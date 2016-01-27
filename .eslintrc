@@ -1,0 +1,9 @@
+{
+  "parser": "babel-eslint",
+  "extends": "airbnb",
+  "rules": {
+    "comma-dangle": 0,
+    "react/prop-types": 0,
+    "new-cap": 0,
+  }
+}
