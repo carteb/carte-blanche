@@ -21,9 +21,6 @@ app.use(require('webpack-dev-middleware')(compiler, {
 
 app.use(require('webpack-hot-middleware')(compiler));
 
-app.use('/', express.static(__dirname + '/api'));
-app.use('/static', express.static(__dirname + '/static'));
-
 app.listen(3000, 'localhost', (err) => {
   if (err) {
     console.log(err);

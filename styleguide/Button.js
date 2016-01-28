@@ -1,11 +1,11 @@
 // import playground from 'pure-ui';
 // import Button from '../comps/Button';
+import React from 'react';
 
 export default () => {
   return (
     <div>
-      <Playground component={Button}>
-      <Button color={'green'}>Follow Me</Button>
+      Button
     </div>
   );
-}
+};
