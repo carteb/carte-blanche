@@ -11,7 +11,8 @@
     "node": "5.5.0"
   },
   "scripts": {
-    "start": "./node_modules/.bin/babel-node server/development.js"
+    "start": "./node_modules/.bin/babel-node server/development.js",
+    "iron": "./node_modules/.bin/iron-node server/debug.js"
   },
   "dependencies": {
     "connect-history-api-fallback": "^1.1.0",
@@ -41,6 +42,7 @@
     "file-loader": "^0.8.5",
     "fs": "0.0.2",
     "html-webpack-plugin": "^2.7.1",
+    "iron-node": "^2.1.13",
     "node-sass": "^3.4.2",
     "postcss-loader": "^0.8.0",
     "proxy-middleware": "^0.15.0",

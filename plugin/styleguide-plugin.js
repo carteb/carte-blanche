@@ -23,12 +23,25 @@ StyleguidePlugin.prototype.apply = (compiler) => {
     };
     // TODO get a childcompiler to compile our internal client.js with the same
     // configuration as the app to styleguide-bundle.js
-    const childCompiler = compilation.createChildCompiler('StyleguideCompilation', outputOptions);
+    const clientPath = path.join(__dirname, 'client.js');
+    const childCompiler = compilation.createChildCompiler('styleguide-webpack-plugin', outputOptions);
     childCompiler.apply(new NodeTemplatePlugin(outputOptions));
-    childCompiler.apply(new LibraryTemplatePlugin('result', 'var'));
+    childCompiler.apply(new LibraryTemplatePlugin(null, 'window'));
     childCompiler.apply(new NodeTargetPlugin());
-    childCompiler.apply(new SingleEntryPlugin(compiler, 'my-loader!client.js'));
+    childCompiler.apply(new SingleEntryPlugin(compiler, '!!' + clientPath));
     childCompiler.runAsChild(callback);
+
+
+    // new JsonpTemplatePlugin(options.output),
+    // new FunctionModulePlugin(options.output),
+    // new NodeSourcePlugin(options.node),
+    // new LoaderTargetPlugin("web")
+
+    // childCompiler.apply(new NodeTemplatePlugin(outputOptions));
+    // childCompiler.apply(new LibraryTemplatePlugin(null, "commonjs2"));
+    // childCompiler.apply(new NodeTargetPlugin());
+    // childCompiler.apply(new SingleEntryPlugin(this.context, "!!" + request));
+    // childCompiler.apply(new LimitChunkCountPlugin({ maxChunks: 1 }));
   });
 
   // compiler.plugin('compilation', (compilation) => {

@@ -3,7 +3,7 @@
 import express from 'express';
 import webpack from 'webpack';
 import historyApiFallback from 'connect-history-api-fallback';
-import config from '../config/webpack.development';
+import config from './webpack.development';
 
 const app = express();
 const compiler = webpack(config);
