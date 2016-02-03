@@ -11,11 +11,12 @@
     "node": "5.5.0"
   },
   "scripts": {
-    "start": "./node_modules/.bin/babel-node server/development.js",
-    "iron": "./node_modules/.bin/iron-node server/debug.js"
+    "start": "babel-node server/development.js",
+    "iron": "iron-node server/debug.js"
   },
   "dependencies": {
     "connect-history-api-fallback": "^1.1.0",
+    "minimatch": "^3.0.0",
     "react": "=0.14.4",
     "react-dom": "=0.14.4"
   },
