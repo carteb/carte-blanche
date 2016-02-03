@@ -2,34 +2,43 @@ import NodeTemplatePlugin from 'webpack/lib/node/NodeTemplatePlugin';
 import NodeTargetPlugin from 'webpack/lib/node/NodeTargetPlugin';
 import LibraryTemplatePlugin from 'webpack/lib/LibraryTemplatePlugin';
 import SingleEntryPlugin from 'webpack/lib/SingleEntryPlugin';
+import minimatch from 'minimatch';
 import path from 'path';
 
-function StyleguidePlugin() {
-  // Setup the plugin instance with options...
+var id = -1;
+function StyleguidePlugin(options) {
+  this.id = (++id);
+  this.options = options || {};
 }
 
-StyleguidePlugin.prototype.apply = (compiler) => {
+StyleguidePlugin.prototype.getCache = function(compiler) {
+  // Attach a cache to the compile if not present
+  if (!compiler.styleguideCache) {
+    compiler.styleguideCache = {};
+  }
+  // Create a cache for this instance
+  if (!compiler.styleguideCache[this.id]) {
+    compiler.styleguideCache[this.id] = {};
+  }
+  return compiler.styleguideCache[this.id];
+};
+
+StyleguidePlugin.prototype.apply = function (compiler) {
   const filename = 'styleguide-bundle.js';
+  // Create a cache per instan
+  var cache = this.getCache(compiler);
 
-  compiler.plugin('make', (compilation, callback) => {
-    const outputOptions = {
-      path: path.join(__dirname, '../dist'),
-      publicPath: compilation.outputOptions.publicPath,
-      filename,
-    };
-
-    // TODO get a childcompiler to compile our internal client.js with the same
-    // configuration as the app to styleguide-bundle.js
-    const clientPath = path.join(__dirname, 'client.js');
-    const childCompiler = compilation.createChildCompiler('styleguide-webpack-plugin', outputOptions);
-    childCompiler.apply(new NodeTemplatePlugin(outputOptions));
-    childCompiler.apply(new LibraryTemplatePlugin(null, 'window'));
-    childCompiler.apply(new NodeTargetPlugin());
-    childCompiler.apply(new SingleEntryPlugin(compiler, '!!' + clientPath));
-    childCompiler.runAsChild(callback);
+  compiler.plugin('normal-module-factory', (nmf) => {
+    nmf.plugin('after-resolve', (data, callback) => {
+      if (minimatch(path.relative(compiler.context, data.userRequest), this.options.src)) {
+        data.loaders.unshift(require.resolve('./loader.js') + '?' + this.id);
+      }
+      callback(null, data);
+    });
   });
 
   compiler.plugin('emit', (compilation, callback) => {
+    console.log(cache);
     const html = `
     <!DOCTYPE html>
     <html>

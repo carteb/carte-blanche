@@ -29,7 +29,9 @@ export default {
       inject: true,
       template: path.join(__dirname, '../src/index.html'),
     }),
-    new StyleguidePlugin(),
+    new StyleguidePlugin({
+      src: 'src/**/*.js'
+    }),
   ],
   module: {
     loaders: [{
