@@ -15,21 +15,24 @@ const printMore = require('./test');
 printMore();
 
 const React = require('react');
+const ReactDOM = require('react-dom');
 console.log(React);
 
 const cube = require('./cube.gif');
 console.log(cube);
 
-class G {
+class G extends React.Component {
   constructor(props) {
-    // super(props);
+    super(props);
     console.log('constructor');
   }
 
   render() {
-    return 'some text';
+    console.log('render');
+    return (
+      React.createElement('p', null, 'Text Content')
+    );
   }
 }
 
-const a = new G();
-console.log(a.render());
+ReactDOM.render(React.createElement(G), document.getElementById('styleguide-root'));
