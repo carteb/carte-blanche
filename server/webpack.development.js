@@ -30,7 +30,7 @@ export default {
       template: path.join(__dirname, '../src/index.html'),
     }),
     new StyleguidePlugin({
-      src: 'src/**/*.js'
+      src: 'src/components/**/*.js'
     }),
   ],
   module: {

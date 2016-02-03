@@ -15,7 +15,7 @@ app.use(historyApiFallback({
 }));
 
 app.use(require('webpack-dev-middleware')(compiler, {
-  noInfo: true,
+  noInfo: false,
   publicPath: config.output.publicPath
 }));
 

@@ -37,8 +37,12 @@ StyleguidePlugin.prototype.apply = function (compiler) {
     });
   });
 
+  
   compiler.plugin('emit', (compilation, callback) => {
-    console.log(cache);
+    var scripts = Object.keys(cache).map(
+      (component) => `<script src="${cache[component]}"></script>`
+      ).join('\n');
+
     const html = `
     <!DOCTYPE html>
     <html>
@@ -48,7 +52,7 @@ StyleguidePlugin.prototype.apply = function (compiler) {
       </head>
       <body>
         <div id='styleguide-root'>Root</div>
-        <script src="${filename}"></script>
+        ${scripts}
       </body>
     </html>
     `;
@@ -61,6 +65,7 @@ StyleguidePlugin.prototype.apply = function (compiler) {
     };
     callback();
   });
+  
 };
 
 export default StyleguidePlugin;
