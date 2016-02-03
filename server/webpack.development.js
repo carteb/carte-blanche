@@ -44,7 +44,7 @@ export default {
       'css?modules&importLoaders=2&localIdentName=[name]-[local]!postcss-loader!sass'),
       include: path.join(__dirname, '../src')
     }, {
-      test: /\.(png|jpg)$/,
+      test: /\.(png|jpg|gif)$/,
       loaders: ['url?limit=10000']
     }, {
       test: /\.(svg)$/,

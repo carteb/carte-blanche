@@ -16,3 +16,6 @@ printMore();
 
 var React = require('react');
 console.log(React);
+
+var cube = require('./cube.gif');
+console.log(cube);
