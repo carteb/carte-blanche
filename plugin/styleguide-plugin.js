@@ -9,10 +9,6 @@ function StyleguidePlugin() {
 }
 
 StyleguidePlugin.prototype.apply = (compiler) => {
-  // compiler.plugin('done', () => {
-  //   console.log('Worked well!');
-  // });
-
   const filename = 'styleguide-bundle.js';
 
   compiler.plugin('make', (compilation, callback) => {
@@ -21,6 +17,7 @@ StyleguidePlugin.prototype.apply = (compiler) => {
       publicPath: compilation.outputOptions.publicPath,
       filename,
     };
+
     // TODO get a childcompiler to compile our internal client.js with the same
     // configuration as the app to styleguide-bundle.js
     const clientPath = path.join(__dirname, 'client.js');
@@ -30,23 +27,7 @@ StyleguidePlugin.prototype.apply = (compiler) => {
     childCompiler.apply(new NodeTargetPlugin());
     childCompiler.apply(new SingleEntryPlugin(compiler, '!!' + clientPath));
     childCompiler.runAsChild(callback);
-
-
-    // new JsonpTemplatePlugin(options.output),
-    // new FunctionModulePlugin(options.output),
-    // new NodeSourcePlugin(options.node),
-    // new LoaderTargetPlugin("web")
-
-    // childCompiler.apply(new NodeTemplatePlugin(outputOptions));
-    // childCompiler.apply(new LibraryTemplatePlugin(null, "commonjs2"));
-    // childCompiler.apply(new NodeTargetPlugin());
-    // childCompiler.apply(new SingleEntryPlugin(this.context, "!!" + request));
-    // childCompiler.apply(new LimitChunkCountPlugin({ maxChunks: 1 }));
   });
-
-  // compiler.plugin('compilation', (compilation) => {
-  //   console.log(compilation.compiler.options.output);
-  // });
 
   compiler.plugin('emit', (compilation, callback) => {
     const html = `

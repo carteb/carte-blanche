@@ -1,3 +1,6 @@
+Debunking Webpack2 - "Everybody here puts his pants on the same way as you.""
+
+
 SingleEntryPlugin
 ---------
 
@@ -53,7 +56,7 @@ This let's you decide between how these modules are compiled. You can choose bet
 
 var, assign, this, window, global, commonjs, commonjs2, amd, umd, umd2, jsonp
 
-Not sure 
+Not sure
 
 
 
@@ -63,3 +66,24 @@ WebPackOptionsApply
 This is initializing different Plugins for different environments. I was quite surprised that these environments are hard-coded into webpack. Not that it's bad. I just didn't expect it. These are the environments:
 
 web, webworker, node, async-node, node-webkit, atom, electron, electron-main, electron-renderer
+
+
+
+
+
+# Loaders
+
+LoadersList
+---------
+
+Is a utility tool to convert the object/json like configuration of loaders into the string based configuration used internally in Webpack to apply loaders.
+
+NormalModule
+---------
+
+This module has a function doBuild which executes the `runLoaders` function. It takes these arguments: `options, compilation, resolver, fs, callback`. This is called in `build` which takes exactly the same arguments.
+
+
+
+
+Webpack uses a package called `loader-runner`. It contains a function `runLoaders` which takes the options and runs all the loaders.

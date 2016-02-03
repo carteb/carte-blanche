@@ -9,3 +9,10 @@
 // );
 
 console.log('Works');
+
+var printMore = require('./test');
+// import printMore from './test';
+printMore();
+
+var React = require('react');
+console.log(React);

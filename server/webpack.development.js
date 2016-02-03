@@ -22,7 +22,6 @@ export default {
     new webpack.DefinePlugin({
       'process.env': {
         DISABLE_LOGGER: process.env.DISABLE_LOGGER,
-        PERF_LOGGING: process.env.PERF_LOGGING
       }
     }),
     new ExtractTextPlugin('bundle-[hash].css', { disable: true }),
@@ -38,15 +37,12 @@ export default {
       loaders: ['babel'],
       // this is a hack for development
       // in the final version we compile it before shipping
-      include: [path.join(__dirname, '../src')]
+      include: [path.join(__dirname, '../src'), path.join(__dirname, '../plugin')]
     }, {
       test: /\.scss/,
       loader: ExtractTextPlugin.extract('style',
       'css?modules&importLoaders=2&localIdentName=[name]-[local]!postcss-loader!sass'),
       include: path.join(__dirname, '../src')
-    }, {
-      test: /\.css/,
-      loader: ExtractTextPlugin.extract('style', 'css')
     }, {
       test: /\.(png|jpg)$/,
       loaders: ['url?limit=10000']
