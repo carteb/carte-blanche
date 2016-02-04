@@ -5,16 +5,7 @@ import {
   Router,
   browserHistory
 } from 'react-router';
-
-class Page extends React.Component {
-  render() {
-    const componentData = window.components[this.props.location.pathname.replace(/\//, "")];
-    const Component = componentData.component;
-    return (
-      <div><Component /></div>
-    );
-  }
-}
+import ComponentPage from './components/ComponentPage';
 
 // Render the components in the window.components object
 const routes =
@@ -25,14 +16,14 @@ const routes =
         <Route
           key={componentName}
           path={componentName}
-          component={Page}
+          component={ComponentPage}
         />
       );
     });
 
 ReactDOM.render(
   <Router history={ browserHistory }>
-    <Route path="/" component={Page}>
+    <Route path="/" component={ComponentPage}>
       { routes }
     </Route>
   </Router>,
