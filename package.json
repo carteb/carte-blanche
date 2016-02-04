@@ -11,8 +11,12 @@
     "node": "5.5.0"
   },
   "scripts": {
-    "start": "babel-node server/development.js",
-    "iron": "iron-node server/debug.js"
+    "start": "npm run examples:simple",
+    "examples:simple": "babel-node examples/simple/server.dev.js",
+    "examples:simple:iron": "iron-node examples/simple/iron-node.js",
+    "client:dev": "babel-node client/server.dev.js",
+    "client:build": "webpack --config client/webpack.prod.babel.js --progress -p",
+    "build": "npm run client:build"
   },
   "dependencies": {
     "connect-history-api-fallback": "^1.1.0",

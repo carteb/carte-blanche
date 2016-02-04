@@ -34,7 +34,7 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
   });
 
   compiler.plugin('emit', (compilation, callback) => {
-    const clientJs = fs.readFileSync(path.join(__dirname, 'client.js'));
+    const clientJs = fs.readFileSync(path.join(__dirname, 'client-bundle.js'));
     const scripts = Object.keys(cache).map(
       (component) => `<script src="${cache[component]}"></script>`
       ).join('\n');

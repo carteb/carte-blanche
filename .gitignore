@@ -5,3 +5,4 @@ npm-debug.log
 npm-debug.log.*
 dist
 stats.json
+plugin/client-bundle.js

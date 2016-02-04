@@ -1,2 +1,2 @@
 require('babel-register');
-require('./development');
+require('./server.dev');
