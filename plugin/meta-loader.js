@@ -1,4 +1,8 @@
-module.exports = function () {
+const reactDocs = require('react-docgen');
+
+module.exports = function (source) {
   this.cacheable();
-  return 'module.exports = ' + JSON.stringify('This will contain the meta information for ' + this.resourcePath);
+  // Parse React Component for meta information
+  const metaInformation = reactDocs.parse(source);
+  return 'module.exports = ' + JSON.stringify(metaInformation);
 };

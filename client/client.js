@@ -8,6 +8,8 @@ import {
 import ComponentPage from './components/ComponentPage';
 import App from './components/App';
 
+console.log(window.components);
+
 // Render the components in the window.components object
 const routes =
   Object.keys(window.components)

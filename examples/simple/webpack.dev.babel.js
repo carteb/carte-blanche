@@ -51,6 +51,9 @@ export default {
     }, {
       test: /\.(svg)$/,
       loaders: ['url?limit=0']
+    }, {
+      test: /\.(json)$/,
+      loader: 'json'
     }]
   },
   postcss: [autoprefixer({ browsers: ['last 2 versions'] })]
