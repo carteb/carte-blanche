@@ -1,3 +1,5 @@
+console.log('Development Environment, mocking components!');
+
 window.components = {};
 
-import './client.js';
+require('./client.js');

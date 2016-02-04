@@ -3,7 +3,7 @@
 import express from 'express';
 import webpack from 'webpack';
 import historyApiFallback from 'connect-history-api-fallback';
-import config from './webpack.client.dev';
+import config from './webpack.dev.babel';
 
 const app = express();
 const compiler = webpack(config);
@@ -25,6 +25,7 @@ app.listen(3001, 'localhost', (err) => {
     return;
   }
 
-  console.log('----> Listening at http://localhost:3001\n');
+  console.log('Mocking enabled\n');
+  console.log('Listening at http://localhost:3001\n');
   console.log('Building...');
 });
