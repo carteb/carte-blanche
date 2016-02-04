@@ -11,11 +11,11 @@
     "node": "5.5.0"
   },
   "scripts": {
-    "start": "npm run example:simple",
+    "start": "npm run example:dev",
     "preserver": "npm run client:build",
     "server": "webpack-dev-server",
-    "example:simple": "npm run server -- --context examples/simple/ --config examples/simple/webpack.dev.babel.js",
-    "example:simple:iron": "iron-node node_modules/webpack-dev-server/bin/webpack-dev-server.js --context examples/simple/ --config examples/simple/webpack.dev.babel.js",
+    "example:dev": "npm run server -- --context examples/dev/ --config examples/dev/webpack.dev.babel.js",
+    "example:dev:iron": "iron-node node_modules/webpack-dev-server/bin/webpack-dev-server.js --context examples/dev/ --config examples/dev/webpack.dev.babel.js",
     "client:dev": "webpack-dev-server --config client/webpack.dev.babel.js",
     "client:build": "webpack --config client/webpack.prod.babel.js --progress -p",
     "build": "npm run client:build"
