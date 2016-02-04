@@ -1,5 +1,4 @@
 import React from 'react';
-import Navigation from './Navigation';
 
 class ComponentPage extends React.Component {
   render() {
@@ -8,7 +7,6 @@ class ComponentPage extends React.Component {
     const Component = componentData.component;
     return (
       <div>
-        <Navigation />
         <Component />
       </div>
     );

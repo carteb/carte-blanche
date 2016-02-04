@@ -6,6 +6,7 @@ import {
   hashHistory
 } from 'react-router';
 import ComponentPage from './components/ComponentPage';
+import App from './components/App';
 
 // Render the components in the window.components object
 const routes =
@@ -23,7 +24,7 @@ const routes =
 
 ReactDOM.render(
   <Router history={ hashHistory }>
-    <Route path="/" component={ComponentPage}>
+    <Route path="/" component={App}>
       { routes }
     </Route>
   </Router>,

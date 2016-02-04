@@ -9,6 +9,7 @@ class Navigation extends React.Component {
           <Link
             to={'/' + componentName}
             key={'/' + componentName}
+            activeClassName="active"
           >
             {componentName}
           </Link>
@@ -19,6 +20,7 @@ class Navigation extends React.Component {
   render() {
     return (
       <div>
+        <Link to="/" activeClassName="active">Home</Link>
         { this.components }
       </div>
     );
