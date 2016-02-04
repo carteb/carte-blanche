@@ -8,11 +8,9 @@ import {
 import ComponentPage from './components/ComponentPage';
 import App from './components/App';
 
-console.log(window.components);
-
-// Render the components in the window.components object
+// Render the components in the window.__STYLEGUIDE_PLUGIN_COMPONENTS_DO_NOT_TOUCH__ object
 const routes =
-  Object.keys(window.components)
+  Object.keys(window.__STYLEGUIDE_PLUGIN_COMPONENTS_DO_NOT_TOUCH__)
     .map((componentName) => {
       // TODO: Fix replace of file
       return (

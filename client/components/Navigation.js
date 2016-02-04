@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 
 class Navigation extends React.Component {
   componentWillMount() {
-    this.components = Object.keys(window.components)
+    this.components = Object.keys(window.__STYLEGUIDE_PLUGIN_COMPONENTS_DO_NOT_TOUCH__)
       .map((componentName) => {
         return (
           <Link

@@ -1,9 +1,9 @@
 'use strict';
 
-// Add out component to window.components so the styleguide client can pick them
+// Add out component to window.__STYLEGUIDE_PLUGIN_COMPONENTS_DO_NOT_TOUCH__ so the styleguide client can pick them
 // up
-window.components = window.components || {};
-window.components['%%name%%'] = {
+window.__STYLEGUIDE_PLUGIN_COMPONENTS_DO_NOT_TOUCH__ = window.__STYLEGUIDE_PLUGIN_COMPONENTS_DO_NOT_TOUCH__ || {};
+window.__STYLEGUIDE_PLUGIN_COMPONENTS_DO_NOT_TOUCH__['%%name%%'] = {
   name: '%%name%%',
   meta: require('!!%%metaLoader%%!%%requestPath%%'),
   source: require('!!%%sourceLoader%%!%%requestPath%%'),
