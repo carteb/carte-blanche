@@ -35,7 +35,7 @@ To build the client to use the new version in the plugin, run
 $ npm run client:build
 ```
 
-> Note: Currently, it is not possible to use the live development version in the plugin development setup, so you have to build it before the new version appears in the plugin.
+> Note: Currently, it is not possible to use the live development version of the client during plugin development. You'll have to build it before the new version appears in the plugin.
 
 ## Example Apps for Plugin Development
 
