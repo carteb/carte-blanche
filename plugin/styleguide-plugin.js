@@ -1,4 +1,5 @@
 import minimatch from 'minimatch';
+import fs from 'fs';
 import path from 'path';
 
 let id = -1;
@@ -33,6 +34,7 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
   });
 
   compiler.plugin('emit', (compilation, callback) => {
+    const clientJs = fs.readFileSync(path.join(__dirname, 'client.js'));
     const scripts = Object.keys(cache).map(
       (component) => `<script src="${cache[component]}"></script>`
       ).join('\n');
@@ -47,6 +49,7 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
       <body>
         <div id='styleguide-root'>Root</div>
         ${scripts}
+        <script>${clientJs}</script>
       </body>
     </html>
     `;
