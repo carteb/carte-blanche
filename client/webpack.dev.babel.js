@@ -18,6 +18,7 @@ export default {
     new webpack.NoErrorsPlugin(),
     new HtmlWebpackPlugin({
       inject: true,
+      filename: 'styleguide/index.html',
       template: path.join(__dirname, './index.html'),
     }),
     new webpack.DefinePlugin({
