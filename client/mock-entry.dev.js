@@ -1,6 +1,6 @@
 console.log('Development Environment, mocking components!');
 
-import React from 'React';
+import React from 'react';
 
 window.components = {
   'src/components/button': {
