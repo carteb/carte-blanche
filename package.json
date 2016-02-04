@@ -14,7 +14,7 @@
     "start": "npm run examples:simple",
     "examples:simple": "webpack-dev-server --context examples/simple/ --config examples/simple/webpack.dev.babel.js",
     "examples:simple:iron": "iron-node node_modules/webpack-dev-server/bin/webpack-dev-server.js --context examples/simple/ --config examples/simple/webpack.dev.babel.js",
-    "client:dev": "babel-node client/server.dev.js",
+    "client:dev": "webpack-dev-server --config client/webpack.dev.babel.js",
     "client:build": "webpack --config client/webpack.prod.babel.js --progress -p",
     "build": "npm run client:build"
   },
