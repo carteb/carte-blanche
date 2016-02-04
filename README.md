@@ -13,7 +13,7 @@ $ npm install
 client
 └── client.js   # The client users see at /styleguide.html
 examples        # The Example Apps
-└── simple      # Simple Example without any fanciness
+└── dev         # Example used for Plugin Development
 plugin          # The Plugin itself
 ├── component-loader.js
 ├── entry.js
@@ -53,12 +53,12 @@ To use them, run
 
 ```
 $ npm run example:<examplename>
-$ npm run example:simple
+$ npm run example:dev
 ```
 
 You can then visit `http://localhost:3000` to see the app and `http://localhost:3000/styleguide.html` to see the styleguide!
 
-> Note: `$ npm start` aliases to `$ npm run example:simple`
+> Note: `$ npm start` aliases to `$ npm run example:dev`
 
 ##### `iron-node`
 
@@ -66,5 +66,5 @@ You can also run the app in iron-node using
 
 ```
 $ npm run example:<examplename>:iron
-$ npm run example:simple:iron
+$ npm run example:dev:iron
 ```
