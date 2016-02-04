@@ -10,38 +10,38 @@ module.exports = function styleguideLoader(source) {
   return source;
 };
 
-module.exports.pitch = function(request) {
-  var childFilename = path.join('styleguide-plugin', path.basename(request.replace(/^.+!/, '').replace(/\?.+$/, '')));
+module.exports.pitch = function pitch(request) {
+  const childFilename = path.join('styleguide-plugin', path.basename(request.replace(/^.+!/, '').replace(/\?.+$/, '')));
   this._compiler.styleguideCache[parseInt(this.query.substr(1), 10)][request] = childFilename;
-  var publicPath = this._compilation.outputOptions.publicPath;
-  var outputOptions = {
+  const publicPath = this._compilation.outputOptions.publicPath;
+  const outputOptions = {
     filename: childFilename,
     publicPath: publicPath
   };
-  var childCompiler = this._compilation.createChildCompiler("styleguide-plugin", outputOptions);
-  var entryPoint = '!!' + require.resolve('./component-loader.js') + '?request=' + encodeURI(request).replace(/\!/g, '%21') + '!' + require.resolve('./entry.js');
+  const childCompiler = this._compilation.createChildCompiler('styleguide-plugin', outputOptions);
+  const entryPoint = '!!' + require.resolve('./component-loader.js') + '?request=' + encodeURI(request).replace(/\!/g, '%21') + '!' + require.resolve('./entry.js');
   childCompiler.apply(new NodeTemplatePlugin(outputOptions));
-  childCompiler.apply(new LibraryTemplatePlugin(null, "window"));
+  childCompiler.apply(new LibraryTemplatePlugin(null, 'window'));
   childCompiler.apply(new NodeTargetPlugin());
   childCompiler.apply(new SingleEntryPlugin(this.context, entryPoint));
   childCompiler.apply(new LimitChunkCountPlugin({ maxChunks: 1 }));
-  var subCache = "subcache " + __dirname + " " + request;
-  childCompiler.plugin("compilation", function(compilation) {
-    if(compilation.cache) {
-      if(!compilation.cache[subCache])
+  const subCache = 'subcache ' + __dirname + ' ' + request;
+  childCompiler.plugin('compilation', function compile(compilation) {
+    if (compilation.cache) {
+      if (!compilation.cache[subCache]) {
         compilation.cache[subCache] = {};
+      }
       compilation.cache = compilation.cache[subCache];
     }
   });
-  var callback = this.async();
-  childCompiler.runAsChild(function(err, entries, compilation) {
-    if(err) return callback(err);
-
-    if(compilation.errors.length > 0) {
+  const callback = this.async();
+  childCompiler.runAsChild(function runAsChild(err, entries, compilation) {
+    if (err) {
+      return callback(err);
+    }
+    if (compilation.errors.length > 0) {
       return callback(compilation.errors[0]);
     }
-    
     callback(null);
   });
-
 };
