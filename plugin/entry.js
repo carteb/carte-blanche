@@ -6,6 +6,7 @@ window.components = window.components || {};
 window.components['%%name%%'] = {
   name: '%%name%%',
   meta: require('!!%%metaLoader%%!%%requestPath%%'),
+  path: '%%path%%',
   component: function() {
     var component = require('!!%%request%%');
     return component.default || component;
