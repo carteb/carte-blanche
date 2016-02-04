@@ -18,9 +18,10 @@ class ComponentTwo extends React.Component {
   }
 }
 
+// Mock window.components
 window.components = {
-  ComponentOne,
-  ComponentTwo,
+  ComponentOne: () => ComponentOne,
+  ComponentTwo: () => ComponentTwo
 };
 
 require('./client.js');
