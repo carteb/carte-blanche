@@ -12,7 +12,7 @@
   },
   "scripts": {
     "start": "npm run example:simple",
-    "example:simple": "babel-node examples/simple/server.dev.js",
+    "example:simple": "webpack-dev-server --context examples/simple/ --config examples/simple/webpack.dev.babel.js",
     "example:simple:iron": "iron-node examples/simple/iron-node.js",
     "client:dev": "babel-node client/server.dev.js",
     "client:build": "webpack --config client/webpack.prod.babel.js --progress -p",
@@ -61,6 +61,7 @@
     "webdriverio": "^3.4.0",
     "webpack": "^1.12.11",
     "webpack-dev-middleware": "^1.5.1",
+    "webpack-dev-server": "1.14.1",
     "webpack-hot-middleware": "^2.6.0",
     "webpack-merge": "0.7.3"
   }
