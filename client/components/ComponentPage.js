@@ -3,7 +3,8 @@ import Navigation from './Navigation';
 
 class ComponentPage extends React.Component {
   render() {
-    const componentData = window.components[this.props.location.pathname.replace(/\//, '')];
+    const key = this.props.location.pathname.replace(/\//, '');
+    const componentData = window.components[key];
     const Component = componentData.component;
     return (
       <div>

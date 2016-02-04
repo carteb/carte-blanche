@@ -60,7 +60,7 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
     // Generate a string with a script tag for every component
     const scripts =
       Object.keys(cache)
-        .map((component) => `<script src="${cache[component]}"></script>`)
+        .map((component) => `<script src="/${cache[component]}"></script>`)
         .join('\n');
 
     // Inject the component script tags and the client js into a basic HTML template
@@ -80,7 +80,7 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
     `;
 
     // And emit that HTML template as 'styleguide.html'
-    compilation.assets['styleguide.html'] = {
+    compilation.assets['styleguide/index.html'] = {
       source: () => {
         return html;
       },

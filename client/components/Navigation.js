@@ -5,7 +5,14 @@ class Navigation extends React.Component {
   componentWillMount() {
     this.components = Object.keys(window.components)
       .map((componentName) => {
-        return (<Link to={'/' + componentName}>{componentName}</Link>);
+        return (
+          <Link
+            to={'/' + componentName}
+            key={'/' + componentName}
+          >
+            {componentName}
+          </Link>
+        );
       });
   }
 

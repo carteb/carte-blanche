@@ -7,8 +7,8 @@ window.components['%%name%%'] = {
   name: '%%name%%',
   meta: require('!!%%metaLoader%%!%%requestPath%%'),
   path: '%%path%%',
-  component: function() {
-    var component = require('!!%%request%%');
+  component: (function component() {
+    var component = require('!!%%request%%'); // eslint-disable-line
     return component.default || component;
-  }
+  })()
 };

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import {
   Route,
   Router,
-  browserHistory
+  hashHistory
 } from 'react-router';
 import ComponentPage from './components/ComponentPage';
 
@@ -22,7 +22,7 @@ const routes =
     });
 
 ReactDOM.render(
-  <Router history={ browserHistory }>
+  <Router history={ hashHistory }>
     <Route path="/" component={ComponentPage}>
       { routes }
     </Route>
