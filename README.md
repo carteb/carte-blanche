@@ -55,6 +55,6 @@ $ npm run example:<examplename>:iron
 $ npm run example:simple:iron
 ```
 
-> Note: `$ npm start` aliases to `$ npm run simple`
+> Note: `$ npm start` aliases to `$ npm run example:simple`
 
 You can then visit `http://localhost:3000` to see the app and `http://localhost:3000/styleguide.html` to see the styleguide!

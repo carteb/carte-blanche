@@ -11,9 +11,9 @@
     "node": "5.5.0"
   },
   "scripts": {
-    "start": "npm run examples:simple",
-    "examples:simple": "babel-node examples/simple/server.dev.js",
-    "examples:simple:iron": "iron-node examples/simple/iron-node.js",
+    "start": "npm run example:simple",
+    "example:simple": "babel-node examples/simple/server.dev.js",
+    "example:simple:iron": "iron-node examples/simple/iron-node.js",
     "client:dev": "babel-node client/server.dev.js",
     "client:build": "webpack --config client/webpack.prod.babel.js --progress -p",
     "build": "npm run client:build"
