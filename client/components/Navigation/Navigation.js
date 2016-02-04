@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { IndexLink } from 'react-router';
 
 import styles from './styles.css';
 
@@ -8,13 +8,14 @@ class Navigation extends React.Component {
     this.components = Object.keys(window.__STYLEGUIDE_PLUGIN_COMPONENTS_DO_NOT_TOUCH__)
       .map((componentName) => {
         return (
-          <Link
+          <IndexLink
             to={'/' + componentName}
             key={'/' + componentName}
-            activeClassName="active"
+            className={ styles.componentLink }
+            activeClassName={ styles.componentLinkActive }
           >
             {componentName}
-          </Link>
+          </IndexLink>
         );
       });
   }
@@ -22,8 +23,21 @@ class Navigation extends React.Component {
   render() {
     return (
       <div className={ styles.drawer }>
-        <Link to="/" activeClassName="active">Home</Link>
-        { this.components }
+        <h2
+          className={ styles.title }
+        >
+          Components
+        </h2>
+        <div className={ styles.list }>
+          <IndexLink
+            to="/"
+            className={ styles.componentLink }
+            activeClassName={ styles.componentLinkActive }
+          >
+            Home
+          </IndexLink>
+          { this.components }
+        </div>
       </div>
     );
   }

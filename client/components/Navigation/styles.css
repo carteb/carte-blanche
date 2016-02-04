@@ -1,3 +1,36 @@
 .drawer {
-  color: red;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 15em;
+  background-color: rgb(40, 40, 48);
+  z-index: 1;
+}
+
+.title {
+  color: white;
+  font-family: Helvetica, Arial, sans-serif;
+  font-weight: 300;
+  margin: 2rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.list {
+  padding: 1rem 0;
+  overflow-y: auto;
+}
+
+.componentLink {
+  color: rgba(255, 255, 255, 0.75);
+  background-color: rgb(40, 40, 48);
+  font-family: Helvetica, Arial, sans-serif;
+  text-decoration: none;
+  padding: 1rem 1rem;
+  display: block;
+}
+
+.componentLinkActive {
+  color: rgba(255, 255, 255, 1);
+  background-color: rgb(23, 24, 28)
 }
