@@ -18,7 +18,7 @@ const routes =
       return (
         <Route
           key={componentName}
-          path={componentName}
+          path={window.__STYLEGUIDE_PLUGIN_COMPONENTS_DO_NOT_TOUCH__[componentName].path}
           component={ComponentPage}
         />
       );
