@@ -43,8 +43,6 @@ $ npm run client:build
 
 ### Example Apps for Plugin Development
 
-**CURRENTLY BROKEN DUE TO [this LoC](plugin/styleguide-plugin.js#L50) and the architectural refactor**
-
 #### Development
 
 For the development of the plugin itself, we have a few example apps prepared.
