@@ -18,10 +18,12 @@ let id = -1;
  */
 function StyleguidePlugin(options) {
   this.id = (++id);
+
   // Assert that a HTML file was specified in the dest option
   if (options.dest && options.dest.indexOf('.html') !== options.dest.length - 5) {
     throw new Error('\n\nYou need to specify a .html file in the "dest" option!\n\n');
   }
+
   this.options = options || {};
 }
 
@@ -33,10 +35,12 @@ StyleguidePlugin.prototype.getCache = function getCache(compiler) {
   if (!compiler.styleguideCache) {
     compiler.styleguideCache = {};
   }
+
   // Create a cache for this instance
   if (!compiler.styleguideCache[this.id]) {
     compiler.styleguideCache[this.id] = {};
   }
+
   return compiler.styleguideCache[this.id];
 };
 
@@ -55,6 +59,7 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
       if (minimatch(path.relative(compiler.context, data.userRequest), this.options.src)) {
         data.loaders.unshift(require.resolve('./loader.js') + '?' + this.id);
       }
+
       callback(null, data);
     });
   });
@@ -63,14 +68,17 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
     // Get the bundled Styleguide Client
     const clientApi = fs.readFileSync(path.join(__dirname, 'client-api.js'));
     const clientJs = fs.readFileSync(path.join(__dirname, 'client-bundle.js'));
+
     // Generate a string with a script tag for every component
     const paths = {};
     Object.keys(cache).forEach((request) => {
       const requestPath = request.replace(/^.+!/, '').replace(/\?.+$/, '');
       const relativePath = path.relative(compiler.options.context, requestPath);
+
       // TODO should be relative not absolute:
       paths[relativePath] = '/' + cache[request];
     });
+
     // Inject the component script tags and the client js into a basic HTML template
     const html = `
     <!DOCTYPE html>
@@ -89,11 +97,10 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
     </html>
     `;
     const styleguidePath = this.options.dest || 'styleguide/index.html';
+
     // And emit that HTML template as 'styleguide/index.html'
     compilation.assets[styleguidePath] = {
-      source: () => {
-        return html;
-      },
+      source: () => html,
       size: () => 0,
     };
     callback();

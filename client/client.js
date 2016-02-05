@@ -11,7 +11,6 @@ import {
 } from 'react-router';
 import ComponentPreview from './components/ComponentPreview';
 import App from './components/App';
-import { STYLEGUIDE } from './constants';
 const styleguideClientApi = window.__STYLEGUIDE_PLUGIN_CLIENT_API;
 
 // Generate a view for every component
@@ -22,7 +21,7 @@ Object.keys(styleguideClientApi.scripts).forEach((componentName) => {
       return (<ComponentPreview
         name={componentName}
       />);
-    }
+    },
   });
 });
 
@@ -30,10 +29,10 @@ Object.keys(styleguideClientApi.scripts).forEach((componentName) => {
 const routes = Object.keys(routeViews)
     .map((componentName) => (
       <Route
-          key={componentName}
-          path={componentName}
-          component={routeViews[componentName]}
-        />
+        key={componentName}
+        path={componentName}
+        component={routeViews[componentName]}
+      />
     ));
 
 ReactDOM.render(

@@ -11,13 +11,13 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      drawerVisible: false
+      drawerVisible: false,
     };
   }
 
   toggleMenu() {
     this.setState({
-      drawerVisible: !this.state.drawerVisible
+      drawerVisible: !this.state.drawerVisible,
     });
   }
 

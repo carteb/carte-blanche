@@ -27,7 +27,6 @@
     "type": "git",
     "url": "https://github.com/pure-ui/styleguide"
   },
-  "private": true,
   "engines": {
     "node": "5.5.0"
   },
@@ -41,7 +40,10 @@
     "example:dest:iron": "iron-node node_modules/webpack-dev-server/bin/webpack-dev-server.js --context examples/dest/ --config examples/dest/webpack.dev.babel.js",
     "client:dev": "webpack-dev-server --hot --config client/webpack.dev.babel.js",
     "client:build": "webpack --config client/webpack.prod.babel.js --progress -p",
-    "build": "npm run client:build"
+    "build": "npm run client:build",
+    "lint": "npm run lint:eslint  && npm run lint:jscs",
+    "lint:eslint": "eslint ./",
+    "lint:jscs": "jscs ./"
   },
   "dependencies": {
     "connect-history-api-fallback": "^1.1.0",
@@ -75,6 +77,7 @@
     "html-loader": "^0.4.0",
     "html-webpack-plugin": "^2.7.1",
     "iron-node": "^2.1.13",
+    "jscs": "^2.9.0",
     "json-loader": "0.5.4",
     "node-sass": "^3.4.2",
     "postcss-loader": "^0.8.0",

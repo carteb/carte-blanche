@@ -1,0 +1,10 @@
+{
+  "preset": "airbnb",
+  "validateQuoteMarks": null,
+  "excludeFiles": [
+    "coverage/**",
+    "node_modules/**",
+    "lib/**",
+    "**/client-bundle.js"
+  ]
+}
