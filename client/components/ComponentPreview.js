@@ -4,6 +4,7 @@
 
 import React from 'react';
 import PropTypesInfo from './PropTypesInfo';
+import Playground from './Playground';
 const styleguideClientApi = window.__STYLEGUIDE_PLUGIN_CLIENT_API;
 
 class ComponentPreview extends React.Component {
@@ -43,6 +44,10 @@ class ComponentPreview extends React.Component {
         <h2>Preview</h2>
         <Component />
         <PropTypesInfo meta={componentMeta} />
+        <Playground
+          component={Component}
+          meta={componentMeta}
+        />
       </div>
     );
   }
