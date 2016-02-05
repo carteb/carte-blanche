@@ -1,14 +1,19 @@
+/**
+ * Showcases a componentn
+ */
+
 import React from 'react';
 import PropTypesInfo from './PropTypesInfo';
-import { GLOBAL_NAME } from '../constants';
+import { STYLEGUIDE } from '../constants';
 
-class ComponentPage extends React.Component {
+class ComponentPreview extends React.Component {
   render() {
     const key = this.props.location.pathname.replace(/\//, '');
-    const componentData = window[GLOBAL_NAME][key];
+    const componentData = window[STYLEGUIDE][key];
     const Component = componentData.component();
     return (
       <div>
+        <h2>Preview</h2>
         <Component />
         <PropTypesInfo meta={componentData.meta} />
       </div>
@@ -16,4 +21,4 @@ class ComponentPage extends React.Component {
   }
 }
 
-export default ComponentPage;
+export default ComponentPreview;

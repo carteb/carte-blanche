@@ -1,9 +1,13 @@
+/**
+ * Mocks the components for easier client developments
+ */
+
 console.log('Development Environment, mocking components!');
 
 import React from 'react';
-import { GLOBAL_NAME } from './constants';
+import { STYLEGUIDE } from './constants';
 
-window[GLOBAL_NAME] = {
+window[STYLEGUIDE] = {
   'src/components/button': {
     'name': 'src/components/button',
     'meta': {

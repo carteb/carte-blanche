@@ -1,3 +1,7 @@
+/**
+ * Wraps around all views
+ */
+
 import React from 'react';
 import Navigation from '../Navigation';
 
@@ -28,9 +32,12 @@ class App extends React.Component {
           >
             Menu
           </button>
-          <h2 className={ styles.previewTitle }>Preview</h2>
           <div className={ styles.componentWrapper }>
-            { this.props.children }
+            {(this.props.children) ? (
+              <div>{ this.props.children }</div>
+            ) : (
+              <h2>Home</h2>
+            )}
           </div>
         </div>
       </div>

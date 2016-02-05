@@ -1,3 +1,7 @@
+/**
+ * The main navigation with a list of all components
+ */
+
 import React from 'react';
 import { IndexLink } from 'react-router';
 
@@ -5,8 +9,10 @@ import styles from './styles.css';
 
 class Navigation extends React.Component {
   componentWillMount() {
+    // Iterate through all components and generate a list
     this.components = Object.keys(window.__STYLEGUIDE_PLUGIN_COMPONENTS_DO_NOT_TOUCH__)
       .map((componentName) => {
+        // IndexLink so not all links that match a part of the route are highlighted
         return (
           <IndexLink
             to={'/' + componentName}
@@ -23,9 +29,7 @@ class Navigation extends React.Component {
   render() {
     return (
       <div className={ styles.drawer }>
-        <h2
-          className={ styles.title }
-        >
+        <h2 className={ styles.title }>
           Components
         </h2>
         <div className={ styles.list }>

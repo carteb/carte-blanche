@@ -1,3 +1,7 @@
+/**
+ * Shows information about the propTypes of a component
+ */
+
 import React from 'react';
 import PropTypeInfo from './PropTypeInfo';
 

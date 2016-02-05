@@ -1,3 +1,7 @@
+/**
+ * Main entry point for the Styleguide Client
+ */
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {
@@ -5,20 +9,19 @@ import {
   Router,
   hashHistory
 } from 'react-router';
-import ComponentPage from './components/ComponentPage';
+import ComponentPreview from './components/ComponentPreview';
 import App from './components/App';
-import { GLOBAL_NAME } from './constants';
+import { STYLEGUIDE } from './constants';
 
-// Render the components from the window
+// Generate the routes to the components
 const routes =
-  Object.keys(window[GLOBAL_NAME])
+  Object.keys(window[STYLEGUIDE])
     .map((componentName) => {
-      // TODO: Fix replace of file
       return (
         <Route
           key={componentName}
-          path={window[GLOBAL_NAME][componentName].path}
-          component={ComponentPage}
+          path={window[STYLEGUIDE][componentName].path}
+          component={ComponentPreview}
         />
       );
     });
