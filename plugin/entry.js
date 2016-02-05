@@ -1,4 +1,4 @@
-'use strict';
+'use strict'; // eslint-disable-line strict
 
 // Add out component to window.__STYLEGUIDE_PLUGIN_COMPONENTS_DO_NOT_TOUCH__ so the styleguide client can pick them
 // up
