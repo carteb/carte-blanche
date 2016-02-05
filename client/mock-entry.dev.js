@@ -1,8 +1,9 @@
 console.log('Development Environment, mocking components!');
 
 import React from 'react';
+import { GLOBAL_NAME } from './constants';
 
-window.__STYLEGUIDE_PLUGIN_COMPONENTS_DO_NOT_TOUCH__ = {
+window[GLOBAL_NAME] = {
   'src/components/button': {
     'name': 'src/components/button',
     'meta': {

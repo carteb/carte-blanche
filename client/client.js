@@ -7,18 +7,17 @@ import {
 } from 'react-router';
 import ComponentPage from './components/ComponentPage';
 import App from './components/App';
+import { GLOBAL_NAME } from './constants';
 
-// console.log(JSON.stringify(window.__STYLEGUIDE_PLUGIN_COMPONENTS_DO_NOT_TOUCH__));
-
-// Render the components in the window.__STYLEGUIDE_PLUGIN_COMPONENTS_DO_NOT_TOUCH__ object
+// Render the components from the window
 const routes =
-  Object.keys(window.__STYLEGUIDE_PLUGIN_COMPONENTS_DO_NOT_TOUCH__)
+  Object.keys(window[GLOBAL_NAME])
     .map((componentName) => {
       // TODO: Fix replace of file
       return (
         <Route
           key={componentName}
-          path={window.__STYLEGUIDE_PLUGIN_COMPONENTS_DO_NOT_TOUCH__[componentName].path}
+          path={window[GLOBAL_NAME][componentName].path}
           component={ComponentPage}
         />
       );
