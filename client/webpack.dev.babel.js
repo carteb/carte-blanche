@@ -5,7 +5,8 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 export default {
   devtool: 'eval',
   entry: [
-    'webpack-hot-middleware/client',
+    'webpack/hot/only-dev-server',
+    'webpack-dev-server/client?http://localhost:8080',
     path.join(__dirname, './mock-entry.dev.js')
   ],
   output: {
@@ -14,12 +15,10 @@ export default {
     publicPath: '/'
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     new HtmlWebpackPlugin({
-      inject: true,
       filename: 'styleguide/index.html',
-      template: path.join(__dirname, './index.html'),
+      template: '!!html!' + path.join(__dirname, './index.html'),
     }),
     new webpack.DefinePlugin({
       'process.env': {
@@ -30,7 +29,11 @@ export default {
   module: {
     loaders: [{
       test: /\.js$/,
-      loaders: ['babel']
+      loaders: [
+        'react-hot',
+        'babel'
+      ],
+      include: path.join(__dirname)
     }, {
       test: /\.css$/,
       loader: 'style-loader!css-loader?modules&importLoaders=1&sourceMap!postcss-loader'
