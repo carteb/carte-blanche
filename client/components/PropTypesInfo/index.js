@@ -7,11 +7,13 @@ class PropTypesInfo extends React.Component {
       <div>
         <h2>Props</h2>
         { Object.keys(this.props.meta.props).map((name) => {
-          return <PropTypeInfo
-            key={ name }
-            name={ name }
-            data={ this.props.meta.props[name]
-          }/>;
+          return (
+            <PropTypeInfo
+              key={ name }
+              name={ name }
+              data={ this.props.meta.props[name] }
+            />
+          );
         }) }
       </div>
     );
