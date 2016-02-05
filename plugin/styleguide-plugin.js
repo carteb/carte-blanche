@@ -83,7 +83,7 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
     const styleguidePath = this.options.basePath || 'styleguide';
 
     // And emit that HTML template as 'styleguide/index.html'
-    compilation.assets[styleguidePath + '/index.html'] = {
+    compilation.assets[path.join(styleguidePath, '/index.html')] = {
       source: () => {
         return html;
       },
