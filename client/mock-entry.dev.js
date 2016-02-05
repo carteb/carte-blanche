@@ -3,51 +3,7 @@
  */
 
 console.log('Development Environment, mocking components!');
-
-import React from 'react';
-import { STYLEGUIDE } from './constants';
-
-window[STYLEGUIDE] = {
-  'src/components/button': {
-    'name': 'src/components/button',
-    'meta': {
-      'description': '',
-      'props': {
-        'className': {
-          'type': {
-            'name': 'string'
-          },
-          'required': false,
-          'description': ''
-        },
-        'type': {
-          'type': {
-            'name': 'enum',
-            'value': [{
-              'value': '"submit"',
-              'computed': false
-            }, {
-              'value': '"button"',
-              'computed': false
-            }, {
-              'value': '"reset"',
-              'computed': false
-            }]
-          },
-          'required': false,
-          'description': ''
-        }
-      }
-    },
-    'path': 'src/components/button.js',
-    'component': () => {
-      return React.createElement(
-        'button',
-        null,
-        'Follow Me'
-      );
-    }
-  }
-};
-
+// Load the components from the example exactly like the plugin would:
+require('!!../plugin/component-loader.js?request=babel%21../examples/dev/src/components/button.js!../plugin/entry.js');
+require('!!../plugin/component-loader.js?request=babel%21../examples/dev/src/components/card.js!../plugin/entry.js');
 require('./client.js');
