@@ -8,6 +8,8 @@ import {
 import ComponentPage from './components/ComponentPage';
 import App from './components/App';
 
+// console.log(JSON.stringify(window.__STYLEGUIDE_PLUGIN_COMPONENTS_DO_NOT_TOUCH__));
+
 // Render the components in the window.__STYLEGUIDE_PLUGIN_COMPONENTS_DO_NOT_TOUCH__ object
 const routes =
   Object.keys(window.__STYLEGUIDE_PLUGIN_COMPONENTS_DO_NOT_TOUCH__)

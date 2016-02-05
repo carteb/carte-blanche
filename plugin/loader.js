@@ -26,7 +26,7 @@ module.exports.pitch = function pitch(request) {
   const publicPath = this._compilation.outputOptions.publicPath;
   const outputOptions = {
     filename: childFilename,
-    publicPath: publicPath
+    publicPath
   };
   const childCompiler = this._compilation.createChildCompiler('styleguide-plugin', outputOptions);
   // '!!' strips all previous loaders, so this makes sure all our components are loaded with

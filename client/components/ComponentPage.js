@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypesInfo from './PropTypesInfo';
 
 class ComponentPage extends React.Component {
   render() {
@@ -8,6 +9,7 @@ class ComponentPage extends React.Component {
     return (
       <div>
         <Component />
+        <PropTypesInfo meta={componentData.meta} />
       </div>
     );
   }
