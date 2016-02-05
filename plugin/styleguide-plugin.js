@@ -18,6 +18,10 @@ let id = -1;
  */
 function StyleguidePlugin(options) {
   this.id = (++id);
+  // Assert that a HTML file was specified in the dest option
+  if (options.dest && options.dest.indexOf('.html') !== options.dest.length - 5) {
+    throw new Error('\n\nYou need to specify a .html file in the "dest" option!\n\n');
+  }
   this.options = options || {};
 }
 
@@ -80,7 +84,7 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
     </html>
     `;
 
-    const styleguidePath = this.options.dest || 'styleguide';
+    const styleguidePath = this.options.dest || 'styleguide/index.html';
 
     // And emit that HTML template as 'styleguide/index.html'
     compilation.assets[styleguidePath] = {
