@@ -3,7 +3,7 @@
 // Add out component to window.__STYLEGUIDE_PLUGIN_COMPONENTS_DO_NOT_TOUCH__ so the styleguide client can pick them
 // up
 window.__STYLEGUIDE_PLUGIN_COMPONENTS_DO_NOT_TOUCH__ = window.__STYLEGUIDE_PLUGIN_COMPONENTS_DO_NOT_TOUCH__ || {};
-window.__STYLEGUIDE_PLUGIN_COMPONENTS_DO_NOT_TOUCH__['%%name%%'] = {
+window.__STYLEGUIDE_PLUGIN_COMPONENTS_DO_NOT_TOUCH__['%%path%%'] = {
   name: '%%name%%',
   meta: require('!!%%metaLoader%%!%%requestPath%%'),
   source: require('!!%%sourceLoader%%!%%requestPath%%'),
