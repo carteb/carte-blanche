@@ -12,11 +12,16 @@ import path from 'path';
 let id = -1;
 /**
  * Instantiates the plugin
- * @param {Object} options      The options
- * @param {String} options.src  A glob pattern that matches all components the styleguide should display
+ * @param {Object} options       The options
+ * @param {String} options.src   A glob pattern that matches all components the styleguide should display
+ * @param {String} options.dest  The destination the styleguide should be emitted at
  */
 function StyleguidePlugin(options) {
   this.id = (++id);
+  // Assert that a HTML file was specified in the dest option
+  if (options.dest && options.dest.indexOf('.html') !== options.dest.length - 5) {
+    throw new Error('\n\nYou need to specify a .html file in the "dest" option!\n\n');
+  }
   this.options = options || {};
 }
 
@@ -79,8 +84,10 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
     </html>
     `;
 
-    // And emit that HTML template as 'styleguide.html'
-    compilation.assets['styleguide/index.html'] = {
+    const styleguidePath = this.options.dest || 'styleguide/index.html';
+
+    // And emit that HTML template as 'styleguide/index.html'
+    compilation.assets[styleguidePath] = {
       source: () => {
         return html;
       },
