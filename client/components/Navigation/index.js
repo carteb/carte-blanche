@@ -10,7 +10,7 @@ import styles from './styles.css';
 class Navigation extends React.Component {
   componentWillMount() {
     // Iterate through all components and generate a list
-    this.components = Object.keys(window.__STYLEGUIDE_PLUGIN_COMPONENTS_DO_NOT_TOUCH__)
+    this.components = Object.keys(window.__STYLEGUIDE_PLUGIN_CLIENT_API.scripts)
       .map((componentName) => {
         // IndexLink so not all links that match a part of the route are highlighted
         return (
