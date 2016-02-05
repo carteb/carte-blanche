@@ -8,8 +8,8 @@ window.__STYLEGUIDE_PLUGIN_COMPONENTS_DO_NOT_TOUCH__['%%path%%'] = {
   meta: require('!!%%metaLoader%%!%%requestPath%%'),
   source: require('!!%%sourceLoader%%!%%requestPath%%'),
   path: '%%path%%',
-  component: (function component() {
+  component: function component() {
     var component = require('!!%%request%%'); // eslint-disable-line
     return component.default || component;
-  })()
+  }
 };
