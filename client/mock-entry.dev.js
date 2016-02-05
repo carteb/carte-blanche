@@ -5,9 +5,37 @@ import React from 'react';
 window.__STYLEGUIDE_PLUGIN_COMPONENTS_DO_NOT_TOUCH__ = {
   'src/components/button': {
     'name': 'src/components/button',
-    'meta': 'This will contain the meta information for /Users/a2517/sites/personal/github/styleguide/examples/simple/src/components/button.js',
+    'meta': {
+      'description': '',
+      'props': {
+        'className': {
+          'type': {
+            'name': 'string'
+          },
+          'required': false,
+          'description': ''
+        },
+        'type': {
+          'type': {
+            'name': 'enum',
+            'value': [{
+              'value': '"submit"',
+              'computed': false
+            }, {
+              'value': '"button"',
+              'computed': false
+            }, {
+              'value': '"reset"',
+              'computed': false
+            }]
+          },
+          'required': false,
+          'description': ''
+        }
+      }
+    },
     'path': 'src/components/button.js',
-    'component': function() {
+    'component': () => {
       return React.createElement(
         'button',
         null,
