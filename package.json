@@ -1,6 +1,6 @@
 {
   "name": "styleguide",
-  "version": "0.1",
+  "version": "0.0.1",
   "description": "",
   "keywords": "",
   "homepage": "https://github.com/pure-ui/styleguide",
@@ -12,7 +12,7 @@
   "contributors": [
     "Nik Graf <nik@nikgraf.com> (https://medium.com/@nikgraf)",
     "Max Stoiber <contact@mxstbr.com> (http://mxstbr.com)",
-    "Jan Nicklas <j.nicklas@me.com> (https://twitter.com/jantimon)"
+    "Jan Nicklas <j.nicklas@me.com> (https://twitter.com/jantimon)",
     "Jyoti Puri"
   ],
   "files": [
