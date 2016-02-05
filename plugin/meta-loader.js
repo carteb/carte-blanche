@@ -1,6 +1,6 @@
 const reactDocs = require('react-docgen');
 
-module.exports = (source) => {
+module.exports = function metaLoader(source) {
   this.cacheable();
 
   // Parse React Component for meta information
