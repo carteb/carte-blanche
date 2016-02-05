@@ -10,7 +10,7 @@ class ComponentPreview extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      componentName: props.name
+      componentName: props.name,
     };
   }
 
@@ -27,7 +27,7 @@ class ComponentPreview extends React.Component {
 
   refreshComponentData() {
     this.setState({
-      componentData: styleguideClientApi.cache[this.state.componentName]
+      componentData: styleguideClientApi.cache[this.state.componentName],
     });
   }
 
@@ -35,6 +35,7 @@ class ComponentPreview extends React.Component {
     if (!this.state.componentData || !this.state.componentData.meta) {
       return (<div/>);
     }
+
     const componentMeta = this.state.componentData.meta;
     const Component = this.state.componentData.component;
     return (

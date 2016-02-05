@@ -2,3 +2,4 @@
 **/coverage/**
 **/dist/**
 **/bin/**
+**/client-bundle.js

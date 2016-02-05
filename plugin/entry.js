@@ -10,5 +10,5 @@ window.__STYLEGUIDE_PLUGIN_CLIENT_API.loadComplete('%%path%%', {
   component: (function component() {
     var component = require('!!%%request%%'); // eslint-disable-line
     return component.default || component;
-  })()
+  })(),
 });
