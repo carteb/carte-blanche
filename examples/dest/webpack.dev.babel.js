@@ -31,7 +31,7 @@ export default {
     }),
     new StyleguidePlugin({
       src: 'src/components/**/*.js',
-      basePath: 'components'
+      dest: 'components/index.html'
     }),
   ],
   module: {

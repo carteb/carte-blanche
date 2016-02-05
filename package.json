@@ -37,8 +37,8 @@
     "server": "webpack-dev-server",
     "example:dev": "npm run server -- --context examples/dev/ --config examples/dev/webpack.dev.babel.js",
     "example:dev:iron": "iron-node node_modules/webpack-dev-server/bin/webpack-dev-server.js --context examples/dev/ --config examples/dev/webpack.dev.babel.js",
-    "example:basepath": "npm run server -- --context examples/basepath/ --config examples/basepath/webpack.dev.babel.js",
-    "example:basepath:iron": "iron-node node_modules/webpack-dev-server/bin/webpack-dev-server.js --context examples/basepath/ --config examples/basepath/webpack.dev.babel.js",
+    "example:dest": "npm run server -- --context examples/dest/ --config examples/dest/webpack.dev.babel.js",
+    "example:dest:iron": "iron-node node_modules/webpack-dev-server/bin/webpack-dev-server.js --context examples/dest/ --config examples/dest/webpack.dev.babel.js",
     "client:dev": "webpack-dev-server --config client/webpack.dev.babel.js",
     "client:build": "webpack --config client/webpack.prod.babel.js --progress -p",
     "build": "npm run client:build"

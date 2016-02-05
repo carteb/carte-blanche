@@ -12,9 +12,9 @@ import path from 'path';
 let id = -1;
 /**
  * Instantiates the plugin
- * @param {Object} options           The options
- * @param {String} options.src       A glob pattern that matches all components the styleguide should display
- * @param {String} options.basePath  The basePath the styleguide should be shown at
+ * @param {Object} options       The options
+ * @param {String} options.src   A glob pattern that matches all components the styleguide should display
+ * @param {String} options.dest  The destination the styleguide should be emitted at
  */
 function StyleguidePlugin(options) {
   this.id = (++id);
@@ -80,10 +80,10 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
     </html>
     `;
 
-    const styleguidePath = this.options.basePath || 'styleguide';
+    const styleguidePath = this.options.dest || 'styleguide';
 
     // And emit that HTML template as 'styleguide/index.html'
-    compilation.assets[path.join(styleguidePath, '/index.html')] = {
+    compilation.assets[styleguidePath] = {
       source: () => {
         return html;
       },
