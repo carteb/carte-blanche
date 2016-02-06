@@ -19,9 +19,13 @@ let id = -1;
 function StyleguidePlugin(options) {
   this.id = (++id);
 
+  if (!options.src) {
+    throw new Error('You need to specify where your components are in the "src" option!\n\n');
+  }
+
   // Assert that a HTML file was specified in the dest option
   if (options.dest && options.dest.indexOf('.html') !== options.dest.length - 5) {
-    throw new Error('\n\nYou need to specify a .html file in the "dest" option!\n\n');
+    throw new Error('You need to specify a .html file in the "dest" option!\n\n');
   }
 
   this.options = options || {};
