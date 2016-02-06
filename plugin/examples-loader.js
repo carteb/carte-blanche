@@ -1,6 +1,5 @@
 const reactDocs = require('react-docgen');
 const doctrine = require('doctrine');
-const babel = require('babel-core');
 
 module.exports = function metaLoader(source) {
   this.cacheable();
@@ -9,6 +8,13 @@ module.exports = function metaLoader(source) {
   const metaInformation = reactDocs.parse(source);
   const docsInformation = doctrine.parse(metaInformation.description);
   const exampleTags = docsInformation.tags.filter((entry) => entry.title === 'example');
-  const examples = exampleTags.map((tag) => tag.description);
+  const examples = exampleTags.map((tag) => {
+    const wrapperComponent = `
+      return () => ((
+        ${tag.description}
+      ));
+    `;
+    return wrapperComponent;
+  });
   return 'module.exports = ' + JSON.stringify(examples);
 };
