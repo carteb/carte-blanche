@@ -4,6 +4,8 @@
 
 import React from 'react';
 import PropTypesInfo from './PropTypesInfo';
+import Examples from './Examples';
+import Playground from './Playground';
 const styleguideClientApi = window.__STYLEGUIDE_PLUGIN_CLIENT_API;
 
 class ComponentPreview extends React.Component {
@@ -37,12 +39,20 @@ class ComponentPreview extends React.Component {
     }
 
     const componentMeta = this.state.componentData.meta;
+    const componentExamples = this.state.componentData.examples;
     const Component = this.state.componentData.component;
     return (
       <div>
         <h2>Preview</h2>
-        <Component />
+        <Examples
+          component={Component}
+          examples={componentExamples}
+        />
         <PropTypesInfo meta={componentMeta} />
+        <Playground
+          component={Component}
+          meta={componentMeta}
+        />
       </div>
     );
   }
