@@ -66,7 +66,7 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
 
   compiler.plugin('emit', (compilation, callback) => {
     // Get the bundled Styleguide Client
-    const clientApi = fs.readFileSync(path.join(__dirname, 'client-api.js'));
+    const clientApi = fs.readFileSync(path.join(__dirname, '../client', 'client-api.js'));
     const clientJs = fs.readFileSync(path.join(__dirname, 'client-bundle.js'));
 
     // Generate a string with a script tag for every component
