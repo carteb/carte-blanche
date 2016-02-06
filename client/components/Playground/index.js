@@ -1,7 +1,6 @@
 import React from 'react';
 
 class Playground extends React.Component {
-  // this.props.meta
   render() {
     return (
       <div>

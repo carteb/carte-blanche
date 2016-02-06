@@ -65,6 +65,7 @@
     "babel-preset-react-hmre": "^1.0.1",
     "babel-preset-stage-0": "^6.3.13",
     "css-loader": "^0.23.1",
+    "doctrine": "^1.1.0",
     "eslint": "^1.10.3",
     "eslint-config-airbnb": "^2.1.1",
     "eslint-plugin-import": "^0.12.1",
