@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+import sinon from 'sinon';
 import MetaLoader from '../meta-loader';
 
 describe('MetaLoader', () => {
@@ -6,7 +7,7 @@ describe('MetaLoader', () => {
 
   beforeEach(() => {
     compiler = {
-      cacheable: () => null, // TODO add sinon spy once I got internet again
+      cacheable: sinon.spy(),
       MetaLoader,
     };
   });
@@ -30,6 +31,7 @@ describe('MetaLoader', () => {
     `;
     const expected = 'module.exports = {"description":"","props":{"className":{"type":{"name":"string"},"required":false,"description":""}}}';
     expect(compiler.MetaLoader(source)).to.deep.equal(expected);
+    expect(compiler.cacheable).to.have.been.called();
   });
 
   it('should extract the description in case no flow/propTypes are defined', () => {
@@ -47,5 +49,6 @@ describe('MetaLoader', () => {
     `;
     const expected = 'module.exports = {"description":"Button component"}';
     expect(compiler.MetaLoader(source)).to.deep.equal(expected);
+    expect(compiler.cacheable).to.have.been.called();
   });
 });

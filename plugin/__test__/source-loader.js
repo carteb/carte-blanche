@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+import sinon from 'sinon';
 import SourceLoader from '../source-loader';
 
 describe('SourceLoader', () => {
@@ -6,7 +7,7 @@ describe('SourceLoader', () => {
 
   beforeEach(() => {
     compiler = {
-      cacheable: () => null, // TODO add sinon spy once I got internet again
+      cacheable: sinon.spy(),
       SourceLoader,
     };
   });
@@ -15,5 +16,6 @@ describe('SourceLoader', () => {
     const source = `export default() => 42;`;
     const expected = 'module.exports = "export default() => 42;"';
     expect(compiler.SourceLoader(source)).to.deep.equal(expected);
+    expect(compiler.cacheable).to.have.been.called();
   });
 });
