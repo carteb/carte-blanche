@@ -1,6 +1,11 @@
 {
   "parser": "babel-eslint",
   "extends": "airbnb",
+  "env": {
+    "browser": true,
+    "mocha": true,
+    "node": true
+  },
   "rules": {
     "comma-dangle": 0,
     "react/prop-types": 0,
