@@ -1,5 +1,5 @@
 import React from 'react';
-import { transform } from 'babel-standalone';
+// import { transform } from 'babel-standalone';
 import ReactDOM from 'react-dom';
 
 const compileExample = (example, component) => {
@@ -13,11 +13,12 @@ const compileExample = (example, component) => {
     (function (React, ${componentName}) {
       ${example}
     });`;
+  return baseCode;
 
-  const code = transform(baseCode, {
-    presets: ['es2015', 'stage-0', 'react'],
-  }).code;
-  return eval(code)(React, component)(); // eslint-disable-line no-eval
+  // const code = transform(baseCode, {
+  //   presets: ['es2015', 'stage-0', 'react'],
+  // }).code;
+  // return eval(code)(React, component)(); // eslint-disable-line no-eval
 };
 
 class Examples extends React.Component {
