@@ -6,6 +6,9 @@
     "mocha": true,
     "node": true
   },
+  "plugins": [
+    "mocha"
+  ],
   "rules": {
     "comma-dangle": 0,
     "react/prop-types": 0,
