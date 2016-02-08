@@ -9,8 +9,10 @@ import Select from './components/select';
 ReactDOM.render(
   <div>
     Hello World: { cube }
-    <Button />
+    <Button>Click Me</Button>
     <Card />
+    <ImmutableList />
+    <Select />
   </div>,
   document.getElementById('root')
 );

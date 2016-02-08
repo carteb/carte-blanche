@@ -1,8 +1,9 @@
 import React from 'react';
+
 // import { transform } from 'babel-standalone';
 import ReactDOM from 'react-dom';
 
-const compileExample = (example, component) => {
+const compileExample = (example, component) => { // eslint-disable-line no-unused-vars
   // TODO we have to do better here. This could easily fall appart.
   const componentName = example
     .match(/<(.+?)(>|\s)/)[0]
