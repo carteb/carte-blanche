@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import MetaLoader from '../meta-loader';
 
-describe('plugin', () => {
+describe('MetaLoader', () => {
   let compiler;
 
   beforeEach(() => {
