@@ -49,6 +49,7 @@
     "babel-standalone": "^6.4.4",
     "belle": "^2.0.3",
     "connect-history-api-fallback": "^1.1.0",
+    "faker": "^3.0.1",
     "lodash": "^4.3.0",
     "minimatch": "^3.0.0",
     "react": "=0.14.7",

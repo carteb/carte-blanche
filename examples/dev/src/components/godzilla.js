@@ -1,10 +1,11 @@
 import React, { PropTypes } from 'react';
 
-const Godzilla = ({ isDangerous = false, age }) => {
+const Godzilla = ({ isDangerous = false, age, description }) => {
   return (
     <div>
-      { isDangerous ? 'Dangerous' : 'Not Dangerous'}
-      { age }
+      <div>{ isDangerous ? 'Dangerous' : 'Not Dangerous'}</div>
+      <div>description: { description }</div>
+      <div>Age: { age }</div>
     </div>
   );
 };
@@ -12,6 +13,7 @@ const Godzilla = ({ isDangerous = false, age }) => {
 Godzilla.propTypes = {
   isDangerous: PropTypes.bool,
   age: PropTypes.number,
+  description: PropTypes.string,
 };
 
 export default Godzilla;
