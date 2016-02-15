@@ -5,6 +5,7 @@ import Button from './components/button';
 import Card from './components/card';
 import ImmutableList from './components/immutableList';
 import Select from './components/select';
+import Godzilla from './components/godzilla';
 
 ReactDOM.render(
   <div>
@@ -13,6 +14,7 @@ ReactDOM.render(
     <Card />
     <ImmutableList />
     <Select />
+    <Godzilla />
   </div>,
   document.getElementById('root')
 );

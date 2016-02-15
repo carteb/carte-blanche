@@ -7,6 +7,7 @@ require('../plugin/client-api.js');
 window.__STYLEGUIDE_PLUGIN_CLIENT_API.scripts = {
   '../examples/dev/src/components/button.js': 'styleguide-plugin/button.js',
   '../examples/dev/src/components/card.js': 'styleguide-plugin/card.js',
+  '../examples/dev/src/components/godzilla.js': 'styleguide-plugin/godzilla.js',
 };
 
 // Instead of lazy loading the scripts we mock the load function
@@ -17,6 +18,8 @@ window.__STYLEGUIDE_PLUGIN_CLIENT_API.load = function load(path) {
       return require('!!../plugin/component-loader.js?request=babel%21../examples/dev/src/components/button.js!../plugin/entry.js');
     case '../examples/dev/src/components/card.js':
       return require('!!../plugin/component-loader.js?request=babel%21../examples/dev/src/components/card.js!../plugin/entry.js');
+    case '../examples/dev/src/components/godzilla.js':
+      return require('!!../plugin/component-loader.js?request=babel%21../examples/dev/src/components/godzilla.js!../plugin/entry.js');
     default:
       throw new Error('invalid path');
   }
