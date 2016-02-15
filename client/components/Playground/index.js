@@ -10,6 +10,9 @@ class Playground extends React.Component {
   render() {
     const Component = this.props.component;
     let props;
+
+    console.log(this.props.meta.props);
+
     if (this.props.meta.props) {
       props = mapValues(this.props.meta.props, (prop) => {
         if (!prop.control) {
@@ -33,7 +36,6 @@ class Playground extends React.Component {
     }
 
     const PlaygroundWrapper = playgroundWrapper(Component, props, 'Fuzz Testing');
-
     return (
       <div>
         <h2>Playground</h2>
