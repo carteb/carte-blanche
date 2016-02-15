@@ -1,9 +1,8 @@
 import React from 'react';
 import { withState } from 'recompose';
 import randomValues from './randomValues';
-
-// import renderControls from './renderControls';
-// import RandomButton from '../RandomButton';
+import renderControls from './renderControls';
+import RandomButton from './RandomButton';
 import styles from './styles';
 
 /*
@@ -17,13 +16,9 @@ const playground = (Component, properties, title = 'Playground') => {
         <div style={styles.controls}>
           <h2>
             {title}
-            {/*
-              <RandomButton onClick={ () => setComponentProperties(randomValues(properties)) }/>
-            */}
+            <RandomButton onClick={ () => setComponentProperties(randomValues(properties)) }/>
           </h2>
-          {/*
           {renderControls(properties, componentProperties, setComponentProperties)}
-          */}
         </div>
         <Component {...props} {...componentProperties}/>
       </div>
