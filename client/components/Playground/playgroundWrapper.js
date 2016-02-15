@@ -18,7 +18,7 @@ const playground = (Component, properties, title = 'Playground') => {
             {title}
             <RandomButton onClick={ () => setComponentProperties(randomValues(properties)) }/>
           </h2>
-          {renderControls(properties, componentProperties, setComponentProperties)}
+          { renderControls(properties, componentProperties, setComponentProperties) }
         </div>
         <Component {...props} {...componentProperties}/>
       </div>

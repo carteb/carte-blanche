@@ -3,6 +3,7 @@ import mapValues from 'lodash/mapValues';
 import BooleanControl from './BooleanControl';
 import IntegerControl from './IntegerControl';
 import ObjectControl from './ObjectControl';
+import StringControl from './StringControl';
 import playgroundWrapper from './playgroundWrapper';
 
 class Playground extends React.Component {
@@ -18,13 +19,14 @@ class Playground extends React.Component {
       case 'number':
         control = <IntegerControl />;
         break;
+      case 'string':
+        control = <StringControl />;
+        break;
       case 'shape':
-        // nested proptypes
         const value = prop.value || prop.type.value;
         mapValues(value, (innerProp) => {
           innerProp.control = this.addControl(innerProp);
         });
-        control = <ObjectControl />;
         break;
       default:
         break;

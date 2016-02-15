@@ -6,8 +6,14 @@ import mapValues from 'lodash/mapValues';
  */
 const randomValues = (properties) => {
   return mapValues(properties, (prop) => {
-    console.log(prop);
-    return prop.control.type.randomValue({});
+    if (!(prop.name === 'shape' || prop.type && prop.type.name === 'shape')) {
+      return prop.control.type.randomValue({});
+    }
+
+    const value = prop.value || prop.type.value;
+    if (value) {
+      return randomValues(value);
+    }
   });
 };
 
