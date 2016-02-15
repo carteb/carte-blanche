@@ -1,6 +1,7 @@
 import React from 'react';
 import mapValues from 'lodash/mapValues';
 import BooleanControl from './BooleanControl';
+import IntegerControl from './IntegerControl';
 import playgroundWrapper from './playgroundWrapper';
 
 class Playground extends React.Component {
@@ -11,10 +12,13 @@ class Playground extends React.Component {
     if (this.props.meta.props) {
       props = mapValues(this.props.meta.props, (prop) => {
         if (!prop.control) {
+          console.log(prop);
           switch (prop.type.name) {
             case 'bool':
               prop.control = <BooleanControl />;
               break;
+            case 'number':
+              prop.control = <IntegerControl />;
             default:
               break;
           }
