@@ -3,7 +3,7 @@ import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 export default {
-  devtool: 'eval',
+  devtool: 'inline-source-map',
   entry: [
     'webpack/hot/only-dev-server',
     'webpack-dev-server/client?http://localhost:8080',
