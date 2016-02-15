@@ -6,6 +6,7 @@ import mapValues from 'lodash/mapValues';
  */
 const randomValues = (properties) => {
   return mapValues(properties, (prop) => {
+    console.log(prop);
     return prop.control.type.randomValue({});
   });
 };
