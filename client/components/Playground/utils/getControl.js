@@ -12,6 +12,7 @@ import IntegerControl from '../IntegerControl';
 import ArrayControl from '../ArrayControl';
 import StringControl from '../StringControl';
 import EnumControl from '../EnumControl';
+import NodeControl from '../NodeControl';
 
 const getControl = (propType) => {
   // In nested prop types, the name is at propType.name
@@ -31,6 +32,9 @@ const getControl = (propType) => {
       break;
     case 'enum':
       control = <EnumControl propTypeData={ propType } />;
+      break;
+    case 'node':
+      control = <NodeControl />;
       break;
     case 'shape':
       mapValues(value, (propTypeData) => {
