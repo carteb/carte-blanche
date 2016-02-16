@@ -1,21 +1,22 @@
 /**
- * Playground
+ * PlaygroundWrapper
  *
- * Renders the playground with UI fuzz testing
+ * Composes the playground with UI fuzz testing
  */
+
 import React, { PropTypes } from 'react';
-import Wrapper from './Wrapper';
+import Playground from './Playground';
 
 import mapValues from 'lodash/mapValues';
 import getControl from './utils/getControl';
 import { withState } from 'recompose';
 import randomValues from './utils/randomValues';
 
-const Playground = (props) => {
+const PlaygroundWrapper = (props) => {
   // Attach controls to propTypes meta information
-  let propsWithControls;
+  let metadataWithControls;
   if (props.meta.props) {
-    propsWithControls = mapValues(props.meta.props, (prop) => {
+    metadataWithControls = mapValues(props.meta.props, (prop) => {
       if (!prop.control) {
         prop.control = getControl(prop);
       }
@@ -24,21 +25,21 @@ const Playground = (props) => {
   }
 
   // Generate initial random values for props
-  const values = randomValues(propsWithControls);
-  const StatefulWrapper = withState('componentProperties', 'setComponentProperties', values, Wrapper);
+  const initialState = randomValues(metadataWithControls);
+  const StatefulPlayground = withState('globalComponentProps', 'setGlobalComponentProps', initialState, Playground);
   return (
-    <StatefulWrapper
-      propsWithControls={propsWithControls}
+    <StatefulPlayground
+      metadataWithControls={metadataWithControls}
       component={props.component}
     />
   );
 };
 
-Playground.propTypes = {
+PlaygroundWrapper.propTypes = {
   meta: PropTypes.shape({
     props: PropTypes.object
   }),
   component: PropTypes.func // TODO Is this really always an function?
 };
 
-export default Playground;
+export default PlaygroundWrapper;

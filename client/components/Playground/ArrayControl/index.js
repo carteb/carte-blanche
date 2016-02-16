@@ -2,10 +2,10 @@ import React from 'react';
 import range from 'lodash/range';
 import RandomButton from '../RandomButton';
 import valueOrNullOrUndefined from '../utils/valueOrNullOrUndefined';
-import randomValues from '../utils/randomValues';
-import renderNestedArrayControls from './renderNestedArrayControls';
+// import randomValues from '../utils/randomValues';
+// import renderNestedArrayControls from './renderNestedArrayControls';
 import renderArrayControls from './renderArrayControls';
-import isReactComponent from './isReactComponent';
+// import isReactComponent from '../utils/isReactComponent';
 import getControl from '../utils/getControl';
 
 const ArrayControl = (props) => {

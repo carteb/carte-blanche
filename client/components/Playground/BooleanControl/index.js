@@ -1,3 +1,9 @@
+/**
+ * BooleanControl
+ *
+ * Renders an input which allows you to modify a certain property of type boolean
+ */
+
 import React from 'react';
 import { Choice, Toggle } from 'belle';
 import RandomButton from '../RandomButton';
@@ -27,6 +33,9 @@ const BooleanControl = (props) => {
   );
 };
 
+/**
+ * Generates a random boolean value
+ */
 BooleanControl.randomValue = ({ random = {} }) => {
   const {
     canBeNull = true,

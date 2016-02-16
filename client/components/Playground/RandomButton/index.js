@@ -1,3 +1,9 @@
+/**
+ * RandomButton
+ *
+ * Shows a button with a dice
+ */
+
 import React from 'react';
 import { Button } from 'belle';
 import styles from './styles';

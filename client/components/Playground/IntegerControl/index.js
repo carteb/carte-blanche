@@ -1,3 +1,9 @@
+/**
+ * IntegerControl
+ *
+ * Renders an input which allows you to modify a certain property of type integer
+ */
+
 import React from 'react';
 import RandomButton from '../RandomButton';
 import valueOrNullOrUndefined from '../utils/valueOrNullOrUndefined';
@@ -7,11 +13,11 @@ const IntegerControl = (props) => {
   return (
     <div>
       <label>
-        {label}
+        { label }
         <input
           type="number"
           step="1"
-          value={value}
+          value={ value }
           onChange={(event) => onUpdate({ value: parseInt(event.target.value, 10) })}
         />
       </label>
@@ -22,6 +28,9 @@ const IntegerControl = (props) => {
   );
 };
 
+/**
+ * Generates a random integer
+ */
 IntegerControl.randomValue = ({ random = {} }) => {
   const {
     canBeNull = true,

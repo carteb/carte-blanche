@@ -5,13 +5,13 @@ import { mapValues, get, set } from 'lodash';
 /*
  * Returns a ReactFragment containing all rendered controls.
  */
-const renderControls = (properties, componentProperties, setComponentProperties, keyPath = []) => {
+const renderControls = (metadataWithControls, globalComponentProps, setGlobalComponentProps, keyPath = []) => {
   const updatePropertyValues = (path, value) => {
-    const values = set(componentProperties, path.join('.'), value);
-    setComponentProperties(values);
+    const values = set(globalComponentProps, path.join('.'), value);
+    setGlobalComponentProps(values);
   };
 
-  const controls = mapValues(properties, (prop, key) => {
+  const controls = mapValues(metadataWithControls, (prop, key) => {
     const newKeyPath = keyPath.slice();
     newKeyPath.push(key);
 
@@ -20,7 +20,7 @@ const renderControls = (properties, componentProperties, setComponentProperties,
     if (isValidElement(prop.control)) {
       const props = {
         label: key,
-        value: get(componentProperties, newKeyPath.join('.')),
+        value: get(globalComponentProps, newKeyPath.join('.')),
         onUpdate: ({ value }) => updatePropertyValues(newKeyPath, value),
       };
       return cloneElement(prop.control, props);
@@ -33,7 +33,7 @@ const renderControls = (properties, componentProperties, setComponentProperties,
       <div>
         <div style={{ height: 30 }}>{key}: {'{'}</div>
           <div style={{ paddingLeft: 10 }}>
-            {renderControls(value, componentProperties, setComponentProperties, newKeyPath)}
+            {renderControls(value, globalComponentProps, setGlobalComponentProps, newKeyPath)}
           </div>
         <div>{'}'}</div>
       </div>
