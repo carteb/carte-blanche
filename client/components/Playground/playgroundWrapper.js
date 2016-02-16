@@ -9,15 +9,12 @@ import styles from './styles';
  * Returns a higher order component to generated a playground for the provided
  * component & properties.
  */
-const playground = (Component, properties, title = 'Playground') => {
+const playground = (Component, properties) => {
   const Wrapper = ({ componentProperties, setComponentProperties, props }) => {
     return (
       <div style={styles.wrapper}>
         <div style={styles.controls}>
-          <h2>
-            {title}
-            <RandomButton onClick={ () => setComponentProperties(randomValues(properties)) }/>
-          </h2>
+          <RandomButton onClick={ () => setComponentProperties(randomValues(properties)) }/>
           { renderControls(properties, componentProperties, setComponentProperties) }
         </div>
         <Component {...props} {...componentProperties}/>

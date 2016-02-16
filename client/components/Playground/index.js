@@ -1,32 +1,66 @@
-import React from 'react';
+/**
+ * Playground
+ *
+ * Renders the playground with UI fuzz testing
+ */
+
+import React, { PropTypes } from 'react';
 import mapValues from 'lodash/mapValues';
-import playgroundWrapper from './playgroundWrapper';
 import getControl from './getControl';
 
-class Playground extends React.Component {
+import { withState } from 'recompose';
+import randomValues from './randomValues';
+import renderControls from './renderControls';
+import RandomButton from './RandomButton';
+import styles from './styles';
 
-  render() {
-    const Component = this.props.component;
-    let props;
-    if (this.props.meta.props) {
-      props = mapValues(this.props.meta.props, (prop) => {
-        if (!prop.control) {
-          prop.control = getControl(prop);
-        }
+/*
+ * Returns a higher order component to generated a playground for the provided
+ * component & properties.
+ */
+const Playground = (props) => {
+  const Component = props.component;
+  let propsWithControls;
+  if (props.meta.props) {
+    propsWithControls = mapValues(props.meta.props, (prop) => {
+      if (!prop.control) {
+        prop.control = getControl(prop);
+      }
 
-        return prop;
-      });
-    }
+      return prop;
+    });
+  }
 
-    const PlaygroundWrapper = playgroundWrapper(Component, props, 'Fuzz Testing');
-
+  const Wrapper = (wrapperProps) => {
+    const {
+      componentProperties,
+      setComponentProperties
+    } = wrapperProps;
+    const values = wrapperProps.props;
     return (
-      <div>
+      <div style={styles.wrapper}>
         <h2>Playground</h2>
-        <PlaygroundWrapper />
+        <div style={styles.controls}>
+          <RandomButton onClick={ () => setComponentProperties(randomValues(propsWithControls)) }/>
+          { renderControls(propsWithControls, componentProperties, setComponentProperties) }
+        </div>
+        <Component {...values} {...componentProperties}/>
       </div>
     );
-  }
-}
+  };
+
+  const values = randomValues(propsWithControls);
+  const StatefulWrapper = withState('componentProperties', 'setComponentProperties', values, Wrapper);
+  return <StatefulWrapper />;
+};
+
+export default Playground;
+
+Playground.propTypes = {
+  meta: PropTypes.shape({
+    props: PropTypes.object
+  }),
+  component: PropTypes.element
+};
 
 export default Playground;
