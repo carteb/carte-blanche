@@ -1,5 +1,5 @@
 import React from 'react';
-import renderControls from '../renderControls';
+import renderControls from '../utils/renderControls';
 
 const NestedArrayControls = (control, rangeArray, value, onUpdateEntry) => {
   return (

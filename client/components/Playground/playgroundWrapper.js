@@ -1,7 +1,7 @@
 import React from 'react';
 import { withState } from 'recompose';
-import randomValues from './randomValues';
-import renderControls from './renderControls';
+import randomValues from './utils/randomValues';
+import renderControls from './utils/renderControls';
 import RandomButton from './RandomButton';
 import styles from './styles';
 

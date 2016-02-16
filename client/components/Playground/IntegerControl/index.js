@@ -1,6 +1,6 @@
 import React from 'react';
 import RandomButton from '../RandomButton';
-import valueOrNullOrUndefined from '../valueOrNullOrUndefined';
+import valueOrNullOrUndefined from '../utils/valueOrNullOrUndefined';
 
 const IntegerControl = (props) => {
   const { label, value, onUpdate } = props;

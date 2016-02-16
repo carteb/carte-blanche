@@ -1,7 +1,7 @@
 import React from 'react';
 import mapValues from 'lodash/mapValues';
 import playgroundWrapper from './playgroundWrapper';
-import getControl from './getControl';
+import getControl from './utils/getControl';
 
 class Playground extends React.Component {
 
