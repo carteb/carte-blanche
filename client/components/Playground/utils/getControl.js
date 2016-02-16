@@ -1,3 +1,10 @@
+/**
+ * getControl
+ *
+ * @param  {object} propType The propType we want the control for
+ * @return {component}       The rendered control for the propType
+ */
+
 import React from 'react';
 import mapValues from 'lodash/mapValues';
 import BooleanControl from '../BooleanControl';
@@ -5,11 +12,11 @@ import IntegerControl from '../IntegerControl';
 import ArrayControl from '../ArrayControl';
 import StringControl from '../StringControl';
 
-const getControl = (prop) => {
-  // In nested prop types, the name is at prop.name
-  // normally it's at prop.type.name
-  const name = prop.name || prop.type.name;
-  const value = prop.value || prop.type && prop.type.value;
+const getControl = (propType) => {
+  // In nested prop types, the name is at propType.name
+  // normally it's at propType.type.name
+  const name = propType.name || propType.type.name;
+  const value = propType.value || propType.type && propType.type.value;
   let control;
   switch (name) {
     case 'bool':
@@ -27,12 +34,12 @@ const getControl = (prop) => {
       });
       break;
     case 'arrayOf':
-      control = <ArrayControl innerProps={ prop } />;
+      control = <ArrayControl innerProps={ propType } />;
       break;
     default:
       break;
   }
   return control;
-}
+};
 
 export default getControl;
