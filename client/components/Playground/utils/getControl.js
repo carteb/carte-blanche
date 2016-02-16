@@ -11,6 +11,7 @@ import BooleanControl from '../BooleanControl';
 import IntegerControl from '../IntegerControl';
 import ArrayControl from '../ArrayControl';
 import StringControl from '../StringControl';
+import EnumControl from '../EnumControl';
 
 const getControl = (propType) => {
   // In nested prop types, the name is at propType.name
@@ -28,13 +29,16 @@ const getControl = (propType) => {
     case 'string':
       control = <StringControl />;
       break;
+    case 'enum':
+      control = <EnumControl propTypeData={ propType } />;
+      break;
     case 'shape':
-      mapValues(value, (innerProp) => {
-        innerProp.control = getControl(innerProp);
+      mapValues(value, (propTypeData) => {
+        propTypeData.control = getControl(propTypeData);
       });
       break;
     case 'arrayOf':
-      control = <ArrayControl innerProps={ propType } />;
+      control = <ArrayControl propTypeData={ propType } />;
       break;
     default:
       break;

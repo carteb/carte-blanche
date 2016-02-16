@@ -13,7 +13,7 @@ const ArrayControl = (props) => {
     label,
     onUpdate,
     value,
-    innerProps,
+    propTypeData,
   } = props;
 
   const size = props.value === null || typeof props.value === 'undefined' ? 0 : props.value.length;
@@ -25,18 +25,18 @@ const ArrayControl = (props) => {
     onUpdate({ value: newValue });
   };
 
-  const propTypeData = innerProps.value || innerProps.type && innerProps.type.value;
-  const control = getControl(propTypeData);
+  const arrayPropTypeData = propTypeData.value || propTypeData.type && propTypeData.type.value;
+  const control = getControl(arrayPropTypeData);
 
   return (
     <div>
       <label>{ label } [</label>
       <RandomButton
-        onClick={ () => onUpdate({ value: ArrayControl.randomValue(innerProps) }) }
+        onClick={ () => onUpdate({ value: ArrayControl.randomValue(propTypeData) }) }
       />
         <div style={{ paddingLeft: 20 }}>
-          { (propTypeData.name === 'shape') ?
-            renderNestedArrayControls(propTypeData, rangeArray, value, onUpdateEntry) :
+          { (arrayPropTypeData.name === 'shape') ?
+            renderNestedArrayControls(arrayPropTypeData, rangeArray, value, onUpdateEntry) :
             renderArrayControls(control, rangeArray, value, onUpdateEntry)
           }
           {typeof value === 'undefined' ? 'undefined' : null}
