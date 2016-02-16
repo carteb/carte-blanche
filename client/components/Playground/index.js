@@ -1,41 +1,9 @@
 import React from 'react';
 import mapValues from 'lodash/mapValues';
-import BooleanControl from './BooleanControl';
-import IntegerControl from './IntegerControl';
-import ArrayControl from './ArrayControl';
-import StringControl from './StringControl';
 import playgroundWrapper from './playgroundWrapper';
+import getControl from './getControl';
 
 class Playground extends React.Component {
-  addControl(prop) {
-    // In nested prop types, the name is at prop.name
-    // normally it's at prop.type.name
-    const name = prop.name || prop.type.name;
-    const value = prop.value || prop.type.value;
-    let control;
-    switch (name) {
-      case 'bool':
-        control = <BooleanControl />;
-        break;
-      case 'number':
-        control = <IntegerControl />;
-        break;
-      case 'string':
-        control = <StringControl />;
-        break;
-      case 'shape':
-        mapValues(value, (innerProp) => {
-          innerProp.control = this.addControl(innerProp);
-        });
-        break;
-      case 'arrayOf':
-        control = <ArrayControl content={ value } />;
-        break;
-      default:
-        break;
-    }
-    return control;
-  }
 
   render() {
     const Component = this.props.component;
@@ -43,7 +11,7 @@ class Playground extends React.Component {
     if (this.props.meta.props) {
       props = mapValues(this.props.meta.props, (prop) => {
         if (!prop.control) {
-          prop.control = this.addControl(prop);
+          prop.control = getControl(prop);
         }
 
         return prop;

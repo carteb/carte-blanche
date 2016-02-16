@@ -6,39 +6,43 @@ import randomValues from '../randomValues';
 import renderNestedArrayControls from './renderNestedArrayControls';
 import renderArrayControls from './renderArrayControls';
 import isReactComponent from './isReactComponent';
+import getControl from '../getControl';
 
 const ArrayControl = (props) => {
   const {
-    controlRandom,
     label,
     onUpdate,
-    value = [],
-    content, // TODO
+    value,
+    innerProps,
   } = props;
+
+  const size = props.value === null || typeof props.value === 'undefined' ? 0 : props.value.length;
+  const rangeArray = range(size);
+
+  const onUpdateEntry = (data, index) => {
+    const newValue = value.slice();
+    newValue[index] = data.value;
+    onUpdate({ value: newValue });
+  };
+
+  const propValue = innerProps.value || innerProps.type && innerProps.type.value;
+  const control = getControl(propValue);
 
   return (
     <div>
       <label>{ label } [</label>
       <RandomButton
-        onClick={ () => onUpdate({ value: ArrayControl.randomValue(props) }) }
+        onClick={ () => onUpdate({ value: ArrayControl.randomValue(innerProps) }) }
       />
         <div style={{ paddingLeft: 20 }}>
-          { value }
+          { renderArrayControls(control, rangeArray, value, onUpdateEntry) }
+          {typeof value === 'undefined' ? 'undefined' : null}
+          {value === null ? 'null' : null}
         </div>
       <div>]</div>
     </div>
   );
 
-  //
-  // const size = props.value !== null && typeof props.value !== 'undefined' ? props.value.length : 0;
-  // const rangeArray = range(size);
-  //
-  // const onUpdateEntry = (data, index) => {
-  //   const newValue = value.slice();
-  //   newValue[index] = data.value;
-  //   onUpdate({ value: newValue });
-  // };
-  //
   // return (
   //   <div>
   //     <label>{ label } [</label>
@@ -55,18 +59,23 @@ const ArrayControl = (props) => {
   // );
 };
 
-ArrayControl.randomValue = ({ random = {}, control, controlRandom = {} }) => {
-  const {
-    canBeNull = true,
-    canBeUndefined = true,
-    min = 0,
-    max = 4,
-  } = random;
+ArrayControl.randomValue = (props) => {
+  const canBeNull = true;
+  const canBeUndefined = true;
+  const min = 0;
+  const max = 4;
+
   const size = Math.floor(Math.random() * (max - min + 1)) + min;
   const rangeArray = range(min, size);
 
+  const propValue = props.value || props.type && props.type.value;
+  const control = getControl(propValue);
+
   let value;
-  value = rangeArray;
+  value = rangeArray.map(() => {
+    return control.type.randomValue(propValue);
+  });
+
   // if (!isReactComponent(control)) {
   //   value = rangeArray.map(() => {
   //     return randomValues(control);

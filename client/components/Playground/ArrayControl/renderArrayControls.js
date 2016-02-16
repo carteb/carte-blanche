@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { cloneElement } from 'react';
 
-const ArrayControls = (Control, rangeArray, value, onUpdateEntry, controlRandom) => {
+const ArrayControls = (Control, rangeArray, value, onUpdateEntry) => {
+
   return (
     <div>
       { rangeArray && rangeArray.map((index) => {
-        return (
-          <Control key={ index }
-                   value={ value[index] }
-                   onUpdate={ (data) => onUpdateEntry(data, index) }
-                   random={ controlRandom } />
-        );
+        const props = {
+          key: index,
+          value: value[index],
+          onUpdate: (data) => onUpdateEntry(data, index),
+        }
+        return cloneElement(Control, props);
       })}
     </div>
   );

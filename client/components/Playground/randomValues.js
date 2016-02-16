@@ -5,11 +5,9 @@ import mapValues from 'lodash/mapValues';
  * function of each control.
  */
 const randomValues = (properties) => {
-  console.log(properties);
-
   return mapValues(properties, (prop) => {
     if (!(prop.name === 'shape' || prop.type && prop.type.name === 'shape')) {
-      return prop.control.type.randomValue({});
+      return prop.control.type.randomValue(prop);
     }
 
     const value = prop.value || prop.type.value;
