@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 
-const Godzilla = ({ isDangerous = false, age, description, fur, teeth }) => {
+const Godzilla = ({ isDangerous = false, age, description, fur, teeth, nestedArray }) => {
   return (
     <div>
       <div>{ isDangerous ? 'Dangerous' : 'Not Dangerous'}</div>
@@ -10,6 +10,12 @@ const Godzilla = ({ isDangerous = false, age, description, fur, teeth }) => {
         <div>Fur: Density: { fur.density }</div>
       ) : null}
       <div>array: { teeth }</div>
+      <div>
+        nestedArray:
+        { nestedArray.map((entry, index) => {
+          return (<div key={index} >{ entry.color}, { entry.fontSize }</div>);
+        })}
+      </div>
     </div>
   );
 };
@@ -26,12 +32,12 @@ Godzilla.propTypes = {
     }),
   }),
   teeth: React.PropTypes.arrayOf(React.PropTypes.number),
-  // nestedArray: React.PropTypes.arrayOf(
-  //   React.PropTypes.shape({
-  //     color: React.PropTypes.string,
-  //     fontSize: React.PropTypes.number,
-  //   }),
-  // ),
+  nestedArray: React.PropTypes.arrayOf(
+    React.PropTypes.shape({
+      color: React.PropTypes.string,
+      fontSize: React.PropTypes.number,
+    }),
+  ),
 };
 
 export default Godzilla;

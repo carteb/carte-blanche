@@ -7,7 +7,7 @@ const ArrayControls = (Control, rangeArray, value, onUpdateEntry) => {
         const props = {
           key: index,
           value: value[index],
-          onUpdate: (data) => onUpdateEntry(data, index),
+          onUpdate: (data) => onUpdateEntry(data.value, index),
         };
         return cloneElement(Control, props);
       })}

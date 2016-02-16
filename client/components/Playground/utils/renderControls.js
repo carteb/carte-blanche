@@ -26,7 +26,7 @@ const renderControls = (metadataWithControls, globalComponentProps, setGlobalCom
       return cloneElement(prop.control, props);
     }
 
-    const value = prop.value || prop.type.value;
+    const value = prop.value || prop.type && prop.type.value;
 
     // render nested object
     return (
