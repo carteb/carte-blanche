@@ -1,0 +1,58 @@
+import React, { PropTypes } from 'react';
+
+const Godzilla = (props) => {
+  const {
+    isDangerous = false,
+    age,
+    description,
+    fur,
+    teeth,
+    nestedArray,
+    type,
+    noseLength,
+  } = props;
+
+  return (
+    <div>
+      <div>{ isDangerous ? 'Dangerous' : 'Not Dangerous'}</div>
+      <div>description: { description }</div>
+      <div>Age: { age }</div>
+      {(fur) ? (
+        <div>Fur: Density: { fur.density }</div>
+      ) : null}
+      <div>array: { teeth }</div>
+      <div>
+        nestedArray:
+        { nestedArray && nestedArray.map((entry, index) => {
+          return (<div key={index} >{ entry.color}, { entry.fontSize }</div>);
+        })}
+      </div>
+      <div>type: { type }</div>
+      <div>noseLength: { noseLength }</div>
+    </div>
+  );
+};
+
+Godzilla.propTypes = {
+  isDangerous: PropTypes.bool,
+  age: PropTypes.number,
+  description: PropTypes.string,
+  fur: React.PropTypes.shape({
+    color: React.PropTypes.string,
+    density: React.PropTypes.number,
+    hairs: React.PropTypes.shape({
+      length: React.PropTypes.number,
+    }),
+  }),
+  teeth: React.PropTypes.arrayOf(React.PropTypes.number),
+  nestedArray: React.PropTypes.arrayOf(
+    React.PropTypes.shape({
+      color: React.PropTypes.string,
+      fontSize: React.PropTypes.number,
+    }),
+  ),
+  type: PropTypes.oneOf(['cute', 'aggressive', 'shy']),
+  noseLength: PropTypes.oneOf([33, 42, 88]),
+};
+
+export default Godzilla;

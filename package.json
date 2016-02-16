@@ -49,12 +49,17 @@
   },
   "dependencies": {
     "babel-standalone": "^6.4.4",
+    "belle": "^2.0.3",
     "connect-history-api-fallback": "^1.1.0",
+    "faker": "^3.0.1",
+    "lodash": "^4.3.0",
     "minimatch": "^3.0.0",
-    "mocha": "^2.4.5",
-    "react": "=0.14.4",
-    "react-dom": "=0.14.4",
-    "react-router": "2.0.0-rc5"
+    "react": "=0.14.7",
+    "react-addons-create-fragment": "^0.14.7",
+    "react-dom": "=0.14.7",
+    "react-router": "2.0.0-rc5",
+    "recompose": "^0.15.0",
+    "mocha": "^2.4.5"
   },
   "devDependencies": {
     "autoprefixer-loader": "^3.2.0",

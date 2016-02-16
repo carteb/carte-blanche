@@ -10,7 +10,7 @@
     "mocha"
   ],
   "rules": {
-    "comma-dangle": 0,
+    "comma-dangle": [2, "always-multiline"],
     "react/prop-types": 0,
     "new-cap": 0,
   }
