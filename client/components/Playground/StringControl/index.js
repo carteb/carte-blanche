@@ -1,6 +1,6 @@
 import React from 'react';
 import RandomButton from '../RandomButton';
-import valueOrNullOrUndefined from '../valueOrNullOrUndefined';
+import valueOrNullOrUndefined from '../utils/valueOrNullOrUndefined';
 import faker from 'faker';
 
 const StringControl = (props) => {

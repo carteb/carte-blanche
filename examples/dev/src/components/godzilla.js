@@ -16,21 +16,16 @@ const Godzilla = ({ isDangerous = false, age, description, fur, teeth }) => {
 
 Godzilla.propTypes = {
   isDangerous: PropTypes.bool,
-  // age: PropTypes.number,
-  // description: PropTypes.string,
-  // fur: React.PropTypes.shape({
-  //   color: React.PropTypes.string,
-  //   density: React.PropTypes.number,
-  //   hairs: React.PropTypes.shape({
-  //     length: React.PropTypes.number,
-  //   }),
-  // }),
+  age: PropTypes.number,
+  description: PropTypes.string,
+  fur: React.PropTypes.shape({
+    color: React.PropTypes.string,
+    density: React.PropTypes.number,
+    hairs: React.PropTypes.shape({
+      length: React.PropTypes.number,
+    }),
+  }),
   teeth: React.PropTypes.arrayOf(React.PropTypes.number),
-  // nesting: React.PropTypes.shape({
-  //   deeper: React.PropTypes.shape({
-  //     fontSize: React.PropTypes.number,
-  //   }),
-  // }),
   // nestedArray: React.PropTypes.arrayOf(
   //   React.PropTypes.shape({
   //     color: React.PropTypes.string,

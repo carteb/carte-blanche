@@ -1,9 +1,9 @@
 import React from 'react';
 import mapValues from 'lodash/mapValues';
-import BooleanControl from './BooleanControl';
-import IntegerControl from './IntegerControl';
-import ArrayControl from './ArrayControl';
-import StringControl from './StringControl';
+import BooleanControl from '../BooleanControl';
+import IntegerControl from '../IntegerControl';
+import ArrayControl from '../ArrayControl';
+import StringControl from '../StringControl';
 
 const getControl = (prop) => {
   // In nested prop types, the name is at prop.name

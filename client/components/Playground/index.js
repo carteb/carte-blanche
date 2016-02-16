@@ -3,14 +3,13 @@
  *
  * Renders the playground with UI fuzz testing
  */
-
 import React, { PropTypes } from 'react';
 import Wrapper from './Wrapper';
 
 import mapValues from 'lodash/mapValues';
-import getControl from './getControl';
+import getControl from './utils/getControl';
 import { withState } from 'recompose';
-import randomValues from './randomValues';
+import randomValues from './utils/randomValues';
 
 const Playground = (props) => {
   // Attach controls to propTypes meta information

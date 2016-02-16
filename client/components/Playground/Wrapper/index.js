@@ -1,8 +1,8 @@
 import React from 'react';
 import styles from './styles';
-import renderControls from '../renderControls';
+import renderControls from '../utils/renderControls';
 import RandomButton from '../RandomButton';
-import randomValues from '../randomValues';
+import randomValues from '../utils/randomValues';
 
 const Wrapper = (props) => {
   const {
