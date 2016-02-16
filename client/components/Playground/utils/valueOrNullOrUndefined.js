@@ -1,4 +1,4 @@
-´/**
+/**
  * Depending on if null & undefined are allowed they are returned about 10% of the time
  *
  * @param  {any}    value          The value we use if it's not null or undefined

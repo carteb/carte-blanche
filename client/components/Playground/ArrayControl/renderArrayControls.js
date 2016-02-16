@@ -1,7 +1,6 @@
 import React, { cloneElement } from 'react';
 
 const ArrayControls = (Control, rangeArray, value, onUpdateEntry) => {
-
   return (
     <div>
       { rangeArray && rangeArray.map((index) => {
@@ -9,7 +8,7 @@ const ArrayControls = (Control, rangeArray, value, onUpdateEntry) => {
           key: index,
           value: value[index],
           onUpdate: (data) => onUpdateEntry(data, index),
-        }
+        };
         return cloneElement(Control, props);
       })}
     </div>

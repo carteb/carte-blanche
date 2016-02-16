@@ -1,6 +1,7 @@
 {
   "preset": "airbnb",
   "validateQuoteMarks": null,
+  "maximumLineLength": false,
   "excludeFiles": [
     "coverage/**",
     "node_modules/**",

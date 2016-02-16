@@ -20,6 +20,7 @@ const PlaygroundWrapper = (props) => {
       if (!prop.control) {
         prop.control = getControl(prop);
       }
+
       return prop;
     });
   }
@@ -37,9 +38,9 @@ const PlaygroundWrapper = (props) => {
 
 PlaygroundWrapper.propTypes = {
   meta: PropTypes.shape({
-    props: PropTypes.object
+    props: PropTypes.object,
   }),
-  component: PropTypes.func // TODO Is this really always an function?
+  component: PropTypes.func, // TODO Is this really always an function?
 };
 
 export default PlaygroundWrapper;

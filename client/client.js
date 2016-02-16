@@ -7,7 +7,7 @@ import ReactDOM from 'react-dom';
 import {
   Route,
   Router,
-  hashHistory
+  hashHistory,
 } from 'react-router';
 import ComponentPreview from './components/ComponentPreview';
 import App from './components/App';

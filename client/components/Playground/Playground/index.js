@@ -4,7 +4,6 @@
  * The playground with UI fuzz testing
  */
 
-
 import React, { PropTypes } from 'react';
 import styles from './styles';
 import renderControls from '../utils/renderControls';
@@ -18,7 +17,7 @@ const Playground = (props) => {
   const {
     globalComponentProps,
     setGlobalComponentProps,
-    metadataWithControls
+    metadataWithControls,
   } = props;
   const Component = props.component;
   return (
@@ -37,7 +36,7 @@ Playground.propTypes = {
   globalComponentProps: PropTypes.object.isRequired,
   setGlobalComponentProps: PropTypes.func.isRequired,
   metadataWithControls: PropTypes.object.isRequired,
-  component: PropTypes.func // TODO is this really always a function
+  component: PropTypes.func, // TODO is this really always a function
 };
 
 export default Playground;
