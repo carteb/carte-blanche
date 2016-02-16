@@ -5,62 +5,41 @@
  */
 
 import React, { PropTypes } from 'react';
+import Wrapper from './Wrapper';
+
 import mapValues from 'lodash/mapValues';
 import getControl from './getControl';
-
 import { withState } from 'recompose';
 import randomValues from './randomValues';
-import renderControls from './renderControls';
-import RandomButton from './RandomButton';
-import styles from './styles';
 
-/*
- * Returns a higher order component to generated a playground for the provided
- * component & properties.
- */
 const Playground = (props) => {
-  const Component = props.component;
+  // Attach controls to propTypes meta information
   let propsWithControls;
   if (props.meta.props) {
     propsWithControls = mapValues(props.meta.props, (prop) => {
       if (!prop.control) {
         prop.control = getControl(prop);
       }
-
       return prop;
     });
   }
 
-  const Wrapper = (wrapperProps) => {
-    const {
-      componentProperties,
-      setComponentProperties
-    } = wrapperProps;
-    const values = wrapperProps.props;
-    return (
-      <div style={styles.wrapper}>
-        <h2>Playground</h2>
-        <div style={styles.controls}>
-          <RandomButton onClick={ () => setComponentProperties(randomValues(propsWithControls)) }/>
-          { renderControls(propsWithControls, componentProperties, setComponentProperties) }
-        </div>
-        <Component {...values} {...componentProperties}/>
-      </div>
-    );
-  };
-
+  // Generate initial random values for props
   const values = randomValues(propsWithControls);
   const StatefulWrapper = withState('componentProperties', 'setComponentProperties', values, Wrapper);
-  return <StatefulWrapper />;
+  return (
+    <StatefulWrapper
+      propsWithControls={propsWithControls}
+      component={props.component}
+    />
+  );
 };
-
-export default Playground;
 
 Playground.propTypes = {
   meta: PropTypes.shape({
     props: PropTypes.object
   }),
-  component: PropTypes.element
+  component: PropTypes.func // TODO Is this really always an function?
 };
 
 export default Playground;
