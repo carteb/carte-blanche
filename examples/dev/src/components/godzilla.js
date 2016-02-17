@@ -53,6 +53,11 @@ Godzilla.propTypes = {
   ),
   type: PropTypes.oneOf(['cute', 'aggressive', 'shy']),
   noseLength: PropTypes.oneOf([33, 42, 88]),
+  noseShape: () => {
+    if (false) { // eslint-disable-line no-constant-condition
+      return new Error('Validation failed!');
+    }
+  },
 };
 
 export default Godzilla;
