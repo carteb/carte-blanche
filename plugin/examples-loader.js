@@ -16,6 +16,5 @@ module.exports = function metaLoader(source) {
     `;
     return wrapperComponent;
   });
-  console.log('module.exports = [' + examples.join(',') + ']');
   return 'var React = require("react"); module.exports = [' + examples.join(',') + ']';
 };
