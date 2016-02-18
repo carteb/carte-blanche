@@ -10,7 +10,7 @@ module.exports = function metaLoader(source) {
   const exampleTags = docsInformation.tags.filter((entry) => entry.title === 'example');
   const examples = exampleTags.map((tag) => {
     const wrapperComponent = `
-      (Button) => (
+      (Component) => (
         ${tag.description}
       )
     `;
