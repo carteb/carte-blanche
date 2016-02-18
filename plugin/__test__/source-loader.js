@@ -1,3 +1,5 @@
+/* jscs:disable disallowSpacesInsideTemplateStringPlaceholders */
+
 import { expect } from 'chai';
 import sinon from 'sinon';
 import SourceLoader from '../source-loader';
