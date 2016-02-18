@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 
 const Godzilla = (props) => {
   const {
-    isDangerous = false,
+    isDangerous,
     age,
     description,
     fur,

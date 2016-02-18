@@ -11,8 +11,11 @@ import React from 'react';
  *   <Option value='banana'>Banana</Option>
  * </Select>
  */
-export default ({ children = [] }) => ((
-  <ul>
-    { children.map((option) => (<li>{option}</li>))}
-  </ul>
-));
+export default (props) => {
+  const children = props.children || [];
+  return (
+    <ul>
+      { children.map((option) => (<li>{option}</li>))}
+    </ul>
+  );
+};
