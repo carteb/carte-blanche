@@ -10,11 +10,11 @@ module.exports = function metaLoader(source) {
   const exampleTags = docsInformation.tags.filter((entry) => entry.title === 'example');
   const examples = exampleTags.map((tag) => {
     const wrapperComponent = `
-      return () => ((
+      (Component) => (
         ${tag.description}
-      ));
+      )
     `;
     return wrapperComponent;
   });
-  return 'module.exports = ' + JSON.stringify(examples);
+  return 'var React = require("react"); module.exports = [' + examples.join(',') + ']';
 };

@@ -4,18 +4,18 @@ import React, { PropTypes } from 'react';
  * Button component
  *
  * @example
- * <Button>Follow us on Twitter</Button>
+ * <Component>Follow us on Twitter</Component>
  * @example
- * <Button type="reset">Reset Form</Button>
+ * <Component type="reset">Reset Form</Component>
  */
-const Button = ({ className = 'test', type = 'button', children }) => ((
+const Button = ({ className = 'test', type = 'button', children }) => (
   <button
     className={className}
     type={type}
   >
     { children }
   </button>
-));
+);
 
 Button.propTypes = {
   className: PropTypes.string,

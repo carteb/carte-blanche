@@ -13,6 +13,7 @@ import ArrayControl from '../ArrayControl';
 import StringControl from '../StringControl';
 import EnumControl from '../EnumControl';
 import NodeControl from '../NodeControl';
+import DummyControl from '../DummyControl';
 
 const getControl = (propType) => {
   // In nested prop types, the name is at propType.name
@@ -45,6 +46,7 @@ const getControl = (propType) => {
       control = <ArrayControl propTypeData={ propType } />;
       break;
     default:
+      control = <DummyControl />;
       break;
   }
   return control;

@@ -9,9 +9,9 @@ import { List } from 'immutable';
  * const list = List([1,2,3]);
  * const emptyList = List();
  * @example
- * <ImmutableList data={ emptyList } />
+ * <Component data={ emptyList } />
  * @example
- * <ImmutableList data={ list } />
+ * <Component data={ list } />
  */
 export default ({ data = List() }) => ((
   <ul>

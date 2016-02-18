@@ -1,7 +1,7 @@
 import React from 'react';
 import RandomButton from '../RandomButton';
 import valueOrNullOrUndefined from '../utils/valueOrNullOrUndefined';
-import faker from 'faker';
+import faker from 'faker/build/build/faker';
 
 const StringControl = (props) => {
   const { label, value, onUpdate } = props;
