@@ -1,0 +1,15 @@
+[ignore]
+.*node_modules/babel.*
+.*node_modules/fbjs.*
+
+[include]
+.*node_modules/react
+
+[libs]
+
+[options]
+esproposal.class_static_fields=enable
+strip_root=true
+
+[version]
+0.21.0
