@@ -12,6 +12,10 @@ const normalizeMetaInfo = (metaInformation) => {
       name: metaInformation.flowType.name,
       value: metaInformation.flowType.value,
     };
+    if (info.name === 'signature') {
+      info.signature = metaInformation.flowType.signature;
+    }
+
     return omit(info, 'flowType');
   }
 
