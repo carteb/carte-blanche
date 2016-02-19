@@ -12,7 +12,7 @@ describe('normalizeMetaInfo', () => {
     expect(normalizeMetaInfo(source)).to.deep.equal(expected);
   });
 
-  it('should remove "type"', () => {
+  it('should move name & value from type property into root and remove type', () => {
     const source = {
       type: {
         name: 'age',
@@ -26,7 +26,7 @@ describe('normalizeMetaInfo', () => {
     expect(normalizeMetaInfo(source)).to.deep.equal(expected);
   });
 
-  it('should remove "flowType"', () => {
+  it('should move name & value from flowType property into root and remove flowType', () => {
     const source = {
       teeth: {
         flowType: {
@@ -48,7 +48,7 @@ describe('normalizeMetaInfo', () => {
     expect(normalizeMetaInfo(source)).to.deep.equal(expected);
   });
 
-  it('should remove "type" from nested objects', () => {
+  it('should handle type inside nested objects', () => {
     const source = {
       teeth: {
         type: {
@@ -70,7 +70,7 @@ describe('normalizeMetaInfo', () => {
     expect(normalizeMetaInfo(source)).to.deep.equal(expected);
   });
 
-  it('should remove "flowType" from nested objects', () => {
+  it('should handle flowType inside nested objects', () => {
     const source = {
       teeth: {
         flowType: {
@@ -92,7 +92,7 @@ describe('normalizeMetaInfo', () => {
     expect(normalizeMetaInfo(source)).to.deep.equal(expected);
   });
 
-  it('should manage arrays in "type"', () => {
+  it('should manage arrays in the type property', () => {
     const source = {
       noseLength: {
         type: {
@@ -124,9 +124,5 @@ describe('normalizeMetaInfo', () => {
       },
     };
     expect(normalizeMetaInfo(source)).to.deep.equal(expected);
-  });
-
-  it('should manage "type" in arrays', () => {
-    expect(true).to.equal(true);
   });
 });
