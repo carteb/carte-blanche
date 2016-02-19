@@ -18,10 +18,8 @@ import DummyControl from '../DummyControl';
 const getControl = (propType) => {
   // In nested prop types, the name is at propType.name
   // normally it's at propType.type.name
-  const name = propType.name || propType.type.name;
-  const value = propType.value || propType.type && propType.type.value;
   let control;
-  switch (name) {
+  switch (propType.name) {
     case 'bool':
       control = <BooleanControl />;
       break;
@@ -38,7 +36,7 @@ const getControl = (propType) => {
       control = <NodeControl />;
       break;
     case 'shape':
-      mapValues(value, (propTypeData) => {
+      mapValues(propType.value, (propTypeData) => {
         propTypeData.control = getControl(propTypeData);
       });
       break;

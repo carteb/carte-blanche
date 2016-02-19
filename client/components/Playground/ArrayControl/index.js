@@ -25,8 +25,7 @@ const ArrayControl = (props) => {
     onUpdate({ value: newValue });
   };
 
-  const arrayPropTypeData = propTypeData.value || propTypeData.type && propTypeData.type.value;
-  const control = getControl(arrayPropTypeData);
+  const control = getControl(propTypeData.value);
 
   return (
     <div>
@@ -35,8 +34,8 @@ const ArrayControl = (props) => {
         onClick={ () => onUpdate({ value: ArrayControl.randomValue(propTypeData) }) }
       />
         <div style={{ paddingLeft: 20 }}>
-          { (arrayPropTypeData.name === 'shape') ?
-            renderNestedArrayControls(arrayPropTypeData, rangeArray, value, onUpdateEntry) :
+          { (propTypeData.value.name === 'shape') ?
+            renderNestedArrayControls(propTypeData.value, rangeArray, value, onUpdateEntry) :
             renderArrayControls(control, rangeArray, value, onUpdateEntry)
           }
           {typeof value === 'undefined' ? 'undefined' : null}

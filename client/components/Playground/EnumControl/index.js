@@ -14,7 +14,6 @@ const EnumControl = (props) => {
     propTypeData,
     onUpdate,
   } = props;
-  const valueList = propTypeData.value || propTypeData.type && propTypeData.type.value;
   return (
     <div>
       <label>
@@ -26,7 +25,7 @@ const EnumControl = (props) => {
             return onUpdate({ value: newValue });
           }}
         >
-          { valueList && valueList.map((valueEntry, index) => {
+          { propTypeData.value && propTypeData.value.map((valueEntry, index) => {
             return (
               <option
                 value={
@@ -49,8 +48,7 @@ const EnumControl = (props) => {
  * Generates a random boolean value
  */
 EnumControl.randomValue = (propTypeData) => {
-  const valueList = propTypeData.value || propTypeData.type && propTypeData.type.value;
-  const randomValue = valueList[Math.floor(Math.random() * valueList.length)];
+  const randomValue = propTypeData.value[Math.floor(Math.random() * propTypeData.value.length)];
 
   // TODO check for randomValue.computed == true;
   return eval(randomValue.value); // eslint-disable-line no-eval

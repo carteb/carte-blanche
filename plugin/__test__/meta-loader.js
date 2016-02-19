@@ -14,7 +14,25 @@ describe('MetaLoader', () => {
     };
   });
 
-  it('should extract the description & PropTypes information', () => {
+  it('should extract the description', () => {
+    const source = `
+      import React, { PropTypes } from 'react';
+
+      /**
+       * Button component
+       */
+      export default({ className = 'btn' }) => ((
+        <button className={className}>
+          Follow
+        </button>
+      ));
+    `;
+    const expected = 'module.exports = {"description":"Button component"}';
+    expect(compiler.MetaLoader(source)).to.deep.equal(expected);
+    expect(compiler.cacheable).to.have.been.called();
+  });
+
+  it('should extract meta information from PropTypes', () => {
     const source = `
       import React, { PropTypes } from 'react';
 
@@ -31,25 +49,31 @@ describe('MetaLoader', () => {
 
       export default Button;
     `;
-    const expected = 'module.exports = {"description":"","props":{"className":{"type":{"name":"string"},"required":false,"description":""}}}';
+    const expected = 'module.exports = {"description":"","props":{"className":{"required":false,"description":"","name":"string"}}}';
     expect(compiler.MetaLoader(source)).to.deep.equal(expected);
     expect(compiler.cacheable).to.have.been.called();
   });
 
-  it('should extract the description in case no flow/propTypes are defined', () => {
+  it('should extract meta information from Flow', () => {
     const source = `
-      import React, { PropTypes } from 'react';
+      import React from 'react';
 
-      /**
-       * Button component
-       */
-      export default({ className = 'btn' }) => ((
-        <button className={className}>
-          Follow
-        </button>
-      ));
+      type Props = {
+        className: string,
+      };
+
+      export default class Button extends Component<void, Props, void> {
+        props: Props;
+
+        render() {
+          return (
+            <button className={this.props.className}></button>
+          );
+        }
+      }
+
     `;
-    const expected = 'module.exports = {"description":"Button component"}';
+    const expected = 'module.exports = {"description":"","props":{"className":{"required":true,"description":"","name":"string"}}}';
     expect(compiler.MetaLoader(source)).to.deep.equal(expected);
     expect(compiler.cacheable).to.have.been.called();
   });

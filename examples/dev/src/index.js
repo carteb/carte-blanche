@@ -1,3 +1,5 @@
+/* @flow */
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import cube from './cube.gif';
@@ -6,6 +8,7 @@ import Card from './components/card';
 import ImmutableList from './components/immutableList';
 import Select from './components/select';
 import Godzilla from './components/godzilla';
+import Ghidorah from './components/ghidorah';
 
 ReactDOM.render(
   <div>
@@ -15,6 +18,7 @@ ReactDOM.render(
     <ImmutableList />
     <Select />
     <Godzilla />
+    <Ghidorah name="Max" />
   </div>,
   document.getElementById('root')
 );

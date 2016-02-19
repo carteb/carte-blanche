@@ -13,9 +13,12 @@ import { List } from 'immutable';
  * @example
  * <Component data={ list } />
  */
-export default ({ data = List() }) => ((
-  <ul>
-    { data.map((item) => (<li>{item}</li>))}
-    { data.size === 0 ? 'This list is empty' : '' }
-  </ul>
-));
+export default (props) => {
+  const data = props.data || List();
+  return (
+    <ul>
+      { data.map((item) => (<li>{item}</li>))}
+      { data.size === 0 ? 'This list is empty' : '' }
+    </ul>
+  );
+};

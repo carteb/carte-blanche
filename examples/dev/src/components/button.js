@@ -8,7 +8,7 @@ import React, { PropTypes } from 'react';
  * @example
  * <Component type="reset">Reset Form</Component>
  */
-const Button = ({ className = 'test', type = 'button', children }) => (
+const Button = ({ className, type, children }) => (
   <button
     className={className}
     type={type}
