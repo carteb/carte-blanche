@@ -31,7 +31,7 @@ describe('MetaLoader', () => {
 
       export default Button;
     `;
-    const expected = 'module.exports = {"description":"","props":{"className":{"type":{"name":"string"},"required":false,"description":""}}}';
+    const expected = 'module.exports = {"description":"","props":{"className":{"required":false,"description":"","name":"string"}}}';
     expect(compiler.MetaLoader(source)).to.deep.equal(expected);
     expect(compiler.cacheable).to.have.been.called();
   });

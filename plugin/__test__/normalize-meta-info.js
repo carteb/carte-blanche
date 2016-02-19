@@ -4,7 +4,7 @@ import { expect } from 'chai';
 import normalizeMetaInfo from '../normalize-meta-info';
 
 describe('normalizeMetaInfo', () => {
-  it('should change the flowType to type', () => {
+  it('should remove "type"', () => {
     const source = {
       type: {
         name: 'age',
@@ -12,20 +12,16 @@ describe('normalizeMetaInfo', () => {
       },
     };
     const expected = {
-      type: {
-        name: 'age',
-        value: 22,
-      },
       name: 'age',
       value: 22,
     };
     expect(normalizeMetaInfo(source)).to.deep.equal(expected);
   });
 
-  it('should manage nested data', () => {
+  it('should remove "flowType"', () => {
     const source = {
       teeth: {
-        type: {
+        flowType: {
           name: 'arrayOf',
           value: {
             name: 'number',
@@ -35,12 +31,6 @@ describe('normalizeMetaInfo', () => {
     };
     const expected = {
       teeth: {
-        type: {
-          name: 'arrayOf',
-          value: {
-            name: 'number',
-          },
-        },
         name: 'arrayOf',
         value: {
           name: 'number',
@@ -50,7 +40,51 @@ describe('normalizeMetaInfo', () => {
     expect(normalizeMetaInfo(source)).to.deep.equal(expected);
   });
 
-  it('should manage arrays', () => {
+  it('should remove "type" from nested objects', () => {
+    const source = {
+      teeth: {
+        type: {
+          name: 'arrayOf',
+          value: {
+            name: 'number',
+          },
+        },
+      },
+    };
+    const expected = {
+      teeth: {
+        name: 'arrayOf',
+        value: {
+          name: 'number',
+        },
+      },
+    };
+    expect(normalizeMetaInfo(source)).to.deep.equal(expected);
+  });
+
+  it('should remove "flowType" from nested objects', () => {
+    const source = {
+      teeth: {
+        flowType: {
+          name: 'arrayOf',
+          value: {
+            name: 'number',
+          },
+        },
+      },
+    };
+    const expected = {
+      teeth: {
+        name: 'arrayOf',
+        value: {
+          name: 'number',
+        },
+      },
+    };
+    expect(normalizeMetaInfo(source)).to.deep.equal(expected);
+  });
+
+  it('should manage arrays in "type"', () => {
     const source = {
       noseLength: {
         type: {
@@ -69,18 +103,6 @@ describe('normalizeMetaInfo', () => {
     };
     const expected = {
       noseLength: {
-        type: {
-          name: 'enum',
-          value: [
-            {
-              value: '33',
-              computed: false,
-            }, {
-              value: '42',
-              computed: false,
-            },
-          ],
-        },
         name: 'enum',
         value: [
           {
@@ -96,31 +118,7 @@ describe('normalizeMetaInfo', () => {
     expect(normalizeMetaInfo(source)).to.deep.equal(expected);
   });
 
-  it('should take name & value from flowType', () => {
-    const source = {
-      teeth: {
-        flowType: {
-          name: 'arrayOf',
-          value: {
-            name: 'number',
-          },
-        },
-      },
-    };
-    const expected = {
-      teeth: {
-        flowType: {
-          name: 'arrayOf',
-          value: {
-            name: 'number',
-          },
-        },
-        name: 'arrayOf',
-        value: {
-          name: 'number',
-        },
-      },
-    };
-    expect(normalizeMetaInfo(source)).to.deep.equal(expected);
+  it('should manage "type" in arrays', () => {
+    expect(true).to.equal(true);
   });
 });
