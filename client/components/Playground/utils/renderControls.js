@@ -26,14 +26,12 @@ const renderControls = (metadataWithControls, globalComponentProps, setGlobalCom
       return cloneElement(prop.control, props);
     }
 
-    const value = prop.value || prop.type && prop.type.value;
-
     // render nested object
     return (
       <div>
         <div style={{ height: 30 }}>{key}: {'{'}</div>
           <div style={{ paddingLeft: 10 }}>
-            {renderControls(value, globalComponentProps, setGlobalComponentProps, newKeyPath)}
+            {renderControls(prop.value, globalComponentProps, setGlobalComponentProps, newKeyPath)}
           </div>
         <div>{'}'}</div>
       </div>

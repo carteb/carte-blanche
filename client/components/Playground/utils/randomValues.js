@@ -13,9 +13,8 @@ const randomValues = (propTypes) => {
       return propType.control.type.randomValue(propType);
     }
 
-    const value = propType.value || propType.type.value;
-    if (value) {
-      return randomValues(value);
+    if (propType.value) {
+      return randomValues(propType.value);
     }
   });
 };
