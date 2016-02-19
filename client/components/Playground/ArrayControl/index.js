@@ -53,7 +53,7 @@ ArrayControl.randomValue = (props) => {
   const max = 4;
   const size = Math.floor(Math.random() * (max - min + 1)) + min;
   const rangeArray = range(min, size);
-  const propTypeData = props.value || props.type && props.type.value;
+  const propTypeData = props.value || props.type && props.type.value; // TODO clean up
   const control = getControl(propTypeData);
 
   let value;

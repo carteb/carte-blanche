@@ -14,11 +14,15 @@ import StringControl from '../StringControl';
 import EnumControl from '../EnumControl';
 import NodeControl from '../NodeControl';
 import DummyControl from '../DummyControl';
+import ObjectControl from '../ObjectControl';
 
 const getControl = (propType) => {
   let control;
   switch (propType.name) {
-    case 'bool':
+    case 'bool': // proptypes boolean
+      control = <BooleanControl />;
+      break;
+    case 'boolean': // flow boolean
       control = <BooleanControl />;
       break;
     case 'number':
@@ -33,10 +37,13 @@ const getControl = (propType) => {
     case 'node':
       control = <NodeControl />;
       break;
-    case 'shape':
+    case 'shape': // proptypes
       mapValues(propType.value, (propTypeData) => {
         propTypeData.control = getControl(propTypeData);
       });
+      break;
+    case 'signature': // flow
+      control = <ObjectControl propTypeData={ propType } />;
       break;
     case 'arrayOf':
       control = <ArrayControl propTypeData={ propType } />;
