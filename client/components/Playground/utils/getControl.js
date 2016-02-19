@@ -16,8 +16,6 @@ import NodeControl from '../NodeControl';
 import DummyControl from '../DummyControl';
 
 const getControl = (propType) => {
-  // In nested prop types, the name is at propType.name
-  // normally it's at propType.type.name
   let control;
   switch (propType.name) {
     case 'bool':

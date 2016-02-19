@@ -125,4 +125,48 @@ describe('normalizeMetaInfo', () => {
     };
     expect(normalizeMetaInfo(source)).to.deep.equal(expected);
   });
+
+  it('should make sure a property type is valid', () => {
+    const source = {
+      type: {
+        type: {
+          name: 'arrayOf',
+          value: {
+            name: 'number',
+          },
+        },
+      },
+    };
+    const expected = {
+      type: {
+        name: 'arrayOf',
+        value: {
+          name: 'number',
+        },
+      },
+    };
+    expect(normalizeMetaInfo(source)).to.deep.equal(expected);
+  });
+
+  it('should make sure a property flowType is valid', () => {
+    const source = {
+      flowType: {
+        type: {
+          name: 'arrayOf',
+          value: {
+            name: 'number',
+          },
+        },
+      },
+    };
+    const expected = {
+      flowType: {
+        name: 'arrayOf',
+        value: {
+          name: 'number',
+        },
+      },
+    };
+    expect(normalizeMetaInfo(source)).to.deep.equal(expected);
+  });
 });
