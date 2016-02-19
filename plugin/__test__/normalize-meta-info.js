@@ -4,6 +4,14 @@ import { expect } from 'chai';
 import normalizeMetaInfo from '../normalize-meta-info';
 
 describe('normalizeMetaInfo', () => {
+  it('should not remove anything in objects without types', () => {
+    const source = {
+      description: 'hi',
+    };
+    const expected = source;
+    expect(normalizeMetaInfo(source)).to.deep.equal(expected);
+  });
+
   it('should remove "type"', () => {
     const source = {
       type: {
