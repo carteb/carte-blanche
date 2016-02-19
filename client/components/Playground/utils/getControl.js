@@ -19,7 +19,10 @@ import ObjectControl from '../ObjectControl';
 const getControl = (propType) => {
   let control;
   switch (propType.name) {
-    case 'bool':
+    case 'bool': // proptypes boolean
+      control = <BooleanControl />;
+      break;
+    case 'boolean': // flow boolean
       control = <BooleanControl />;
       break;
     case 'number':
