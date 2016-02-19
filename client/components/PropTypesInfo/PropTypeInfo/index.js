@@ -11,7 +11,7 @@ class PropTypeInfo extends React.Component {
       <div className={ styles.wrapper }>
         <div>{ this.props.name }</div>
         <div>Required: { this.props.data.required ? 'True' : 'False' }</div>
-        <div>Type: { this.props.data.type.name }</div>
+        <div>Type: { this.props.data.name }</div>
       </div>
     );
   }
