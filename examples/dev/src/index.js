@@ -18,7 +18,7 @@ ReactDOM.render(
     <ImmutableList />
     <Select />
     <Godzilla />
-    <Ghidorah name="Max" />
+    <Ghidorah />
   </div>,
   document.getElementById('root')
 );
