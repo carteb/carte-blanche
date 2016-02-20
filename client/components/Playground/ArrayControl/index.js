@@ -55,8 +55,6 @@ ArrayControl.randomValue = (props) => {
     return control.type.randomValue(propTypeData);
   });
 
-  // console.log(value);
-
   return valueOrNullOrUndefined(value, canBeNull, canBeUndefined);
 };
 

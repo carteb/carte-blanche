@@ -18,7 +18,6 @@ import ObjectControl from '../ObjectControl';
 import FlowArrayControl from '../FlowArrayControl';
 
 const getControl = (propType) => {
-  console.log('getControl', propType);
   let control;
   switch (propType.name) {
     case 'bool': // proptypes boolean
