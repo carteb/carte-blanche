@@ -10,6 +10,7 @@ import React from 'react';
 import mapValues from 'lodash/mapValues';
 import randomValues from '../utils/randomValues';
 import valueOrNullOrUndefined from '../utils/valueOrNullOrUndefined';
+import RandomButton from '../RandomButton';
 
 const ObjectControl = ({ label, propTypeData, value, onUpdate }) => {
   const updatePropertyValues = (values) => {
@@ -26,10 +27,15 @@ const ObjectControl = ({ label, propTypeData, value, onUpdate }) => {
   return (
     <div>
       {/* inside arrays there is no label for the object */}
-      <div>{label ? '${label}:' : null} {'{'}</div>
-        <div style={{ paddingLeft: 20 }}>
-          { renderControls(normalizedPropsWithControls, value, updatePropertyValues) }
-        </div>
+      <div>
+        {label ? '${label}:' : null} {'{'}
+        <RandomButton
+          onClick={ () => onUpdate({ value: ObjectControl.randomValue(propTypeData) }) }
+        />
+      </div>
+      <div style={{ paddingLeft: 20 }}>
+        { renderControls(normalizedPropsWithControls, value, updatePropertyValues) }
+      </div>
       <div>{'}'}</div>
     </div>
   );
