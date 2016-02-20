@@ -11,6 +11,7 @@ import keyBy from 'lodash/keyBy';
 import mapValues from 'lodash/mapValues';
 import randomValues from '../utils/randomValues';
 import valueOrNullOrUndefined from '../utils/valueOrNullOrUndefined';
+import RandomButton from '../RandomButton';
 
 const normalizeProps = (props) => {
   const propsObject = keyBy(props, 'key');
@@ -33,10 +34,15 @@ const FlowObjectControl = ({ label, propTypeData, value, onUpdate }) => {
 
   return (
     <div>
-      <div>{label}: {'{'}</div>
-        <div style={{ paddingLeft: 20 }}>
-          { renderControls(normalizedPropsWithControls, value, updatePropertyValues) }
-        </div>
+      <div>
+        {label ? '${label}:' : null} {'{'}
+        <RandomButton
+          onClick={ () => onUpdate({ value: FlowObjectControl.randomValue(propTypeData) }) }
+        />
+      </div>
+      <div style={{ paddingLeft: 20 }}>
+        { renderControls(normalizedPropsWithControls, value, updatePropertyValues) }
+      </div>
       <div>{'}'}</div>
     </div>
   );
