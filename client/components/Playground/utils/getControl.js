@@ -15,6 +15,7 @@ import EnumControl from '../EnumControl';
 import NodeControl from '../NodeControl';
 import DummyControl from '../DummyControl';
 import ObjectControl from '../ObjectControl';
+import FlowArrayControl from '../FlowArrayControl';
 
 const getControl = (propType) => {
   let control;
@@ -47,6 +48,9 @@ const getControl = (propType) => {
       break;
     case 'arrayOf':
       control = <ArrayControl propTypeData={ propType } />;
+      break;
+    case 'Array':
+      control = <FlowArrayControl propTypeData={ propType } />;
       break;
     default:
       control = <DummyControl />;
