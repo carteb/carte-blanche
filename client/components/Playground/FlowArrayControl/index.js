@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { cloneElement } from 'react';
 import range from 'lodash/range';
 import cloneDeep from 'lodash/cloneDeep';
 import RandomButton from '../RandomButton';
 import valueOrNullOrUndefined from '../utils/valueOrNullOrUndefined';
-import renderArrayControls from './renderArrayControls';
 import getControl from '../utils/getControl';
 
 const FlowArrayControl = (props) => {
@@ -23,8 +22,6 @@ const FlowArrayControl = (props) => {
     onUpdate({ value: newValue });
   };
 
-  // TODO test array of array of number
-
   // TODO fix this for multiples ones
   const control = getControl(propTypeData.elements[0]);
 
@@ -35,7 +32,14 @@ const FlowArrayControl = (props) => {
         onClick={ () => onUpdate({ value: FlowArrayControl.randomValue(propTypeData) }) }
       />
         <div style={{ paddingLeft: 20 }}>
-          { renderArrayControls(control, rangeArray, value, onUpdateEntry) }
+          { rangeArray && rangeArray.map((index) => {
+            const newProps = {
+              key: index,
+              value: value[index],
+              onUpdate: (data) => onUpdateEntry(data.value, index),
+            };
+            return cloneElement(control, newProps);
+          })}
           {typeof value === 'undefined' ? 'undefined' : null}
           {value === null ? 'null' : null}
         </div>
@@ -57,7 +61,7 @@ FlowArrayControl.randomValue = (props) => {
 
   let value;
   value = rangeArray.map(() => {
-    return control.type.randomValue(props);
+    return control.type.randomValue(props.elements[0]);
   });
 
   return valueOrNullOrUndefined(value, canBeNull, canBeUndefined);
