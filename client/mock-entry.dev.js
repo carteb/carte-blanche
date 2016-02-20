@@ -5,24 +5,24 @@ require('../plugin/client-api.js');
 
 // Create routes exactly like the plugin would
 window.__STYLEGUIDE_PLUGIN_CLIENT_API.scripts = {
-  '../examples/dev/src/components/button.js': 'styleguide-plugin/button.js',
-  '../examples/dev/src/components/card.js': 'styleguide-plugin/card.js',
-  '../examples/dev/src/components/godzilla.js': 'styleguide-plugin/godzilla.js',
-  '../examples/dev/src/components/ghidorah.js': 'styleguide-plugin/ghidorah.js',
+  '../examples/dev/src/components/Button.js': 'styleguide-plugin/Button.js',
+  '../examples/dev/src/components/Card.js': 'styleguide-plugin/Card.js',
+  '../examples/dev/src/components/Godzilla.js': 'styleguide-plugin/Godzilla.js',
+  '../examples/dev/src/components/Ghidorah.js': 'styleguide-plugin/Ghidorah.js',
 };
 
 // Instead of lazy loading the scripts we mock the load function
 window.__STYLEGUIDE_PLUGIN_CLIENT_API.load = function load(path) {
   // Load the components from the example exactly like the plugin would:
   switch (path) {
-    case '../examples/dev/src/components/button.js':
-      return require('!!../plugin/component-loader.js?request=babel%21../examples/dev/src/components/button.js!../plugin/entry.js');
-    case '../examples/dev/src/components/card.js':
-      return require('!!../plugin/component-loader.js?request=babel%21../examples/dev/src/components/card.js!../plugin/entry.js');
-    case '../examples/dev/src/components/godzilla.js':
-      return require('!!../plugin/component-loader.js?request=babel%21../examples/dev/src/components/godzilla.js!../plugin/entry.js');
-    case '../examples/dev/src/components/ghidorah.js':
-      return require('!!../plugin/component-loader.js?request=babel%21../examples/dev/src/components/ghidorah.js!../plugin/entry.js');
+    case '../examples/dev/src/components/Button.js':
+      return require('!!../plugin/component-loader.js?request=babel%21../examples/dev/src/components/Button.js!../plugin/entry.js');
+    case '../examples/dev/src/components/Card.js':
+      return require('!!../plugin/component-loader.js?request=babel%21../examples/dev/src/components/Card.js!../plugin/entry.js');
+    case '../examples/dev/src/components/Godzilla.js':
+      return require('!!../plugin/component-loader.js?request=babel%21../examples/dev/src/components/Godzilla.js!../plugin/entry.js');
+    case '../examples/dev/src/components/Ghidorah.js':
+      return require('!!../plugin/component-loader.js?request=babel%21../examples/dev/src/components/Ghidorah.js!../plugin/entry.js');
     default:
       throw new Error('invalid path');
   }
