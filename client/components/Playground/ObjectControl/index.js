@@ -22,8 +22,6 @@ const ObjectControl = ({ label, propTypeData, value, onUpdate }) => {
     return prop;
   });
 
-  // TODO add random button
-
   return (
     <div>
       {/* inside arrays there is no label for the object */}
