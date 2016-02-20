@@ -6,7 +6,7 @@ import valueOrNullOrUndefined from '../utils/valueOrNullOrUndefined';
 import renderArrayControls from './renderArrayControls';
 import getControl from '../utils/getControl';
 
-const ArrayControl = (props) => {
+const FlowArrayControl = (props) => {
   const {
     label,
     onUpdate,
@@ -23,13 +23,14 @@ const ArrayControl = (props) => {
     onUpdate({ value: newValue });
   };
 
-  const control = getControl(propTypeData.value);
+  // TODO fix this for multiples ones
+  const control = getControl(propTypeData.elements[0]);
 
   return (
     <div>
       <label>{ label } [</label>
       <RandomButton
-        onClick={ () => onUpdate({ value: ArrayControl.randomValue(propTypeData) }) }
+        onClick={ () => onUpdate({ value: FlowArrayControl.randomValue(propTypeData) }) }
       />
         <div style={{ paddingLeft: 20 }}>
           { renderArrayControls(control, rangeArray, value, onUpdateEntry) }
@@ -41,21 +42,23 @@ const ArrayControl = (props) => {
   );
 };
 
-ArrayControl.randomValue = (props) => {
+FlowArrayControl.randomValue = (props) => {
   const canBeNull = true;
   const canBeUndefined = true;
   const min = 0;
   const max = 4;
   const size = Math.floor(Math.random() * (max - min + 1)) + min;
   const rangeArray = range(min, size);
-  const propTypeData = props.value || props.type && props.type.value; // TODO clean up
-  const control = getControl(propTypeData);
 
-  const value = rangeArray.map(() => {
-    return control.type.randomValue(propTypeData);
+  // TODO fix this for multiples ones
+  const control = getControl(props.elements[0]);
+
+  let value;
+  value = rangeArray.map(() => {
+    return control.type.randomValue(props);
   });
 
   return valueOrNullOrUndefined(value, canBeNull, canBeUndefined);
 };
 
-export default ArrayControl;
+export default FlowArrayControl;

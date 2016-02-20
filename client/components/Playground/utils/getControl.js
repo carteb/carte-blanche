@@ -6,7 +6,6 @@
  */
 
 import React from 'react';
-import mapValues from 'lodash/mapValues';
 import BooleanControl from '../BooleanControl';
 import IntegerControl from '../IntegerControl';
 import ArrayControl from '../ArrayControl';
@@ -14,7 +13,9 @@ import StringControl from '../StringControl';
 import EnumControl from '../EnumControl';
 import NodeControl from '../NodeControl';
 import DummyControl from '../DummyControl';
+import FlowObjectControl from '../FlowObjectControl';
 import ObjectControl from '../ObjectControl';
+import FlowArrayControl from '../FlowArrayControl';
 
 const getControl = (propType) => {
   let control;
@@ -38,15 +39,16 @@ const getControl = (propType) => {
       control = <NodeControl />;
       break;
     case 'shape': // proptypes
-      mapValues(propType.value, (propTypeData) => {
-        propTypeData.control = getControl(propTypeData);
-      });
+      control = <ObjectControl propTypeData={ propType } />;
       break;
     case 'signature': // flow
-      control = <ObjectControl propTypeData={ propType } />;
+      control = <FlowObjectControl propTypeData={ propType } />;
       break;
     case 'arrayOf':
       control = <ArrayControl propTypeData={ propType } />;
+      break;
+    case 'Array':
+      control = <FlowArrayControl propTypeData={ propType } />;
       break;
     default:
       control = <DummyControl />;

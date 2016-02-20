@@ -16,6 +16,10 @@ const normalizeMetaInfo = (metaInformation) => {
       info.signature = metaInformation.flowType.signature;
     }
 
+    if (info.name === 'Array') {
+      info.elements = metaInformation.flowType.elements;
+    }
+
     return omit(info, 'flowType');
   }
 
