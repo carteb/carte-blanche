@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { cloneElement } from 'react';
 import range from 'lodash/range';
 import cloneDeep from 'lodash/cloneDeep';
 import RandomButton from '../RandomButton';
 import valueOrNullOrUndefined from '../utils/valueOrNullOrUndefined';
-import renderArrayControls from './renderArrayControls';
 import getControl from '../utils/getControl';
 
 const ArrayControl = (props) => {
@@ -32,7 +31,14 @@ const ArrayControl = (props) => {
         onClick={ () => onUpdate({ value: ArrayControl.randomValue(propTypeData) }) }
       />
         <div style={{ paddingLeft: 20 }}>
-          { renderArrayControls(control, rangeArray, value, onUpdateEntry) }
+          { rangeArray && rangeArray.map((index) => {
+            const newProps = {
+              key: index,
+              value: value[index],
+              onUpdate: (data) => onUpdateEntry(data.value, index),
+            };
+            return cloneElement(control, newProps);
+          })}
           {typeof value === 'undefined' ? 'undefined' : null}
           {value === null ? 'null' : null}
         </div>
