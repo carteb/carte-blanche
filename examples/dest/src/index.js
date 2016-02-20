@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Button from './components/button';
-import Card from './components/card';
+import Button from './components/Button';
+import Card from './components/Card';
 
 ReactDOM.render(
   <div>
