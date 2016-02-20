@@ -7,26 +7,33 @@
 import renderControls from '../utils/renderControls';
 import getControl from '../utils/getControl';
 import React from 'react';
+import keyBy from 'lodash/keyBy';
 import mapValues from 'lodash/mapValues';
 import randomValues from '../utils/randomValues';
 import valueOrNullOrUndefined from '../utils/valueOrNullOrUndefined';
 
-const ObjectControl = ({ label, propTypeData, value, onUpdate }) => {
+const normalizeProps = (props) => {
+  const propsObject = keyBy(props, 'key');
+  const normalizedProps = mapValues(propsObject, (prop) => prop.value);
+  return mapValues(normalizedProps, (prop) => {
+    prop.control = getControl(prop);
+    return prop;
+  });
+};
+
+const FlowObjectControl = ({ label, propTypeData, value, onUpdate }) => {
   const updatePropertyValues = (values) => {
     onUpdate({ value: values });
   };
 
-  const normalizedPropsWithControls = mapValues(propTypeData.value, (prop) => {
-    prop.control = getControl(prop);
-    return prop;
-  });
+  const normalizedPropsWithControls = normalizeProps(propTypeData.signature.properties);
 
   // TODO add random button
+  // TODO test array of array of number
 
   return (
     <div>
-      {/* inside arrays there is no label for the object */}
-      <div>{label ? '${label}:' : null} {'{'}</div>
+      <div>{label}: {'{'}</div>
         <div style={{ paddingLeft: 20 }}>
           { renderControls(normalizedPropsWithControls, value, updatePropertyValues) }
         </div>
@@ -35,15 +42,12 @@ const ObjectControl = ({ label, propTypeData, value, onUpdate }) => {
   );
 };
 
-ObjectControl.randomValue = (propTypeData) => {
+FlowObjectControl.randomValue = (propTypeData) => {
   const canBeNull = true;
   const canBeUndefined = true;
-  const normalizedPropsWithControls = mapValues(propTypeData.value, (prop) => {
-    prop.control = getControl(prop);
-    return prop;
-  });
+  const normalizedPropsWithControls = normalizeProps(propTypeData.signature.properties);
   const value = randomValues(normalizedPropsWithControls);
   return valueOrNullOrUndefined(value, canBeNull, canBeUndefined);
 };
 
-export default ObjectControl;
+export default FlowObjectControl;

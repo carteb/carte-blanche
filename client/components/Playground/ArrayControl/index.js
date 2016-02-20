@@ -5,8 +5,6 @@ import RandomButton from '../RandomButton';
 import valueOrNullOrUndefined from '../utils/valueOrNullOrUndefined';
 import renderArrayControls from './renderArrayControls';
 import getControl from '../utils/getControl';
-import randomValues from '../utils/randomValues';
-import renderNestedArrayControls from './renderNestedArrayControls';
 
 const ArrayControl = (props) => {
   const {
@@ -34,10 +32,7 @@ const ArrayControl = (props) => {
         onClick={ () => onUpdate({ value: ArrayControl.randomValue(propTypeData) }) }
       />
         <div style={{ paddingLeft: 20 }}>
-          { (propTypeData.value.name === 'shape') ?
-            renderNestedArrayControls(propTypeData.value, rangeArray, value, onUpdateEntry) :
-            renderArrayControls(control, rangeArray, value, onUpdateEntry)
-          }
+          { renderArrayControls(control, rangeArray, value, onUpdateEntry) }
           {typeof value === 'undefined' ? 'undefined' : null}
           {value === null ? 'null' : null}
         </div>
@@ -56,16 +51,11 @@ ArrayControl.randomValue = (props) => {
   const propTypeData = props.value || props.type && props.type.value; // TODO clean up
   const control = getControl(propTypeData);
 
-  let value;
-  if (propTypeData.name === 'shape') {
-    value = rangeArray.map(() => {
-      return randomValues(propTypeData.value);
-    });
-  } else {
-    value = rangeArray.map(() => {
-      return control.type.randomValue(propTypeData);
-    });
-  }
+  const value = rangeArray.map(() => {
+    return control.type.randomValue(propTypeData);
+  });
+
+  // console.log(value);
 
   return valueOrNullOrUndefined(value, canBeNull, canBeUndefined);
 };
