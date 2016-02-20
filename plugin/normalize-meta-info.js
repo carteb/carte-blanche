@@ -16,7 +16,7 @@ const normalizeMetaInfo = (metaInformation) => {
       info.signature = metaInformation.flowType.signature;
     }
 
-    if (info.name === 'Array') {
+    if (info.name === 'Array' || info.name === 'union') {
       info.elements = metaInformation.flowType.elements;
     }
 

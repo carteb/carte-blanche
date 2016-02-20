@@ -29,8 +29,6 @@ const FlowObjectControl = ({ label, propTypeData, value, onUpdate }) => {
 
   const normalizedPropsWithControls = normalizeProps(propTypeData.signature.properties);
 
-  // TODO test array of array of number
-
   return (
     <div>
       <div>

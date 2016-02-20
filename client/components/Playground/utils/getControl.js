@@ -16,6 +16,7 @@ import DummyControl from '../DummyControl';
 import FlowObjectControl from '../FlowObjectControl';
 import ObjectControl from '../ObjectControl';
 import FlowArrayControl from '../FlowArrayControl';
+import FlowUnionControl from '../FlowUnionControl';
 
 const getControl = (propType) => {
   let control;
@@ -49,6 +50,9 @@ const getControl = (propType) => {
       break;
     case 'Array':
       control = <FlowArrayControl propTypeData={ propType } />;
+      break;
+    case 'union':
+      control = <FlowUnionControl propTypeData={ propType } />;
       break;
     default:
       control = <DummyControl />;

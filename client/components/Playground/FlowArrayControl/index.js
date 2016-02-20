@@ -23,6 +23,8 @@ const FlowArrayControl = (props) => {
     onUpdate({ value: newValue });
   };
 
+  // TODO test array of array of number
+
   // TODO fix this for multiples ones
   const control = getControl(propTypeData.elements[0]);
 

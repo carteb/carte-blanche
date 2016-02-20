@@ -18,6 +18,7 @@ type Props = {
   description?: string,
   fur?: Fur,
   teeth?: Array<number>,
+  toe?: number | string,
 }
 
 type DefaultProps = {
@@ -42,6 +43,7 @@ export default class Ghidorah extends Component<DefaultProps, Props, void> {
           <div>Fur: Density: { this.props.fur.density }</div>
         ) : null}
         <div>array: { this.props.teeth }</div>
+        <div>toe: { this.props.toe }</div>
       </div>
     );
   }
