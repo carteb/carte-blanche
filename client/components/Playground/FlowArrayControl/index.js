@@ -23,7 +23,7 @@ const FlowArrayControl = (props) => {
     onUpdate({ value: newValue });
   };
 
-  // fix this for multiples ones
+  // TODO fix this for multiples ones
   const control = getControl(propTypeData.elements[0]);
 
   return (
@@ -50,7 +50,7 @@ FlowArrayControl.randomValue = (props) => {
   const size = Math.floor(Math.random() * (max - min + 1)) + min;
   const rangeArray = range(min, size);
 
-  // fix this for multiples ones
+  // TODO fix this for multiples ones
   const control = getControl(props.elements[0]);
 
   let value;
