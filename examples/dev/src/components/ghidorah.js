@@ -26,7 +26,7 @@ type DefaultProps = {
   isDangerous: boolean,
 }
 
-export default class Ghidorah extends Component<DefaultProps, Props, void> {
+export default class Ghidorah extends Component {
 
   static defaultProps: DefaultProps = {
     isDangerous: false,
