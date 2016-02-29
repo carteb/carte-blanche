@@ -1,7 +1,7 @@
 /**
  * Mocks the components for easier client developments
  */
-require('../plugin/client-api.js');
+require('./client-api.js');
 
 // Create routes exactly like the plugin would
 window.__STYLEGUIDE_PLUGIN_CLIENT_API.scripts = {
