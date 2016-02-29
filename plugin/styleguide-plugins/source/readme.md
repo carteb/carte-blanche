@@ -1,0 +1,1 @@
+This plugin displays the source code of the component

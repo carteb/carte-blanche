@@ -1,0 +1,1 @@
+This plugin displays the react docs of the component
