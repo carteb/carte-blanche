@@ -15,7 +15,7 @@ class App extends React.Component {
     };
   }
 
-  toggleMenu() {
+  toggleMenu = () => {
     this.setState({
       drawerVisible: !this.state.drawerVisible,
     });
@@ -28,7 +28,7 @@ class App extends React.Component {
         <div className={(!this.state.drawerVisible) ? styles.preview : styles.previewOpen}>
           <button
             className={styles.menuButton}
-            onClick={this.toggleMenu.bind(this)}
+            onClick={this.toggleMenu}
           >
             Menu
           </button>

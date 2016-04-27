@@ -22,13 +22,13 @@ module.exports = function metaLoader(source) {
   const data = { source, module };
 
   // Trigger events for styleguide child plugins
-  this._compilation.applyPlugins(
+  this._compilation.applyPlugins( // eslint-disable-line no-underscore-dangle
     'styleguide-plugin-before-processing',
     data,
     this
   );
 
-  this._compilation.applyPlugins(
+  this._compilation.applyPlugins( // eslint-disable-line no-underscore-dangle
     'styleguide-plugin-processing',
     renderToStyleguideApi,
     data,
@@ -42,10 +42,14 @@ module.exports = function metaLoader(source) {
       .filter((styleguidePlugin) => styleguidePlugin.result !== undefined)
       .map((styleguidePlugin) => {
         // Execute the default export of the plugins frontend module
-        const frontendCode = 'function() { return ' +
-          '(require(' + JSON.stringify(styleguidePlugin.frontendPlugin) + '))' +
-          '.default.apply(this, Array.prototype.concat.apply([this.result, data], arguments))' +
-        '}';
+        const frontendCode = `function() {
+          return (
+            require(${JSON.stringify(styleguidePlugin.frontendPlugin)}))
+            .default.apply(
+              this,
+              Array.prototype.concat.apply([this.result, data], arguments)
+            )
+          };`;
         return `{
           name: ${JSON.stringify(styleguidePlugin.name)},
           result: ${JSON.stringify(styleguidePlugin.result)},

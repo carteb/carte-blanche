@@ -12,15 +12,23 @@ window.STYLEGUIDE_PLUGIN_CLIENT_API = {
   loadComplete: function loadComplete(name, data) {
     var event = document.createEvent('Event'); // eslint-disable-line no-var
     window.STYLEGUIDE_PLUGIN_CLIENT_API.cache[name] = data;
-    event.initEvent('styleguide-plugin-component-load_' + name);
+    event.initEvent(`styleguide-plugin-component-load_${name}`);
     document.documentElement.dispatchEvent(event);
   },
 
   on: function on(name, fn) {
-    document.documentElement.addEventListener('styleguide-plugin-component-load_' + name, fn, false);
+    document.documentElement.addEventListener(
+      `styleguide-plugin-component-load_${name}`,
+      fn,
+      false
+    );
   },
 
   off: function off(name, fn) {
-    document.documentElement.removeEventListener('styleguide-plugin-component-load_' + name, fn, false);
+    document.documentElement.removeEventListener(
+      `styleguide-plugin-component-load_${name}`,
+      fn,
+      false
+    );
   },
 };

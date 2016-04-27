@@ -40,7 +40,11 @@ class ComponentPreview extends React.Component {
     const componentMeta = this.state.componentData.meta;
     const Component = this.state.componentData.component;
     const componentPlugins = componentMeta
-      .map(component => <div key={component.name}>{component.frontendPlugin && component.frontendPlugin(React)}</div>)
+      .map(component => (
+        <div key={component.name}>
+          {component.frontendPlugin && component.frontendPlugin(React)}
+        </div>
+      ))
       .filter(component => component !== undefined);
     return (
       <div>
