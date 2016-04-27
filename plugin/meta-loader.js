@@ -19,14 +19,26 @@ module.exports = function metaLoader(source) {
     }));
   };
 
+  const data = { source, module };
+
   // Trigger events for styleguide child plugins
-  const data = { source };
-  this._compilation.applyPlugins('styleguide-plugin-before-processing', data, this);
-  this._compilation.applyPlugins('styleguide-plugin-processing', renderToStyleguideApi, data, this);
+  this._compilation.applyPlugins(
+    'styleguide-plugin-before-processing',
+    data,
+    this
+  );
+
+  this._compilation.applyPlugins(
+    'styleguide-plugin-processing',
+    renderToStyleguideApi,
+    data,
+    this
+  );
 
   // Execute all plugins and return the module code
   const callback = this.async();
-  Promise.all(styleguidePluginPromisses).then((styleguidPlugins) => styleguidPlugins
+  Promise.all(styleguidePluginPromisses)
+    .then((styleguidPlugins) => styleguidPlugins
       .filter((styleguidePlugin) => styleguidePlugin.result !== undefined)
       .map((styleguidePlugin) => {
         // Execute the default export of the plugins frontend module
@@ -40,7 +52,13 @@ module.exports = function metaLoader(source) {
           frontendPlugin: ${styleguidePlugin.frontendPlugin ? frontendCode : '""'}
         }`;
       })
-  )
-  .then((componentData) => callback(null, 'var data = ' + JSON.stringify(data) + ';  module.exports = [' + componentData.join(',') + '];'))
-  .catch((err) => callback(err));
+    )
+    .then((componentData) => callback(
+      null,
+      `
+      var data = ${JSON.stringify(data)};
+      module.exports = [${componentData.join(',')}];
+      `
+    ))
+    .catch((err) => callback(err));
 };

@@ -10,9 +10,12 @@ ReactDocsPlugin.prototype.apply = function apply(compiler) {
   const options = this.options;
   compiler.plugin('compilation', (compilation) => {
     // Expose the react parse result to all other styleguide plugins
-    compilation.plugin('styleguide-plugin-before-processing', function reactDocsParse(data) {
-      data.reactDocs = reactDocs.parse(data.source);
-    });
+    compilation.plugin(
+      'styleguide-plugin-before-processing',
+      function reactDocsParse(data) {
+        data.reactDocs = reactDocs.parse(data.source);
+      }
+    );
 
     // The ng-docs styleguide plugin
     compilation.plugin('styleguide-plugin-processing', function reactDocsRegister(renderStyleguide, data) {

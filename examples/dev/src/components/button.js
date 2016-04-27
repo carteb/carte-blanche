@@ -2,11 +2,6 @@ import React, { PropTypes } from 'react';
 
 /**
  * Button component
- *
- * @example
- * <Component>Follow us on Twitter</Component>
- * @example
- * <Component type="reset">Reset Form</Component>
  */
 const Button = ({ className, type, children }) => (
   <button
