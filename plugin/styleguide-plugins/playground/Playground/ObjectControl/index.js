@@ -18,7 +18,7 @@ const ObjectControl = ({ label, propTypeData, value, onUpdate }) => {
   };
 
   const normalizedPropsWithControls = mapValues(propTypeData.value, (prop) => {
-    prop.control = getControl(prop);
+    prop.control = getControl(prop); // eslint-disable-line no-param-reassign
     return prop;
   });
 
@@ -28,11 +28,11 @@ const ObjectControl = ({ label, propTypeData, value, onUpdate }) => {
       <div>
         {label ? '${label}:' : null} {'{'}
         <RandomButton
-          onClick={ () => onUpdate({ value: ObjectControl.randomValue(propTypeData) }) }
+          onClick={() => onUpdate({ value: ObjectControl.randomValue(propTypeData) })}
         />
       </div>
       <div style={{ paddingLeft: 20 }}>
-        { renderControls(normalizedPropsWithControls, value, updatePropertyValues) }
+        {renderControls(normalizedPropsWithControls, value, updatePropertyValues)}
       </div>
       <div>{'}'}</div>
     </div>
@@ -43,7 +43,7 @@ ObjectControl.randomValue = (propTypeData) => {
   const canBeNull = true;
   const canBeUndefined = true;
   const normalizedPropsWithControls = mapValues(propTypeData.value, (prop) => {
-    prop.control = getControl(prop);
+    prop.control = getControl(prop); // eslint-disable-line no-param-reassign
     return prop;
   });
   const value = randomValues(normalizedPropsWithControls);

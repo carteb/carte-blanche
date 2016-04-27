@@ -27,12 +27,12 @@ const FlowArrayControl = (props) => {
 
   return (
     <div>
-      <label>{ label } [</label>
+      <label>{label} [</label>
       <RandomButton
-        onClick={ () => onUpdate({ value: FlowArrayControl.randomValue(propTypeData) }) }
+        onClick={() => onUpdate({ value: FlowArrayControl.randomValue(propTypeData) })}
       />
         <div style={{ paddingLeft: 20 }}>
-          { rangeArray && rangeArray.map((index) => {
+          {rangeArray && rangeArray.map((index) => {
             const newProps = {
               key: index,
               value: value[index],

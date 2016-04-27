@@ -11,18 +11,16 @@ import {
 } from 'react-router';
 import ComponentPreview from './components/ComponentPreview';
 import App from './components/App';
-const styleguideClientApi = window.__STYLEGUIDE_PLUGIN_CLIENT_API;
+const styleguideClientApi = window.STYLEGUIDE_PLUGIN_CLIENT_API;
 
 // Generate a view for every component
 const routeViews = {};
 Object.keys(styleguideClientApi.scripts).forEach((componentName) => {
-  routeViews[componentName] = React.createClass({
-    render() {
-      return (<ComponentPreview
-        name={componentName}
-      />);
-    },
-  });
+  routeViews[componentName] = () => (
+    <ComponentPreview
+      name={componentName}
+    />
+  );
 });
 
 // Generate a route for every view
@@ -36,9 +34,9 @@ const routes = Object.keys(routeViews)
     ));
 
 ReactDOM.render(
-  <Router history={ hashHistory }>
+  <Router history={hashHistory}>
     <Route path="/" component={App}>
-      { routes }
+      {routes}
     </Route>
   </Router>,
   document.getElementById('styleguide-root')

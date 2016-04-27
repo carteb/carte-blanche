@@ -26,7 +26,7 @@ const BooleanControl = (props) => {
           <Choice value={false}>False</Choice>
         </Toggle>
       </label>
-      <RandomButton onClick={ () => onUpdate({ value: BooleanControl.randomValue(props) }) }/>
+      <RandomButton onClick={() => onUpdate({ value: BooleanControl.randomValue(props) })} />
       {typeof value === 'undefined' ? 'undefined' : null}
       {value === null ? 'null' : null}
     </div>

@@ -34,25 +34,25 @@ const getControl = (propType) => {
       control = <StringControl />;
       break;
     case 'enum':
-      control = <EnumControl propTypeData={ propType } />;
+      control = <EnumControl propTypeData={propType} />;
       break;
     case 'node':
       control = <NodeControl />;
       break;
     case 'shape': // proptypes
-      control = <ObjectControl propTypeData={ propType } />;
+      control = <ObjectControl propTypeData={propType} />;
       break;
     case 'signature': // flow
-      control = <FlowObjectControl propTypeData={ propType } />;
+      control = <FlowObjectControl propTypeData={propType} />;
       break;
     case 'arrayOf':
-      control = <ArrayControl propTypeData={ propType } />;
+      control = <ArrayControl propTypeData={propType} />;
       break;
     case 'Array':
-      control = <FlowArrayControl propTypeData={ propType } />;
+      control = <FlowArrayControl propTypeData={propType} />;
       break;
     case 'union':
-      control = <FlowUnionControl propTypeData={ propType } />;
+      control = <FlowUnionControl propTypeData={propType} />;
       break;
     default:
       control = <DummyControl />;

@@ -14,21 +14,21 @@ const Godzilla = (props) => {
 
   return (
     <div>
-      <div>{ isDangerous ? 'Dangerous' : 'Not Dangerous'}</div>
-      <div>description: { description }</div>
-      <div>Age: { age }</div>
+      <div>{isDangerous ? 'Dangerous' : 'Not Dangerous'}</div>
+      <div>description: {description}</div>
+      <div>Age: {age}</div>
       {(fur) ? (
-        <div>Fur: Density: { fur.density }</div>
+        <div>Fur: Density: {fur.density}</div>
       ) : null}
-      <div>array: { teeth }</div>
+      <div>array: {teeth}</div>
       <div>
         nestedArray:
-        { nestedArray && nestedArray.map((entry, index) => {
-          return (<div key={index} >{ entry.color}, { entry.fontSize }</div>);
+        {nestedArray && nestedArray.map((entry, index) => {
+          return (<div key={index} >{entry.color}, {entry.fontSize}</div>);
         })}
       </div>
-      <div>type: { type }</div>
-      <div>noseLength: { noseLength }</div>
+      <div>type: {type}</div>
+      <div>noseLength: {noseLength}</div>
     </div>
   );
 };

@@ -12,17 +12,17 @@ ReactDocsPlugin.prototype.apply = function apply(compiler) {
     // Expose the react parse result to all other styleguide plugins
     compilation.plugin(
       'styleguide-plugin-before-processing',
-      function reactDocsParse(data) {
-        data.reactDocs = reactDocs.parse(data.source);
+      (data) => {
+        data.reactDocs = reactDocs.parse(data.source); // eslint-disable-line no-param-reassign
       }
     );
 
     // The ng-docs styleguide plugin
-    compilation.plugin('styleguide-plugin-processing', function reactDocsRegister(renderStyleguide, data) {
+    compilation.plugin('styleguide-plugin-processing', (renderStyleguide, data) => {
       renderStyleguide({
         name: 'reactDocs',
         frontendData: { reactDocs: data.reactDocs, options },
-        frontendPlugin: '!!babel!' + require.resolve('./component.js'),
+        frontendPlugin: `!!babel!${require.resolve('./component.js')}`,
       });
     });
   });

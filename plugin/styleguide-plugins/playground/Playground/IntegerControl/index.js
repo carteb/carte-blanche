@@ -13,15 +13,15 @@ const IntegerControl = (props) => {
   return (
     <div>
       <label>
-        { label }
+        {label}
         <input
           type="number"
           step="1"
-          value={ value }
+          value={value}
           onChange={(event) => onUpdate({ value: parseInt(event.target.value, 10) })}
         />
       </label>
-      <RandomButton onClick={ () => onUpdate({ value: IntegerControl.randomValue(props) }) }/>
+      <RandomButton onClick={() => onUpdate({ value: IntegerControl.randomValue(props) })} />
       {typeof value === 'undefined' ? 'undefined' : null}
       {value === null ? 'null' : null}
     </div>

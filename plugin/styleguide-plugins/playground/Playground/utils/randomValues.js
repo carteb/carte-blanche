@@ -7,10 +7,10 @@
 
 import mapValues from 'lodash/mapValues';
 
-const randomValues = (propTypes) => {
-  return mapValues(propTypes, (propType) => {
-    return propType.control.type.randomValue(propType);
-  });
-};
+const randomValues = (propTypes) => (
+  mapValues(propTypes, (propType) => (
+    propType.control.type.randomValue(propType)
+  ))
+);
 
 export default randomValues;

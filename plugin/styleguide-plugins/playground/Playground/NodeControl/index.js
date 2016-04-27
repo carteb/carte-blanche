@@ -15,7 +15,7 @@ const NodeControl = (props) => {
           onChange={(event) => onUpdate({ value: event.target.value })}
         />
       </label>
-      <RandomButton onClick={ () => onUpdate({ value: NodeControl.randomValue(props) }) }/>
+      <RandomButton onClick={() => onUpdate({ value: NodeControl.randomValue(props) })} />
       {typeof value === 'undefined' ? 'undefined' : null}
       {value === null ? 'null' : null}
     </div>

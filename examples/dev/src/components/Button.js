@@ -8,7 +8,7 @@ const Button = ({ className, type, children }) => (
     className={className}
     type={type}
   >
-    { children }
+    {children}
   </button>
 );
 

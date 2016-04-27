@@ -12,7 +12,7 @@ import Ghidorah from './components/Ghidorah';
 
 ReactDOM.render(
   <div>
-    Hello World: { cube }
+    Hello World: {cube}
     <Button>Click Me</Button>
     <Card />
     <ImmutableList />

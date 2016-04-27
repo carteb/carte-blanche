@@ -17,8 +17,8 @@ export default (props) => {
   const data = props.data || List();
   return (
     <ul>
-      { data.map((item) => (<li>{item}</li>))}
-      { data.size === 0 ? 'This list is empty' : '' }
+      {data.map((item) => (<li>{item}</li>))}
+      {data.size === 0 ? 'This list is empty' : ''}
     </ul>
   );
 };

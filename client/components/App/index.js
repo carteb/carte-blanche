@@ -23,18 +23,18 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className={ styles.main }>
+      <div className={styles.main}>
         <Navigation />
-        <div className={(!this.state.drawerVisible) ? styles.preview : styles.previewOpen }>
+        <div className={(!this.state.drawerVisible) ? styles.preview : styles.previewOpen}>
           <button
-            className={ styles.menuButton }
+            className={styles.menuButton}
             onClick={this.toggleMenu.bind(this)}
           >
             Menu
           </button>
-          <div className={ styles.componentWrapper }>
+          <div className={styles.componentWrapper}>
             {(this.props.children) ? (
-              <div>{ this.props.children }</div>
+              <div>{this.props.children}</div>
             ) : (
               <h2>Home</h2>
             )}

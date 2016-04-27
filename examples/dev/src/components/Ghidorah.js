@@ -37,15 +37,15 @@ export default class Ghidorah extends Component {
   render() {
     return (
       <div>
-        <div>{ this.props.isDangerous ? 'Dangerous' : 'Not Dangerous'}</div>
-        <div>description: { this.props.description }</div>
-        <div>Age: { this.props.age }</div>
+        <div>{this.props.isDangerous ? 'Dangerous' : 'Not Dangerous'}</div>
+        <div>description: {this.props.description}</div>
+        <div>Age: {this.props.age}</div>
         {(this.props.fur) ? (
-          <div>Fur: Density: { this.props.fur.density }</div>
+          <div>Fur: Density: {this.props.fur.density}</div>
         ) : null}
-        <div>array: { this.props.teeth }</div>
-        <div>array of arrays: { this.props.teethOfTeeth }</div>
-        <div>toe: { this.props.toe }</div>
+        <div>array: {this.props.teeth}</div>
+        <div>array of arrays: {this.props.teethOfTeeth}</div>
+        <div>toe: {this.props.toe}</div>
       </div>
     );
   }

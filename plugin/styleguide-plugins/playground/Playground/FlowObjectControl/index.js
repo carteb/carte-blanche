@@ -17,7 +17,7 @@ const normalizeProps = (props) => {
   const propsObject = keyBy(props, 'key');
   const normalizedProps = mapValues(propsObject, (prop) => prop.value);
   return mapValues(normalizedProps, (prop) => {
-    prop.control = getControl(prop);
+    prop.control = getControl(prop); // eslint-disable-line no-param-reassign
     return prop;
   });
 };
@@ -34,11 +34,11 @@ const FlowObjectControl = ({ label, propTypeData, value, onUpdate }) => {
       <div>
         {label ? '${label}:' : null} {'{'}
         <RandomButton
-          onClick={ () => onUpdate({ value: FlowObjectControl.randomValue(propTypeData) }) }
+          onClick={() => onUpdate({ value: FlowObjectControl.randomValue(propTypeData) })}
         />
       </div>
       <div style={{ paddingLeft: 20 }}>
-        { renderControls(normalizedPropsWithControls, value, updatePropertyValues) }
+        {renderControls(normalizedPropsWithControls, value, updatePropertyValues)}
       </div>
       <div>{'}'}</div>
     </div>

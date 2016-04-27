@@ -1,17 +1,17 @@
-window.__STYLEGUIDE_PLUGIN_CLIENT_API = {
+window.STYLEGUIDE_PLUGIN_CLIENT_API = {
   cache: {},
 
   // Lazy load the script for the given component
   load: function load(name) {
     var script = document.createElement('script'); // eslint-disable-line no-var
     script.type = 'text/javascript';
-    script.src = window.__STYLEGUIDE_PLUGIN_CLIENT_API.scripts[name];
+    script.src = window.STYLEGUIDE_PLUGIN_CLIENT_API.scripts[name];
     document.body.appendChild(script);
   },
 
   loadComplete: function loadComplete(name, data) {
     var event = document.createEvent('Event'); // eslint-disable-line no-var
-    window.__STYLEGUIDE_PLUGIN_CLIENT_API.cache[name] = data;
+    window.STYLEGUIDE_PLUGIN_CLIENT_API.cache[name] = data;
     event.initEvent('styleguide-plugin-component-load_' + name);
     document.documentElement.dispatchEvent(event);
   },

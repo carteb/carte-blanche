@@ -7,7 +7,12 @@ import mapValues from 'lodash/mapValues';
 /*
  * Returns a ReactFragment containing all rendered controls.
  */
-const renderControls = (metadataWithControls, globalComponentProps, setGlobalComponentProps, keyPath = []) => {
+const renderControls = (
+  metadataWithControls,
+  globalComponentProps,
+  setGlobalComponentProps,
+  keyPath = []
+) => {
   const updatePropertyValues = (path, value) => {
     const values = set(globalComponentProps, path.join('.'), value);
     setGlobalComponentProps(values);

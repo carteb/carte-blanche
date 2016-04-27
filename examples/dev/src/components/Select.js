@@ -15,7 +15,7 @@ export default (props) => {
   const children = props.children || [];
   return (
     <ul>
-      { children.map((option) => (<li>{option}</li>))}
+      {children.map((option) => (<li>{option}</li>))}
     </ul>
   );
 };

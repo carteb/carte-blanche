@@ -11,7 +11,7 @@ class Examples extends React.Component {
         <h2>Examples</h2>
         <div>
           {compiledExamples.map((reactElement, index) => ((
-            <div key={index}>{ reactElement }</div>
+            <div key={index}>{reactElement}</div>
           )))}
         </div>
       </div>
