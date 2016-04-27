@@ -1,23 +1,23 @@
 const reactDocs = require('react-docgen');
 
-function NgDocsPlugin(options) {
+function ReactDocsPlugin(options) {
   this.options = options || {};
 }
 /**
  * Initializes the plugin, called after the main StyleguidePlugin function above
  */
-NgDocsPlugin.prototype.apply = function apply(compiler) {
+ReactDocsPlugin.prototype.apply = function apply(compiler) {
   const options = this.options;
   compiler.plugin('compilation', (compilation) => {
     // Expose the react parse result to all other styleguide plugins
-    compilation.plugin('styleguide-plugin-before-processing', function ngDocsParse(data) {
+    compilation.plugin('styleguide-plugin-before-processing', function reactDocsParse(data) {
       data.reactDocs = reactDocs.parse(data.source);
     });
 
     // The ng-docs styleguide plugin
-    compilation.plugin('styleguide-plugin-processing', function ngDocsRegister(renderStyleguide, data) {
+    compilation.plugin('styleguide-plugin-processing', function reactDocsRegister(renderStyleguide, data) {
       renderStyleguide({
-        name: 'ngDocs',
+        name: 'reactDocs',
         frontendData: { reactDocs: data.reactDocs, options },
         frontendPlugin: '!!babel!' + require.resolve('./component.js'),
       });
@@ -25,4 +25,4 @@ NgDocsPlugin.prototype.apply = function apply(compiler) {
   });
 };
 
-export default NgDocsPlugin;
+export default ReactDocsPlugin;

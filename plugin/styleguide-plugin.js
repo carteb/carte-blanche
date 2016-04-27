@@ -10,6 +10,7 @@ import fs from 'fs';
 import path from 'path';
 import ReactDocsPlugin from './styleguide-plugins/react-docs/plugin';
 import SourcePlugin from './styleguide-plugins/source/plugin';
+import PlaygroundPlugin from './styleguide-plugins/playground/plugin';
 
 let id = -1;
 /**
@@ -139,6 +140,8 @@ StyleguidePlugin.prototype.registerDefaultPlugins = function registerDefaultPlug
   reactDocsPlugin.apply(compiler);
   const sourcePlugin = new SourcePlugin();
   sourcePlugin.apply(compiler);
+  const playgroundPlugin = new PlaygroundPlugin();
+  playgroundPlugin.apply(compiler);
 };
 
 export default StyleguidePlugin;
