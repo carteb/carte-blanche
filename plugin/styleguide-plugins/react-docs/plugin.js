@@ -13,12 +13,13 @@ NgDocsPlugin.prototype.apply = function apply(compiler) {
     compilation.plugin('styleguide-plugin-before-processing', function ngDocsParse(data) {
       data.reactDocs = reactDocs.parse(data.source);
     });
+
     // The ng-docs styleguide plugin
     compilation.plugin('styleguide-plugin-processing', function ngDocsRegister(renderStyleguide, data) {
       renderStyleguide({
         name: 'ngDocs',
         frontendData: { reactDocs: data.reactDocs, options },
-        frontendPlugin: '!!babel!' + require.resolve('./component.js')
+        frontendPlugin: '!!babel!' + require.resolve('./component.js'),
       });
     });
   });

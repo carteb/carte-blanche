@@ -7,12 +7,13 @@ module.exports = function metaLoader(source) {
     if (!pluginOptions || !pluginOptions.name) {
       throw new Error('Plugin name is mandatory');
     }
+
     styleguidePluginPromisses.push(new Promise((resolve, reject) => {
       Promise.resolve(pluginOptions.frontendData)
         .then((result) => resolve({
           name: pluginOptions.name,
           result,
-          frontendPlugin: pluginOptions.frontendPlugin
+          frontendPlugin: pluginOptions.frontendPlugin,
         }))
         .catch((err) => reject(err));
     }));

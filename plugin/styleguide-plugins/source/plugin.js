@@ -12,7 +12,7 @@ SourcePlugin.prototype.apply = function apply(compiler) {
       renderStyleguide({
         name: 'source',
         frontendData: { options },
-        frontendPlugin: '!!babel!' + require.resolve('./component.js')
+        frontendPlugin: '!!babel!' + require.resolve('./component.js'),
       });
     });
   });

@@ -55,6 +55,7 @@ StyleguidePlugin.prototype.getCache = function getCache(compiler) {
  */
 StyleguidePlugin.prototype.apply = function apply(compiler) {
   this.registerDefaultPlugins(compiler);
+
   // Create the cache for this instace of the compiler
   const cache = this.getCache(compiler);
   const loaderRequest = require.resolve('./loader.js') + '?' + this.id;
@@ -64,6 +65,7 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
       if (data.loaders.indexOf(loaderRequest) >= 0) {
         return callback(null, data);
       }
+
       // Load all files hat are matched by the directory glob specified in options.src
       // with the loader in ./loader.js
       // (minimatch checks if a path matches a glob pattern)
@@ -104,29 +106,26 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
       </body>
     </html>`;
     const styleguidePath = this.options.dest || 'styleguide/index.html';
+
     // And emit that HTML template as 'styleguide.html'
     compilation.assets[styleguidePath] = {
-      source: () => {
-        return html;
-      },
+      source: () => html,
       size: () => html.length,
     };
+
     // Add styleguide base javascript
     if (!compilation.assets['styleguide/client-bundle.js']) {
       const clientJs = fs.readFileSync(path.join(__dirname, 'client-bundle.js'));
       compilation.assets['styleguide/client-bundle.js'] = {
-        source: () => {
-          return clientJs;
-        },
+        source: () => clientJs,
         size: () => clientJs.length,
       };
     }
+
     if (!compilation.assets['styleguide/client-api.js']) {
       const clientJs = fs.readFileSync(path.join(__dirname, 'client-api.js'));
       compilation.assets['styleguide/client-api.js'] = {
-        source: () => {
-          return clientJs;
-        },
+        source: () => clientJs,
         size: () => clientJs.length,
       };
     }

@@ -41,9 +41,8 @@
     "client:dev": "webpack-dev-server --hot --config client/webpack.dev.babel.js",
     "client:build": "webpack --config client/webpack.prod.babel.js --progress -p",
     "build": "npm run client:build",
-    "lint": "npm run lint:eslint  && npm run lint:jscs && npm run lint:flow",
+    "lint": "npm run lint:eslint && npm run lint:flow",
     "lint:eslint": "eslint ./",
-    "lint:jscs": "jscs ./",
     "lint:flow": "flow status",
     "test": "node_modules/.bin/mocha --compilers js:babel-core/register --require testHelper.js client/**/__test__/*.js plugin/**/__test__/*.js",
     "test:watch": "npm test -- --watch"

@@ -4,7 +4,7 @@
 
 import React from 'react';
 
-import Playground from './Playground'; // TODO
+// import Playground from './Playground'; // TODO
 const styleguideClientApi = window.__STYLEGUIDE_PLUGIN_CLIENT_API;
 
 class ComponentPreview extends React.Component {
@@ -38,7 +38,6 @@ class ComponentPreview extends React.Component {
     }
 
     const componentMeta = this.state.componentData.meta;
-    const componentExamples = this.state.componentData.examples;
     const Component = this.state.componentData.component;
     const componentPlugins = componentMeta
       .map(component => <div key={component.name}>{component.frontendPlugin && component.frontendPlugin(React)}</div>)
