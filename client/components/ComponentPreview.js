@@ -5,7 +5,7 @@
 import React from 'react';
 
 // import Playground from './Playground'; // TODO
-const styleguideClientApi = window.__STYLEGUIDE_PLUGIN_CLIENT_API;
+const styleguideClientApi = window.STYLEGUIDE_PLUGIN_CLIENT_API;
 
 class ComponentPreview extends React.Component {
   constructor(props) {
@@ -34,13 +34,17 @@ class ComponentPreview extends React.Component {
 
   render() {
     if (!this.state.componentData || !this.state.componentData.meta) {
-      return (<div/>);
+      return (<div />);
     }
 
     const componentMeta = this.state.componentData.meta;
     const Component = this.state.componentData.component;
     const componentPlugins = componentMeta
-      .map(component => <div key={component.name}>{component.frontendPlugin && component.frontendPlugin(React)}</div>)
+      .map(component => (
+        <div key={component.name}>
+          {component.frontendPlugin && component.frontendPlugin(React)}
+        </div>
+      ))
       .filter(component => component !== undefined);
     return (
       <div>

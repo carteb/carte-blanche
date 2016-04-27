@@ -10,19 +10,19 @@ PlaygroundPlugin.prototype.apply = function apply(compiler) {
     // Expose the react parse result to all other styleguide plugins
     compilation.plugin(
       'styleguide-plugin-before-processing',
-      function module(data) {
-        data.module = 'test';
+      (data) => {
+        data.module = 'test'; // eslint-disable-line no-param-reassign
       }
     );
 
     // The source styleguide plugin
     compilation.plugin(
       'styleguide-plugin-processing',
-      function playgroundRegister(renderStyleguide) {
+      (renderStyleguide) => {
         renderStyleguide({
           name: 'playground',
           frontendData: { options },
-          frontendPlugin: '!!babel!' + require.resolve('./component.js'),
+          frontendPlugin: `!!babel!${require.resolve('./component.js')}`,
         });
       }
     );

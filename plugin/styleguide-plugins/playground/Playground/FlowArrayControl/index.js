@@ -27,22 +27,22 @@ const FlowArrayControl = (props) => {
 
   return (
     <div>
-      <label>{ label } [</label>
+      <label>{label} [</label>
       <RandomButton
-        onClick={ () => onUpdate({ value: FlowArrayControl.randomValue(propTypeData) }) }
+        onClick={() => onUpdate({ value: FlowArrayControl.randomValue(propTypeData) })}
       />
-        <div style={{ paddingLeft: 20 }}>
-          { rangeArray && rangeArray.map((index) => {
-            const newProps = {
-              key: index,
-              value: value[index],
-              onUpdate: (data) => onUpdateEntry(data.value, index),
-            };
-            return cloneElement(control, newProps);
-          })}
-          {typeof value === 'undefined' ? 'undefined' : null}
-          {value === null ? 'null' : null}
-        </div>
+      <div style={{ paddingLeft: 20 }}>
+        {rangeArray && rangeArray.map((index) => {
+          const newProps = {
+            key: index,
+            value: value[index],
+            onUpdate: (data) => onUpdateEntry(data.value, index),
+          };
+          return cloneElement(control, newProps);
+        })}
+        {typeof value === 'undefined' ? 'undefined' : null}
+        {value === null ? 'null' : null}
+      </div>
       <div>]</div>
     </div>
   );
@@ -59,10 +59,7 @@ FlowArrayControl.randomValue = (props) => {
   // TODO fix this for multiples ones
   const control = getControl(props.elements[0]);
 
-  let value;
-  value = rangeArray.map(() => {
-    return control.type.randomValue(props.elements[0]);
-  });
+  const value = rangeArray.map(() => control.type.randomValue(props.elements[0]));
 
   return valueOrNullOrUndefined(value, canBeNull, canBeUndefined);
 };

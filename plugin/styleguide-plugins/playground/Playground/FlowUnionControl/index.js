@@ -27,28 +27,26 @@ const FlowUnionControl = ({ label, propTypeData, value, onUpdate }) => {
     <div>
       {label}
       <select
-        value={ typeof value }
-        onChange={ (event) => {
+        value={typeof value}
+        onChange={(event) => {
           const newTypeName = event.target.value;
           const control = getControl({ name: newTypeName });
           return onUpdate({ value: control.type.randomValue({}) });
         }}
       >
-        { propTypeData.elements.map((type, index) => {
-          return (
-            <option
-              value={ type.name }
-              key={ index }
-            >
-              { type.name }
-            </option>
-          );
-        })}
+        {propTypeData.elements.map((type, index) => (
+          <option
+            value={type.name}
+            key={index}
+          >
+            {type.name}
+          </option>
+        ))}
       </select>
       <RandomButton
-        onClick={ () => onUpdate({ value: FlowUnionControl.randomValue(propTypeData) }) }
+        onClick={() => onUpdate({ value: FlowUnionControl.randomValue(propTypeData) })}
       />
-      { clonedControl }
+      {clonedControl}
     </div>
   );
 };

@@ -2,6 +2,8 @@
 .*/node_modules/babel.*
 .*/node_modules/fbjs/.*
 .*/node_modules/react/.*
+.*/node_modules/config-chain/.*
+.*/node_modules/npmconf/.*
 
 [include]
 
@@ -16,4 +18,4 @@ module.name_mapper='.*\(.gif\)' -> 'GifModule'
 module.system=haste
 
 [version]
-0.21.0
+0.23.0

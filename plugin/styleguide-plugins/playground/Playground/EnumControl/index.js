@@ -19,27 +19,25 @@ const EnumControl = (props) => {
       <label>
         {label}
         <select
-          value={ value }
-          onChange={ (event) => {
+          value={value}
+          onChange={(event) => {
             const newValue = eval(event.target.value); // eslint-disable-line no-eval
             return onUpdate({ value: newValue });
           }}
         >
-          { propTypeData.value && propTypeData.value.map((valueEntry, index) => {
-            return (
-              <option
-                value={
-                  eval(valueEntry.value) // eslint-disable-line no-eval
-                }
-                key={ index }
-              >
-                { valueEntry.value }
-              </option>
-            );
-          })}
+          {propTypeData.value && propTypeData.value.map((valueEntry, index) => (
+            <option
+              value={
+                eval(valueEntry.value) // eslint-disable-line no-eval
+              }
+              key={index}
+            >
+              {valueEntry.value}
+            </option>
+          ))}
         </select>
       </label>
-      <RandomButton onClick={ () => onUpdate({ value: EnumControl.randomValue(propTypeData) }) }/>
+      <RandomButton onClick={() => onUpdate({ value: EnumControl.randomValue(propTypeData) })} />
     </div>
   );
 };

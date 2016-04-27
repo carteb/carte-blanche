@@ -15,7 +15,7 @@ const StringControl = (props) => {
           onChange={(event) => onUpdate({ value: event.target.value })}
         />
       </label>
-      <RandomButton onClick={ () => onUpdate({ value: StringControl.randomValue(props) }) }/>
+      <RandomButton onClick={() => onUpdate({ value: StringControl.randomValue(props) })} />
       {typeof value === 'undefined' ? 'undefined' : null}
       {value === null ? 'null' : null}
     </div>

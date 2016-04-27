@@ -26,22 +26,22 @@ const ArrayControl = (props) => {
 
   return (
     <div>
-      <label>{ label } [</label>
+      <label>{label} [</label>
       <RandomButton
-        onClick={ () => onUpdate({ value: ArrayControl.randomValue(propTypeData) }) }
+        onClick={() => onUpdate({ value: ArrayControl.randomValue(propTypeData) })}
       />
-        <div style={{ paddingLeft: 20 }}>
-          { rangeArray && rangeArray.map((index) => {
-            const newProps = {
-              key: index,
-              value: value[index],
-              onUpdate: (data) => onUpdateEntry(data.value, index),
-            };
-            return cloneElement(control, newProps);
-          })}
-          {typeof value === 'undefined' ? 'undefined' : null}
-          {value === null ? 'null' : null}
-        </div>
+      <div style={{ paddingLeft: 20 }}>
+        {rangeArray && rangeArray.map((index) => {
+          const newProps = {
+            key: index,
+            value: value[index],
+            onUpdate: (data) => onUpdateEntry(data.value, index),
+          };
+          return cloneElement(control, newProps);
+        })}
+        {typeof value === 'undefined' ? 'undefined' : null}
+        {value === null ? 'null' : null}
+      </div>
       <div>]</div>
     </div>
   );
@@ -57,9 +57,7 @@ ArrayControl.randomValue = (props) => {
   const propTypeData = props.value || props.type && props.type.value; // TODO clean up
   const control = getControl(propTypeData);
 
-  const value = rangeArray.map(() => {
-    return control.type.randomValue(propTypeData);
-  });
+  const value = rangeArray.map(() => control.type.randomValue(propTypeData));
 
   return valueOrNullOrUndefined(value, canBeNull, canBeUndefined);
 };

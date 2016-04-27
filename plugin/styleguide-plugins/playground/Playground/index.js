@@ -18,7 +18,7 @@ const PlaygroundWrapper = (props) => {
   if (props.meta.props) {
     metadataWithControls = mapValues(props.meta.props, (prop) => {
       if (!prop.control) {
-        prop.control = getControl(prop);
+        prop.control = getControl(prop); // eslint-disable-line no-param-reassign
       }
 
       return prop;
@@ -27,7 +27,12 @@ const PlaygroundWrapper = (props) => {
 
   // Generate initial random values for props
   const initialState = randomValues(metadataWithControls);
-  const StatefulPlayground = withState('globalComponentProps', 'setGlobalComponentProps', initialState, Playground);
+  const StatefulPlayground = withState(
+    'globalComponentProps',
+    'setGlobalComponentProps',
+    initialState,
+    Playground
+  );
   return (
     <StatefulPlayground
       metadataWithControls={metadataWithControls}

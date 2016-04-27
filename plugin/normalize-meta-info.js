@@ -5,7 +5,10 @@ const omit = require('lodash/omit');
 const normalizeMetaInfo = (metaInformation) => {
   // there can be the case where a property is `flowType` and therefor we need to
   // check if flowType contains name
-  const hasFlowType = (has(metaInformation, 'flowType') && has(metaInformation, ['flowType', 'name']));
+  const hasFlowType = (
+    has(metaInformation, 'flowType') &&
+    has(metaInformation, ['flowType', 'name'])
+  );
   if (hasFlowType) {
     const info = {
       ...metaInformation,
@@ -36,9 +39,7 @@ const normalizeMetaInfo = (metaInformation) => {
   }
 
   if (typeof metaInformation === 'object') {
-    return mapValues(metaInformation, (entry) => {
-      return normalizeMetaInfo(entry);
-    });
+    return mapValues(metaInformation, (entry) => normalizeMetaInfo(entry));
   }
 
   return metaInformation;

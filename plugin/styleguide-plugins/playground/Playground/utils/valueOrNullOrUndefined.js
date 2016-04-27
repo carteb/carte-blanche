@@ -5,7 +5,7 @@
  * @param  {bool} canBeNull        If the returned value can be null
  * @param  {bool} canBeUndefined   If the returned value can be undefined
  *
- * @return {any}                   Either the initial value or, in 10% of the cases, null or undefined
+ * @return {any}    Either the initial value or, in 10% of the cases, null or undefined
  */
 const valueOrNullOrUndefined = (value, canBeNull, canBeUndefined) => {
   const random = Math.random();
