@@ -8,6 +8,9 @@
 import minimatch from 'minimatch';
 import fs from 'fs';
 import path from 'path';
+import ReactDocsPlugin from './styleguide-plugins/react-docs/plugin';
+import SourcePlugin from './styleguide-plugins/source/plugin';
+import PlaygroundPlugin from './styleguide-plugins/playground/plugin';
 
 let id = -1;
 /**
@@ -52,16 +55,23 @@ StyleguidePlugin.prototype.getCache = function getCache(compiler) {
  * Initializes the plugin, called after the main StyleguidePlugin function above
  */
 StyleguidePlugin.prototype.apply = function apply(compiler) {
+  this.registerDefaultPlugins(compiler);
+
   // Create the cache for this instace of the compiler
   const cache = this.getCache(compiler);
+  const loaderRequest = require.resolve('./loader.js') + '?' + this.id;
 
   compiler.plugin('normal-module-factory', (nmf) => {
     nmf.plugin('after-resolve', (data, callback) => {
+      if (data.loaders.indexOf(loaderRequest) >= 0) {
+        return callback(null, data);
+      }
+
       // Load all files hat are matched by the directory glob specified in options.src
       // with the loader in ./loader.js
       // (minimatch checks if a path matches a glob pattern)
       if (minimatch(path.relative(compiler.context, data.userRequest), this.options.src)) {
-        data.loaders.unshift(require.resolve('./loader.js') + '?' + this.id);
+        data.loaders.unshift(loaderRequest);
       }
 
       callback(null, data);
@@ -69,10 +79,6 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
   });
 
   compiler.plugin('emit', (compilation, callback) => {
-    // Get the bundled Styleguide Client
-    const clientApi = fs.readFileSync(path.join(__dirname, 'client-api.js'));
-    const clientJs = fs.readFileSync(path.join(__dirname, 'client-bundle.js'));
-
     // Generate a string with a script tag for every component
     const paths = {};
     Object.keys(cache).forEach((request) => {
@@ -93,22 +99,49 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
       </head>
       <body>
         <div id='styleguide-root'>Root</div>
-        <script>${clientApi}
+        <script src="client-api.js"></script>
+        <script>
           window.__STYLEGUIDE_PLUGIN_CLIENT_API.scripts = ${JSON.stringify(paths)};
         </script>
-        <script>${clientJs}</script>
+        <script src="client-bundle.js"></script>
       </body>
-    </html>
-    `;
+    </html>`;
     const styleguidePath = this.options.dest || 'styleguide/index.html';
 
-    // And emit that HTML template as 'styleguide/index.html'
+    // And emit that HTML template as 'styleguide.html'
     compilation.assets[styleguidePath] = {
       source: () => html,
-      size: () => 0,
+      size: () => html.length,
     };
+
+    // Add styleguide base javascript
+    if (!compilation.assets['styleguide/client-bundle.js']) {
+      const clientJs = fs.readFileSync(path.join(__dirname, 'client-bundle.js'));
+      compilation.assets['styleguide/client-bundle.js'] = {
+        source: () => clientJs,
+        size: () => clientJs.length,
+      };
+    }
+
+    if (!compilation.assets['styleguide/client-api.js']) {
+      const clientJs = fs.readFileSync(path.join(__dirname, 'client-api.js'));
+      compilation.assets['styleguide/client-api.js'] = {
+        source: () => clientJs,
+        size: () => clientJs.length,
+      };
+    }
+
     callback();
   });
+};
+
+StyleguidePlugin.prototype.registerDefaultPlugins = function registerDefaultPlugins(compiler) {
+  const reactDocsPlugin = new ReactDocsPlugin();
+  reactDocsPlugin.apply(compiler);
+  const sourcePlugin = new SourcePlugin();
+  sourcePlugin.apply(compiler);
+  const playgroundPlugin = new PlaygroundPlugin();
+  playgroundPlugin.apply(compiler);
 };
 
 export default StyleguidePlugin;

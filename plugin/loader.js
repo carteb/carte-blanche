@@ -8,7 +8,7 @@
 import NodeTemplatePlugin from 'webpack/lib/node/NodeTemplatePlugin';
 import NodeTargetPlugin from 'webpack/lib/node/NodeTargetPlugin';
 import LibraryTemplatePlugin from 'webpack/lib/LibraryTemplatePlugin';
-import SingleEntryPlugin from 'webpack/lib/SingleEntryPlugin';
+import MultiEntryPlugin from 'webpack/lib/MultiEntryPlugin';
 import LimitChunkCountPlugin from 'webpack/lib/optimize/LimitChunkCountPlugin';
 import path from 'path';
 
@@ -39,7 +39,7 @@ module.exports.pitch = function pitch(request) {
   childCompiler.apply(new NodeTemplatePlugin(outputOptions));
   childCompiler.apply(new LibraryTemplatePlugin(null, 'window'));
   childCompiler.apply(new NodeTargetPlugin());
-  childCompiler.apply(new SingleEntryPlugin(this.context, entryPoint));
+  childCompiler.apply(new MultiEntryPlugin(this.context, [entryPoint]));
   childCompiler.apply(new LimitChunkCountPlugin({ maxChunks: 1 }));
 
   // TODO Explain this part, what do subCaches do and why do we need them?

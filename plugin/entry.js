@@ -5,8 +5,6 @@
 window.__STYLEGUIDE_PLUGIN_CLIENT_API.loadComplete('%%path%%', {
   name: '%%name%%',
   meta: require('!!%%metaLoader%%!%%requestPath%%'),
-  source: require('!!%%sourceLoader%%!%%requestPath%%'),
-  examples: require('!!%%examplesLoader%%!%%requestPath%%'),
   path: '%%path%%',
   component: (function component() {
     var component = require('!!%%request%%'); // eslint-disable-line
