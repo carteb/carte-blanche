@@ -1,18 +1,27 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
-const Button = ({ className = 'test', type = 'button' }) => ((
+/**
+ * Button component
+ *
+ * @example
+ * <Component>Follow us on Twitter</Component>
+ * @example
+ * <Component type="reset">Reset Form</Component>
+ */
+const Button = ({ className, type, children }) => (
   <button
     className={className}
     type={type}
   >
-    Follow Me
+    { children }
   </button>
-));
+);
 
 Button.propTypes = {
-  className: React.PropTypes.string,
+  className: PropTypes.string,
   /* HTML native button types */
-  type: React.PropTypes.oneOf(['submit', 'button', 'reset']),
+  type: PropTypes.oneOf(['submit', 'button', 'reset']),
+  children: PropTypes.node.isRequired,
 };
 
 export default Button;

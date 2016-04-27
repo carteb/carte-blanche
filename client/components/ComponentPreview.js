@@ -3,13 +3,15 @@
  */
 
 import React from 'react';
+
+import Playground from './Playground'; // TODO
 const styleguideClientApi = window.__STYLEGUIDE_PLUGIN_CLIENT_API;
 
 class ComponentPreview extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      componentName: props.name
+      componentName: props.name,
     };
   }
 
@@ -26,7 +28,7 @@ class ComponentPreview extends React.Component {
 
   refreshComponentData() {
     this.setState({
-      componentData: styleguideClientApi.cache[this.state.componentName]
+      componentData: styleguideClientApi.cache[this.state.componentName],
     });
   }
 
@@ -34,7 +36,9 @@ class ComponentPreview extends React.Component {
     if (!this.state.componentData || !this.state.componentData.meta) {
       return (<div/>);
     }
+
     const componentMeta = this.state.componentData.meta;
+    const componentExamples = this.state.componentData.examples;
     const Component = this.state.componentData.component;
     const componentPlugins = componentMeta
       .map(component => <div key={component.name}>{component.frontendPlugin && component.frontendPlugin(React)}</div>)
@@ -48,5 +52,10 @@ class ComponentPreview extends React.Component {
     );
   }
 }
+
+// <Playground
+//   component={Component}
+//   meta={componentMeta}
+// />
 
 export default ComponentPreview;

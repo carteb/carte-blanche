@@ -14,11 +14,22 @@ import SourcePlugin from './styleguide-plugins/source/plugin';
 let id = -1;
 /**
  * Instantiates the plugin
- * @param {Object} options      The options
- * @param {String} options.src  A glob pattern that matches all components the styleguide should display
+ * @param {Object} options       The options
+ * @param {String} options.src   A glob pattern that matches all components the styleguide should display
+ * @param {String} options.dest  The destination the styleguide should be emitted at
  */
 function StyleguidePlugin(options) {
   this.id = (++id);
+
+  if (!options.src) {
+    throw new Error('You need to specify where your components are in the "src" option!\n\n');
+  }
+
+  // Assert that a HTML file was specified in the dest option
+  if (options.dest && options.dest.indexOf('.html') !== options.dest.length - 5) {
+    throw new Error('You need to specify a .html file in the "dest" option!\n\n');
+  }
+
   this.options = options || {};
 }
 
@@ -30,10 +41,12 @@ StyleguidePlugin.prototype.getCache = function getCache(compiler) {
   if (!compiler.styleguideCache) {
     compiler.styleguideCache = {};
   }
+
   // Create a cache for this instance
   if (!compiler.styleguideCache[this.id]) {
     compiler.styleguideCache[this.id] = {};
   }
+
   return compiler.styleguideCache[this.id];
 };
 
@@ -57,6 +70,7 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
       if (minimatch(path.relative(compiler.context, data.userRequest), this.options.src)) {
         data.loaders.unshift(loaderRequest);
       }
+
       callback(null, data);
     });
   });
@@ -67,9 +81,11 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
     Object.keys(cache).forEach((request) => {
       const requestPath = request.replace(/^.+!/, '').replace(/\?.+$/, '');
       const relativePath = path.relative(compiler.options.context, requestPath);
+
       // TODO should be relative not absolute:
       paths[relativePath] = '/' + cache[request];
     });
+
     // Inject the component script tags and the client js into a basic HTML template
     const html = `
     <!DOCTYPE html>
@@ -87,8 +103,9 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
         <script src="client-bundle.js"></script>
       </body>
     </html>`;
+    const styleguidePath = this.options.dest || 'styleguide/index.html';
     // And emit that HTML template as 'styleguide.html'
-    compilation.assets['styleguide/index.html'] = {
+    compilation.assets[styleguidePath] = {
       source: () => {
         return html;
       },
