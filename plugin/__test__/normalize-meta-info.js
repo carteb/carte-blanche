@@ -1,5 +1,3 @@
-/* jscs:disable disallowSpacesInsideTemplateStringPlaceholders */
-
 import { expect } from 'chai';
 import normalizeMetaInfo from '../normalize-meta-info';
 
