@@ -27,12 +27,12 @@ const PlaygroundWrapper = (props) => {
 
   // Generate initial random values for props
   const initialState = randomValues(metadataWithControls);
+
   const StatefulPlayground = withState(
     'globalComponentProps',
     'setGlobalComponentProps',
     initialState,
-    Playground
-  );
+  )(Playground);
   return (
     <StatefulPlayground
       metadataWithControls={metadataWithControls}
