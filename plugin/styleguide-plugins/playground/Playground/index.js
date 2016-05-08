@@ -13,8 +13,6 @@ import { withState } from 'recompose';
 import randomValues from './utils/randomValues';
 
 const PlaygroundWrapper = (props) => {
-  console.log(props);
-
   // Attach controls to propTypes meta information
   let metadataWithControls;
   if (props.meta.props) {
@@ -27,18 +25,14 @@ const PlaygroundWrapper = (props) => {
     });
   }
 
-  console.log(metadataWithControls);
-
   // Generate initial random values for props
   const initialState = randomValues(metadataWithControls);
-  console.log(initialState);
 
   const StatefulPlayground = withState(
     'globalComponentProps',
     'setGlobalComponentProps',
     initialState,
-    Playground
-  );
+  )(Playground);
   return (
     <StatefulPlayground
       metadataWithControls={metadataWithControls}
