@@ -1,5 +1,12 @@
-// import Playground from './Playground';
+import Playground from './Playground';
+import normalizeMetaInfo from './normalizeMetaInfo';
 
 export default function playground(options, data, Component, React) {
-  return (<div>Hello World</div>);
+  // console.log(data, options);
+  return (
+    <Playground
+      component={Component}
+      meta={normalizeMetaInfo(data.reactDocs)}
+    />
+  );
 }
