@@ -100,11 +100,11 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
       </head>
       <body>
         <div id='styleguide-root'>Root</div>
-        <script src="client-api.js"></script>
+        <script src="/styleguide/client-api.js"></script>
         <script>
           window.STYLEGUIDE_PLUGIN_CLIENT_API.scripts = ${JSON.stringify(paths)};
         </script>
-        <script src="client-bundle.js"></script>
+        <script src="/styleguide/client-bundle.js"></script>
       </body>
     </html>`;
     const styleguidePath = this.options.dest || 'styleguide/index.html';
