@@ -42,7 +42,7 @@ const ArrayControl = (props) => {
         {typeof value === 'undefined' ? 'undefined' : null}
         {value === null ? 'null' : null}
       </div>
-      <div>{']}'}</div>
+      <div>{']},'}</div>
     </div>
   );
 };

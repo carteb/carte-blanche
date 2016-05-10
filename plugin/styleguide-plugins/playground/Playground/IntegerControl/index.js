@@ -23,7 +23,7 @@ const IntegerControl = (props) => {
           value={value}
           onChange={(event) => onUpdate({ value: parseInt(event.target.value, 10) })}
         />
-        {(label) ? '"' : null}
+        {(label) ? '"' : null},
       </label>
       <RandomButton onClick={() => onUpdate({ value: IntegerControl.randomValue(props) })} />
       {typeof value === 'undefined' ? 'undefined' : null}

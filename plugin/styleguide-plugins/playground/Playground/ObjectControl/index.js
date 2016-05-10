@@ -34,7 +34,7 @@ const ObjectControl = ({ label, propTypeData, value, onUpdate }) => {
       <div style={{ paddingLeft: 20 }}>
         {renderControls(normalizedPropsWithControls, value, updatePropertyValues)}
       </div>
-      <div>{label ? '}}' : '}'}</div>
+      <div>{label ? '}},' : '},'}</div>
     </div>
   );
 };
