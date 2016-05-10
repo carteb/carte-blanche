@@ -1,7 +1,14 @@
 const styles = {
   base: {
-    lineHeight: '10px',
-    padding: '3px 16px 3px',
+    display: 'inline-block',
+    height: '0.8em',
+    width: '0.8em',
+    marginLeft: '0.2em',
+  },
+
+  icon: {
+    width: '100%',
+    height: '100%',
   },
 };
 
