@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import normalizeMetaInfo from '../normalize-meta-info';
+import normalizeMetaInfo from '../normalizeMetaInfo';
 
 describe('normalizeMetaInfo', () => {
   it('should not remove anything in objects without types', () => {
