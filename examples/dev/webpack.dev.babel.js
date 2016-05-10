@@ -1,7 +1,6 @@
 import path from 'path';
 import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import StyleguidePlugin from '../../plugin/styleguide-plugin';
 import autoprefixer from 'autoprefixer';
 
@@ -23,7 +22,6 @@ export default {
         DISABLE_LOGGER: process.env.DISABLE_LOGGER,
       },
     }),
-    new ExtractTextPlugin('bundle-[hash].css', { disable: true }),
     new HtmlWebpackPlugin({
       inject: true,
       template: path.join(__dirname, './src/index.html'),
@@ -42,10 +40,9 @@ export default {
         // in the final version we compile it before shipping
         include: [path.join(__dirname, './src'), path.join(__dirname, '../../plugin')],
       }, {
-        test: /\.scss/,
-        loader: ExtractTextPlugin.extract('style',
-        'css?modules&importLoaders=2&localIdentName=[name]-[local]!postcss-loader!sass'),
-        include: path.join(__dirname, './src'),
+        test: /\.css/,
+        loader: 'style!css?modules&importLoaders=1&localIdentName=[name]-[local]!postcss-loader',
+        include: [path.join(__dirname, './src'), path.join(__dirname, '../../plugin')],
       }, {
         test: /\.(png|jpg|gif)$/,
         loaders: ['url?limit=10000'],
@@ -59,4 +56,5 @@ export default {
     ],
   },
   postcss: [autoprefixer({ browsers: ['last 2 versions'] })],
+  stats: false,
 };

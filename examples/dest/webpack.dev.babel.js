@@ -44,10 +44,10 @@ export default {
         // in the final version we compile it before shipping
         include: [path.join(__dirname, './src'), path.join(__dirname, '../../plugin')],
       }, {
-        test: /\.scss/,
+        test: /\.css/,
         loader: ExtractTextPlugin.extract('style',
-        'css?modules&importLoaders=2&localIdentName=[name]-[local]!postcss-loader!sass'),
-        include: path.join(__dirname, './src'),
+        'css?modules&importLoaders=1&localIdentName=[name]-[local]!postcss-loader'),
+        include: [path.join(__dirname, './src'), path.join(__dirname, '../../plugin')],
       }, {
         test: /\.(png|jpg|gif)$/,
         loaders: ['url?limit=10000'],

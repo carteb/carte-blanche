@@ -5,7 +5,7 @@
  */
 
 import React, { PropTypes } from 'react';
-import styles from './styles';
+import styles from './styles.css';
 import renderControls from '../utils/renderControls';
 import RandomButton from '../RandomButton';
 import randomValues from '../utils/randomValues';
@@ -21,15 +21,13 @@ const Playground = (props) => {
   } = props;
   const Component = props.component;
   return (
-    <div style={styles.wrapper}>
+    <div className={styles.wrapper}>
       <h2>Playground</h2>
-      <div style={styles.controls}>
-        {"<Button"}
+      <div className={styles.controls}>
         <RandomButton onClick={() => setGlobalComponentProps(randomValues(metadataWithControls))} />
         <div style={styles.innerControls}>
           {renderControls(metadataWithControls, globalComponentProps, setGlobalComponentProps)}
         </div>
-        {"/>"}
       </div>
       <Component {...globalComponentProps} />
     </div>

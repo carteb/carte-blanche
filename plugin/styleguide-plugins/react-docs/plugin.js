@@ -22,7 +22,7 @@ ReactDocsPlugin.prototype.apply = function apply(compiler) {
       renderStyleguide({
         name: 'reactDocs',
         frontendData: { reactDocs: data.reactDocs, options },
-        frontendPlugin: `!!babel!${require.resolve('./component.js')}`,
+        frontendPlugin: `${require.resolve('./component.js')}`,
       });
     });
   });

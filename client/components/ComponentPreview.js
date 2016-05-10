@@ -1,5 +1,5 @@
 /**
- * Showcases a componentn
+ * Showcases a component
  */
 
 import React from 'react';
@@ -42,7 +42,7 @@ class ComponentPreview extends React.Component {
     const componentPlugins = componentMeta
       .map(component => (
         <div key={component.name}>
-          {component.frontendPlugin && component.frontendPlugin(Component, React)}
+          {component.frontendPlugin && component.frontendPlugin(Component)}
         </div>
       ))
       .filter(component => component !== undefined);
