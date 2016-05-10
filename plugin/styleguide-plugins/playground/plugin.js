@@ -1,3 +1,6 @@
+const reactDocs = require('react-docgen');
+const component = require('./component');
+
 function PlaygroundPlugin(options) {
   this.options = options || {};
 }
@@ -12,17 +15,18 @@ PlaygroundPlugin.prototype.apply = function apply(compiler) {
       'styleguide-plugin-before-processing',
       (data) => {
         data.module = 'test'; // eslint-disable-line no-param-reassign
+        data.reactDocs = reactDocs.parse(data.source); // eslint-disable-line no-param-reassign
       }
     );
 
     // The source styleguide plugin
     compilation.plugin(
       'styleguide-plugin-processing',
-      (renderStyleguide) => {
+      (renderStyleguide, data) => {
         renderStyleguide({
           name: 'playground',
-          frontendData: { options },
-          frontendPlugin: `!!babel!${require.resolve('./component.js')}`,
+          frontendData: { reactDocs: data.reactDocs, options },
+          frontendPlugin: component,
         });
       }
     );

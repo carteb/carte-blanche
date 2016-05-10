@@ -8,8 +8,8 @@
 import minimatch from 'minimatch';
 import fs from 'fs';
 import path from 'path';
-import ReactDocsPlugin from './styleguide-plugins/react-docs/plugin';
-import SourcePlugin from './styleguide-plugins/source/plugin';
+// import ReactDocsPlugin from './styleguide-plugins/react-docs/plugin';
+// import SourcePlugin from './styleguide-plugins/source/plugin';
 import PlaygroundPlugin from './styleguide-plugins/playground/plugin';
 
 let id = -1;
@@ -137,10 +137,10 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
 };
 
 StyleguidePlugin.prototype.registerDefaultPlugins = function registerDefaultPlugins(compiler) {
-  const reactDocsPlugin = new ReactDocsPlugin();
-  reactDocsPlugin.apply(compiler);
-  const sourcePlugin = new SourcePlugin();
-  sourcePlugin.apply(compiler);
+  // const reactDocsPlugin = new ReactDocsPlugin();
+  // reactDocsPlugin.apply(compiler);
+  // const sourcePlugin = new SourcePlugin();
+  // sourcePlugin.apply(compiler);
   const playgroundPlugin = new PlaygroundPlugin();
   playgroundPlugin.apply(compiler);
 };
