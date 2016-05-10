@@ -7,6 +7,11 @@ const styles = {
 
   controls: {
     padding: 20,
+    fontFamily: 'Courier, Monaco, monospace',
+  },
+
+  innerControls: {
+    marginLeft: '2em',
   },
 };
 
