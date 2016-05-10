@@ -2,18 +2,21 @@ import React from 'react';
 import RandomButton from '../RandomButton';
 import valueOrNullOrUndefined from '../utils/valueOrNullOrUndefined';
 import faker from 'faker/build/build/faker';
+import styles from './styles';
 
 const StringControl = (props) => {
   const { label, value, onUpdate } = props;
   return (
     <div>
       <label>
-        {label}
+        {label}="
         <input
+          style={styles.input}
           type="text"
           value={value}
           onChange={(event) => onUpdate({ value: event.target.value })}
         />
+        "
       </label>
       <RandomButton onClick={() => onUpdate({ value: StringControl.randomValue(props) })} />
       {typeof value === 'undefined' ? 'undefined' : null}

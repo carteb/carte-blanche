@@ -24,8 +24,12 @@ const Playground = (props) => {
     <div style={styles.wrapper}>
       <h2>Playground</h2>
       <div style={styles.controls}>
+        {"<Button"}
         <RandomButton onClick={() => setGlobalComponentProps(randomValues(metadataWithControls))} />
-        {renderControls(metadataWithControls, globalComponentProps, setGlobalComponentProps)}
+        <div style={styles.innerControls}>
+          {renderControls(metadataWithControls, globalComponentProps, setGlobalComponentProps)}
+        </div>
+        {"/>"}
       </div>
       <Component {...globalComponentProps} />
     </div>
