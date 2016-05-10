@@ -1,5 +1,8 @@
 import React from 'react';
+import styles from './styles.css';
 
 export default () => (
-  <div>Card</div>
+  <div className={styles.card}>
+    Card
+  </div>
 );
