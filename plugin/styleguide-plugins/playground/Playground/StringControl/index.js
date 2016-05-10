@@ -9,14 +9,14 @@ const StringControl = (props) => {
   return (
     <div>
       <label>
-        {label}="
+        {(label) ? `${label}="` : null}
         <input
           style={styles.input}
           type="text"
           value={value}
           onChange={(event) => onUpdate({ value: event.target.value })}
         />
-        "
+        {(label) ? '"' : null}
       </label>
       <RandomButton onClick={() => onUpdate({ value: StringControl.randomValue(props) })} />
       {typeof value === 'undefined' ? 'undefined' : null}
