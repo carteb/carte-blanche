@@ -26,7 +26,7 @@ const ObjectControl = ({ label, propTypeData, value, onUpdate }) => {
     <div>
       {/* inside arrays there is no label for the object */}
       <div>
-        {label ? '${label}:' : null} {'{'}
+        {label ? `${label}:` : null} {'{'}
         <RandomButton
           onClick={() => onUpdate({ value: ObjectControl.randomValue(propTypeData) })}
         />
