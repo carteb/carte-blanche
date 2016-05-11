@@ -5,9 +5,9 @@
  */
 
 import React, { cloneElement } from 'react';
-import valueOrNullOrUndefined from '../utils/valueOrNullOrUndefined';
-import getControl from '../utils/getControl';
-import RandomButton from '../RandomButton';
+import valueOrNullOrUndefined from '../../../utils/valueOrNullOrUndefined';
+import getControl from '../../../utils/getControl';
+import RandomButton from '../../common/RandomButton';
 
 const FlowUnionControl = ({ label, propTypeData, value, onUpdate }) => {
   let clonedControl;

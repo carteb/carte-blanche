@@ -6,8 +6,8 @@
 
 import React, { PropTypes } from 'react';
 import styles from './styles.css';
-import renderControls from '../utils/renderControls';
-import randomValues from '../utils/randomValues';
+import renderControls from '../../utils/renderControls';
+import randomValues from '../../utils/randomValues';
 
 class Playground extends React.Component {
   constructor() {

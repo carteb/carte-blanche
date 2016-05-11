@@ -6,17 +6,17 @@
  */
 
 import React from 'react';
-import BooleanControl from '../BooleanControl';
-import IntegerControl from '../IntegerControl';
-import ArrayControl from '../ArrayControl';
-import StringControl from '../StringControl';
-import EnumControl from '../EnumControl';
-import NodeControl from '../NodeControl';
-import DummyControl from '../DummyControl';
-import FlowObjectControl from '../FlowObjectControl';
-import ObjectControl from '../ObjectControl';
-import FlowArrayControl from '../FlowArrayControl';
-import FlowUnionControl from '../FlowUnionControl';
+import BooleanControl from '../components/controls/BooleanControl';
+import IntegerControl from '../components/controls/IntegerControl';
+import ArrayControl from '../components/controls/ArrayControl';
+import StringControl from '../components/controls/StringControl';
+import EnumControl from '../components/controls/EnumControl';
+import NodeControl from '../components/controls/NodeControl';
+import DummyControl from '../components/controls/DummyControl';
+import FlowObjectControl from '../components/controls/FlowObjectControl';
+import ObjectControl from '../components/controls/ObjectControl';
+import FlowArrayControl from '../components/controls/FlowArrayControl';
+import FlowUnionControl from '../components/controls/FlowUnionControl';
 
 const getControl = (propType) => {
   let control;

@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 
-import RandomButton from '../../Playground/RandomButton';
+import RandomButton from '../RandomButton';
 import styles from './styles.css';
 
 function Input(props) {
