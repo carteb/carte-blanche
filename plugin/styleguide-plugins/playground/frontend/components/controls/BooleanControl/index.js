@@ -6,8 +6,8 @@
 
 import React from 'react';
 import { Choice, Toggle } from 'belle';
-import RandomButton from '../RandomButton';
-import valueOrNullOrUndefined from '../utils/valueOrNullOrUndefined';
+import RandomButton from '../../common/RandomButton';
+import valueOrNullOrUndefined from '../../../utils/valueOrNullOrUndefined';
 
 const BooleanControl = (props) => {
   const { label, value, onUpdate } = props;

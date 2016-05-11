@@ -1,8 +1,8 @@
 import React from 'react';
-import valueOrNullOrUndefined from '../utils/valueOrNullOrUndefined';
+import valueOrNullOrUndefined from '../../../utils/valueOrNullOrUndefined';
 import faker from 'faker/build/build/faker';
 
-import Input from '../../components/Input';
+import Input from '../../common/Input';
 
 const StringControl = (props) => {
   const { label, value, onUpdate } = props;

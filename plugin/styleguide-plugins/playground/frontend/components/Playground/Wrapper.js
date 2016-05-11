@@ -5,12 +5,12 @@
  */
 
 import React, { PropTypes } from 'react';
-import Playground from './Playground';
+import Playground from './index';
 
 import mapValues from 'lodash/mapValues';
-import getControl from './utils/getControl';
+import getControl from '../../utils/getControl';
 import { withState } from 'recompose';
-import randomValues from './utils/randomValues';
+import randomValues from '../../utils/randomValues';
 
 const PlaygroundWrapper = (props) => {
   // Attach controls to propTypes meta information

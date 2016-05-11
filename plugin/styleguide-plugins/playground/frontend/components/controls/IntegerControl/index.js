@@ -5,9 +5,9 @@
  */
 
 import React from 'react';
-import valueOrNullOrUndefined from '../utils/valueOrNullOrUndefined';
+import valueOrNullOrUndefined from '../../../utils/valueOrNullOrUndefined';
 
-import Input from '../../components/Input';
+import Input from '../../common/Input';
 
 const IntegerControl = (props) => {
   const { label, value, onUpdate } = props;

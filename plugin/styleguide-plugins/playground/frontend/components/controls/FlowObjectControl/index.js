@@ -4,14 +4,14 @@
  * Renders an information field mentioning that this property can't be generated.
  */
 
-import renderControls from '../utils/renderControls';
-import getControl from '../utils/getControl';
+import renderControls from '../../../utils/renderControls';
+import getControl from '../../../utils/getControl';
 import React from 'react';
 import keyBy from 'lodash/keyBy';
 import mapValues from 'lodash/mapValues';
-import randomValues from '../utils/randomValues';
-import valueOrNullOrUndefined from '../utils/valueOrNullOrUndefined';
-import RandomButton from '../RandomButton';
+import randomValues from '../../../utils/randomValues';
+import valueOrNullOrUndefined from '../../../utils/valueOrNullOrUndefined';
+import RandomButton from '../../common/RandomButton';
 
 const normalizeProps = (props) => {
   const propsObject = keyBy(props, 'key');

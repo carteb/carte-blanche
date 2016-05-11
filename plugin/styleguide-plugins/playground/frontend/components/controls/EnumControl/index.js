@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-import RandomButton from '../RandomButton';
+import RandomButton from '../../common/RandomButton';
 
 const EnumControl = (props) => {
   const {

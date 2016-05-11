@@ -22,7 +22,7 @@ PlaygroundPlugin.prototype.apply = function apply(compiler) {
         renderStyleguide({
           name: 'playground',
           frontendData: { options },
-          frontendPlugin: `${require.resolve('./component.js')}`,
+          frontendPlugin: `${require.resolve('./frontend/index.js')}`,
         });
       }
     );
