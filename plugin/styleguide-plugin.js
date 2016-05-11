@@ -12,6 +12,8 @@ import ReactDocsPlugin from './styleguide-plugins/react-docs/plugin';
 import SourcePlugin from './styleguide-plugins/source/plugin';
 import PlaygroundPlugin from './styleguide-plugins/playground/plugin';
 
+const fork = require('child_process').fork;
+
 let id = -1;
 /**
  * Instantiates the plugin
@@ -32,6 +34,7 @@ function StyleguidePlugin(options) {
   }
 
   this.options = options || {};
+  fork(path.resolve(__dirname, './server/index.js'));
 }
 
 /**
