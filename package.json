@@ -108,6 +108,7 @@
     "sinon": "^1.17.3",
     "sinon-chai": "^2.8.0",
     "style-loader": "^0.13.1",
+    "supertest": "^1.2.0",
     "url-loader": "^0.5.7",
     "webdriverio": "^4.0.5",
     "webpack": "^1.13.0",

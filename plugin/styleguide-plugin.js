@@ -34,7 +34,7 @@ function StyleguidePlugin(options) {
   }
 
   this.options = options || {};
-  fork(path.resolve(__dirname, './server/index.js'));
+  fork(path.resolve(__dirname, './server/run.js'));
 }
 
 /**
