@@ -13,8 +13,6 @@ const Button = ({ className, type, children }) => (
 );
 
 Button.propTypes = {
-  arrayOfStrings: PropTypes.arrayOf(PropTypes.string),
-  arrayOfNumbers: PropTypes.arrayOf(PropTypes.number),
   className: PropTypes.string,
   /* HTML native button types */
   type: PropTypes.oneOf(['submit', 'button', 'reset']),

@@ -34,23 +34,25 @@ const ArrayControl = (props) => {
         text={label}
         onRandomClick={() => onUpdate({ value: ArrayControl.randomValue(propTypeData) })}
       />
-      <div
-        className={
-          (isNested) ?
-          objectControlStyles.nestedDeeperThanOneLevel :
-          objectControlStyles.nestedControls
-        }
-      >
-        {rangeArray && rangeArray.map((index) => {
-          const newProps = {
-            key: index,
-            value: value[index],
-            onUpdate: (data) => onUpdateEntry(data.value, index),
-            isNested: true,
-          };
-          return cloneElement(control, newProps);
-        })}
-      </div>
+      {(size !== 0) ? (
+        <div
+          className={
+            (isNested) ?
+            objectControlStyles.nestedDeeperThanOneLevel :
+            objectControlStyles.nestedControls
+          }
+        >
+          {rangeArray && rangeArray.map((index) => {
+            const newProps = {
+              key: index,
+              value: value[index],
+              onUpdate: (data) => onUpdateEntry(data.value, index),
+              isNested: true,
+            };
+            return cloneElement(control, newProps);
+          })}
+        </div>
+      ) : null}
     </div>
   );
 };

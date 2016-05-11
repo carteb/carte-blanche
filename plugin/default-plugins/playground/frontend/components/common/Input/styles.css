@@ -3,6 +3,7 @@
   padding-top: 1.75em;
   border-bottom: 1px solid rgb(222, 222, 222);
   position: relative;
+  min-height: 3em;
 }
 
 .wrapper--nested {

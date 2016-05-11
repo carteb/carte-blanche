@@ -24,15 +24,24 @@ const ObjectControl = ({ label, propTypeData, value, onUpdate, isNested }) => {
     return prop;
   });
 
+  let controlWrapperClassName = styles.nestedControls;
+  if (!label && isNested) {
+    controlWrapperClassName = styles['nestedDeeperThanOneLevel--without-label'];
+  } else if (isNested) {
+    controlWrapperClassName = styles.nestedDeeperThanOneLevel;
+  }
+
   return (
     <div className={styles.wrapper}>
       {/* inside arrays there is no label for the object */}
-      <Label
-        text={label}
-        isNested={isNested}
-        onRandomClick={() => onUpdate({ value: ObjectControl.randomValue(propTypeData) })}
-      />
-      <div className={(isNested) ? styles.nestedDeeperThanOneLevel : styles.nestedControls}>
+      {(label) ? (
+        <Label
+          text={label}
+          isNested={isNested}
+          onRandomClick={() => onUpdate({ value: ObjectControl.randomValue(propTypeData) })}
+        />
+      ) : null}
+      <div className={controlWrapperClassName}>
         {renderControls(normalizedPropsWithControls, value, updatePropertyValues, true)}
       </div>
     </div>

@@ -1,5 +1,8 @@
 .wrapper {
   position: relative;
+  width: 100%;
+  border-bottom: 1px solid rgb(222, 222, 222);
+  min-height: 3em;
 }
 
 .nestedControls {
@@ -17,4 +20,9 @@
   padding-left: 0.5em;
   padding-right: 0.5em;
   padding-bottom: 0.5em;
+}
+
+.nestedDeeperThanOneLevel--without-label {
+  composes: nestedDeeperThanOneLevel;
+  padding-top: 0;
 }
