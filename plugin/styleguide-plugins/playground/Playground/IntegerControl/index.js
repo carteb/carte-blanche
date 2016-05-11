@@ -5,30 +5,21 @@
  */
 
 import React from 'react';
-import RandomButton from '../RandomButton';
 import valueOrNullOrUndefined from '../utils/valueOrNullOrUndefined';
 
-import styles from '../StringControl/styles';
+import Input from '../../components/Input';
 
 const IntegerControl = (props) => {
   const { label, value, onUpdate } = props;
   return (
-    <div>
-      <label>
-        {(label) ? `${label}="` : null}
-        <input
-          style={styles.input}
-          type="number"
-          step="1"
-          value={value}
-          onChange={(event) => onUpdate({ value: parseInt(event.target.value, 10) })}
-        />
-        {(label) ? '"' : null},
-      </label>
-      <RandomButton onClick={() => onUpdate({ value: IntegerControl.randomValue(props) })} />
-      {typeof value === 'undefined' ? 'undefined' : null}
-      {value === null ? 'null' : null}
-    </div>
+    <Input
+      label={label}
+      type="number"
+      step="1"
+      value={value}
+      onChange={(event) => onUpdate({ value: parseInt(event.target.value, 10) })}
+      onRandomClick={() => onUpdate({ value: IntegerControl.randomValue(props) })}
+    />
   );
 };
 
