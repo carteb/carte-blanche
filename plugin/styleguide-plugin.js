@@ -8,9 +8,9 @@
 import minimatch from 'minimatch';
 import fs from 'fs';
 import path from 'path';
-import ReactDocsPlugin from './styleguide-plugins/react-docs/plugin';
-import SourcePlugin from './styleguide-plugins/source/plugin';
-import PlaygroundPlugin from './styleguide-plugins/playground/plugin';
+import ReactDocsPlugin from './default-plugins/react-docs/plugin';
+import SourcePlugin from './default-plugins/source/plugin';
+import PlaygroundPlugin from './default-plugins/playground/plugin';
 
 const fork = require('child_process').fork;
 
