@@ -1,6 +1,7 @@
-const express = require('express');
-const app = express();
-let server;
+/* eslint-disable */
+var express = require('express');
+var app = express();
+var server;
 
 app.get('/:component', (req, res) => {
   res.status(200).send(`GET ${req.params.component}`);
@@ -11,11 +12,10 @@ app.post('/:component', (req, res) => {
 });
 
 function start() {
-  const port = 8000;
+  var port = 8000;
   server = app.listen(port);
-  /* eslint-disable no-console */
   console.log('\n\n--------------------------------------');
-  console.log(`Playground Server listening to port: ${port}`);
+  console.log('Playground Server listening to port: ' + port);
   console.log('---------------------------------------\n\n');
 }
 
