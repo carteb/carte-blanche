@@ -27,4 +27,21 @@ describe('get', () => {
         done();
       });
   });
+
+  // GET
+  // verify that the component for the provided path exists
+  // find the relevant data for the specific component
+  // if the component exists
+  //    take all the variations from he different file and combine them into one response as array
+  // if provide an empty array
+
+  // DELETE (removes a variation)
+  // verify that the component for the provided path exists
+  // identify the variation based on the query parameter variation
+  // verify that this variation exists and remove it
+
+  // POST (acts as create or update of a variation)
+  // verify that the component for the provided path exists
+  // if the variation based on the parameter in the data doesn't exists create the file
+  // write the provided data to the file
 });
