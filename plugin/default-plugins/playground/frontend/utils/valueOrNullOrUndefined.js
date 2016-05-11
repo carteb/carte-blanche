@@ -9,9 +9,9 @@
  */
 const valueOrNullOrUndefined = (value, canBeNull, canBeUndefined) => {
   const random = Math.random();
-  if (canBeNull && random < 0.05) {
+  if (canBeNull && random < 0.025) {
     return null;
-  } else if (canBeUndefined && random > 0.95) {
+  } else if (canBeUndefined && random > 0.975) {
     return undefined;
   }
 
