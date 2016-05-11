@@ -32,13 +32,11 @@ class App extends React.Component {
           >
             Menu
           </button>
-          <div className={styles.componentWrapper}>
-            {(this.props.children) ? (
-              <div>{this.props.children}</div>
-            ) : (
-              <h2>Home</h2>
-            )}
-          </div>
+          {(this.props.children) ? (
+            this.props.children
+          ) : (
+            <h2>Home</h2>
+          )}
         </div>
       </div>
     );

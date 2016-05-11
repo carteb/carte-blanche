@@ -7,32 +7,77 @@
 import React, { PropTypes } from 'react';
 import styles from './styles.css';
 import renderControls from '../utils/renderControls';
-import RandomButton from '../RandomButton';
 import randomValues from '../utils/randomValues';
 
-const Playground = (props) => {
-  // globalComponentProps and setGlobalComponentProps are injected by recompose's
-  // withState() higher order component, additionally pass metadataWithControls
-  // and component in order to render the preview and the random value controls
-  const {
-    globalComponentProps,
-    setGlobalComponentProps,
-    metadataWithControls,
-  } = props;
-  const Component = props.component;
-  return (
-    <div className={styles.wrapper}>
-      <h2>Playground</h2>
-      <div className={styles.controls}>
-        <RandomButton onClick={() => setGlobalComponentProps(randomValues(metadataWithControls))} />
-        <div style={styles.innerControls}>
-          {renderControls(metadataWithControls, globalComponentProps, setGlobalComponentProps)}
+class Playground extends React.Component {
+  constructor() {
+    super();
+    this.togglePropForm = this.togglePropForm.bind(this);
+  }
+
+  state = {
+    propFormVisible: false,
+  };
+
+  togglePropForm() {
+    this.setState({
+      propFormVisible: !this.state.propFormVisible,
+    });
+  }
+
+  render() {
+    // globalComponentProps and setGlobalComponentProps are injected by recompose's
+    // withState() higher order component, additionally pass metadataWithControls
+    // and component in order to render the preview and the random value controls
+    const {
+      globalComponentProps,
+      setGlobalComponentProps,
+      metadataWithControls,
+    } = this.props;
+    const Component = this.props.component;
+
+    return (
+      <div className={styles.wrapper}>
+        <div
+          className={
+            (this.state.propFormVisible) ?
+            styles['sidebar--propFormOpen'] :
+            styles.sidebar
+          }
+        >
+          <div className={styles.sidebarButtonWrapper}>
+            <button
+              className={styles.sidebarButton}
+              onClick={this.togglePropForm}
+            >
+              Props
+            </button>
+          </div>
+          <div
+            className={
+              (this.state.propFormVisible) ?
+              styles.propsFormVisible :
+              styles.propsForm
+            }
+          >
+            <button
+              className={styles.propFormRandomizeButton}
+              onClick={() => setGlobalComponentProps(randomValues(metadataWithControls))}
+            >
+              Randomize
+            </button>
+            <div className={styles.propFormControls}>
+              {renderControls(metadataWithControls, globalComponentProps, setGlobalComponentProps)}
+            </div>
+          </div>
+        </div>
+        <div className={styles.componentWrapper}>
+          <Component {...globalComponentProps} />
         </div>
       </div>
-      <Component {...globalComponentProps} />
-    </div>
-  );
-};
+    );
+  }
+}
 
 Playground.propTypes = {
   globalComponentProps: PropTypes.object.isRequired,

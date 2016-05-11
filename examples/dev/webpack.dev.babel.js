@@ -41,7 +41,7 @@ export default {
         include: [path.join(__dirname, './src'), path.join(__dirname, '../../plugin')],
       }, {
         test: /\.css/,
-        loader: 'style!css?modules&importLoaders=1&localIdentName=[name]-[local]!postcss-loader',
+        loader: 'style!css?modules&importLoaders=1&localIdentName=[local]__[path][name]__[hash:base64:5]!postcss-loader', // eslint-disable-line max-len
         include: [path.join(__dirname, './src'), path.join(__dirname, '../../plugin')],
       }, {
         test: /\.(png|jpg|gif)$/,
