@@ -19,8 +19,8 @@ function start() {
   console.log('---------------------------------------\n\n');
 }
 
-function stop() {
-  server.close();
+function stop(callback) {
+  server.close(callback);
 }
 
 exports.start = start;

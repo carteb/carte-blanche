@@ -1,16 +1,19 @@
 import supertest from 'supertest';
 import { expect } from 'chai';
-import server from '../server';
 
 const client = supertest.agent('http://localhost:8000');
 
 describe('get', () => {
-  before(() => {
+  let server;
+
+  beforeEach(() => {
+    delete require.cache[require.resolve('./server')];
+    server = require('../server'); // eslint-disable-line global-require
     server.start();
   });
 
-  after(() => {
-    server.stop();
+  afterEach((done) => {
+    server.stop(done);
   });
 
   it('should get all data for one component ', (done) => {
