@@ -1,24 +1,30 @@
 .wrapper {
   width: 100%;
   padding-top: 1.75em;
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
-  border-bottom-color: rgb(222, 222, 222);
+  border-bottom: 1px solid rgb(222, 222, 222);
   position: relative;
 }
 
-.label {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 100%;
-  padding: 20px 1pc 0px;
-  margin: 0px;
-  z-index: 1;
-  font-size: 0.8em;
-  color: rgb(153, 153, 153);
-  font-weight: 400;
-  cursor: text;
+.wrapper--nested {
+  composes: wrapper;
+  border: 1px solid #DDD;
+  margin-top: 1em;
+}
+
+.wrapper--without-label {
+  composes: wrapper;
+  padding-top: 0;
+  border-top: 1px solid rgb(222, 222, 222);
+  border-bottom: none;
+}
+
+.wrapper--nested--without-label {
+  composes: wrapper--nested;
+  padding-top: 0;
+}
+
+.wrapper--nested--without-label:first-child {
+  margin-top: 0;
 }
 
 .input {
@@ -29,4 +35,9 @@
   border: none;
   outline: 0px;
   font-size: 1em;
+}
+
+.wrapper--without-label .input,
+.wrapper--nested--without-label .input {
+  padding: 0.8125em 1pc;
 }

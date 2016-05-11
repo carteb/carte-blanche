@@ -1,0 +1,18 @@
+.label {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  padding: 20px 1pc 0px;
+  margin: 0px;
+  z-index: 1;
+  font-size: 0.8em;
+  color: rgb(153, 153, 153);
+  font-weight: 400;
+  cursor: text;
+}
+
+.label--array {
+  composes: label;
+  padding-bottom: 20px;
+}

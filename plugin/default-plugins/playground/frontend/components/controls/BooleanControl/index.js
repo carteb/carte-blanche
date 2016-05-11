@@ -5,31 +5,32 @@
  */
 
 import React from 'react';
-import { Choice, Toggle } from 'belle';
-import RandomButton from '../../common/RandomButton';
+import Select from '../../common/Select';
 import valueOrNullOrUndefined from '../../../utils/valueOrNullOrUndefined';
 
 const BooleanControl = (props) => {
   const { label, value, onUpdate } = props;
   return (
-    <div>
-      <label>
-        {label}
-        <Toggle
-          onUpdate={onUpdate}
-          value={value}
-          style={{ transform: 'scale(0.8)' }}
-          firstChoiceStyle={{ fontSize: 13 }}
-          secondChoiceStyle={{ fontSize: 13 }}
-        >
-          <Choice value>True</Choice>
-          <Choice value={false}>False</Choice>
-        </Toggle>
-      </label>
-      <RandomButton onClick={() => onUpdate({ value: BooleanControl.randomValue(props) })} />
-      {typeof value === 'undefined' ? 'undefined' : null}
-      {value === null ? 'null' : null}
-    </div>
+    <Select
+      label={label}
+      onChange={(event) => {
+        // Need to eval, because we're getting 'true' and 'false' (strings)
+        // instead of true and false (booleans) here
+        const newValue = eval(event.target.value); // eslint-disable-line no-eval
+        return onUpdate({ value: newValue });
+      }}
+      value={value}
+      options={[
+        {
+          value: true,
+          label: 'true',
+        }, {
+          value: false,
+          label: 'false',
+        },
+      ]}
+      onRandomClick={() => onUpdate({ value: BooleanControl.randomValue(props) })}
+    />
   );
 };
 

@@ -11,21 +11,19 @@ const renderControls = (
   metadataWithControls,
   globalComponentProps,
   setGlobalComponentProps,
-  keyPath = []
+  isNested = false,
 ) => {
   const updatePropertyValues = (path, value) => {
-    const values = set(globalComponentProps, path.join('.'), value);
+    const values = set(globalComponentProps, path, value);
     setGlobalComponentProps(values);
   };
 
-  const controls = mapValues(metadataWithControls, (prop, key) => {
-    const newKeyPath = keyPath.slice();
-    newKeyPath.push(key);
-
+  const controls = mapValues(metadataWithControls, (prop, keyPath) => {
     const props = {
-      label: key,
-      value: get(globalComponentProps, newKeyPath.join('.')),
-      onUpdate: ({ value }) => updatePropertyValues(newKeyPath, value),
+      label: keyPath,
+      value: get(globalComponentProps, keyPath),
+      onUpdate: ({ value }) => updatePropertyValues(keyPath, value),
+      isNested,
     };
     return cloneElement(prop.control, props);
   });

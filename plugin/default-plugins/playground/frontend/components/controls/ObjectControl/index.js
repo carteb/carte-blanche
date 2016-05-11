@@ -10,9 +10,11 @@ import React from 'react';
 import mapValues from 'lodash/mapValues';
 import randomValues from '../../../utils/randomValues';
 import valueOrNullOrUndefined from '../../../utils/valueOrNullOrUndefined';
-import RandomButton from '../../common/RandomButton';
+import Label from '../../common/Label';
 
-const ObjectControl = ({ label, propTypeData, value, onUpdate }) => {
+import styles from './styles.css';
+
+const ObjectControl = ({ label, propTypeData, value, onUpdate, isNested }) => {
   const updatePropertyValues = (values) => {
     onUpdate({ value: values });
   };
@@ -23,18 +25,16 @@ const ObjectControl = ({ label, propTypeData, value, onUpdate }) => {
   });
 
   return (
-    <div>
+    <div className={styles.wrapper}>
       {/* inside arrays there is no label for the object */}
-      <div>
-        {label ? `${label}={` : null}{'{'}
-        <RandomButton
-          onClick={() => onUpdate({ value: ObjectControl.randomValue(propTypeData) })}
-        />
+      <Label
+        text={label}
+        isNested={isNested}
+        onRandomClick={() => onUpdate({ value: ObjectControl.randomValue(propTypeData) })}
+      />
+      <div className={(isNested) ? styles.nestedDeeperThanOneLevel : styles.nestedControls}>
+        {renderControls(normalizedPropsWithControls, value, updatePropertyValues, true)}
       </div>
-      <div style={{ paddingLeft: 20 }}>
-        {renderControls(normalizedPropsWithControls, value, updatePropertyValues)}
-      </div>
-      <div>{label ? '}},' : '},'}</div>
     </div>
   );
 };

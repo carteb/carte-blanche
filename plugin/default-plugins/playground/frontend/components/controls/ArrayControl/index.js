@@ -1,9 +1,12 @@
 import React, { cloneElement } from 'react';
 import range from 'lodash/range';
 import cloneDeep from 'lodash/cloneDeep';
-import RandomButton from '../../common/RandomButton';
+import Label from '../../common/Label';
 import valueOrNullOrUndefined from '../../../utils/valueOrNullOrUndefined';
 import getControl from '../../../utils/getControl';
+
+import inputStyles from '../../common/Input/styles.css';
+import objectControlStyles from '../ObjectControl/styles.css';
 
 const ArrayControl = (props) => {
   const {
@@ -11,6 +14,7 @@ const ArrayControl = (props) => {
     onUpdate,
     value,
     propTypeData,
+    isNested,
   } = props;
 
   const size = props.value === null || typeof props.value === 'undefined' ? 0 : props.value.length;
@@ -25,24 +29,28 @@ const ArrayControl = (props) => {
   const control = getControl(propTypeData.value);
 
   return (
-    <div>
-      <label>{label}={'{['}</label>
-      <RandomButton
-        onClick={() => onUpdate({ value: ArrayControl.randomValue(propTypeData) })}
+    <div className={inputStyles.wrapper}>
+      <Label
+        text={label}
+        onRandomClick={() => onUpdate({ value: ArrayControl.randomValue(propTypeData) })}
       />
-      <div style={{ paddingLeft: 20 }}>
+      <div
+        className={
+          (isNested) ?
+          objectControlStyles.nestedDeeperThanOneLevel :
+          objectControlStyles.nestedControls
+        }
+      >
         {rangeArray && rangeArray.map((index) => {
           const newProps = {
             key: index,
             value: value[index],
             onUpdate: (data) => onUpdateEntry(data.value, index),
+            isNested: true,
           };
           return cloneElement(control, newProps);
         })}
-        {typeof value === 'undefined' ? 'undefined' : null}
-        {value === null ? 'null' : null}
       </div>
-      <div>{']},'}</div>
     </div>
   );
 };

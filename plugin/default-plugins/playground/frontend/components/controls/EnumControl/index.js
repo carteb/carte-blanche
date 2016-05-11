@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-import RandomButton from '../../common/RandomButton';
+import Select from '../../common/Select';
 
 const EnumControl = (props) => {
   const {
@@ -15,30 +15,16 @@ const EnumControl = (props) => {
     onUpdate,
   } = props;
   return (
-    <div>
-      <label>
-        {label}
-        <select
-          value={value}
-          onChange={(event) => {
-            const newValue = eval(event.target.value); // eslint-disable-line no-eval
-            return onUpdate({ value: newValue });
-          }}
-        >
-          {propTypeData.value && propTypeData.value.map((valueEntry, index) => (
-            <option
-              value={
-                eval(valueEntry.value) // eslint-disable-line no-eval
-              }
-              key={index}
-            >
-              {valueEntry.value}
-            </option>
-          ))}
-        </select>
-      </label>
-      <RandomButton onClick={() => onUpdate({ value: EnumControl.randomValue(propTypeData) })} />
-    </div>
+    <Select
+      label={label}
+      value={value}
+      onChange={(event) => {
+        const newValue = event.target.value;
+        return onUpdate({ value: newValue });
+      }}
+      options={propTypeData.value}
+      onRandomClick={() => onUpdate({ value: EnumControl.randomValue(propTypeData) })}
+    />
   );
 };
 

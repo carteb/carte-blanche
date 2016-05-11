@@ -1,0 +1,20 @@
+.wrapper {
+  position: relative;
+}
+
+.nestedControls {
+  margin-left: 0.5em;
+  position: relative;
+  padding: 1.625em 1pc;
+  padding-left: 0.5em;
+}
+
+.nestedDeeperThanOneLevel {
+  composes: nestedControls;
+  border: 1px solid #CCC;
+  margin-left: 0;
+  margin-top: 1em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  padding-bottom: 0.5em;
+}
