@@ -25,7 +25,7 @@ var start = (componentBasePath, variationsBasePath, port) => {
   var app = express();
 
   /**
-   * GET /*
+   * GET
    */
   app.get('/*', (req, res) => {
     // Get the path of the component from the base path and the passed in parameter
@@ -39,33 +39,18 @@ var start = (componentBasePath, variationsBasePath, port) => {
     var variationComponentPath = path.join(variationsBasePath, req.params[0].replace('.js', ''));
     var variations = {};
     // Get all the variations of this component
-    fs.readdir(variationComponentPath, (err, fileNames) => {
-      // TODO Error handling
-      if (err) {
-        res.json({ data: {} });
-        return;
-      }
-      // Return all the data of all the variations of this component
-      fileNames.map((fileName, index) => {
-        var filePath = path.join(variationComponentPath, fileName);
-        fs.readFile(filePath, { encoding: 'utf8' }, (err, data) => {
-          // TODO Error handling
-          if (err) {
-            variations[fileName.replace('.js', '')] = {};
-          }
-          variations[fileName.replace('.js', '')] = data.replace("module.exports = ", '');
-          // If we're at the last file, respond to the request
-          if (index === fileNames.length - 1) {
-            res.json({ data: variations });
-            return;
-          }
-        });
-      });
+    var fileNames = fs.readdirSync(variationComponentPath);
+    fileNames.map((fileName) => {
+      var filePath = path.join(variationComponentPath, fileName);
+      // TODO make this async and wait for all files to be finished
+      var content = fs.readFileSync(filePath, { encoding: 'utf8' });
+      variations[fileName.replace('.js', '')] = content.replace("module.exports = ", '');
     });
+    res.json({ data: variations });
   });
 
   /**
-   * DELETE /*
+   * DELETE
    */
   app.delete('/*', (req, res) => {
     var componentPath = path.join(componentBasePath, req.params[0]);
@@ -90,13 +75,15 @@ var start = (componentBasePath, variationsBasePath, port) => {
     });
   });
 
+  /**
+   * POST
+   */
   app.post('/*', jsonBodyParser, (req, res) => {
     var componentPath = path.join(componentBasePath, req.params[0]);
     if (fileExists(componentPath) === false) {
       res.status(404).send('');
       return;
     }
-
 
     var stringToBeReplaced = req.params[0].endsWith('/index.js') ? '/index.js' : '.js';
     var variationComponentPath = path.join(

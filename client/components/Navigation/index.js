@@ -61,11 +61,11 @@ class Navigation extends React.Component {
             Home
           </h2>
         </IndexLink>
-          <input
-            className={styles.filterInput}
-            placeholder="Filter"
-            onChange={this.setFilter}
-          />
+        <input
+          className={styles.filterInput}
+          placeholder="Filter"
+          onChange={this.setFilter}
+        />
         <div className={styles.list}>
           {this.renderComponents()}
         </div>
