@@ -19,7 +19,7 @@ var fileExists = (path) => {
   }
 }
 
-var start = (componentBasePath, variationsBasePath) => {
+var start = (componentBasePath, variationsBasePath, port) => {
   var app = express();
 
   /**
@@ -74,7 +74,7 @@ var start = (componentBasePath, variationsBasePath) => {
     var variationPath = path.join(
       variationsBasePath,
       req.params[0].replace('.js', ''),
-      req.query.variation,
+      req.query.variation
     );
 
     try {
@@ -96,7 +96,6 @@ var start = (componentBasePath, variationsBasePath) => {
     res.status(200).send(`POST ${req.params.component}`);
   });
 
-  var port = 8000;
   server = app.listen(port);
 }
 

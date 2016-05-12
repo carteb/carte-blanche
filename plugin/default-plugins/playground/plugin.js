@@ -1,5 +1,9 @@
+const fork = require('child_process').fork;
+const path = require('path');
+
 function PlaygroundPlugin(options) {
   this.options = options || {};
+  fork(path.resolve(__dirname, './server/run.js'));
 }
 /**
  * Initializes the plugin, called after the main StyleguidePlugin function above
