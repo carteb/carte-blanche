@@ -4,35 +4,62 @@
   top: 0;
   bottom: 0;
   width: 15em;
-  background-color: rgb(40, 40, 48);
+  background: #282830; /* Old browsers */
+  background: -moz-linear-gradient(top, #282830 0%, #26262e 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top, #282830 0%,#26262e 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, #282830 0%,#26262e 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#282830', endColorstr='#26262e',GradientType=0 );
   z-index: 1;
+}
+
+.titleItem {
+  display: block;
+  padding: 2rem 1rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+  margin: 0;
+  text-decoration: none;
 }
 
 .title {
   color: white;
   font-family: Helvetica, Arial, sans-serif;
   font-weight: 300;
-  margin: 2rem 1rem;
-  margin-bottom: 1rem;
+  margin: 0;
+  padding: 0;
 }
 
 .list {
-  padding: 1rem 0;
   overflow-y: auto;
 }
 
-.componentLink {
-  color: rgba(255, 255, 255, 0.75);
-  background-color: rgb(40, 40, 48);
-  font-family: Helvetica, Arial, sans-serif;
+.listItem {
+  color: rgba(255, 255, 255, 0.5);
+  background: #282830; /* Old browsers */
+  background: -moz-linear-gradient(top, #282830 0%, #26262e 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top, #282830 0%,#26262e 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, #282830 0%,#26262e 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#282830', endColorstr='#26262e',GradientType=0 );
+  /* Use System Fonts */
+  font-family: -apple-system, BlinkMacSystemFont,  "Segoe UI", "Roboto", "Oxygen",  "Ubuntu", "Cantarell", "Fira Sans",  "Droid Sans", "Helvetica Neue", sans-serif;
   text-decoration: none;
-  padding: 1rem 1rem;
+  padding: 0.5rem 1rem;
   display: block;
+  font-size: 0.9rem;
+  font-weight: 300;
+  letter-spacing: 0.05em;
   text-overflow: ellipsis;
   overflow: hidden;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
 }
 
-.componentLinkActive {
+.listItemActive {
   color: rgba(255, 255, 255, 1);
-  background-color: rgb(23, 24, 28)
+  background: rgb(23, 24, 28);
+  border-left: 0.25em solid rgb(72, 133, 246);
+  border-top-color: transparent;
+}
+
+.listItem:last-child.listItemActive {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
