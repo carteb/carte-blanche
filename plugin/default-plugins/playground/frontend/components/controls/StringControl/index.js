@@ -18,9 +18,9 @@ const StringControl = (props) => {
   );
 };
 
-StringControl.randomValue = (props, required) => {
-  const canBeUndefined = !required;
-  const canBeNull = !required;
+StringControl.randomValue = (props) => {
+  const canBeUndefined = !props.required;
+  const canBeNull = !props.required;
   const randomString = faker.lorem.sentence();
   return valueOrNullOrUndefined(randomString, canBeNull, canBeUndefined);
 };

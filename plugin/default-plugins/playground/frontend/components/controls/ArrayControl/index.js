@@ -57,9 +57,9 @@ const ArrayControl = (props) => {
   );
 };
 
-ArrayControl.randomValue = (propTypeData, required) => {
-  const canBeNull = !required;
-  const canBeUndefined = !required;
+ArrayControl.randomValue = (propTypeData) => {
+  const canBeNull = !propTypeData.required;
+  const canBeUndefined = !propTypeData.required;
   // Restrict random arrays to a length between 0 and 4 elements
   const min = 0;
   const max = 4;

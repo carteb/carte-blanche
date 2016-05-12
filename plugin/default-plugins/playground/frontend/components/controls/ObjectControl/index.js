@@ -50,9 +50,9 @@ const ObjectControl = ({ label, propTypeData, value, onUpdate, isNested, require
   );
 };
 
-ObjectControl.randomValue = (propTypeData, required) => {
-  const canReallyBeNull = !required;
-  const canReallyBeUndefined = !required;
+ObjectControl.randomValue = (propTypeData) => {
+  const canReallyBeNull = !propTypeData.required;
+  const canReallyBeUndefined = !propTypeData.required;
   const normalizedPropsWithControls = mapValues(propTypeData.value, (prop) => {
     prop.control = getControl(prop); // eslint-disable-line no-param-reassign
     return prop;

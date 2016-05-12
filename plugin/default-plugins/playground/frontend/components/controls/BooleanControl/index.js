@@ -37,9 +37,9 @@ const BooleanControl = (props) => {
 /**
  * Generates a random boolean value
  */
-BooleanControl.randomValue = (props = {}, required) => {
-  const canBeNull = !required;
-  const canBeUndefined = !required;
+BooleanControl.randomValue = (props) => {
+  const canBeNull = !props.required;
+  const canBeUndefined = !props.required;
   const value = Math.random() >= 0.5;
   return valueOrNullOrUndefined(value, canBeNull, canBeUndefined);
 };

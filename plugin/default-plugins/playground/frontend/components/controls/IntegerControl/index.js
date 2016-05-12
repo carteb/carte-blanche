@@ -27,14 +27,14 @@ const IntegerControl = (props) => {
 /**
  * Generates a random integer
  */
-IntegerControl.randomValue = (props, required) => {
+IntegerControl.randomValue = (props) => {
   const {
     min = Number.MAX_SAFE_INTEGER,
     max = Number.MIN_SAFE_INTEGER,
     step = 1,
   } = props;
-  const canBeNull = !required;
-  const canBeUndefined = !required;
+  const canBeNull = !props.required;
+  const canBeUndefined = !props.required;
   let number;
   do {
     number = Math.floor(Math.random() * (max - min + 1)) + min;
