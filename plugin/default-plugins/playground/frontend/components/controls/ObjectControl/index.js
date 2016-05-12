@@ -51,14 +51,14 @@ const ObjectControl = ({ label, propTypeData, value, onUpdate, isNested, require
 };
 
 ObjectControl.randomValue = (propTypeData) => {
-  const canReallyBeNull = !propTypeData.required;
-  const canReallyBeUndefined = !propTypeData.required;
+  const canBeNull = !propTypeData.required;
+  const canBeUndefined = !propTypeData.required;
   const normalizedPropsWithControls = mapValues(propTypeData.value, (prop) => {
     prop.control = getControl(prop); // eslint-disable-line no-param-reassign
     return prop;
   });
   const value = randomValues(normalizedPropsWithControls);
-  return valueOrNullOrUndefined(value, canReallyBeNull, canReallyBeUndefined);
+  return valueOrNullOrUndefined(value, canBeNull, canBeUndefined);
 };
 
 export default ObjectControl;
