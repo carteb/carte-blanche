@@ -16,15 +16,6 @@ ReactDocsPlugin.prototype.apply = function apply(compiler) {
         data.reactDocs = reactDocs.parse(data.source); // eslint-disable-line no-param-reassign
       }
     );
-
-    // The ng-docs styleguide plugin
-    compilation.plugin('styleguide-plugin-processing', (renderStyleguide, data) => {
-      renderStyleguide({
-        name: 'reactDocs',
-        frontendData: { reactDocs: data.reactDocs, options },
-        frontendPlugin: `${require.resolve('./component.js')}`,
-      });
-    });
   });
 };
 

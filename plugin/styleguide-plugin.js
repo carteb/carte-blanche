@@ -8,7 +8,7 @@
 import minimatch from 'minimatch';
 import fs from 'fs';
 import path from 'path';
-import ReactDocsPlugin from './default-plugins/react-docs/plugin';
+// import ReactDocsPlugin from './default-plugins/react-docs/plugin';
 import SourcePlugin from './default-plugins/source/plugin';
 import PlaygroundPlugin from './default-plugins/playground/plugin';
 
@@ -137,8 +137,8 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
 };
 
 StyleguidePlugin.prototype.registerDefaultPlugins = function registerDefaultPlugins(compiler) {
-  const reactDocsPlugin = new ReactDocsPlugin();
-  reactDocsPlugin.apply(compiler);
+  // const reactDocsPlugin = new ReactDocsPlugin();
+  // reactDocsPlugin.apply(compiler);
   const sourcePlugin = new SourcePlugin();
   sourcePlugin.apply(compiler);
   const playgroundPlugin = new PlaygroundPlugin();

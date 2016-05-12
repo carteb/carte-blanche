@@ -1,5 +1,6 @@
 const fork = require('child_process').fork;
 const path = require('path');
+const reactDocs = require('react-docgen');
 
 function PlaygroundPlugin(options) {
   this.options = options || {};
@@ -16,6 +17,7 @@ PlaygroundPlugin.prototype.apply = function apply(compiler) {
       'styleguide-plugin-before-processing',
       (data) => {
         data.module = 'test'; // eslint-disable-line no-param-reassign
+        data.reactDocs = reactDocs.parse(data.source);  // eslint-disable-line no-param-reassign
       }
     );
 
