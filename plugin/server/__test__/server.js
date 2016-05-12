@@ -29,10 +29,10 @@ describe('variations server', () => {
         .end((err, res) => {
           expect(res.status).to.equal(200);
           expect(res.body.error).to.be.false; // eslint-disable-line no-unused-expressions
-          expect(res.body.data).to.have.keys(['firstState', 'secondState']);
+          expect(res.body.data).to.have.keys(['firstVariation', 'secondVariation']);
 
-          let firstState;
-          eval(`firstState = ${res.body.data.firstState}`); // eslint-disable-line no-eval
+          let firstVariation;
+          eval(`firstVariation = ${res.body.data.firstVariation}`); // eslint-disable-line no-eval
           const expected = {
             props: {
               className: {
@@ -52,10 +52,10 @@ describe('variations server', () => {
               },
             },
           };
-          expect(firstState).to.deep.equal(expected); // eslint-disable-line no-undef
+          expect(firstVariation).to.deep.equal(expected); // eslint-disable-line no-undef
 
-          let secondState;
-          eval(`secondState = ${res.body.data.secondState}`); // eslint-disable-line no-eval
+          let secondVariation;
+          eval(`secondVariation = ${res.body.data.secondVariation}`); // eslint-disable-line no-eval
           const secondExpected = {
             props: {
               age: {
@@ -68,7 +68,7 @@ describe('variations server', () => {
               },
             },
           };
-          expect(secondState).to.deep.equal(secondExpected); // eslint-disable-line no-undef
+          expect(secondVariation).to.deep.equal(secondExpected); // eslint-disable-line no-undef
           done();
         });
     });
