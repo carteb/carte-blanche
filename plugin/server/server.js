@@ -36,13 +36,30 @@ var start = (componentBasePath, variationsBasePath) => {
 
     var variationsPath = path.join(variationsBasePath, req.params[0].replace('.js', ''));
     var variations = {};
-    var fileNames = fs.readdirSync(variationsPath);
-    fileNames.map((fileName) => {
-      var filePath = path.join(variationsPath, fileName);
-      var content = fs.readFileSync(filePath, { encoding: 'utf8' });
-      variations[fileName.replace('.js', '')] = content.replace("module.exports = ", '');
+    // Get all the variations of this component
+    fs.readdir(variationsPath, (err, fileNames) => {
+      // TODO Error handling
+      if (err) {
+        res.json({ data: {} });
+        return;
+      }
+      // Return all the data of all the variations of this component
+      fileNames.map((fileName, index) => {
+        var filePath = path.join(variationsPath, fileName);
+        fs.readFile(filePath, { encoding: 'utf8' }, (err, data) => {
+          // TODO Error handling
+          if (err) {
+            variations[fileName.replace('.js', '')] = {};
+          }
+          variations[fileName.replace('.js', '')] = data.replace("module.exports = ", '');
+          // If we're at the last file, respond to the request
+          if (index === fileNames.length - 1) {
+            res.json({ data: variations });
+            return;
+          }
+        });
+      });
     });
-    res.json({ data: variations });
   });
 
   /**
