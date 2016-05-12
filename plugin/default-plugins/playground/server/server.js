@@ -25,7 +25,7 @@ var start = (componentBasePath, variationsBasePath, port) => {
   var app = express();
 
   /**
-   * GET /*
+   * GET
    */
   app.get('/*', (req, res) => {
     // Get the path of the component from the base path and the passed in parameter
@@ -50,7 +50,7 @@ var start = (componentBasePath, variationsBasePath, port) => {
   });
 
   /**
-   * DELETE /*
+   * DELETE
    */
   app.delete('/*', (req, res) => {
     var componentPath = path.join(componentBasePath, req.params[0]);
@@ -75,13 +75,15 @@ var start = (componentBasePath, variationsBasePath, port) => {
     });
   });
 
+  /**
+   * POST
+   */
   app.post('/*', jsonBodyParser, (req, res) => {
     var componentPath = path.join(componentBasePath, req.params[0]);
     if (fileExists(componentPath) === false) {
       res.status(404).send('');
       return;
     }
-
 
     var stringToBeReplaced = req.params[0].endsWith('/index.js') ? '/index.js' : '.js';
     var variationComponentPath = path.join(
