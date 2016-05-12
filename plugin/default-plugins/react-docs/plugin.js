@@ -7,7 +7,6 @@ function ReactDocsPlugin(options) {
  * Initializes the plugin, called after the main StyleguidePlugin function above
  */
 ReactDocsPlugin.prototype.apply = function apply(compiler) {
-  const options = this.options;
   compiler.plugin('compilation', (compilation) => {
     // Expose the react parse result to all other styleguide plugins
     compilation.plugin(
