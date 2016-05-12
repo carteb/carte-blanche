@@ -13,16 +13,14 @@ const StringControl = (props) => {
       value={value}
       isNested={isNested}
       onChange={(e) => onUpdate({ value: e.target.value })}
-      onRandomClick={() => onUpdate({ value: StringControl.randomValue(props) })}
+      onRandomClick={() => onUpdate({ value: StringControl.randomValue(props, props.required) })}
     />
   );
 };
 
-StringControl.randomValue = ({ random = {} }) => {
-  const {
-    canBeNull = true,
-    canBeUndefined = true,
-  } = random;
+StringControl.randomValue = (props) => {
+  const canBeUndefined = !props.required;
+  const canBeNull = !props.required;
   const randomString = faker.lorem.sentence();
   return valueOrNullOrUndefined(randomString, canBeNull, canBeUndefined);
 };

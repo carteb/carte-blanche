@@ -19,40 +19,44 @@ import FlowArrayControl from '../components/controls/FlowArrayControl';
 import FlowUnionControl from '../components/controls/FlowUnionControl';
 
 const getControl = (propType) => {
+  const generalProps = {
+    // If something is required, don't randomise it to null/undefined
+    required: propType.required,
+  };
   let control;
   switch (propType.name) {
     case 'bool': // proptypes boolean
-      control = <BooleanControl />;
+      control = <BooleanControl {...generalProps} />;
       break;
     case 'boolean': // flow boolean
-      control = <BooleanControl />;
+      control = <BooleanControl {...generalProps} />;
       break;
     case 'number':
-      control = <IntegerControl />;
+      control = <IntegerControl {...generalProps} />;
       break;
     case 'string':
-      control = <StringControl />;
+      control = <StringControl {...generalProps} />;
       break;
     case 'enum':
-      control = <EnumControl propTypeData={propType} />;
+      control = <EnumControl propTypeData={propType} {...generalProps} />;
       break;
     case 'node':
-      control = <NodeControl />;
+      control = <NodeControl {...generalProps} />;
       break;
     case 'shape': // proptypes
-      control = <ObjectControl propTypeData={propType} />;
+      control = <ObjectControl propTypeData={propType} {...generalProps} />;
       break;
     case 'signature': // flow
-      control = <FlowObjectControl propTypeData={propType} />;
+      control = <FlowObjectControl propTypeData={propType} {...generalProps} />;
       break;
     case 'arrayOf':
-      control = <ArrayControl propTypeData={propType} />;
+      control = <ArrayControl propTypeData={propType} {...generalProps} />;
       break;
     case 'Array':
-      control = <FlowArrayControl propTypeData={propType} />;
+      control = <FlowArrayControl propTypeData={propType} {...generalProps} />;
       break;
     case 'union':
-      control = <FlowUnionControl propTypeData={propType} />;
+      control = <FlowUnionControl propTypeData={propType} {...generalProps} />;
       break;
     default:
       control = <DummyControl />;

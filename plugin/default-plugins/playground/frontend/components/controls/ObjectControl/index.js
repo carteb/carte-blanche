@@ -14,7 +14,7 @@ import Label from '../../common/Label';
 
 import styles from './styles.css';
 
-const ObjectControl = ({ label, propTypeData, value, onUpdate, isNested }) => {
+const ObjectControl = ({ label, propTypeData, value, onUpdate, isNested, required }) => {
   const updatePropertyValues = (values) => {
     onUpdate({ value: values });
   };
@@ -38,7 +38,9 @@ const ObjectControl = ({ label, propTypeData, value, onUpdate, isNested }) => {
         <Label
           text={label}
           isNested={isNested}
-          onRandomClick={() => onUpdate({ value: ObjectControl.randomValue(propTypeData) })}
+          onRandomClick={() => onUpdate({
+            value: ObjectControl.randomValue(propTypeData, required),
+          })}
         />
       ) : null}
       <div className={controlWrapperClassName}>
@@ -49,8 +51,8 @@ const ObjectControl = ({ label, propTypeData, value, onUpdate, isNested }) => {
 };
 
 ObjectControl.randomValue = (propTypeData) => {
-  const canBeNull = true;
-  const canBeUndefined = true;
+  const canBeNull = !propTypeData.required;
+  const canBeUndefined = !propTypeData.required;
   const normalizedPropsWithControls = mapValues(propTypeData.value, (prop) => {
     prop.control = getControl(prop); // eslint-disable-line no-param-reassign
     return prop;

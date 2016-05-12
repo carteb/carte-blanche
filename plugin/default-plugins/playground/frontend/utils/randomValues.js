@@ -9,7 +9,7 @@ import mapValues from 'lodash/mapValues';
 
 const randomValues = (propTypes) => (
   mapValues(propTypes, (propType) => (
-    propType.control.type.randomValue(propType)
+    propType.control.type.randomValue(propType, propType.required)
   ))
 );
 

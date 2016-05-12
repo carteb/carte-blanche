@@ -57,17 +57,23 @@ const ArrayControl = (props) => {
   );
 };
 
-ArrayControl.randomValue = (props) => {
-  const canBeNull = true;
-  const canBeUndefined = true;
+ArrayControl.randomValue = (propTypeData) => {
+  const canBeNull = !propTypeData.required;
+  const canBeUndefined = !propTypeData.required;
+  // Restrict random arrays to a length between 0 and 4 elements
   const min = 0;
   const max = 4;
   const size = Math.floor(Math.random() * (max - min + 1)) + min;
   const rangeArray = range(min, size);
-  const propTypeData = props.value || props.type && props.type.value; // TODO clean up
-  const control = getControl(propTypeData);
+  // Get the prop type data of the insides of the array
+  const innerPropTypeData =
+    propTypeData.value
+    || propTypeData.type
+    && propTypeData.type.value; // TODO clean up
+  const control = getControl(innerPropTypeData);
 
-  const value = rangeArray.map(() => control.type.randomValue(propTypeData));
+  // Generate a random value for each propType in the array
+  const value = rangeArray.map(() => control.type.randomValue(innerPropTypeData));
 
   return valueOrNullOrUndefined(value, canBeNull, canBeUndefined);
 };

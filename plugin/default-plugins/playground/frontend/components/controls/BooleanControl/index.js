@@ -29,7 +29,7 @@ const BooleanControl = (props) => {
           label: 'false',
         },
       ]}
-      onRandomClick={() => onUpdate({ value: BooleanControl.randomValue(props) })}
+      onRandomClick={() => onUpdate({ value: BooleanControl.randomValue(props, props.required) })}
     />
   );
 };
@@ -37,11 +37,9 @@ const BooleanControl = (props) => {
 /**
  * Generates a random boolean value
  */
-BooleanControl.randomValue = ({ random = {} }) => {
-  const {
-    canBeNull = true,
-    canBeUndefined = true,
-  } = random;
+BooleanControl.randomValue = (props) => {
+  const canBeNull = !props.required;
+  const canBeUndefined = !props.required;
   const value = Math.random() >= 0.5;
   return valueOrNullOrUndefined(value, canBeNull, canBeUndefined);
 };
