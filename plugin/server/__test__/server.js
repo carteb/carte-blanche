@@ -1,12 +1,13 @@
 import supertest from 'supertest';
 import path from 'path';
 import { expect } from 'chai';
+import fs from 'fs';
 
 const componentBasePath = path.join(__dirname, 'components');
 const variationsBasePath = path.join(__dirname, 'variations');
 const client = supertest.agent('http://localhost:8000');
 
-describe('get', () => {
+describe('variations server', () => {
   let server;
 
   beforeEach(() => {
@@ -19,73 +20,108 @@ describe('get', () => {
     server.stop(done);
   });
 
-  it('should get all data for a valid component with variations data', (done) => {
-    client
-      .get('/ComponentA.js')
-      .expect('Content-type', /json/)
-      .expect(200)
-      .end((err, res) => {
-        expect(res.status).to.equal(200);
-        expect(res.body.error).to.be.false; // eslint-disable-line no-unused-expressions
-        expect(res.body.data).to.have.keys(['firstState', 'secondState']);
+  describe('get', () => {
+    it('should get all data for a valid component with variations data', (done) => {
+      client
+        .get('/ComponentA.js')
+        .expect('Content-type', /json/)
+        .expect(200)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.error).to.be.false; // eslint-disable-line no-unused-expressions
+          expect(res.body.data).to.have.keys(['firstState', 'secondState']);
 
-        let firstState;
-        eval(`firstState = ${res.body.data.firstState}`); // eslint-disable-line no-eval
-        const expected = {
-          props: {
-            className: {
-              value: 'component-a',
+          let firstState;
+          eval(`firstState = ${res.body.data.firstState}`); // eslint-disable-line no-eval
+          const expected = {
+            props: {
+              className: {
+                value: 'component-a',
+              },
+              age: {
+                value: 22,
+                min: 0,
+                max: 140,
+              },
             },
-            age: {
-              value: 22,
-              min: 0,
-              max: 140,
+            state: {
+              focusedAge: {
+                value: 19,
+                min: 0,
+                max: 140,
+              },
             },
-          },
-          state: {
-            focusedAge: {
-              value: 19,
-              min: 0,
-              max: 140,
-            },
-          },
-        };
-        expect(firstState).to.deep.equal(expected); // eslint-disable-line no-undef
+          };
+          expect(firstState).to.deep.equal(expected); // eslint-disable-line no-undef
 
-        let secondState;
-        eval(`secondState = ${res.body.data.secondState}`); // eslint-disable-line no-eval
-        const secondExpected = {
-          props: {
-            age: {
-              value: null,
+          let secondState;
+          eval(`secondState = ${res.body.data.secondState}`); // eslint-disable-line no-eval
+          const secondExpected = {
+            props: {
+              age: {
+                value: null,
+              },
             },
-          },
-          state: {
-            focusedAge: {
-              value: 10,
+            state: {
+              focusedAge: {
+                value: 10,
+              },
             },
-          },
-        };
-        expect(secondState).to.deep.equal(secondExpected); // eslint-disable-line no-undef
-        done();
-      });
+          };
+          expect(secondState).to.deep.equal(secondExpected); // eslint-disable-line no-undef
+          done();
+        });
+    });
+
+    it('should return an empty data object in case the component does not exist', (done) => {
+      client
+        .get('/ComponentNotAvailable.js')
+        .expect('Content-type', /json/)
+        .expect(200)
+        .end((err, res) => {
+          expect(res.body.data).to.deep.equal({});
+          done();
+        });
+    });
   });
 
-  it('should return an empty data object in case ', (done) => {
-    client
-      .get('/ComponentNotAvailable')
-      .expect('Content-type', /json/)
-      .expect(200)
-      .end((err, res) => {
-        expect(res.body.data).to.deep.equal({});
-        done();
-      });
-  });
+  describe('delete', () => {
+    it('should remove the variation', (done) => {
+      const variationPath = path.join(variationsBasePath, 'ComponentA', 'toBeRemoved.js');
+      fs.closeSync(fs.openSync(variationPath, 'w'));
 
-  // DELETE (removes a variation)
-  // verify that the component for the provided path exists
-  // identify the variation based on the query parameter variation
-  // verify that this variation exists and remove it
+      client
+        .delete('/ComponentA.js?variation=toBeRemoved.js')
+        .expect('Content-type', /json/)
+        .expect(200)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          done();
+        });
+    });
+
+    it('should fail in case the component does not exist', (done) => {
+      client
+        .delete('/ComponentNotAvailable.js')
+        .expect('Content-type', /json/)
+        .expect(404)
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          done();
+        });
+    });
+
+    it('should fail in case the variation does not exist', (done) => {
+      client
+        .delete('/ComponentA.js?variation=notAvailableVariation.js')
+        .expect('Content-type', /json/)
+        .expect(404)
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          done();
+        });
+    });
+  });
 
   // POST (acts as create or update of a variation)
   // verify that the component for the provided path exists

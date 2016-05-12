@@ -4,16 +4,21 @@ var path = require('path');
 var fs = require('fs');
 var server;
 
-function start(componentBasePath, variationsBasePath) {
+var fileExists = (path) => {
+  try {
+    fs.accessSync(path, fs.R_OK && fs.W_OK);
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
+var start = (componentBasePath, variationsBasePath) => {
   var app = express();
 
   app.get('/*', (req, res) => {
     var componentPath = path.join(componentBasePath, req.params[0]);
-
-    // return an empty array response in case the component has no variations data
-    try {
-      fs.accessSync(componentPath, fs.R_OK);
-    } catch (error) {
+    if (fileExists(componentPath) === false) {
       res.json({ data: {} });
     }
 
@@ -28,18 +33,35 @@ function start(componentBasePath, variationsBasePath) {
     res.json({ data: variations });
   });
 
+  app.delete('/*', (req, res) => {
+    var componentPath = path.join(componentBasePath, req.params[0]);
+    if (fileExists(componentPath) === false) {
+      res.status(404).send('');
+    }
+
+    var variationPath = path.join(
+      variationsBasePath,
+      req.params[0].replace('.js', ''),
+      req.query.variation,
+    );
+
+    try {
+      fs.unlinkSync(variationPath);
+      res.status(200).send('');
+    } catch (error) {
+      res.status(404).send('');
+    }
+  });
+
   app.post('/*', (req, res) => {
     res.status(200).send(`POST ${req.params.component}`);
   });
 
   var port = 8000;
   server = app.listen(port);
-  console.log('\n\n--------------------------------------');
-  console.log('Playground Server listening to port: ' + port);
-  console.log('---------------------------------------\n\n');
 }
 
-function stop(callback) {
+var stop = (callback) => {
   server.close(callback);
 }
 
