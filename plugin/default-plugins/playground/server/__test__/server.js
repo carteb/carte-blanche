@@ -2,11 +2,12 @@ import supertest from 'supertest';
 import path from 'path';
 import { expect } from 'chai';
 import fs from 'fs';
+import rimraf from 'rimraf';
 
 const port = 8000;
 const componentBasePath = path.join(__dirname, 'components');
 const variationsBasePath = path.join(__dirname, 'variations');
-const client = supertest.agent(`http://localhost:${port}`);
+const request = supertest.agent(`http://localhost:${port}`);
 
 describe('variations server', () => {
   let server;
@@ -23,14 +24,14 @@ describe('variations server', () => {
 
   describe('get', () => {
     it('should get all data for a valid component with variations data', (done) => {
-      client
+      request
         .get('/ComponentA.js')
         .expect('Content-type', /json/)
         .expect(200)
         .end((err, res) => {
           expect(res.status).to.equal(200);
           expect(res.body.error).to.be.false; // eslint-disable-line no-unused-expressions
-          expect(res.body.data).to.have.keys(['firstVariation', 'secondVariation']);
+          expect(res.body.data).to.include.keys(['firstVariation', 'secondVariation']);
 
           let firstVariation;
           eval(`firstVariation = ${res.body.data.firstVariation}`); // eslint-disable-line no-eval
@@ -75,7 +76,7 @@ describe('variations server', () => {
     });
 
     it('should return an empty data object in case the component does not exist', (done) => {
-      client
+      request
         .get('/ComponentNotAvailable.js')
         .expect('Content-type', /json/)
         .expect(200)
@@ -91,7 +92,7 @@ describe('variations server', () => {
       const variationPath = path.join(variationsBasePath, 'ComponentA', 'toBeRemoved.js');
       fs.closeSync(fs.openSync(variationPath, 'w'));
 
-      client
+      request
         .delete('/ComponentA.js?variation=toBeRemoved.js')
         .expect('Content-type', /json/)
         .expect(200)
@@ -102,7 +103,7 @@ describe('variations server', () => {
     });
 
     it('should fail in case the component does not exist', (done) => {
-      client
+      request
         .delete('/ComponentNotAvailable.js')
         .expect('Content-type', /json/)
         .expect(404)
@@ -113,7 +114,7 @@ describe('variations server', () => {
     });
 
     it('should fail in case the variation does not exist', (done) => {
-      client
+      request
         .delete('/ComponentA.js?variation=notAvailableVariation.js')
         .expect('Content-type', /json/)
         .expect(404)
@@ -124,8 +125,93 @@ describe('variations server', () => {
     });
   });
 
-  // POST (acts as create or update of a variation)
-  // verify that the component for the provided path exists
-  // if the variation based on the parameter in the data doesn't exists create the file
-  // write the provided data to the file
+  describe('post', () => {
+    describe('write new variation', () => {
+      const variationComponentPath = path.join(variationsBasePath, 'ComponentB');
+      const variationPath = path.join(variationComponentPath, 'newVariation.js');
+      const code = `{
+        props: {
+          name: {
+            value: 'Ada Lovelace',
+          },
+          onClick: {
+            value: () => true,
+          },
+        },
+      };`;
+
+      afterEach((done) => {
+        rimraf(variationComponentPath, done);
+      });
+
+      it('should create a new file with the provided data', (done) => {
+        request
+          .post('/ComponentB/index.js')
+          .type('json')
+          .send({
+            variation: 'newVariation.js',
+            code,
+          })
+          .expect(200)
+          .end((err, res) => {
+            expect(res.status).to.equal(200);
+            fs.readFile(variationPath, { encoding: 'utf8' }, (_, fileContent) => {
+              expect(`module.exports = ${code}`).to.equal(fileContent);
+              done();
+            });
+          });
+      });
+    });
+
+    describe('overwrite existing variation', () => {
+      const variationPath = path.join(variationsBasePath, 'ComponentA', 'existingVariation.js');
+      const code = `{
+        props: {
+          name: {
+            value: 'Marie Curie',
+          },
+          onSelect: {
+            value: () => true,
+          },
+        },
+      };`;
+
+      afterEach((done) => {
+        fs.unlink(variationPath, () => {
+          done();
+        });
+      });
+
+      it('should overwrite the existing file with the provided data', (done) => {
+        fs.closeSync(fs.openSync(variationPath, 'w'));
+
+        request
+          .post('/ComponentA.js')
+          .type('json')
+          .send({
+            variation: 'existingVariation.js',
+            code,
+          })
+          .expect(200)
+          .end((err, res) => {
+            expect(res.status).to.equal(200);
+            fs.readFile(variationPath, { encoding: 'utf8' }, (_, fileContent) => {
+              expect(`module.exports = ${code}`).to.equal(fileContent);
+              done();
+            });
+          });
+      });
+    });
+
+    it('should fail in case the component does not exist', (done) => {
+      request
+        .post('/ComponentNotAvailable.js')
+        .expect('Content-type', /json/)
+        .expect(404)
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          done();
+        });
+    });
+  });
 });
