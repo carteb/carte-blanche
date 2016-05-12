@@ -50,6 +50,7 @@ body {
   border-right: 1px solid #CCC;
   outline: none;
   cursor: pointer;
+  z-index: 1000;
 }
 
 .previewTitle {

@@ -28,6 +28,8 @@
   text-decoration: none;
   padding: 1rem 1rem;
   display: block;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .componentLinkActive {

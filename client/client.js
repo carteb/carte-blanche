@@ -15,21 +15,21 @@ const styleguideClientApi = window.STYLEGUIDE_PLUGIN_CLIENT_API;
 
 // Generate a view for every component
 const routeViews = {};
-Object.keys(styleguideClientApi.scripts).forEach((componentName) => {
-  routeViews[componentName] = () => (
+Object.keys(styleguideClientApi.scripts).forEach((componentPath) => {
+  routeViews[componentPath] = () => (
     <ComponentPreview
-      name={componentName}
+      name={componentPath}
     />
   );
 });
 
 // Generate a route for every view
 const routes = Object.keys(routeViews)
-    .map((componentName) => (
+    .map((componentPath) => (
       <Route
-        key={componentName}
-        path={componentName}
-        component={routeViews[componentName]}
+        key={componentPath}
+        path={componentPath}
+        component={routeViews[componentPath]}
       />
     ));
 
