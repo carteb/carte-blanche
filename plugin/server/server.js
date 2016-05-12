@@ -78,10 +78,17 @@ var start = (componentBasePath, variationsBasePath) => {
     );
 
     try {
-      fs.unlinkSync(variationPath);
-      res.status(200).send('');
+      fs.unlink(variationPath, (err) => {
+        if (err) {
+          res.status(404).send('');
+          return;
+        }
+        res.status(200).send('');
+        return;
+      });
     } catch (error) {
       res.status(404).send('');
+      return;
     }
   });
 
