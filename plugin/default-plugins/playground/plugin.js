@@ -16,7 +16,6 @@ PlaygroundPlugin.prototype.apply = function apply(compiler) {
     compilation.plugin(
       'styleguide-plugin-before-processing',
       (data) => {
-        data.module = 'test'; // eslint-disable-line no-param-reassign
         data.reactDocs = reactDocs.parse(data.source);  // eslint-disable-line no-param-reassign
       }
     );

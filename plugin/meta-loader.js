@@ -19,7 +19,7 @@ module.exports = function metaLoader(source) {
     }));
   };
 
-  const data = { source, module };
+  const data = { source };
 
   // Trigger events for styleguide child plugins
   this._compilation.applyPlugins( // eslint-disable-line no-underscore-dangle
