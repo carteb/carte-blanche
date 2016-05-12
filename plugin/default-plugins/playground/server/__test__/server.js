@@ -3,9 +3,10 @@ import path from 'path';
 import { expect } from 'chai';
 import fs from 'fs';
 
+const port = 8000;
 const componentBasePath = path.join(__dirname, 'components');
 const variationsBasePath = path.join(__dirname, 'variations');
-const client = supertest.agent('http://localhost:8000');
+const client = supertest.agent(`http://localhost:${port}`);
 
 describe('variations server', () => {
   let server;
@@ -13,7 +14,7 @@ describe('variations server', () => {
   beforeEach(() => {
     delete require.cache[require.resolve('./server')];
     server = require('../server'); // eslint-disable-line global-require
-    server.start(componentBasePath, variationsBasePath);
+    server.start(componentBasePath, variationsBasePath, port);
   });
 
   afterEach((done) => {
