@@ -10,24 +10,43 @@ import getComponentNameFromPath from '../../utils/getComponentNameFromPath';
 import styles from './styles.css';
 
 class Navigation extends React.Component {
-  componentWillMount() {
+  constructor() {
+    super();
+    this.setFilter = this.setFilter.bind(this);
+    this.renderComponents = this.renderComponents.bind(this);
+  }
+
+  state = {
+    filterString: '',
+  };
+
+  setFilter(e) {
+    this.setState({
+      filterString: e.target.value,
+    });
+  }
+
+  renderComponents() {
     // Iterate through all components and generate a list
-    this.components = Object.keys(window.STYLEGUIDE_PLUGIN_CLIENT_API.scripts)
+    return Object.keys(window.STYLEGUIDE_PLUGIN_CLIENT_API.scripts)
       .map((componentPath) => {
         // Clean the component name
         // TODO Maybe do this earlier, not on every mount
         const componentName = getComponentNameFromPath(componentPath);
-        return (
-          // IndexLink so not all links that match a part of the route are highlighted
-          <IndexLink
-            to={`/${componentPath}`}
-            key={`/${componentPath}`}
-            className={styles.listItem}
-            activeClassName={styles.listItemActive}
-          >
-            {componentName}
-          </IndexLink>
-        );
+        if (componentName.indexOf(this.state.filterString) > -1) {
+          return (
+            // IndexLink so not all links that match a part of the route are highlighted
+            <IndexLink
+              to={`/${componentPath}`}
+              key={`/${componentPath}`}
+              className={styles.listItem}
+              activeClassName={styles.listItemActive}
+            >
+              {componentName}
+            </IndexLink>
+          );
+        }
+        return null;
       });
   }
 
@@ -42,8 +61,13 @@ class Navigation extends React.Component {
             Home
           </h2>
         </IndexLink>
+          <input
+            className={styles.filterInput}
+            placeholder="Filter"
+            onChange={this.setFilter}
+          />
         <div className={styles.list}>
-          {this.components}
+          {this.renderComponents()}
         </div>
       </div>
     );
