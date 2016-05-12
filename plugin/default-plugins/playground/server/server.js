@@ -36,10 +36,10 @@ var start = (componentBasePath, variationsBasePath, port) => {
       return;
     }
 
-    var variationsPath = path.join(variationsBasePath, req.params[0].replace('.js', ''));
+    var variationComponentPath = path.join(variationsBasePath, req.params[0].replace('.js', ''));
     var variations = {};
     // Get all the variations of this component
-    fs.readdir(variationsPath, (err, fileNames) => {
+    fs.readdir(variationComponentPath, (err, fileNames) => {
       // TODO Error handling
       if (err) {
         res.json({ data: {} });
@@ -47,7 +47,7 @@ var start = (componentBasePath, variationsBasePath, port) => {
       }
       // Return all the data of all the variations of this component
       fileNames.map((fileName, index) => {
-        var filePath = path.join(variationsPath, fileName);
+        var filePath = path.join(variationComponentPath, fileName);
         fs.readFile(filePath, { encoding: 'utf8' }, (err, data) => {
           // TODO Error handling
           if (err) {
