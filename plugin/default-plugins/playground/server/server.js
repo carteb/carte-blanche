@@ -97,11 +97,17 @@ var start = (componentBasePath, variationsBasePath, port) => {
       return;
     }
 
-    var variationPath = path.join(
+
+    var stringToBeReplaced = req.params[0].endsWith('/index.js') ? '/index.js' : '.js';
+    var variationComponentPath = path.join(
       variationsBasePath,
-      req.params[0].replace('.js', ''),
-      req.body.variation
+      req.params[0].replace(stringToBeReplaced, '')
     );
+    var variationPath = path.join(variationComponentPath, req.body.variation);
+
+    if (!fs.existsSync(variationComponentPath)) {
+      fs.mkdirSync(variationComponentPath);
+    };
 
     fs.closeSync(fs.openSync(variationPath, 'w'));
     try {

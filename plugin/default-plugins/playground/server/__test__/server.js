@@ -2,6 +2,7 @@ import supertest from 'supertest';
 import path from 'path';
 import { expect } from 'chai';
 import fs from 'fs';
+import rimraf from 'rimraf';
 
 const port = 8000;
 const componentBasePath = path.join(__dirname, 'components');
@@ -30,7 +31,7 @@ describe('variations server', () => {
         .end((err, res) => {
           expect(res.status).to.equal(200);
           expect(res.body.error).to.be.false; // eslint-disable-line no-unused-expressions
-          expect(res.body.data).to.have.keys(['firstVariation', 'secondVariation']);
+          expect(res.body.data).to.include.keys(['firstVariation', 'secondVariation']);
 
           let firstVariation;
           eval(`firstVariation = ${res.body.data.firstVariation}`); // eslint-disable-line no-eval
@@ -125,30 +126,27 @@ describe('variations server', () => {
   });
 
   describe('post', () => {
-    describe('write the variation', () => {
-      let variationPath;
+    describe('write new variation', () => {
+      const variationComponentPath = path.join(variationsBasePath, 'ComponentB');
+      const variationPath = path.join(variationComponentPath, 'newVariation.js');
+      const code = `{
+        props: {
+          name: {
+            value: 'Ada Lovelace',
+          },
+          onClick: {
+            value: () => true,
+          },
+        },
+      };`;
 
       afterEach((done) => {
-        fs.unlink(variationPath, () => {
-          done();
-        });
+        rimraf(variationComponentPath, done);
       });
 
       it('should create a new file with the provided data', (done) => {
-        variationPath = path.join(variationsBasePath, 'ComponentA', 'newVariation.js');
-        const code = `{
-          props: {
-            name: {
-              value: 'Ada Lovelace',
-            },
-            onClick: {
-              value: () => true,
-            },
-          },
-        };`;
-
         request
-          .post('/ComponentA.js')
+          .post('/ComponentB/index.js')
           .type('json')
           .send({
             variation: 'newVariation.js',
@@ -163,21 +161,29 @@ describe('variations server', () => {
             });
           });
       });
+    });
 
-      it('should overwrite an existing variation file', (done) => {
-        variationPath = path.join(variationsBasePath, 'ComponentA', 'existingVariation.js');
-        fs.closeSync(fs.openSync(variationPath, 'w'));
-
-        const code = `{
-          props: {
-            name: {
-              value: 'Marie Curie',
-            },
-            onSelect: {
-              value: () => true,
-            },
+    describe('overwrite existing variation', () => {
+      const variationPath = path.join(variationsBasePath, 'ComponentA', 'existingVariation.js');
+      const code = `{
+        props: {
+          name: {
+            value: 'Marie Curie',
           },
-        };`;
+          onSelect: {
+            value: () => true,
+          },
+        },
+      };`;
+
+      afterEach((done) => {
+        fs.unlink(variationPath, () => {
+          done();
+        });
+      });
+
+      it('should overwrite the existing file with the provided data', (done) => {
+        fs.closeSync(fs.openSync(variationPath, 'w'));
 
         request
           .post('/ComponentA.js')
