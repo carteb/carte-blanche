@@ -12,6 +12,7 @@ class PlaygroundList extends Component {
 
   state = {
     variations: {},
+    loading: false,
   };
 
   componentWillMount() {
@@ -19,20 +20,29 @@ class PlaygroundList extends Component {
   }
 
   fetchVariations = () => {
+    this.setState({
+      loading: true,
+    });
     // TODO dynamic host
     fetch(`http://localhost:8000/${this.props.componentPath}`)
       .then((response) => response.json())
       .then((json) => {
         this.setState({
           variations: json.data,
+          loading: false,
         });
       }).catch((ex) => {
         // TODO proper error handling
         console.log('parsing failed', ex); // eslint-disable-line no-console
+        this.setState({
+          loading: false,
+        });
       });
   };
 
   createVariation = (event) => {
+    // TODO Optimistic UI update to show currently loaded variations and an "empty"
+    // one with a loading indicator
     event.preventDefault();
     // TODO dynamic host
     fetch(`http://localhost:8000/${this.props.componentPath}`, {
@@ -75,6 +85,12 @@ class PlaygroundList extends Component {
   };
 
   render() {
+    if (this.state.loading) {
+      // TODO Better loading indicator
+      return (
+        <div>Loading…</div>
+      );
+    }
     const { component, meta } = this.props;
     return (
       <div>
