@@ -1,10 +1,11 @@
 import React from 'react';
-import PlaygroundWrapper from './components/Playground/Wrapper';
+import PlaygroundList from './components/PlaygroundList';
 import normalizeMetaInfo from './utils/normalizeMetaInfo';
 
-export default function playground(options, data, Component) {
+export default function playground(options, data, Component, componentPath) {
   return (
-    <PlaygroundWrapper
+    <PlaygroundList
+      componentPath={componentPath}
       component={Component}
       meta={normalizeMetaInfo(data.reactDocs)}
     />

@@ -45,22 +45,25 @@
     "lint:eslint": "eslint ./",
     "lint:eslint:fix": "eslint --fix ./",
     "lint:flow": "flow status",
-    "test": "node_modules/.bin/mocha --compilers js:babel-core/register --require testHelper.js client/**/__test__/*.js plugin/**/__test__/*.js",
+    "test": "node_modules/.bin/mocha --compilers js:babel-core/register --require testHelper.js client/**/__test__/*.js plugin/**/__test__/*.js utils/**/__test__/*.js",
     "test:watch": "npm test -- --watch"
   },
   "dependencies": {
     "belle": "^2.0.7",
     "body-parser": "^1.15.1",
     "connect-history-api-fallback": "^1.2.0",
+    "cors": "^2.7.1",
     "faker": "^3.1.0",
     "lodash": "^4.11.2",
     "minimatch": "^3.0.0",
+    "mkdirp": "^0.5.1",
     "mocha": "^2.4.5",
     "react": "=15.0.1",
     "react-addons-create-fragment": "^15.0.1",
     "react-dom": "=15.0.1",
     "react-router": "2.3.0",
-    "recompose": "^0.17.0"
+    "recompose": "^0.17.0",
+    "whatwg-fetch": "^1.0.0"
   },
   "devDependencies": {
     "autoprefixer-loader": "^3.2.0",

@@ -11,24 +11,24 @@ class ComponentPreview extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      componentName: props.name,
+      componentPath: props.path,
     };
   }
 
   componentDidMount() {
     this.refreshComponentData = this.refreshComponentData.bind(this);
-    styleguideClientApi.on(this.state.componentName, this.refreshComponentData);
+    styleguideClientApi.on(this.state.componentPath, this.refreshComponentData);
     this.refreshComponentData();
-    styleguideClientApi.load(this.state.componentName);
+    styleguideClientApi.load(this.state.componentPath);
   }
 
   componentWillUnmount() {
-    styleguideClientApi.off(this.state.componentName, this.refreshComponentData);
+    styleguideClientApi.off(this.state.componentPath, this.refreshComponentData);
   }
 
   refreshComponentData() {
     this.setState({
-      componentData: styleguideClientApi.cache[this.state.componentName],
+      componentData: styleguideClientApi.cache[this.state.componentPath],
     });
   }
 
@@ -39,10 +39,12 @@ class ComponentPreview extends React.Component {
 
     const componentMeta = this.state.componentData.meta;
     const Component = this.state.componentData.component;
+    // TODO Try if filtering first works for early-bail perf reasons
     const componentPlugins = componentMeta
       .map(component => (
         <div key={component.name}>
-          {component.frontendPlugin && component.frontendPlugin(Component)}
+          {component.frontendPlugin
+            && component.frontendPlugin(Component, this.state.componentPath)}
         </div>
       ))
       .filter(component => component !== undefined);

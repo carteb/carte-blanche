@@ -4,13 +4,16 @@ const reactDocs = require('react-docgen');
 
 function PlaygroundPlugin(options) {
   this.options = options || {};
-  fork(path.resolve(__dirname, './server/run.js'));
 }
 /**
  * Initializes the plugin, called after the main StyleguidePlugin function above
  */
 PlaygroundPlugin.prototype.apply = function apply(compiler) {
   const options = this.options;
+  const projectBasePath = compiler.options.context;
+
+  fork(path.resolve(__dirname, './server/run.js'), [projectBasePath]);
+
   compiler.plugin('compilation', (compilation) => {
     // Expose the react parse result to all other styleguide plugins
     compilation.plugin(

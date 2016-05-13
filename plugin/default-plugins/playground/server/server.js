@@ -3,8 +3,11 @@ var express = require('express');
 var path = require('path');
 var fs = require('fs');
 var bodyParser = require('body-parser');
+var cors = require('cors');
+var mkdirp = require('mkdirp');
 var server;
 var jsonBodyParser = bodyParser.json();
+var getComponentNameFromPath = require('../../../../utils/getComponentNameFromPath');
 
 /**
  * Checks if a file at a certain path exists
@@ -21,22 +24,31 @@ var fileExists = (path) => {
   }
 }
 
-var start = (componentBasePath, variationsBasePath, port) => {
+var start = (projectBasePath, variationsBasePath, port) => {
   var app = express();
+  app.use(cors());
 
   /**
    * GET
    */
   app.get('/*', (req, res) => {
     // Get the path of the component from the base path and the passed in parameter
-    var componentPath = path.join(componentBasePath, req.params[0]);
+    var componentPath = path.join(projectBasePath, req.params[0]);
+
     // If no file exists at the component path, bail out early
     if (fileExists(componentPath) === false) {
-      res.json({ data: {} });
+      res.status(404).send('');
       return;
     }
 
-    var variationComponentPath = path.join(variationsBasePath, req.params[0].replace('.js', ''));
+    var componentName = getComponentNameFromPath(req.params[0]);
+    var variationComponentPath = path.join(variationsBasePath, componentName);
+
+    if (!fs.existsSync(variationComponentPath)) {
+      res.json({ data: {} });
+      return;
+    };
+
     var variations = {};
     // Get all the variations of this component
     var fileNames = fs.readdirSync(variationComponentPath);
@@ -53,15 +65,16 @@ var start = (componentBasePath, variationsBasePath, port) => {
    * DELETE
    */
   app.delete('/*', (req, res) => {
-    var componentPath = path.join(componentBasePath, req.params[0]);
+    var componentPath = path.join(projectBasePath, req.params[0]);
     if (fileExists(componentPath) === false) {
       res.status(404).send('');
       return;
     }
 
+    var componentName = getComponentNameFromPath(req.params[0]);
     var variationPath = path.join(
       variationsBasePath,
-      req.params[0].replace('.js', ''),
+      componentName,
       req.query.variation
     );
 
@@ -79,21 +92,18 @@ var start = (componentBasePath, variationsBasePath, port) => {
    * POST
    */
   app.post('/*', jsonBodyParser, (req, res) => {
-    var componentPath = path.join(componentBasePath, req.params[0]);
+    var componentPath = path.join(projectBasePath, req.params[0]);
     if (fileExists(componentPath) === false) {
       res.status(404).send('');
       return;
     }
 
-    var stringToBeReplaced = req.params[0].endsWith('/index.js') ? '/index.js' : '.js';
-    var variationComponentPath = path.join(
-      variationsBasePath,
-      req.params[0].replace(stringToBeReplaced, '')
-    );
+    var componentName = getComponentNameFromPath(req.params[0]);
+    var variationComponentPath = path.join(variationsBasePath, componentName);
     var variationPath = path.join(variationComponentPath, req.body.variation);
 
     if (!fs.existsSync(variationComponentPath)) {
-      fs.mkdirSync(variationComponentPath);
+      mkdirp.sync(variationComponentPath);
     };
 
     fs.closeSync(fs.openSync(variationPath, 'w'));
