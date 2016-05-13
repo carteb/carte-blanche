@@ -62,7 +62,6 @@
     "react-addons-create-fragment": "^15.0.1",
     "react-dom": "=15.0.1",
     "react-router": "2.3.0",
-    "recompose": "^0.17.0",
     "whatwg-fetch": "^1.0.0"
   },
   "devDependencies": {
