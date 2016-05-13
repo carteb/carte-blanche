@@ -5,7 +5,7 @@ import StyleguidePlugin from '../../plugin/styleguide-plugin';
 import autoprefixer from 'autoprefixer';
 
 export default {
-  devtool: 'eval',
+  devtool: 'inline-source-map',
   output: {
     path: path.join(__dirname, '../dist'),
     filename: 'bundle.js',

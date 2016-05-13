@@ -2,41 +2,69 @@
  * Playground Store
  */
 
-import React, { Component, PropTypes } from 'react';
-import PlaygroundWrapper from '../Playground/Wrapper';
+import React, { Component } from 'react';
+import Playground from '../Playground';
 import mapValues from 'lodash/mapValues';
+import find from 'lodash/find';
 import values from 'lodash/values';
 import 'whatwg-fetch';
 
-class PlaygroundList extends Component {
+import getControl from '../../utils/getControl';
+import randomValues from '../../utils/randomValues';
+import propsToVariation from '../../utils/propsToVariation';
+import variationsToProps from '../../utils/variationsToProps';
+import PropForm from '../PropForm';
+import styles from './styles.css';
 
+class PlaygroundList extends Component {
   state = {
-    variations: {},
-    loading: false,
+    variationPropsList: {},
+    selected: [],
+    metadataWithControls: null,
   };
 
   componentWillMount() {
+    this.generateMetadataWithControls();
     this.fetchVariations();
   }
 
-  fetchVariations = () => {
+  getRandomValues = () => randomValues(this.state.metadataWithControls);
+
+  generateMetadataWithControls = () => {
+    const { meta } = this.props;
+    // Attach controls to propTypes meta information
+    let metadataWithControls;
+    if (meta.props) {
+      metadataWithControls = mapValues(meta.props, (prop) => {
+        if (!prop.control) {
+          prop.control = getControl(prop); // eslint-disable-line no-param-reassign
+        }
+
+        return prop;
+      });
+    }
+
     this.setState({
-      loading: true,
+      metadataWithControls,
     });
+  };
+
+  fetchVariations = () => {
     // TODO dynamic host
     fetch(`http://localhost:8000/${this.props.componentPath}`)
       .then((response) => response.json())
       .then((json) => {
+        const variationPropsList = this.variationsToProps(json.data);
         this.setState({
-          variations: json.data,
-          loading: false,
+          variationPropsList,
+          selected:
+            (this.state.selected.length === 0) ?
+            [Object.keys(variationPropsList)[0]] :
+            this.state.selected,
         });
       }).catch((ex) => {
         // TODO proper error handling
         console.log('parsing failed', ex); // eslint-disable-line no-console
-        this.setState({
-          loading: false,
-        });
       });
   };
 
@@ -54,24 +82,15 @@ class PlaygroundList extends Component {
       body: JSON.stringify({
         // TODO use a proper name (think about the UX adding/chaning names)
         variation: `testVariation-${Math.random() * 100}.js`,
-        code: `{
-          props: {
-            name: {
-              value: 'Ada Lovelace',
-            },
-            onClick: {
-              value: () => true,
-            },
-          },
-        };`,
+        code: this.propsToVariation(this.getRandomValues()),
       }),
     })
       .then(() => {
         // TODO only fetch in case there was a 200 response (should we switch to 201?)
         this.fetchVariations();
-      }).catch((ex) => {
+      }).catch((err) => {
         // TODO proper error handling
-        console.log('parsing failed', ex); // eslint-disable-line no-console
+        console.log('parsing failed', err); // eslint-disable-line no-console
       });
   };
 
@@ -79,34 +98,72 @@ class PlaygroundList extends Component {
     // TODO create a button and implement delete
   };
 
-  updateVariation = (variationPath, variationCode) => {
+  updateVariation = (variationPath, props) => {
     // TODO implement updateVariation
-    console.log(variationPath, variationCode); // eslint-disable-line no-console
+    fetch(`http://localhost:8000/${this.props.componentPath}`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        // TODO use a proper name (think about the UX adding/chaning names)
+        variation: `${variationPath}.js`,
+        code: this.propsToVariation(props),
+      }),
+    })
+    .then(() => {
+      this.fetchVariations();
+    })
+    .catch((err) => {
+      // TODO PROPER ERROR HANDLING
+      console.trace(err); // eslint-disable-line no-console
+    });
   };
 
+  selectVariation = (id) => {
+    this.setState({
+      selected: [id],
+    });
+  };
+
+  propsToVariation = propsToVariation;
+  variationsToProps = variationsToProps;
+
   render() {
-    if (this.state.loading) {
-      // TODO Better loading indicator
-      return (
-        <div>Loading…</div>
+    const { component } = this.props;
+    const selectedVariationProps =
+      find(
+        this.state.variationPropsList,
+        (variationProps, key) => this.state.selected.indexOf(key) > -1
       );
-    }
-    const { component, meta } = this.props;
     return (
-      <div>
-        {
-          // PlaygroundWrapper or Playground should be made ready to work with
-          values(mapValues(this.state.variations, (variation, variationId) => (
-            <PlaygroundWrapper
+      <div className={styles.wrapper}>
+        <PropForm
+          metadataWithControls={this.state.metadataWithControls}
+          variationProps={selectedVariationProps}
+          variationPath={this.state.selected[0]}
+          onVariationPropsChange={this.updateVariation}
+        />
+        {values(mapValues(this.state.variationPropsList, (variationProps, variationPath) => (
+          <div
+            className={styles.playgroundWrapper}
+            key={variationPath}
+          >
+            {(this.state.selected.indexOf(variationPath) === -1) ? (
+              <div
+                className={styles.playgroundOverlay}
+                onClick={() => {
+                  this.selectVariation(variationPath);
+                }}
+              />
+            ) : null}
+            <Playground
               component={component}
-              meta={meta}
-              variation={variation}
-              variationId={variationId}
-              key={variationId}
-              updateVariation={this.updateVariation}
+              variationProps={variationProps}
             />
-          )))
-        }
+          </div>
+        )))}
         <button
           onClick={this.createVariation}
           type="button"
@@ -117,12 +174,5 @@ class PlaygroundList extends Component {
     );
   }
 }
-
-PlaygroundList.propTypes = {
-  meta: PropTypes.shape({
-    props: PropTypes.object,
-  }),
-  component: PropTypes.func, // TODO is this really always a function
-};
 
 export default PlaygroundList;
