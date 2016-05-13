@@ -48,15 +48,15 @@
 }
 
 .filterInput:-moz-placeholder { /* Firefox 18- */
-   color: rgba(255, 255, 255, 0.5);  
+   color: rgba(255, 255, 255, 0.5);
 }
 
 .filterInput::-moz-placeholder {  /* Firefox 19+ */
-   color: rgba(255, 255, 255, 0.5);  
+   color: rgba(255, 255, 255, 0.5);
 }
 
 .filterInput:-ms-input-placeholder {
-   color: rgba(255, 255, 255, 0.5);  
+   color: rgba(255, 255, 255, 0.5);
 }
 
 .list {
@@ -82,6 +82,11 @@
   overflow: hidden;
   border-top: 1px solid rgba(255, 255, 255, 0.05);
   border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+.listItem:focus {
+  outline: none;
+  border-left: 0.25em solid rgb(72, 133, 246);
 }
 
 .listItemActive {
