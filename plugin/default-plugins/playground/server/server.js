@@ -4,6 +4,7 @@ var path = require('path');
 var fs = require('fs');
 var bodyParser = require('body-parser');
 var cors = require('cors');
+var mkdirp = require('mkdirp');
 var server;
 var jsonBodyParser = bodyParser.json();
 var getComponentNameFromPath = require('../../../../utils/getComponentNameFromPath');
@@ -102,7 +103,7 @@ var start = (projectBasePath, variationsBasePath, port) => {
     var variationPath = path.join(variationComponentPath, req.body.variation);
 
     if (!fs.existsSync(variationComponentPath)) {
-      fs.mkdirSync(variationComponentPath);
+      mkdirp.sync(variationComponentPath);
     };
 
     fs.closeSync(fs.openSync(variationPath, 'w'));
