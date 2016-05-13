@@ -1,5 +1,6 @@
 .drawer {
   position: absolute;
+  position: fixed;
   left: 0;
   top: 0;
   bottom: 0;
@@ -38,7 +39,7 @@
   margin: 0;
   border: none;
   border-bottom: 1px solid rgba(0, 0, 0, 0.25);
-  background-color: #2F2F38;
+  background-color: #42424A;
   color: white;
   padding: 0 1rem;
 }

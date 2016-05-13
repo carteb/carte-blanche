@@ -27,7 +27,10 @@ class App extends React.Component {
       <div className={styles.main}>
         <Navigation />
         <div className={(!this.state.drawerVisible) ? styles.preview : styles.previewOpen}>
-          <MenuButton onClick={this.toggleMenu} />
+          <MenuButton
+            onClick={this.toggleMenu}
+            drawerOpen={this.state.drawerVisible}
+          />
           {(this.props.children) ? (
             this.props.children
           ) : (

@@ -41,13 +41,14 @@ class ComponentPreview extends React.Component {
     const Component = this.state.componentData.component;
     // TODO Try if filtering first works for early-bail perf reasons
     const componentPlugins = componentMeta
+      .filter(component => (
+        component !== undefined && component.frontendPlugin !== undefined
+      ))
       .map(component => (
         <div key={component.name}>
-          {component.frontendPlugin
-            && component.frontendPlugin(Component, this.state.componentPath)}
+          {component.frontendPlugin(Component, this.state.componentPath)}
         </div>
-      ))
-      .filter(component => component !== undefined);
+      ));
     return (
       <div>
         {componentPlugins}

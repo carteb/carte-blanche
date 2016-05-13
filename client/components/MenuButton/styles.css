@@ -1,12 +1,19 @@
 .button {
   position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   cursor: pointer;
   z-index: 1000;
   padding: 0.5rem;
+  transition: transform 150ms ease-in-out; /* Same as drawer */
 }
 
 .svg {
   fill: #282830;
+}
+
+.buttonOpenDrawer {
+  composes: button;
+  transform: translateX(15em); /* Drawer Width */
 }
