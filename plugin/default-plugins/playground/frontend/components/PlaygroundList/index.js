@@ -19,8 +19,8 @@ class PlaygroundList extends Component {
   }
 
   fetchVariations = () => {
-    // TODO dynamic host + path based on component
-    fetch('http://localhost:8000/src/components/Button.js')
+    // TODO dynamic host
+    fetch(`http://localhost:8000/${this.props.componentPath}`)
       .then((response) => response.json())
       .then((json) => {
         this.setState({
@@ -34,8 +34,8 @@ class PlaygroundList extends Component {
 
   createVariation = (event) => {
     event.preventDefault();
-    // TODO dynamic host + path based on component
-    fetch('http://localhost:8000/src/components/Button.js', {
+    // TODO dynamic host
+    fetch(`http://localhost:8000/${this.props.componentPath}`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',

@@ -18,7 +18,7 @@ const routeViews = {};
 Object.keys(styleguideClientApi.scripts).forEach((componentPath) => {
   routeViews[componentPath] = () => (
     <ComponentPreview
-      name={componentPath}
+      path={componentPath}
     />
   );
 });
