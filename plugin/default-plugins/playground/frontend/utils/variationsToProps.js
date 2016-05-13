@@ -2,8 +2,8 @@
 import mapValues from 'lodash/mapValues';
 import isObject from 'lodash/isObject';
 
-const MATCH_FIRST_CURLY_BRACES_REGEX = /^\{/;
-const MATCH_LAST_CURLY_BRACES_REGEX = /\};$/;
+const MATCH_FIRST_CURLY_BRACES_REGEX = /^\s*\{/;
+const MATCH_LAST_CURLY_BRACES_REGEX = /\};\s*$/;
 const PROPS_REGEX = /\s*props: /;
 const LAST_COMMA_REGEX = /,\s*$/;
 
