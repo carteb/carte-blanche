@@ -4,6 +4,7 @@
 
 import React from 'react';
 import Navigation from '../Navigation';
+import MenuButton from '../MenuButton';
 
 import styles from './styles.css';
 
@@ -26,12 +27,7 @@ class App extends React.Component {
       <div className={styles.main}>
         <Navigation />
         <div className={(!this.state.drawerVisible) ? styles.preview : styles.previewOpen}>
-          <button
-            className={styles.menuButton}
-            onClick={this.toggleMenu}
-          >
-            Menu
-          </button>
+          <MenuButton onClick={this.toggleMenu} />
           {(this.props.children) ? (
             this.props.children
           ) : (
