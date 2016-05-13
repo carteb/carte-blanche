@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import variationsToProps from '../variationsToProps';
 
 describe('variationsToProps', () => {
-  it.only('should convert a number prop', () => {
+  it('should convert a number prop', () => {
     const variation =
 `{
   props: {
@@ -18,64 +18,63 @@ describe('variationsToProps', () => {
   });
 
   it('should convert a string prop', () => {
-    const props = {
-      name: 'Ada Lovelace',
-    };
-    const expected = `{
+    const variation = `{
   props: {
     name: {
       value: 'Ada Lovelace',
     },
   },
 };`;
-    expect(variationsToProps(props)).to.deep.equal(expected);
+    const expected = {
+      name: 'Ada Lovelace',
+    };
+    expect(variationsToProps(variation)).to.deep.equal(expected);
   });
 
   it('should convert a true boolean prop', () => {
-    const props = {
+    const variation = `{
+props: {
+  active: {
+    value: true,
+  },
+},
+};`;
+    const expected = {
       active: true,
     };
-    const expected =
-`{
-  props: {
-    active: {
-      value: true,
-    },
-  },
-};`;
-    expect(variationsToProps(props)).to.deep.equal(expected);
+    expect(variationsToProps(variation)).to.deep.equal(expected);
   });
 
   it('should convert a false boolean prop', () => {
-    const props = {
+    const variation =
+`{
+props: {
+  active: {
+    value: false,
+  },
+},
+};`;
+    const expected = {
       active: false,
     };
-    const expected =
-`{
-  props: {
-    active: {
-      value: false,
-    },
-  },
-};`;
-    expect(variationsToProps(props)).to.deep.equal(expected);
+    expect(variationsToProps(variation)).to.deep.equal(expected);
   });
 
   it('should convert multiple props', () => {
-    const props = {
+    const variation = `{
+props: {
+  age: {
+    value: 22,
+  },
+  name: {
+    value: 'Ada Lovelace',
+  },
+},
+};`;
+    const expected = {
       age: 22,
       name: 'Ada Lovelace',
     };
-    const expected = `{
-  props: {
-    age: {
-      value: 22,
-    },
-    name: {
-      value: 'Ada Lovelace',
-    },
-  },
-};`;
-    expect(variationsToProps(props)).to.deep.equal(expected);
+    expect(variationsToProps(variation)).to.deep.equal(expected);
   });
 });
