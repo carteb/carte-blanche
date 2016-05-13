@@ -14,6 +14,7 @@ import randomValues from '../../utils/randomValues';
 import propsToVariation from '../../utils/propsToVariation';
 import variationsToProps from '../../utils/variationsToProps';
 import PropForm from '../PropForm';
+import styles from './styles.css';
 
 class PlaygroundList extends Component {
   state = {
@@ -56,7 +57,10 @@ class PlaygroundList extends Component {
         const variationPropsList = this.variationsToProps(json.data);
         this.setState({
           variationPropsList,
-          selected: [Object.keys(variationPropsList)[0]],
+          selected:
+            (this.state.selected.length === 0) ?
+            [Object.keys(variationPropsList)[0]] :
+            this.state.selected,
         });
       }).catch((ex) => {
         // TODO proper error handling
@@ -134,22 +138,32 @@ class PlaygroundList extends Component {
         (variationProps, key) => this.state.selected.indexOf(key) > -1
       );
     return (
-      <div>
+      <div className={styles.wrapper}>
         <PropForm
           metadataWithControls={this.state.metadataWithControls}
           variationProps={selectedVariationProps}
           variationPath={this.state.selected[0]}
           onVariationPropsChange={this.updateVariation}
         />
-        { // Wrapper or Playground should be made ready to work with
-          values(mapValues(this.state.variationPropsList, (variationProps, variationPath) => (
+        {values(mapValues(this.state.variationPropsList, (variationProps, variationPath) => (
+          <div
+            className={styles.playgroundWrapper}
+            key={variationPath}
+          >
+            {(this.state.selected.indexOf(variationPath) === -1) ? (
+              <div
+                className={styles.playgroundOverlay}
+                onClick={() => {
+                  this.selectVariation(variationPath);
+                }}
+              />
+            ) : null}
             <Playground
               component={component}
               variationProps={variationProps}
-              key={variationPath}
             />
-          )))
-        }
+          </div>
+        )))}
         <button
           onClick={this.createVariation}
           type="button"
