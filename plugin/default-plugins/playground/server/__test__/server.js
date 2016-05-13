@@ -5,7 +5,7 @@ import fs from 'fs';
 import rimraf from 'rimraf';
 
 const port = 8000;
-const componentBasePath = path.join(__dirname, 'components');
+const projectBasePath = __dirname;
 const variationsBasePath = path.join(__dirname, 'variations');
 const request = supertest.agent(`http://localhost:${port}`);
 
@@ -15,7 +15,7 @@ describe('variations server', () => {
   beforeEach(() => {
     delete require.cache[require.resolve('./server')];
     server = require('../server'); // eslint-disable-line global-require
-    server.start(componentBasePath, variationsBasePath, port);
+    server.start(projectBasePath, variationsBasePath, port);
   });
 
   afterEach((done) => {
@@ -25,7 +25,7 @@ describe('variations server', () => {
   describe('get', () => {
     it('should get all data for a valid component with variations data', (done) => {
       request
-        .get('/ComponentA.js')
+        .get('/components/ComponentA.js')
         .expect('Content-type', /json/)
         .expect(200)
         .end((err, res) => {
@@ -77,11 +77,11 @@ describe('variations server', () => {
 
     it('should return an empty data object in case the component does not exist', (done) => {
       request
-        .get('/ComponentNotAvailable.js')
+        .get('/components/ComponentNotAvailable.js')
         .expect('Content-type', /json/)
-        .expect(200)
+        .expect(404)
         .end((err, res) => {
-          expect(res.body.data).to.deep.equal({});
+          expect(res.status).to.equal(404);
           done();
         });
     });
@@ -93,7 +93,7 @@ describe('variations server', () => {
       fs.closeSync(fs.openSync(variationPath, 'w'));
 
       request
-        .delete('/ComponentA.js?variation=toBeRemoved.js')
+        .delete('/components/ComponentA.js?variation=toBeRemoved.js')
         .expect('Content-type', /json/)
         .expect(200)
         .end((err, res) => {
@@ -104,7 +104,7 @@ describe('variations server', () => {
 
     it('should fail in case the component does not exist', (done) => {
       request
-        .delete('/ComponentNotAvailable.js')
+        .delete('/components/ComponentNotAvailable.js')
         .expect('Content-type', /json/)
         .expect(404)
         .end((err, res) => {
@@ -115,7 +115,7 @@ describe('variations server', () => {
 
     it('should fail in case the variation does not exist', (done) => {
       request
-        .delete('/ComponentA.js?variation=notAvailableVariation.js')
+        .delete('/components/ComponentA.js?variation=notAvailableVariation.js')
         .expect('Content-type', /json/)
         .expect(404)
         .end((err, res) => {
@@ -146,7 +146,7 @@ describe('variations server', () => {
 
       it('should create a new file with the provided data', (done) => {
         request
-          .post('/ComponentB/index.js')
+          .post('/components/ComponentB/index.js')
           .type('json')
           .send({
             variation: 'newVariation.js',
@@ -186,7 +186,7 @@ describe('variations server', () => {
         fs.closeSync(fs.openSync(variationPath, 'w'));
 
         request
-          .post('/ComponentA.js')
+          .post('/components/ComponentA.js')
           .type('json')
           .send({
             variation: 'existingVariation.js',
@@ -205,7 +205,7 @@ describe('variations server', () => {
 
     it('should fail in case the component does not exist', (done) => {
       request
-        .post('/ComponentNotAvailable.js')
+        .post('/components/ComponentNotAvailable.js')
         .expect('Content-type', /json/)
         .expect(404)
         .end((err, res) => {

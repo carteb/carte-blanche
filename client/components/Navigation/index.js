@@ -6,7 +6,7 @@
 import React from 'react';
 import { IndexLink } from 'react-router';
 
-import getComponentNameFromPath from '../../utils/getComponentNameFromPath';
+import getComponentNameFromPath from '../../../utils/getComponentNameFromPath';
 import styles from './styles.css';
 
 class Navigation extends React.Component {
