@@ -5,6 +5,7 @@
 import React, { Component } from 'react';
 import Playground from '../Playground';
 import mapValues from 'lodash/mapValues';
+import find from 'lodash/find';
 import values from 'lodash/values';
 import 'whatwg-fetch';
 
@@ -52,8 +53,10 @@ class PlaygroundList extends Component {
     fetch(`http://localhost:8000/${this.props.componentPath}`)
       .then((response) => response.json())
       .then((json) => {
+        const variationPropsList = this.variationsToProps(json.data);
         this.setState({
-          variationPropsList: this.variationsToProps(json.data),
+          variationPropsList,
+          selected: [Object.keys(variationPropsList)[0]],
         });
       }).catch((ex) => {
         // TODO proper error handling
@@ -75,7 +78,7 @@ class PlaygroundList extends Component {
       body: JSON.stringify({
         // TODO use a proper name (think about the UX adding/chaning names)
         variation: `testVariation-${Math.random() * 100}.js`,
-        code: this.propsToVariation(this.randomValues()),
+        code: this.propsToVariation(this.getRandomValues()),
       }),
     })
       .then(() => {
@@ -119,8 +122,10 @@ class PlaygroundList extends Component {
   render() {
     const { component } = this.props;
     const selectedVariationProps =
-      this.state.variationPropsList
-        .find((variationProps, key) => this.state.selected.indexOf(key) > -1);
+      find(
+        this.state.variationPropsList,
+        (variationProps, key) => this.state.selected.indexOf(key) > -1
+      );
     return (
       <div>
         <PropForm
@@ -130,10 +135,10 @@ class PlaygroundList extends Component {
           onVariationPropsChange={this.updateVariation}
         />
         { // Wrapper or Playground should be made ready to work with
-          values(mapValues(this.state.variations, (variation, variationPath) => (
+          values(mapValues(this.state.variationPropsList, (variationProps, variationPath) => (
             <Playground
               component={component}
-              variationProps={selectedVariationProps}
+              variationProps={variationProps}
               key={variationPath}
             />
           )))

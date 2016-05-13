@@ -33,9 +33,11 @@ const convert = (props, newObject) => {
   return newObject;
 };
 
-const variationsToProps = (variations) => {
-  const variationsAsCode = parse(variations);
-  return convert(variationsAsCode, {}, {});
-};
+const variationsToProps = (variations) => (
+  mapValues(variations, (variation) => {
+    const variationAsCode = parse(variation);
+    return convert(variationAsCode, {}, {});
+  }
+));
 
 export default variationsToProps;
