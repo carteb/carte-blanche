@@ -37,22 +37,6 @@ body {
   width: calc(100% - 15em);
 }
 
-.menuButton {
-  position: absolute;
-  top: 0;
-  left: 0;
-  padding: 1rem;
-  background-color: transparent;
-  color: black;
-  font-size: 1rem;
-  border: none;
-  border-bottom: 1px solid #CCC;
-  border-right: 1px solid #CCC;
-  outline: none;
-  cursor: pointer;
-  z-index: 1000;
-}
-
 .previewTitle {
   font-weight: 300;
   text-align: center;
