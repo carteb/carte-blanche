@@ -30,7 +30,7 @@ class PlaygroundList extends Component {
         // TODO proper error handling
         console.log('parsing failed', ex); // eslint-disable-line no-console
       });
-  }
+  };
 
   createVariation = (event) => {
     event.preventDefault();
@@ -63,16 +63,16 @@ class PlaygroundList extends Component {
         // TODO proper error handling
         console.log('parsing failed', ex); // eslint-disable-line no-console
       });
-  }
+  };
 
   deleteVariation = () => {
     // TODO create a button and implement delete
-  }
+  };
 
   updateVariation = (variationPath, variationCode) => {
     // TODO implement updateVariation
     console.log(variationPath, variationCode); // eslint-disable-line no-console
-  }
+  };
 
   render() {
     const { component, meta } = this.props;
