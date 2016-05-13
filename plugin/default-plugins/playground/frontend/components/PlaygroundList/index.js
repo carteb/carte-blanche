@@ -84,9 +84,9 @@ class PlaygroundList extends Component {
       .then(() => {
         // TODO only fetch in case there was a 200 response (should we switch to 201?)
         this.fetchVariations();
-      }).catch((ex) => {
+      }).catch((err) => {
         // TODO proper error handling
-        console.log('parsing failed', ex); // eslint-disable-line no-console
+        console.log('parsing failed', err); // eslint-disable-line no-console
       });
   };
 
@@ -104,9 +104,16 @@ class PlaygroundList extends Component {
       },
       body: JSON.stringify({
         // TODO use a proper name (think about the UX adding/chaning names)
-        variation: variationPath,
+        variation: `${variationPath}.js`,
         code: this.propsToVariation(props),
       }),
+    })
+    .then(() => {
+      this.fetchVariations();
+    })
+    .catch((err) => {
+      // TODO PROPER ERROR HANDLING
+      console.trace(err); // eslint-disable-line no-console
     });
   };
 
