@@ -3,66 +3,86 @@ import variationsToProps from '../variationsToProps';
 
 describe('variationsToProps', () => {
   it('should convert a number prop', () => {
-    const variation =
+    const variations = {
+      'variationA.js':
 `{
   props: {
     age: {
       value: 22,
     },
   },
-};`;
-    const expected = {
-      age: 22,
+};`,
     };
-    expect(variationsToProps(variation)).to.deep.equal(expected);
+    const expected = {
+      'variationA.js': {
+        age: 22,
+      },
+    };
+    expect(variationsToProps(variations)).to.deep.equal(expected);
   });
 
   it('should convert a string prop', () => {
-    const variation = `{
+    const variations = {
+      'variationA.js':
+`{
   props: {
     name: {
       value: 'Ada Lovelace',
     },
   },
-};`;
-    const expected = {
-      name: 'Ada Lovelace',
+};`,
     };
-    expect(variationsToProps(variation)).to.deep.equal(expected);
+    const expected = {
+      'variationA.js': {
+        name: 'Ada Lovelace',
+      },
+    };
+    expect(variationsToProps(variations)).to.deep.equal(expected);
   });
 
   it('should convert a true boolean prop', () => {
-    const variation = `{
-props: {
+    const variations = {
+      'variationA.js':
+`{
+  props: {
   active: {
     value: true,
   },
 },
-};`;
-    const expected = {
-      active: true,
+};`,
     };
-    expect(variationsToProps(variation)).to.deep.equal(expected);
+    const expected = {
+      'variationA.js': {
+        active: true,
+      },
+    };
+    expect(variationsToProps(variations)).to.deep.equal(expected);
   });
 
   it('should convert a false boolean prop', () => {
-    const variation =
+    const variations = {
+      'variationA.js':
 `{
 props: {
   active: {
     value: false,
   },
 },
-};`;
-    const expected = {
-      active: false,
+};`,
     };
-    expect(variationsToProps(variation)).to.deep.equal(expected);
+    const expected = {
+      'variationA.js': {
+        active: false,
+      },
+    };
+    expect(variationsToProps(variations)).to.deep.equal(expected);
   });
 
   it('should convert multiple props', () => {
-    const variation = `{
-props: {
+    const variations = {
+      'variationA.js':
+`{
+  props: {
   age: {
     value: 22,
   },
@@ -70,11 +90,14 @@ props: {
     value: 'Ada Lovelace',
   },
 },
-};`;
-    const expected = {
-      age: 22,
-      name: 'Ada Lovelace',
+};`,
     };
-    expect(variationsToProps(variation)).to.deep.equal(expected);
+    const expected = {
+      'variationA.js': {
+        age: 22,
+        name: 'Ada Lovelace',
+      },
+    };
+    expect(variationsToProps(variations)).to.deep.equal(expected);
   });
 });
