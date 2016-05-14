@@ -5,29 +5,47 @@
  */
 
 import React, { PropTypes } from 'react';
+
+import EditButton from '../common/EditButton';
+import DeleteButton from '../common/DeleteButton';
 import styles from './styles.css';
 
-function Playground(props) {
-  const Component = props.component;
+class Playground extends React.Component {
+  onEditButtonClick = () => {
+    this.props.onEditButtonClick(this.props.variationPath);
+  };
 
-  return (
-    <div
-      className={
-        (props.big) ?
-        styles.wrapperBig :
-        styles.wrapper
-      }
-    >
-      <div className={styles.componentWrapper}>
-        <Component {...props.variationProps} />
+  onDeleteButtonClick = () => {
+    this.props.onDeleteButtonClick(this.props.variationPath);
+  };
+
+  render() {
+    const Component = this.props.component;
+
+    return (
+      <div
+        className={
+          (this.props.big) ?
+          styles.wrapperBig :
+          styles.wrapper
+        }
+      >
+        <EditButton onClick={this.onEditButtonClick} />
+        <DeleteButton onClick={this.onDeleteButtonClick} />
+        <div className={styles.componentWrapper}>
+          <Component {...this.props.variationProps} />
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 Playground.propTypes = {
   variationProps: PropTypes.object.isRequired,
   component: PropTypes.func.isRequired, // TODO is this really always a function
+  onEditButtonClick: PropTypes.func.isRequired,
+  onDeleteButtonClick: PropTypes.func.isRequired,
+  variationPath: PropTypes.string.isRequired,
 };
 
 export default Playground;

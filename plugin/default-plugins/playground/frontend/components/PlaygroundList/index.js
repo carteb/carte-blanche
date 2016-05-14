@@ -14,7 +14,6 @@ import randomValues from '../../utils/randomValues';
 import propsToVariation from '../../utils/propsToVariation';
 import variationsToProps from '../../utils/variationsToProps';
 import PropForm from '../PropForm';
-import EditButton from '../common/EditButton';
 import styles from './styles.css';
 
 class PlaygroundList extends Component {
@@ -22,7 +21,7 @@ class PlaygroundList extends Component {
     variationPropsList: {},
     selected: [],
     metadataWithControls: null,
-    propFormOpen: false,
+    editMode: false,
   };
 
   componentWillMount() {
@@ -92,7 +91,7 @@ class PlaygroundList extends Component {
       },
       body: JSON.stringify({
         // TODO use a proper name (think about the UX adding/chaning names)
-        variation: `testVariation-${Math.random() * 100}.js`,
+        variation: `testVariation-${Math.random() * 100}`,
         code: this.propsToVariation(this.getRandomValues()),
       }),
     })
@@ -105,12 +104,24 @@ class PlaygroundList extends Component {
       });
   };
 
-  deleteVariation = () => {
-    // TODO create a button and implement delete
+  deleteVariation = (variationPath) => {
+    fetch(`http://localhost:8000/${this.props.componentPath}?variation=${variationPath}`, {
+      method: 'DELETE',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    })
+    .then(() => {
+      this.fetchVariations();
+    })
+    .catch((err) => {
+      // TODO PROPER ERROR HANDLING
+      console.trace(err); // eslint-disable-line no-console
+    });
   };
 
   updateVariation = (variationPath, props) => {
-    // TODO implement updateVariation
     fetch(`http://localhost:8000/${this.props.componentPath}`, {
       method: 'POST',
       headers: {
@@ -119,7 +130,7 @@ class PlaygroundList extends Component {
       },
       body: JSON.stringify({
         // TODO use a proper name (think about the UX adding/chaning names)
-        variation: `${variationPath}.js`,
+        variation: `${variationPath}`,
         code: this.propsToVariation(props),
       }),
     })
@@ -138,16 +149,16 @@ class PlaygroundList extends Component {
     });
   };
 
-  startEditMode = () => {
+  startEditMode = (id) => {
     this.setState({
-      propFormOpen: true,
-      selected: Object.keys(this.state.variationPropsList)[0],
+      editMode: true,
+      selected: id,
     });
   };
 
   closePropForm = () => {
     this.setState({
-      propFormOpen: false,
+      editMode: false,
       selected: [],
     });
   };
@@ -164,16 +175,13 @@ class PlaygroundList extends Component {
       );
     return (
       <div className={styles.wrapper}>
-        {(!this.state.propFormOpen) ? (
-          <EditButton onClick={this.startEditMode} />
-        ) : null}
         <PropForm
           metadataWithControls={this.state.metadataWithControls}
           variationProps={selectedVariationProps}
           variationPath={this.state.selected[0]}
           onVariationPropsChange={this.updateVariation}
           onCloseClick={this.closePropForm}
-          open={this.state.propFormOpen}
+          open={this.state.editMode}
         />
         {values(mapValues(this.state.variationPropsList, (variationProps, variationPath) => (
           <div
@@ -190,9 +198,12 @@ class PlaygroundList extends Component {
               />
             ) : null}
             <Playground
-              big={this.state.propFormOpen}
+              big={this.state.editMode}
               component={component}
               variationProps={variationProps}
+              variationPath={variationPath}
+              onDeleteButtonClick={this.deleteVariation}
+              onEditButtonClick={this.startEditMode}
             />
           </div>
         )))}

@@ -1,6 +1,6 @@
 .base {
   position: absolute;
-  top: 0;
+  top: 2rem;
   right: 0;
   cursor: pointer;
   z-index: 2;
@@ -10,10 +10,7 @@
   font-size: 1rem;
 }
 
-.svg {
-  fill: #282830;
-}
-
-.svg polygon {
+.svg path,
+.svg circle {
   stroke: #282830;
 }

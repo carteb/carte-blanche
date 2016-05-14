@@ -93,7 +93,7 @@ describe('variations server', () => {
       fs.closeSync(fs.openSync(variationPath, 'w'));
 
       request
-        .delete('/components/ComponentA.js?variation=toBeRemoved.js')
+        .delete('/components/ComponentA.js?variation=toBeRemoved')
         .expect('Content-type', /json/)
         .expect(200)
         .end((err, res) => {
@@ -115,7 +115,7 @@ describe('variations server', () => {
 
     it('should fail in case the variation does not exist', (done) => {
       request
-        .delete('/components/ComponentA.js?variation=notAvailableVariation.js')
+        .delete('/components/ComponentA.js?variation=notAvailableVariation')
         .expect('Content-type', /json/)
         .expect(404)
         .end((err, res) => {
@@ -149,7 +149,7 @@ describe('variations server', () => {
           .post('/components/ComponentB/index.js')
           .type('json')
           .send({
-            variation: 'newVariation.js',
+            variation: 'newVariation',
             code,
           })
           .expect(200)
@@ -189,7 +189,7 @@ describe('variations server', () => {
           .post('/components/ComponentA.js')
           .type('json')
           .send({
-            variation: 'existingVariation.js',
+            variation: 'existingVariation',
             code,
           })
           .expect(200)
