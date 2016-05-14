@@ -177,6 +177,7 @@ class PlaygroundList extends Component {
               />
             ) : null}
             <Playground
+              big={this.state.propFormOpen}
               component={component}
               variationProps={variationProps}
             />

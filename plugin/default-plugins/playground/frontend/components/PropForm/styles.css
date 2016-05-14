@@ -32,6 +32,14 @@
   position: relative;
 }
 
+.header h2 {
+  margin: 0;
+  padding: 0;
+  color: white;
+  font-family: Helvetica,Arial,sans-serif;
+  font-weight: 300;
+}
+
 .closeBtn {
   position: absolute;
   top: 0;

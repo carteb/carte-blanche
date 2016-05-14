@@ -11,7 +11,13 @@ function Playground(props) {
   const Component = props.component;
 
   return (
-    <div className={styles.wrapper}>
+    <div
+      className={
+        (props.big) ?
+        styles.wrapperBig :
+        styles.wrapper
+      }
+    >
       <div className={styles.componentWrapper}>
         <Component {...props.variationProps} />
       </div>

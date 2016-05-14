@@ -3,10 +3,16 @@
   border-bottom: 1px solid #999;
   display: flex;
   width: 100%;
-  min-height: 50vh;
+  min-height: 25vh;
   align-items: center;
   justify-content: center;
   position: relative;
+  transition: min-height 150ms ease-in-out;
+}
+
+.wrapperBig {
+  composes: wrapper;
+  min-height: 50vh;
 }
 
 .sidebar {
