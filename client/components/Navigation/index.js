@@ -10,23 +10,29 @@ import getComponentNameFromPath from '../../../utils/getComponentNameFromPath';
 import styles from './styles.css';
 
 class Navigation extends React.Component {
-  constructor() {
-    super();
-    this.setFilter = this.setFilter.bind(this);
-    this.renderComponents = this.renderComponents.bind(this);
-  }
 
   state = {
     filterString: '',
   };
 
-  setFilter(e) {
+  componentDidMount() {
+    document.documentElement.addEventListener(
+      'styleguide-plugin-component-load',
+      () => {
+        console.log('loaded');
+      },
+      false
+    );
+  }
+
+  setFilter = (event) => {
     this.setState({
-      filterString: e.target.value,
+      filterString: event.target.value,
     });
   }
 
-  renderComponents() {
+  renderComponents = () => {
+    console.log('weee');
     // Iterate through all components and generate a list
     return Object.keys(window.STYLEGUIDE_PLUGIN_CLIENT_API.scripts)
       .map((componentPath) => {
@@ -47,7 +53,8 @@ class Navigation extends React.Component {
           );
         }
         return null;
-      });
+      }
+    );
   }
 
   render() {

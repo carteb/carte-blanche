@@ -15,7 +15,6 @@ class ComponentPreview extends React.Component {
   }
 
   componentDidMount() {
-    this.refreshComponentData = this.refreshComponentData.bind(this);
     styleguideClientApi.on(this.state.componentPath, this.refreshComponentData);
     this.refreshComponentData();
     styleguideClientApi.load(this.state.componentPath);
@@ -25,7 +24,7 @@ class ComponentPreview extends React.Component {
     styleguideClientApi.off(this.state.componentPath, this.refreshComponentData);
   }
 
-  refreshComponentData() {
+  refreshComponentData = () => {
     this.setState({
       componentData: styleguideClientApi.cache[this.state.componentPath],
     });

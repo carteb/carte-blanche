@@ -11,9 +11,12 @@ window.STYLEGUIDE_PLUGIN_CLIENT_API = {
 
   loadComplete: function loadComplete(name, data) {
     var event = document.createEvent('Event'); // eslint-disable-line no-var
+    var loadEvent = document.createEvent('Event'); // eslint-disable-line no-var
     window.STYLEGUIDE_PLUGIN_CLIENT_API.cache[name] = data;
     event.initEvent(`styleguide-plugin-component-load_${name}`);
     document.documentElement.dispatchEvent(event);
+    loadEvent.initEvent('styleguide-plugin-component-load');
+    document.documentElement.dispatchEvent(loadEvent);
   },
 
   on: function on(name, fn) {
