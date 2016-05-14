@@ -4,7 +4,6 @@
 
 import React from 'react';
 
-// import Playground from './Playground'; // TODO
 const styleguideClientApi = window.STYLEGUIDE_PLUGIN_CLIENT_API;
 
 class ComponentPreview extends React.Component {
@@ -56,10 +55,5 @@ class ComponentPreview extends React.Component {
     );
   }
 }
-
-// <Playground
-//   component={Component}
-//   meta={componentMeta}
-// />
 
 export default ComponentPreview;
