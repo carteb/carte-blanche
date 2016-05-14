@@ -9,12 +9,13 @@ import React from 'react';
 import styles from './styles.css';
 
 const EditButton = (props) => (
-  <div {...props} className={styles.base}>
+  <button {...props} className={styles.base}>
     <svg
       x="0px"
       y="0px"
       width="1.5em"
       height="1.5em"
+      aria-label="Start edit mode"
       viewBox="0 0 24 24"
       className={styles.svg}
       enable-background="new 0 0 24 24"
@@ -32,7 +33,7 @@ const EditButton = (props) => (
         />
       </g>
     </svg>
-  </div>
+  </button>
 );
 
 export default EditButton;

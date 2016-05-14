@@ -5,11 +5,11 @@ import styles from './styles.css';
 
 function MenuButton(props) {
   return (
-    <div
+    <button
       className={(props.drawerOpen) ? styles.buttonOpenDrawer : styles.button}
       onClick={props.onClick}
     >
-      <svg className={styles.svg} x="0px" y="0px" width="1.5em" height="1.5em" viewBox="0 0 24 24" enable-background="new 0 0 24 24">
+      <svg className={styles.svg} x="0px" y="0px" width="1.5em" height="1.5em" viewBox="0 0 24 24" enable-background="new 0 0 24 24" aria-label="Open navigation">
         <g id="Filled_Icons_1_">
           <g id="Filled_Icons">
             <g>
@@ -23,7 +23,7 @@ function MenuButton(props) {
           </g>
         </g>
       </svg>
-    </div>
+    </button>
   );
 }
 

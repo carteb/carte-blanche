@@ -1,9 +1,6 @@
 .label {
-  position: absolute;
-  top: 0px;
-  left: 0px;
   width: 100%;
-  padding: 20px 1pc 0px;
+  padding: 0 1rem;
   margin: 0px;
   z-index: 1;
   font-size: 0.8em;

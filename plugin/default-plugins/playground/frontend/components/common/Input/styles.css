@@ -1,9 +1,14 @@
 .wrapper {
   width: 100%;
-  padding-top: 1.75em;
-  border-bottom: 1px solid rgb(222, 222, 222);
+  padding-top: 0.5rem;
   position: relative;
   min-height: 3em;
+  background: #282830; /* Old browsers */
+  background: -moz-linear-gradient(top, #282830 0%, #26262e 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top, #282830 0%,#26262e 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, #282830 0%,#26262e 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#282830', endColorstr='#26262e',GradientType=0 );
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .wrapper--nested {
@@ -29,13 +34,18 @@
 }
 
 .input {
-  position: relative;
-  padding: 1.625em 1pc;
+  padding: 1rem;
   width: 100%;
-  color: rgb(102, 102, 102);
   border: none;
   outline: 0px;
   font-size: 1em;
+  margin-top: 0.5rem;
+  background-color: #42424a;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.input:focus {
+  color: white;
 }
 
 .wrapper--without-label .input,

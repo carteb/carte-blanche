@@ -6,6 +6,9 @@
   cursor: pointer;
   z-index: 1000;
   padding: 0.5rem;
+  background-color: transparent;
+  border: none;
+  font-size: 1rem;
 }
 
 .svg {
