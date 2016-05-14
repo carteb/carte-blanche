@@ -169,7 +169,7 @@ class PlaygroundList extends Component {
           >
             {(this.state.selected.length > 0
               && this.state.selected.indexOf(variationPath) === -1) ? (
-              <div
+              <button
                 className={styles.playgroundOverlay}
                 onClick={() => {
                   this.selectVariation(variationPath);
