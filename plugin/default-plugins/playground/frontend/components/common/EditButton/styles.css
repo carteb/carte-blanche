@@ -1,0 +1,13 @@
+.base {
+  position: absolute;
+  position: fixed;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+  z-index: 1000;
+  padding: 0.5rem;
+}
+
+.svg {
+  fill: #282830;
+}
