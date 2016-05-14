@@ -23,9 +23,10 @@ class App extends React.Component {
   };
 
   render() {
+    const activeComponentPath = this.props.location.pathname.replace(/^\//, '');
     return (
       <div className={styles.main}>
-        <Navigation />
+        <Navigation activeComponentPath={activeComponentPath} />
         <div className={(!this.state.drawerVisible) ? styles.preview : styles.previewOpen}>
           <MenuButton
             onClick={this.toggleMenu}

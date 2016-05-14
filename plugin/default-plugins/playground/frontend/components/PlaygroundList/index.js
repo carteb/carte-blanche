@@ -59,6 +59,19 @@ class PlaygroundList extends Component {
         this.setState({
           variationPropsList,
         });
+
+        const links = values(mapValues(variationPropsList, (value, key) => (
+          {
+            title: key,
+            id: key,
+          }
+        )));
+
+        window.STYLEGUIDE_PLUGIN_CLIENT_API.updateNavigation(
+          this.props.componentPath,
+          'playground-plugin',
+          links
+        );
       }).catch((ex) => {
         // TODO proper error handling
         console.log('parsing failed', ex); // eslint-disable-line no-console

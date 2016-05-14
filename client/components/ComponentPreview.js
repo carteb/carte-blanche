@@ -3,8 +3,8 @@
  */
 
 import React from 'react';
+import has from 'lodash/has';
 
-// import Playground from './Playground'; // TODO
 const styleguideClientApi = window.STYLEGUIDE_PLUGIN_CLIENT_API;
 
 class ComponentPreview extends React.Component {
@@ -16,7 +16,6 @@ class ComponentPreview extends React.Component {
   }
 
   componentDidMount() {
-    this.refreshComponentData = this.refreshComponentData.bind(this);
     styleguideClientApi.on(this.state.componentPath, this.refreshComponentData);
     this.refreshComponentData();
     styleguideClientApi.load(this.state.componentPath);
@@ -26,10 +25,12 @@ class ComponentPreview extends React.Component {
     styleguideClientApi.off(this.state.componentPath, this.refreshComponentData);
   }
 
-  refreshComponentData() {
-    this.setState({
-      componentData: styleguideClientApi.cache[this.state.componentPath],
-    });
+  refreshComponentData = () => {
+    if (has(styleguideClientApi.cache, this.state.componentPath)) {
+      this.setState({
+        componentData: styleguideClientApi.cache[this.state.componentPath].component,
+      });
+    }
   }
 
   render() {
@@ -56,10 +57,5 @@ class ComponentPreview extends React.Component {
     );
   }
 }
-
-// <Playground
-//   component={Component}
-//   meta={componentMeta}
-// />
 
 export default ComponentPreview;

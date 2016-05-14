@@ -8,27 +8,65 @@ import { IndexLink } from 'react-router';
 
 import getComponentNameFromPath from '../../../utils/getComponentNameFromPath';
 import styles from './styles.css';
+import mapValues from 'lodash/mapValues';
+import values from 'lodash/values';
+import has from 'lodash/has';
 
 class Navigation extends React.Component {
-  constructor() {
-    super();
-    this.setFilter = this.setFilter.bind(this);
-    this.renderComponents = this.renderComponents.bind(this);
-  }
 
   state = {
     filterString: '',
   };
 
-  setFilter(e) {
+  componentDidMount() {
+    // making sure the component is re-rendered when the component data is loaded
+    document.documentElement.addEventListener(
+      'styleguide-plugin-update-navigation',
+      () => {
+        this.forceUpdate();
+      },
+      false
+    );
+  }
+
+  setFilter = (event) => {
     this.setState({
-      filterString: e.target.value,
+      filterString: event.target.value,
     });
   }
 
-  renderComponents() {
+  renderSubNavigation = (componentPath) => {
+    if (this.props.activeComponentPath === componentPath) {
+      if (has(window.STYLEGUIDE_PLUGIN_CLIENT_API.cache, componentPath)) {
+        const plugins = window.STYLEGUIDE_PLUGIN_CLIENT_API.cache[componentPath].navigation;
+        return values(mapValues(plugins, (plugin) => (
+          <div>
+            {
+              values(mapValues(plugin, (link) => (
+                <div className={styles.subListItemWrapper}>
+                  <IndexLink
+                    to={`/${componentPath}?id=${link.id}`}
+                    className={styles.subListItem}
+                    activeClassName={styles.subListItemActive}
+                  >
+                    {link.title}
+                  </IndexLink>
+                </div>
+              )))
+            }
+          </div>
+        )));
+      }
+
+      return null;
+    }
+
+    return null;
+  }
+
+  renderComponents = () => (
     // Iterate through all components and generate a list
-    return Object.keys(window.STYLEGUIDE_PLUGIN_CLIENT_API.scripts)
+    Object.keys(window.STYLEGUIDE_PLUGIN_CLIENT_API.scripts)
       .map((componentPath) => {
         // Clean the component name
         // TODO Maybe do this earlier, not on every mount
@@ -36,19 +74,22 @@ class Navigation extends React.Component {
         if (componentName.indexOf(this.state.filterString) > -1) {
           return (
             // IndexLink so not all links that match a part of the route are highlighted
-            <IndexLink
-              to={`/${componentPath}`}
-              key={`/${componentPath}`}
-              className={styles.listItem}
-              activeClassName={styles.listItemActive}
-            >
-              {componentName}
-            </IndexLink>
+            <div key={componentPath} >
+              <IndexLink
+                to={`/${componentPath}`}
+                className={styles.listItem}
+                activeClassName={styles.listItemActive}
+              >
+                {componentName}
+              </IndexLink>
+              {this.renderSubNavigation(componentPath)}
+            </div>
           );
         }
         return null;
-      });
-  }
+      }
+    )
+  )
 
   render() {
     return (

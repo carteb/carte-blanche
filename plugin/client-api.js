@@ -11,7 +11,9 @@ window.STYLEGUIDE_PLUGIN_CLIENT_API = {
 
   loadComplete: function loadComplete(name, data) {
     var event = document.createEvent('Event'); // eslint-disable-line no-var
-    window.STYLEGUIDE_PLUGIN_CLIENT_API.cache[name] = data;
+    window.STYLEGUIDE_PLUGIN_CLIENT_API.cache[name] = {};
+    window.STYLEGUIDE_PLUGIN_CLIENT_API.cache[name].component = data;
+    window.STYLEGUIDE_PLUGIN_CLIENT_API.cache[name].navigation = {};
     event.initEvent(`styleguide-plugin-component-load_${name}`);
     document.documentElement.dispatchEvent(event);
   },
@@ -30,5 +32,12 @@ window.STYLEGUIDE_PLUGIN_CLIENT_API = {
       fn,
       false
     );
+  },
+
+  updateNavigation: function updateNavigation(name, pluginName, data) {
+    var event = document.createEvent('Event'); // eslint-disable-line no-var
+    window.STYLEGUIDE_PLUGIN_CLIENT_API.cache[name].navigation[pluginName] = data;
+    event.initEvent('styleguide-plugin-update-navigation');
+    document.documentElement.dispatchEvent(event);
   },
 };
