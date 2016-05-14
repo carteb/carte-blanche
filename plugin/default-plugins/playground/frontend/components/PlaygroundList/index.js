@@ -91,12 +91,24 @@ class PlaygroundList extends Component {
       });
   };
 
-  deleteVariation = () => {
-    // TODO create a button and implement delete
+  deleteVariation = (variationPath) => {
+    fetch(`http://localhost:8000/${this.props.componentPath}?variation=${variationPath}.js`, {
+      method: 'DELETE',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    })
+    .then(() => {
+      this.fetchVariations();
+    })
+    .catch((err) => {
+      // TODO PROPER ERROR HANDLING
+      console.trace(err); // eslint-disable-line no-console
+    });
   };
 
   updateVariation = (variationPath, props) => {
-    // TODO implement updateVariation
     fetch(`http://localhost:8000/${this.props.componentPath}`, {
       method: 'POST',
       headers: {
@@ -177,6 +189,7 @@ class PlaygroundList extends Component {
               component={component}
               variationProps={variationProps}
               variationPath={variationPath}
+              onDeleteButtonClick={this.deleteVariation}
               onEditButtonClick={this.startEditMode}
             />
           </div>
