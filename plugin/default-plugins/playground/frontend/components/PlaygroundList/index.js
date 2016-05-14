@@ -78,7 +78,7 @@ class PlaygroundList extends Component {
       },
       body: JSON.stringify({
         // TODO use a proper name (think about the UX adding/chaning names)
-        variation: `testVariation-${Math.random() * 100}.js`,
+        variation: `testVariation-${Math.random() * 100}`,
         code: this.propsToVariation(this.getRandomValues()),
       }),
     })
@@ -92,7 +92,7 @@ class PlaygroundList extends Component {
   };
 
   deleteVariation = (variationPath) => {
-    fetch(`http://localhost:8000/${this.props.componentPath}?variation=${variationPath}.js`, {
+    fetch(`http://localhost:8000/${this.props.componentPath}?variation=${variationPath}`, {
       method: 'DELETE',
       headers: {
         Accept: 'application/json',
@@ -117,7 +117,7 @@ class PlaygroundList extends Component {
       },
       body: JSON.stringify({
         // TODO use a proper name (think about the UX adding/chaning names)
-        variation: `${variationPath}.js`,
+        variation: `${variationPath}`,
         code: this.propsToVariation(props),
       }),
     })

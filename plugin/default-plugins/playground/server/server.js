@@ -75,7 +75,7 @@ var start = (projectBasePath, variationsBasePath, port) => {
     var variationPath = path.join(
       variationsBasePath,
       componentName,
-      req.query.variation
+      `${req.query.variation}.js`
     );
 
     fs.unlink(variationPath, (err) => {
@@ -100,7 +100,7 @@ var start = (projectBasePath, variationsBasePath, port) => {
 
     var componentName = getComponentNameFromPath(req.params[0]);
     var variationComponentPath = path.join(variationsBasePath, componentName);
-    var variationPath = path.join(variationComponentPath, req.body.variation);
+    var variationPath = path.join(variationComponentPath, `${req.body.variation}.js`);
 
     if (!fs.existsSync(variationComponentPath)) {
       mkdirp.sync(variationComponentPath);
