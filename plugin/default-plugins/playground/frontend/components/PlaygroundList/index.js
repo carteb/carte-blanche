@@ -14,7 +14,6 @@ import randomValues from '../../utils/randomValues';
 import propsToVariation from '../../utils/propsToVariation';
 import variationsToProps from '../../utils/variationsToProps';
 import PropForm from '../PropForm';
-import EditButton from '../common/EditButton';
 import styles from './styles.css';
 
 class PlaygroundList extends Component {
@@ -22,7 +21,7 @@ class PlaygroundList extends Component {
     variationPropsList: {},
     selected: [],
     metadataWithControls: null,
-    propFormOpen: false,
+    editMode: false,
   };
 
   componentWillMount() {
@@ -125,16 +124,16 @@ class PlaygroundList extends Component {
     });
   };
 
-  startEditMode = () => {
+  startEditMode = (id) => {
     this.setState({
-      propFormOpen: true,
-      selected: Object.keys(this.state.variationPropsList)[0],
+      editMode: true,
+      selected: id,
     });
   };
 
   closePropForm = () => {
     this.setState({
-      propFormOpen: false,
+      editMode: false,
       selected: [],
     });
   };
@@ -151,16 +150,13 @@ class PlaygroundList extends Component {
       );
     return (
       <div className={styles.wrapper}>
-        {(!this.state.propFormOpen) ? (
-          <EditButton onClick={this.startEditMode} />
-        ) : null}
         <PropForm
           metadataWithControls={this.state.metadataWithControls}
           variationProps={selectedVariationProps}
           variationPath={this.state.selected[0]}
           onVariationPropsChange={this.updateVariation}
           onCloseClick={this.closePropForm}
-          open={this.state.propFormOpen}
+          open={this.state.editMode}
         />
         {values(mapValues(this.state.variationPropsList, (variationProps, variationPath) => (
           <div
@@ -177,9 +173,11 @@ class PlaygroundList extends Component {
               />
             ) : null}
             <Playground
-              big={this.state.propFormOpen}
+              big={this.state.editMode}
               component={component}
               variationProps={variationProps}
+              variationPath={variationPath}
+              onEditButtonClick={this.startEditMode}
             />
           </div>
         )))}

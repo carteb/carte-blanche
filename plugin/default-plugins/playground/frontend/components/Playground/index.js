@@ -5,29 +5,40 @@
  */
 
 import React, { PropTypes } from 'react';
+
+import EditButton from '../common/EditButton';
 import styles from './styles.css';
 
-function Playground(props) {
-  const Component = props.component;
+class Playground extends React.Component {
+  onEditButtonClick = () => {
+    this.props.onEditButtonClick(this.props.variationPath);
+  };
 
-  return (
-    <div
-      className={
-        (props.big) ?
-        styles.wrapperBig :
-        styles.wrapper
-      }
-    >
-      <div className={styles.componentWrapper}>
-        <Component {...props.variationProps} />
+  render() {
+    const Component = this.props.component;
+
+    return (
+      <div
+        className={
+          (this.props.big) ?
+          styles.wrapperBig :
+          styles.wrapper
+        }
+      >
+        <EditButton onClick={this.onEditButtonClick} />
+        <div className={styles.componentWrapper}>
+          <Component {...this.props.variationProps} />
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 Playground.propTypes = {
   variationProps: PropTypes.object.isRequired,
   component: PropTypes.func.isRequired, // TODO is this really always a function
+  onEditButtonClick: PropTypes.func.isRequired,
+  variationPath: PropTypes.string.isRequired,
 };
 
 export default Playground;
