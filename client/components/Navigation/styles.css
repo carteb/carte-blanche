@@ -85,18 +85,59 @@
   border-bottom: 1px solid rgba(0, 0, 0, 0.25);
 }
 
+.listItem:hover {
+  color: rgba(255, 255, 255, 1);
+}
+
 .listItem:focus {
   outline: none;
-  border-left: 0.25em solid rgb(72, 133, 246);
+  border-left: 0.15rem solid rgb(72, 133, 246);
 }
 
 .listItemActive {
   color: rgba(255, 255, 255, 1);
   background: rgb(23, 24, 28);
-  border-left: 0.25em solid rgb(72, 133, 246);
+  border-left: 0.15rem solid rgb(72, 133, 246);
   border-top-color: transparent;
 }
 
 .listItem:last-child.listItemActive {
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.subListItemWrapper {
+  background: rgb(23, 24, 28);
+  border-left: 0.15rem solid rgb(72, 133, 246);
+}
+
+.subListItem {
+  color: rgba(255, 255, 255, 0.5);
+  border-top-color: transparent;
+  /* Use System Fonts */
+  font-family: -apple-system, BlinkMacSystemFont,  "Segoe UI", "Roboto", "Oxygen",  "Ubuntu", "Cantarell", "Fira Sans",  "Droid Sans", "Helvetica Neue", sans-serif;
+  text-decoration: none;
+  padding: 0.5rem 1rem 0.5rem 1.6rem;
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+.subListItem:hover {
+  color: rgba(255, 255, 255, 1);
+}
+
+.subListItem:focus {
+  outline: none;
+  border-left: 0.15rem solid rgb(167, 198, 255);
+}
+
+.subListItemActive {
+  color: rgba(255, 255, 255, 1);
+  background: rgb(23, 24, 28);
+  border-left: 0.15rem solid rgb(167, 198, 255);
+  border-top-color: transparent;
 }

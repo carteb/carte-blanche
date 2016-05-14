@@ -3,6 +3,7 @@
  */
 
 import React from 'react';
+import has from 'lodash/has';
 
 const styleguideClientApi = window.STYLEGUIDE_PLUGIN_CLIENT_API;
 
@@ -25,9 +26,11 @@ class ComponentPreview extends React.Component {
   }
 
   refreshComponentData = () => {
-    this.setState({
-      componentData: styleguideClientApi.cache[this.state.componentPath],
-    });
+    if (has(styleguideClientApi.cache, this.state.componentPath)) {
+      this.setState({
+        componentData: styleguideClientApi.cache[this.state.componentPath].component,
+      });
+    }
   }
 
   render() {
