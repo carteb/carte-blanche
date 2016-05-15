@@ -31,10 +31,10 @@ describe('variations server', () => {
         .end((err, res) => {
           expect(res.status).to.equal(200);
           expect(res.body.error).to.be.false; // eslint-disable-line no-unused-expressions
-          expect(res.body.data).to.include.keys(['firstVariation', 'secondVariation']);
+          expect(res.body.data).to.have.keys(['v-firstVariation', 'v-secondVariation']);
 
           let firstVariation;
-          eval(`firstVariation = ${res.body.data.firstVariation}`); // eslint-disable-line no-eval
+          eval(`firstVariation = ${res.body.data['v-firstVariation']}`); // eslint-disable-line no-eval, max-len
           const expected = {
             props: {
               className: {
@@ -57,7 +57,7 @@ describe('variations server', () => {
           expect(firstVariation).to.deep.equal(expected); // eslint-disable-line no-undef
 
           let secondVariation;
-          eval(`secondVariation = ${res.body.data.secondVariation}`); // eslint-disable-line no-eval
+          eval(`secondVariation = ${res.body.data['v-secondVariation']}`); // eslint-disable-line no-eval, max-len
           const secondExpected = {
             props: {
               age: {

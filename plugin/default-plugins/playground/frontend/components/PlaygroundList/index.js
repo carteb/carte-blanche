@@ -15,6 +15,7 @@ import propsToVariation from '../../utils/propsToVariation';
 import variationsToProps from '../../utils/variationsToProps';
 import PropForm from '../PropForm';
 import styles from './styles.css';
+import md5 from 'blueimp-md5';
 
 class PlaygroundList extends Component {
   state = {
@@ -82,6 +83,7 @@ class PlaygroundList extends Component {
     // TODO Optimistic UI update to show currently loaded variations and an "empty"
     // one with a loading indicator
     event.preventDefault();
+    const code = this.propsToVariation(this.getRandomValues());
     // TODO dynamic host
     fetch(`http://localhost:8000/${this.props.componentPath}`, {
       method: 'POST',
@@ -90,9 +92,13 @@ class PlaygroundList extends Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        // TODO use a proper name (think about the UX adding/chaning names)
-        variation: `testVariation-${Math.random() * 100}`,
-        code: this.propsToVariation(this.getRandomValues()),
+        // TODO name should be: v-[hash:5]-[slugify-human-readable-version]
+        // Webpack uses md5 as default hashing algorithm & in css modules it is bas64 encoded:
+        // https://github.com/webpack/loader-utils/blob/master/index.js#L221
+        // The name should start with `v-` in order to whitelist by this pattern.
+        // This way system files like .DS_Store will be ignored.
+        variation: `v-${btoa(md5(code)).substring(0, 5)}`,
+        code,
       }),
     })
       .then(() => {

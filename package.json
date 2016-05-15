@@ -50,6 +50,7 @@
   },
   "dependencies": {
     "belle": "^2.0.7",
+    "blueimp-md5": "^2.3.0",
     "body-parser": "^1.15.1",
     "connect-history-api-fallback": "^1.2.0",
     "cors": "^2.7.1",
