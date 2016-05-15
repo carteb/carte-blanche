@@ -92,12 +92,12 @@ class PlaygroundList extends Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        // TODO name should be: v-[hash:5]-[slugify-human-readable-version]
+        // TODO name should be: v-[key]-[slugify-human-readable-version]
         // Webpack uses md5 as default hashing algorithm & in css modules it is bas64 encoded:
         // https://github.com/webpack/loader-utils/blob/master/index.js#L221
         // The name should start with `v-` in order to whitelist by this pattern.
         // This way system files like .DS_Store will be ignored.
-        variation: `v-${generateKey({})}`,
+        variation: `v-${generateKey()}`,
         code,
       }),
     })
