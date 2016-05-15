@@ -4,7 +4,7 @@ import { expect } from 'chai';
 import fs from 'fs';
 import rimraf from 'rimraf';
 
-const port = 8000;
+const port = 8003;
 const projectBasePath = __dirname;
 const variationsBasePath = path.join(__dirname, 'variations');
 const request = supertest.agent(`http://localhost:${port}`);
