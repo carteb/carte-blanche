@@ -74,7 +74,7 @@ class Navigation extends React.Component {
         // Clean the component name
         // TODO Maybe do this earlier, not on every mount
         const componentName = getComponentNameFromPath(componentPath);
-        if (componentName.indexOf(this.state.filterString) > -1) {
+        if (componentName.toLowerCase().indexOf(this.state.filterString.toLowerCase()) > -1) {
           return (
             // IndexLink so not all links that match a part of the route are highlighted
             <div key={componentPath} >
