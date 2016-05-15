@@ -20,7 +20,7 @@ import md5 from 'blueimp-md5';
 class PlaygroundList extends Component {
   state = {
     variationPropsList: {},
-    selected: [],
+    selected: undefined,
     metadataWithControls: null,
     editMode: false,
   };
@@ -151,7 +151,7 @@ class PlaygroundList extends Component {
 
   selectVariation = (id) => {
     this.setState({
-      selected: [id],
+      selected: id,
     });
   };
 
@@ -165,7 +165,7 @@ class PlaygroundList extends Component {
   closePropForm = () => {
     this.setState({
       editMode: false,
-      selected: [],
+      selected: undefined,
     });
   };
 
@@ -177,14 +177,14 @@ class PlaygroundList extends Component {
     const selectedVariationProps =
       find(
         this.state.variationPropsList,
-        (variationProps, key) => this.state.selected.indexOf(key) > -1
+        (variationProps, key) => this.state.selected === key
       );
     return (
       <div className={styles.wrapper}>
         <PropForm
           metadataWithControls={this.state.metadataWithControls}
           variationProps={selectedVariationProps}
-          variationPath={this.state.selected[0]}
+          variationPath={this.state.selected}
           onVariationPropsChange={this.updateVariation}
           onCloseClick={this.closePropForm}
           open={this.state.editMode}
@@ -194,8 +194,7 @@ class PlaygroundList extends Component {
             className={styles.playgroundWrapper}
             key={variationPath}
           >
-            {(this.state.selected.length > 0
-              && this.state.selected.indexOf(variationPath) === -1) ? (
+            {(this.state.selected && this.state.selected !== variationPath) ? (
               <button
                 className={styles.playgroundOverlay}
                 onClick={() => {
