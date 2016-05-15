@@ -39,11 +39,14 @@ class Navigation extends React.Component {
     if (this.props.activeComponentPath === componentPath) {
       if (has(window.STYLEGUIDE_PLUGIN_CLIENT_API.cache, componentPath)) {
         const plugins = window.STYLEGUIDE_PLUGIN_CLIENT_API.cache[componentPath].navigation;
-        return values(mapValues(plugins, (plugin) => (
-          <div>
+        return values(mapValues(plugins, (plugin, pluginKey) => (
+          <div key={pluginKey}>
             {
               values(mapValues(plugin, (link) => (
-                <div className={styles.subListItemWrapper}>
+                <div
+                  className={styles.subListItemWrapper}
+                  key={link.id}
+                >
                   <IndexLink
                     to={`/${componentPath}?id=${link.id}`}
                     className={styles.subListItem}
