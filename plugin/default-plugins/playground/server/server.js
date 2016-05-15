@@ -52,7 +52,8 @@ var start = (projectBasePath, variationsBasePath, port) => {
     var variations = {};
     // Get all the variations of this component
     var fileNames = fs.readdirSync(variationComponentPath);
-    fileNames.map((fileName) => {
+    var filtedFileNames = fileNames.filter((fileName) => fileName.startsWith('v-'))
+    filtedFileNames.map((fileName) => {
       var filePath = path.join(variationComponentPath, fileName);
       // TODO make this async and wait for all files to be finished
       var content = fs.readFileSync(filePath, { encoding: 'utf8' });

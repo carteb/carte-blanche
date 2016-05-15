@@ -15,11 +15,12 @@ import propsToVariation from '../../utils/propsToVariation';
 import variationsToProps from '../../utils/variationsToProps';
 import PropForm from '../PropForm';
 import styles from './styles.css';
+import generateKey from './generateKey';
 
 class PlaygroundList extends Component {
   state = {
     variationPropsList: {},
-    selected: [],
+    selected: undefined,
     metadataWithControls: null,
     editMode: false,
   };
@@ -82,6 +83,7 @@ class PlaygroundList extends Component {
     // TODO Optimistic UI update to show currently loaded variations and an "empty"
     // one with a loading indicator
     event.preventDefault();
+    const code = this.propsToVariation(this.getRandomValues());
     // TODO dynamic host
     fetch(`http://localhost:8000/${this.props.componentPath}`, {
       method: 'POST',
@@ -90,9 +92,13 @@ class PlaygroundList extends Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        // TODO use a proper name (think about the UX adding/chaning names)
-        variation: `testVariation-${Math.random() * 100}`,
-        code: this.propsToVariation(this.getRandomValues()),
+        // TODO name should be: v-[key]-[slugify-human-readable-version]
+        // Webpack uses md5 as default hashing algorithm & in css modules it is bas64 encoded:
+        // https://github.com/webpack/loader-utils/blob/master/index.js#L221
+        // The name should start with `v-` in order to whitelist by this pattern.
+        // This way system files like .DS_Store will be ignored.
+        variation: `v-${generateKey()}`,
+        code,
       }),
     })
       .then(() => {
@@ -145,7 +151,7 @@ class PlaygroundList extends Component {
 
   selectVariation = (id) => {
     this.setState({
-      selected: [id],
+      selected: id,
     });
   };
 
@@ -159,7 +165,7 @@ class PlaygroundList extends Component {
   closePropForm = () => {
     this.setState({
       editMode: false,
-      selected: [],
+      selected: undefined,
     });
   };
 
@@ -171,14 +177,14 @@ class PlaygroundList extends Component {
     const selectedVariationProps =
       find(
         this.state.variationPropsList,
-        (variationProps, key) => this.state.selected.indexOf(key) > -1
+        (variationProps, key) => this.state.selected === key
       );
     return (
       <div className={styles.wrapper}>
         <PropForm
           metadataWithControls={this.state.metadataWithControls}
           variationProps={selectedVariationProps}
-          variationPath={this.state.selected[0]}
+          variationPath={this.state.selected}
           onVariationPropsChange={this.updateVariation}
           onCloseClick={this.closePropForm}
           open={this.state.editMode}
@@ -188,8 +194,7 @@ class PlaygroundList extends Component {
             className={styles.playgroundWrapper}
             key={variationPath}
           >
-            {(this.state.selected.length > 0
-              && this.state.selected.indexOf(variationPath) === -1) ? (
+            {(this.state.selected && this.state.selected !== variationPath) ? (
               <button
                 className={styles.playgroundOverlay}
                 onClick={() => {
