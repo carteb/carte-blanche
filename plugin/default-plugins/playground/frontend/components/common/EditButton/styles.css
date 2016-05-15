@@ -1,9 +1,5 @@
 .base {
-  position: absolute;
-  top: 0;
-  right: 0;
   cursor: pointer;
-  z-index: 2;
   padding: 0.5rem;
   background-color: transparent;
   border: none;

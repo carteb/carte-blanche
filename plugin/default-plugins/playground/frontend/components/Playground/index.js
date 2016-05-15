@@ -5,6 +5,7 @@
  */
 
 import React, { PropTypes } from 'react';
+import cx from 'classnames';
 
 import EditButton from '../common/EditButton';
 import DeleteButton from '../common/DeleteButton';
@@ -21,17 +22,20 @@ class Playground extends React.Component {
 
   render() {
     const Component = this.props.component;
+    const classname = cx(styles.wrapper, {
+      [styles['wrapper--fullHeight']]: this.props.fullHeight,
+    });
 
     return (
-      <div
-        className={
-          (this.props.big) ?
-          styles.wrapperBig :
-          styles.wrapper
-        }
-      >
-        <EditButton onClick={this.onEditButtonClick} />
-        <DeleteButton onClick={this.onDeleteButtonClick} />
+      <div className={classname}>
+        <div className={styles.buttonWrapper}>
+          {(this.props.onEditButtonClick) ? (
+            <EditButton onClick={this.onEditButtonClick} />
+          ) : null}
+          {(this.props.onDeleteButtonClick) ? (
+            <DeleteButton onClick={this.onDeleteButtonClick} />
+          ) : null}
+        </div>
         <div className={styles.componentWrapper}>
           <Component {...this.props.variationProps} />
         </div>
@@ -43,8 +47,9 @@ class Playground extends React.Component {
 Playground.propTypes = {
   variationProps: PropTypes.object.isRequired,
   component: PropTypes.func.isRequired, // TODO is this really always a function
-  onEditButtonClick: PropTypes.func.isRequired,
-  onDeleteButtonClick: PropTypes.func.isRequired,
+  onEditButtonClick: PropTypes.func,
+  onDeleteButtonClick: PropTypes.func,
+  fullHeight: PropTypes.bool,
   variationPath: PropTypes.string.isRequired,
 };
 

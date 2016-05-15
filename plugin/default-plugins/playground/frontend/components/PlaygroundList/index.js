@@ -3,7 +3,6 @@
  */
 
 import React, { Component } from 'react';
-import Playground from '../Playground';
 import mapValues from 'lodash/mapValues';
 import find from 'lodash/find';
 import values from 'lodash/values';
@@ -13,9 +12,13 @@ import getControl from '../../utils/getControl';
 import randomValues from '../../utils/randomValues';
 import propsToVariation from '../../utils/propsToVariation';
 import variationsToProps from '../../utils/variationsToProps';
+import generateKey from '../../utils/generateKey';
+
+import Playground from '../Playground';
 import PropForm from '../PropForm';
+import Modal from '../Modal';
+
 import styles from './styles.css';
-import generateKey from './generateKey';
 
 class PlaygroundList extends Component {
   state = {
@@ -119,6 +122,9 @@ class PlaygroundList extends Component {
       },
     })
     .then(() => {
+      this.setState({
+        editMode: false,
+      });
       this.fetchVariations();
     })
     .catch((err) => {
@@ -181,37 +187,32 @@ class PlaygroundList extends Component {
       );
     return (
       <div className={styles.wrapper}>
-        <PropForm
-          metadataWithControls={this.state.metadataWithControls}
-          variationProps={selectedVariationProps}
-          variationPath={this.state.selected}
-          onVariationPropsChange={this.updateVariation}
-          onCloseClick={this.closePropForm}
-          open={this.state.editMode}
-        />
+        <Modal visible={this.state.editMode}>
+          <PropForm
+            metadataWithControls={this.state.metadataWithControls}
+            variationProps={selectedVariationProps}
+            variationPath={this.state.selected}
+            onVariationPropsChange={this.updateVariation}
+            onCloseClick={this.closePropForm}
+            open={this.state.editMode}
+          />
+          <Playground
+            component={component}
+            fullHeight
+            onDeleteButtonClick={this.deleteVariation}
+            variationProps={selectedVariationProps}
+            variationPath={this.state.selected}
+          />
+        </Modal>
         {values(mapValues(this.state.variationPropsList, (variationProps, variationPath) => (
-          <div
-            className={styles.playgroundWrapper}
+          <Playground
             key={variationPath}
-            id={variationPath}
-          >
-            {(this.state.selected && this.state.selected !== variationPath) ? (
-              <button
-                className={styles.playgroundOverlay}
-                onClick={() => {
-                  this.selectVariation(variationPath);
-                }}
-              />
-            ) : null}
-            <Playground
-              big={this.state.editMode}
-              component={component}
-              variationProps={variationProps}
-              variationPath={variationPath}
-              onDeleteButtonClick={this.deleteVariation}
-              onEditButtonClick={this.startEditMode}
-            />
-          </div>
+            component={component}
+            variationProps={variationProps}
+            variationPath={variationPath}
+            onDeleteButtonClick={this.deleteVariation}
+            onEditButtonClick={this.startEditMode}
+          />
         )))}
         <button
           onClick={this.createVariation}

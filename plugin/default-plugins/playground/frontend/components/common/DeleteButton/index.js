@@ -10,7 +10,7 @@ import styles from './styles.css';
 
 const DeleteButton = (props) => (
   <button {...props} className={styles.base}>
-    <svg className={styles.svg} height="24px" width="24px" version="1.1" viewBox="0 0 24 24" x="0px" y="0px" xmlSpace="preserve">
+    <svg className={styles.svg} height="1.5em" width="1.5em" version="1.1" viewBox="0 0 24 24" x="0px" y="0px" xmlSpace="preserve">
       <g id="Outline_Icons_1_">
         <g id="Outline_Icons">
           <g>
@@ -20,9 +20,6 @@ const DeleteButton = (props) => (
           </g>
         </g>
         <g id="New_icons_1_" />
-      </g>
-      <g id="Frames-24px">
-        <rect height="24" width="24" fill="none" />
       </g>
     </svg>
   </button>
