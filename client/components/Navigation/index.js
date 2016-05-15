@@ -11,6 +11,11 @@ import styles from './styles.css';
 import mapValues from 'lodash/mapValues';
 import values from 'lodash/values';
 import has from 'lodash/has';
+import throttle from 'lodash/throttle';
+import find from 'lodash/find';
+import flatten from 'lodash/flatten';
+
+const getPlugins = (path) => window.STYLEGUIDE_PLUGIN_CLIENT_API.cache[path].navigation;
 
 class Navigation extends React.Component {
 
@@ -22,11 +27,12 @@ class Navigation extends React.Component {
     // making sure the component is re-rendered when the component data is loaded
     document.documentElement.addEventListener(
       'styleguide-plugin-update-navigation',
-      () => {
-        this.forceUpdate();
-      },
+      () => this.forceUpdate(),
       false
     );
+
+    window.addEventListener('scroll', throttle(this.setQueryParamForActiveItemId, 50), false);
+    window.addEventListener('hashchange', this.setScrollPosition, false);
   }
 
   setFilter = (event) => {
@@ -35,10 +41,34 @@ class Navigation extends React.Component {
     });
   }
 
+  setScrollPosition = () => {
+    const element = document.getElementById(this.props.activeItemId);
+    if (element) {
+      window.scroll(window.scrollX, element.offsetTop);
+    }
+  }
+
+  setQueryParamForActiveItemId = () => {
+    const plugins = getPlugins(this.props.activeComponentPath);
+    const ids = flatten(values(mapValues(plugins, (plugin) => values(mapValues(plugin, (link) => link.id)))));
+
+    const activeId = find(ids, (id) => {
+      const element = document.getElementById(id);
+      return window.scrollY <= element.offsetTop;
+    });
+
+    if (this.props.activeItemId) {
+      window.location.hash = window.location.hash.replace(/id=.+&/, `id=${activeId}&`);
+    } else {
+      // in case the id is not set
+      window.location.hash = window.location.hash.replace(/\?/, `?id=${activeId}&`);
+    }
+  }
+
   renderSubNavigation = (componentPath) => {
     if (this.props.activeComponentPath === componentPath) {
       if (has(window.STYLEGUIDE_PLUGIN_CLIENT_API.cache, componentPath)) {
-        const plugins = window.STYLEGUIDE_PLUGIN_CLIENT_API.cache[componentPath].navigation;
+        const plugins = getPlugins(componentPath);
         return values(mapValues(plugins, (plugin, pluginKey) => (
           <div key={pluginKey}>
             {
