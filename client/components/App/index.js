@@ -26,7 +26,10 @@ class App extends React.Component {
     const activeComponentPath = this.props.location.pathname.replace(/^\//, '');
     return (
       <div className={styles.main}>
-        <Navigation activeComponentPath={activeComponentPath} />
+        <Navigation
+          activeComponentPath={activeComponentPath}
+          activeItemId={this.props.location.query.id}
+        />
         <div className={(!this.state.drawerVisible) ? styles.preview : styles.previewOpen}>
           <MenuButton
             onClick={this.toggleMenu}

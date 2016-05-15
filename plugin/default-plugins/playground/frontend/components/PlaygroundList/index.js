@@ -193,6 +193,7 @@ class PlaygroundList extends Component {
           <div
             className={styles.playgroundWrapper}
             key={variationPath}
+            id={variationPath}
           >
             {(this.state.selected && this.state.selected !== variationPath) ? (
               <button
