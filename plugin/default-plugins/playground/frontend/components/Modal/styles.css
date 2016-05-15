@@ -1,0 +1,16 @@
+.modal {
+  width: 90%; /* Percentage fallbacks for older browsers */
+  width: 90vw;
+  height: 90%;
+  height: 90vh;
+  margin: 5%;
+  margin: 5vh 5vw;
+  position: absolute;
+  position: fixed;
+  top: 0; right: 0; left: 0; bottom: 0;
+  z-index: 5;
+  background-color: white;
+  -webkit-box-shadow: 0px 0px 28px 9px rgba(0,0,0,0.33);
+  -moz-box-shadow: 0px 0px 28px 9px rgba(0,0,0,0.33);
+  box-shadow: 0px 0px 28px 9px rgba(0,0,0,0.33);
+}
