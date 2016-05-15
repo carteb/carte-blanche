@@ -15,7 +15,7 @@ import propsToVariation from '../../utils/propsToVariation';
 import variationsToProps from '../../utils/variationsToProps';
 import PropForm from '../PropForm';
 import styles from './styles.css';
-import md5 from 'blueimp-md5';
+import generateKey from './generateKey';
 
 class PlaygroundList extends Component {
   state = {
@@ -97,7 +97,7 @@ class PlaygroundList extends Component {
         // https://github.com/webpack/loader-utils/blob/master/index.js#L221
         // The name should start with `v-` in order to whitelist by this pattern.
         // This way system files like .DS_Store will be ignored.
-        variation: `v-${btoa(md5(code)).substring(0, 5)}`,
+        variation: `v-${generateKey({})}`,
         code,
       }),
     })
