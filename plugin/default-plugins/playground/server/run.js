@@ -7,6 +7,4 @@ var projectBasePath = process.argv[2];
 
 // TODO allow to overwrite the path where all the variations data is stored
 server.start(projectBasePath, path.join(projectBasePath, 'variations'), port);
-console.log('\n\n--------------------------------------');
-console.log('Playground Server listening to port: ' + port);
-console.log('---------------------------------------\n\n');
+console.log('\nPlayground Server listening to port: ' + port + '\n');
