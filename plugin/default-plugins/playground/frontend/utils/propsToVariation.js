@@ -8,14 +8,18 @@ import isString from 'lodash/isString';
 const BASE_LEVEL = 2;
 const SPACES_PER_LEVEL = 2;
 
-const getArrayValues = (array) => (
-  array.map((value, index) => {
+const getArrayValues = (array, level) => {
+  return array.map((value, index) => {
+    if (isPlainObject(value)) return `{${convert(value, level + 1).join('')}\n}, `; // eslint-disable-line no-use-before-define,max-len
+    if (isArray(value)) {
+      return `[${getArrayValues(value, level + 1).join('')}], `; // eslint-disable-line no-use-before-define,max-len
+    }
     if (index !== array.length - 1) {
       return `${value}, `;
     }
     return `${value}`;
-  })
-);
+  });
+};
 
 const convert = (props, level) => {
   const spacesCount = ((level + 1) * SPACES_PER_LEVEL) + BASE_LEVEL;
@@ -26,7 +30,7 @@ const convert = (props, level) => {
     if (isPlainObject(prop)) {
       value = `{${convert(prop, level + 1).join('')}\n${spaces}}`;
     } else if (isArray(prop)) {
-      value = `[${getArrayValues(prop).join('')}]`;
+      value = `[${getArrayValues(prop, level).join('')}]`;
     } else {
       value = isString(prop) ? `'${prop}'` : prop;
     }
