@@ -1,12 +1,7 @@
 .wrapper {
   width: 100%;
-  padding-top: 0.5rem;
   position: relative;
-}
-
-.wrapper--nested {
-  composes: wrapper;
-  margin-top: 1em;
+  padding: 1rem;
 }
 
 .wrapper--without-label {
@@ -17,10 +12,8 @@
 }
 
 .wrapper--nested--without-label {
-  composes: wrapper--nested;
-  padding-top: 0;
-  padding-left: 1rem;
-  border: none;
+  composes: wrapper;
+  padding: 0;
 }
 
 .wrapper--nested--without-label:first-child {
@@ -28,13 +21,13 @@
 }
 
 .input {
-  width: calc(100% - 2rem);
+  width: 100%;
   border: none;
   outline: 0px;
   font-size: 1em;
   background-color: white;
   padding: 0.5em;
-  margin: 0.25em 1rem;
+  margin: 0.25em 0;
   border-radius: 3px;
   -webkit-box-shadow: inset 0px 1px 2px 0px rgba(50, 50, 50, 0.25);
   -moz-box-shadow: inset 0px 1px 2px 0px rgba(50, 50, 50, 0.25);

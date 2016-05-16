@@ -1,27 +1,26 @@
 .wrapper {
-  position: relative;
   width: 100%;
-  min-height: 3em;
+  position: relative;
+  padding: 1rem;
+  border-left: 1px solid #CCC;
 }
 
 .nestedControls {
-  margin-left: 1rem;
   position: relative;
-  padding: 1.625em 1pc;
-  padding-left: 0;
-  padding-top: 0em;
   border-left: 1px solid #CCC;
 }
 
 .nestedDeeperThanOneLevel {
   composes: nestedControls;
-  margin-top: 1em;
-  margin-left: 1rem;
-  padding-right: 0.5em;
-  padding-bottom: 0.5em;
 }
 
 .nestedDeeperThanOneLevel--without-label {
-  composes: nestedDeeperThanOneLevel;
+  composes: nestedControls;
   padding-top: 0;
+}
+
+.wrapper .wrapper,
+.nestedControls .wrapper,
+.nestedDeeperThanOneLevel .wrapper {
+  padding-right: 0;
 }

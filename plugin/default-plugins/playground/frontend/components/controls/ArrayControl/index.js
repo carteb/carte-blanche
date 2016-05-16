@@ -29,7 +29,7 @@ const ArrayControl = (props) => {
   const control = getControl(propTypeData.value);
 
   return (
-    <div className={inputStyles.wrapper}>
+    <div className={objectControlStyles.wrapper}>
       <Label
         text={label}
         onRandomClick={() => onUpdate({ value: ArrayControl.randomValue(propTypeData) })}
@@ -38,9 +38,12 @@ const ArrayControl = (props) => {
         <div
           className={
             (isNested) ?
-            objectControlStyles.nestedDeeperThanOneLevel :
-            objectControlStyles.nestedControls
+            objectControlStyles.nestedControls :
+            objectControlStyles.wrapper
           }
+          style={{
+            paddingLeft: '1rem',
+          }}
         >
           {rangeArray && rangeArray.map((index) => {
             const newProps = {

@@ -2,15 +2,14 @@ import React, { PropTypes } from 'react';
 
 import Label from '../Label';
 import styles from './styles.css';
+import objectControlStyles from '../../controls/ObjectControl/styles.css';
 
 function Input(props) {
-  let wrapperClassname = styles.wrapper;
+  let wrapperClassname = objectControlStyles.wrapper;
   if (!props.label && props.isNested) {
     wrapperClassname = styles['wrapper--nested--without-label'];
   } else if (!props.label) {
     wrapperClassname = styles['wrapper--without-label'];
-  } else if (props.isNested) {
-    wrapperClassname = styles['wrapper--nested'];
   }
   return (
     <div className={wrapperClassname}>
