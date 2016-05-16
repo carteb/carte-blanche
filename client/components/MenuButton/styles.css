@@ -4,7 +4,7 @@
   top: 0;
   left: 0;
   cursor: pointer;
-  z-index: 1000;
+  z-index: 2;
   padding: 0.5rem;
   margin: 0;
   background-color: transparent;

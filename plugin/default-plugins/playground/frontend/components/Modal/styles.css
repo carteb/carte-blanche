@@ -7,7 +7,7 @@
   position: fixed;
   top: 0; right: 0; left: 0; bottom: 0;
   z-index: 4;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(255, 255, 255, 0.8);
 }
 
 .modal {
@@ -17,10 +17,26 @@
   height: 90vh;
   margin: 5%;
   margin: 5vh 5vw;
+  z-index: 5;
   position: absolute;
   top: 0; right: 0; left: 0; bottom: 0;
   background-color: white;
   -webkit-box-shadow: 0px 0px 28px 9px rgba(0,0,0,0.33);
   -moz-box-shadow: 0px 0px 28px 9px rgba(0,0,0,0.33);
   box-shadow: 0px 0px 28px 9px rgba(0,0,0,0.33);
+}
+
+.closeBtn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  padding: 0.5rem;
+  border: none;
+  background-color: transparent;
+}
+
+.closeBtnSvg {
+  stroke: black;
+  stroke-width: 3px;
 }
