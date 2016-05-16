@@ -8,11 +8,9 @@ describe('propsToVariation', () => {
     };
     const expected =
 `{
-  props: {
-    age: {
-      value: 22,
-    },
-  },
+  "props": {
+    "age": 22
+  }
 };`;
     expect(propsToVariation(props)).to.deep.equal(expected);
   });
@@ -21,12 +19,11 @@ describe('propsToVariation', () => {
     const props = {
       name: 'Ada Lovelace',
     };
-    const expected = `{
-  props: {
-    name: {
-      value: 'Ada Lovelace',
-    },
-  },
+    const expected =
+`{
+  "props": {
+    "name": "Ada Lovelace"
+  }
 };`;
     expect(propsToVariation(props)).to.deep.equal(expected);
   });
@@ -37,11 +34,9 @@ describe('propsToVariation', () => {
     };
     const expected =
 `{
-  props: {
-    active: {
-      value: true,
-    },
-  },
+  "props": {
+    "active": true
+  }
 };`;
     expect(propsToVariation(props)).to.deep.equal(expected);
   });
@@ -52,11 +47,9 @@ describe('propsToVariation', () => {
     };
     const expected =
 `{
-  props: {
-    active: {
-      value: false,
-    },
-  },
+  "props": {
+    "active": false
+  }
 };`;
     expect(propsToVariation(props)).to.deep.equal(expected);
   });
@@ -66,15 +59,148 @@ describe('propsToVariation', () => {
       age: 22,
       name: 'Ada Lovelace',
     };
-    const expected = `{
-  props: {
-    age: {
-      value: 22,
-    },
-    name: {
-      value: 'Ada Lovelace',
-    },
-  },
+    const expected =
+`{
+  "props": {
+    "age": 22,
+    "name": "Ada Lovelace"
+  }
+};`;
+    expect(propsToVariation(props)).to.deep.equal(expected);
+  });
+
+  it('should convert arrays', () => {
+    const props = {
+      hairs: [1, 2, 3],
+    };
+    const expected =
+`{
+  "props": {
+    "hairs": [
+      1,
+      2,
+      3
+    ]
+  }
+};`;
+    expect(propsToVariation(props)).to.deep.equal(expected);
+  });
+
+  it('should convert nested arrays', () => {
+    const props = {
+      hairs: [
+        [1, 2, 3],
+        [2, 3, 4],
+      ],
+    };
+    const expected =
+`{
+  "props": {
+    "hairs": [
+      [
+        1,
+        2,
+        3
+      ],
+      [
+        2,
+        3,
+        4
+      ]
+    ]
+  }
+};`;
+    expect(propsToVariation(props)).to.deep.equal(expected);
+  });
+
+  it('should convert objects', () => {
+    const props = {
+      hair: {
+        length: 15,
+        thickness: 7,
+      },
+    };
+    const expected =
+`{
+  "props": {
+    "hair": {
+      "length": 15,
+      "thickness": 7
+    }
+  }
+};`;
+    expect(propsToVariation(props)).to.deep.equal(expected);
+  });
+
+  it('should convert nested objects', () => {
+    const props = {
+      hair: {
+        size: {
+          length: 15,
+          thickness: 22,
+        },
+      },
+    };
+    const expected =
+`{
+  "props": {
+    "hair": {
+      "size": {
+        "length": 15,
+        "thickness": 22
+      }
+    }
+  }
+};`;
+    expect(propsToVariation(props)).to.deep.equal(expected);
+  });
+
+  it('should covert object-array nesting', () => {
+    const props = {
+      hair: {
+        size: [15, 22],
+      },
+    };
+    const expected =
+`{
+  "props": {
+    "hair": {
+      "size": [
+        15,
+        22
+      ]
+    }
+  }
+};`;
+    expect(propsToVariation(props)).to.deep.equal(expected);
+  });
+
+  it('should covert array-object nesting', () => {
+    const props = {
+      hairs: [
+        {
+          size: 15,
+          thickness: 22,
+        }, {
+          size: 16,
+          thickness: 25,
+        },
+      ],
+    };
+    const expected =
+`{
+  "props": {
+    "hairs": [
+      {
+        "size": 15,
+        "thickness": 22
+      },
+      {
+        "size": 16,
+        "thickness": 25
+      }
+    ]
+  }
 };`;
     expect(propsToVariation(props)).to.deep.equal(expected);
   });
