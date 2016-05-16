@@ -8,9 +8,9 @@ describe('propsToVariation', () => {
     };
     const expected =
 `{
-  props: {
-    age: 22,
-  },
+  "props": {
+    "age": 22
+  }
 };`;
     expect(propsToVariation(props)).to.deep.equal(expected);
   });
@@ -19,10 +19,11 @@ describe('propsToVariation', () => {
     const props = {
       name: 'Ada Lovelace',
     };
-    const expected = `{
-  props: {
-    name: 'Ada Lovelace',
-  },
+    const expected =
+`{
+  "props": {
+    "name": "Ada Lovelace"
+  }
 };`;
     expect(propsToVariation(props)).to.deep.equal(expected);
   });
@@ -33,9 +34,9 @@ describe('propsToVariation', () => {
     };
     const expected =
 `{
-  props: {
-    active: true,
-  },
+  "props": {
+    "active": true
+  }
 };`;
     expect(propsToVariation(props)).to.deep.equal(expected);
   });
@@ -46,9 +47,9 @@ describe('propsToVariation', () => {
     };
     const expected =
 `{
-  props: {
-    active: false,
-  },
+  "props": {
+    "active": false
+  }
 };`;
     expect(propsToVariation(props)).to.deep.equal(expected);
   });
@@ -58,27 +59,29 @@ describe('propsToVariation', () => {
       age: 22,
       name: 'Ada Lovelace',
     };
-    const expected = `{
-  props: {
-    age: 22,
-    name: 'Ada Lovelace',
-  },
+    const expected =
+`{
+  "props": {
+    "age": 22,
+    "name": "Ada Lovelace"
+  }
 };`;
     expect(propsToVariation(props)).to.deep.equal(expected);
   });
 
   it('should convert arrays', () => {
     const props = {
-      hairs: [
-        1,
-        2,
-        3,
-      ],
+      hairs: [1, 2, 3],
     };
-    const expected = `{
-  props: {
-    hairs: [1, 2, 3],
-  },
+    const expected =
+`{
+  "props": {
+    "hairs": [
+      1,
+      2,
+      3
+    ]
+  }
 };`;
     expect(propsToVariation(props)).to.deep.equal(expected);
   });
@@ -90,10 +93,22 @@ describe('propsToVariation', () => {
         [2, 3, 4],
       ],
     };
-    const expected = `{
-  props: {
-    hairs: [[1, 2, 3], [2, 3, 4], ],
-  },
+    const expected =
+`{
+  "props": {
+    "hairs": [
+      [
+        1,
+        2,
+        3
+      ],
+      [
+        2,
+        3,
+        4
+      ]
+    ]
+  }
 };`;
     expect(propsToVariation(props)).to.deep.equal(expected);
   });
@@ -105,13 +120,14 @@ describe('propsToVariation', () => {
         thickness: 7,
       },
     };
-    const expected = `{
-  props: {
-    hair: {
-      length: 15,
-      thickness: 7,
-    },
-  },
+    const expected =
+`{
+  "props": {
+    "hair": {
+      "length": 15,
+      "thickness": 7
+    }
+  }
 };`;
     expect(propsToVariation(props)).to.deep.equal(expected);
   });
@@ -125,15 +141,16 @@ describe('propsToVariation', () => {
         },
       },
     };
-    const expected = `{
-  props: {
-    hair: {
-      size: {
-        length: 15,
-        thickness: 22,
-      },
-    },
-  },
+    const expected =
+`{
+  "props": {
+    "hair": {
+      "size": {
+        "length": 15,
+        "thickness": 22
+      }
+    }
+  }
 };`;
     expect(propsToVariation(props)).to.deep.equal(expected);
   });
@@ -144,17 +161,21 @@ describe('propsToVariation', () => {
         size: [15, 22],
       },
     };
-    const expected = `{
-  props: {
-    hair: {
-      size: [15, 22],
-    },
-  },
+    const expected =
+`{
+  "props": {
+    "hair": {
+      "size": [
+        15,
+        22
+      ]
+    }
+  }
 };`;
     expect(propsToVariation(props)).to.deep.equal(expected);
   });
 
-  it.skip('should covert array-object nesting', () => {
+  it('should covert array-object nesting', () => {
     const props = {
       hairs: [
         {
@@ -166,18 +187,20 @@ describe('propsToVariation', () => {
         },
       ],
     };
-    const expected = `{
-  props: {
-    hairs: [
+    const expected =
+`{
+  "props": {
+    "hairs": [
       {
-        size: 15,
-        thickness: 22,
-      }, {
-        size: 16,
-        thickness: 25,
+        "size": 15,
+        "thickness": 22
       },
-    ],
-  },
+      {
+        "size": 16,
+        "thickness": 25
+      }
+    ]
+  }
 };`;
     expect(propsToVariation(props)).to.deep.equal(expected);
   });
