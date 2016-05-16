@@ -6,11 +6,9 @@ describe('variationsToProps', () => {
     const variations = {
       'variationA.js':
 `{
-  props: {
-    age: {
-      value: 22,
-    },
-  },
+  "props": {
+    "age": 22
+  }
 };`,
     };
     const expected = {
@@ -25,11 +23,9 @@ describe('variationsToProps', () => {
     const variations = {
       'variationA.js':
 `{
-  props: {
-    name: {
-      value: 'Ada Lovelace',
-    },
-  },
+  "props": {
+    "name": "Ada Lovelace"
+  }
 };`,
     };
     const expected = {
@@ -44,11 +40,9 @@ describe('variationsToProps', () => {
     const variations = {
       'variationA.js':
 `{
-  props: {
-  active: {
-    value: true,
-  },
-},
+  "props": {
+    "active": true
+  }
 };`,
     };
     const expected = {
@@ -63,11 +57,9 @@ describe('variationsToProps', () => {
     const variations = {
       'variationA.js':
 `{
-props: {
-  active: {
-    value: false,
-  },
-},
+  "props": {
+    "active": false
+  }
 };`,
     };
     const expected = {
@@ -78,18 +70,14 @@ props: {
     expect(variationsToProps(variations)).to.deep.equal(expected);
   });
 
-  it('should convert multiple props', () => {
+  it.only('should convert multiple props', () => {
     const variations = {
       'variationA.js':
 `{
-  props: {
-  age: {
-    value: 22,
-  },
-  name: {
-    value: 'Ada Lovelace',
-  },
-},
+  "props": {
+    "age": 22,
+    "name": "Ada Lovelace"
+  }
 };`,
     };
     const expected = {
