@@ -20,6 +20,9 @@ import Modal from '../Modal';
 
 import styles from './styles.css';
 
+const PERSISTENCE_DELAY = 1000;
+let PERSISTENCE_TIMEOUT;
+
 class PlaygroundList extends Component {
   state = {
     variationPropsList: {},
@@ -133,7 +136,7 @@ class PlaygroundList extends Component {
     });
   };
 
-  updateVariation = (variationPath, props) => {
+  persistVariationUpdate = (variationPath, props) => {
     fetch(`http://localhost:8000/${this.props.componentPath}`, {
       method: 'POST',
       headers: {
@@ -155,8 +158,23 @@ class PlaygroundList extends Component {
     });
   };
 
+  updateVariation = (variationPath, props) => {
+    // Update changes locally for snappy UI
+    this.setState({
+      variationPropsList: {
+        ...this.state.variationPropsList,
+        [variationPath]: props,
+      },
+    });
+    // Persist changes to server every PERSISTENCE_TIMEOUT milliseconds
+    clearTimeout(PERSISTENCE_TIMEOUT);
+    PERSISTENCE_TIMEOUT = setTimeout(() => {
+      this.persistVariationUpdate(variationPath, props);
+    }, PERSISTENCE_DELAY);
+  };
+
   randomiseEverything = (path) => {
-    this.updateVariation(path, this.getRandomValues());
+    this.persistVariationUpdate(path, this.getRandomValues());
   };
 
   selectVariation = (id) => {
