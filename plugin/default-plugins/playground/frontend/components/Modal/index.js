@@ -15,10 +15,11 @@ function Modal(props) {
       }}
       duration={150}
       easing="ease-in-out"
-      runOnMount
     >
-      <div className={styles.modal}>
-        {props.children}
+      <div className={styles.modalBackground}>
+        <div className={styles.modal}>
+          {props.children}
+        </div>
       </div>
     </VelocityComponent>
   );
@@ -26,6 +27,7 @@ function Modal(props) {
 
 Modal.propTypes = {
   visible: PropTypes.bool.isRequired,
+  children: PropTypes.func.isRequired,
 };
 
 export default Modal;
