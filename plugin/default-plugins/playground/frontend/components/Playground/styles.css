@@ -1,12 +1,24 @@
 .wrapper {
-  border-top: 1px solid #999;
-  border-bottom: 1px solid #999;
   display: flex;
-  width: 100%;
   min-height: 25vh;
   align-items: center;
   justify-content: center;
   position: relative;
+  width: 90%;
+  margin: 1em auto;
+  border: none;
+  border-radius: 3px;
+  -webkit-box-shadow: 0 1px 1px rgba(50,59,67,0.1);
+  -moz-box-shadow: 0 1px 1px rgba(50,59,67,0.1);
+  box-shadow: 0 1px 1px rgba(50,59,67,0.1);
+  background-color: white;
+  transition: box-shadow 150ms;
+}
+
+.wrapper:hover {
+  -webkit-box-shadow: 0 2px 2px rgba(50,59,67,0.1);
+  -moz-box-shadow: 0 2px 2px rgba(50,59,67,0.1);
+  box-shadow: 0 2px 2px rgba(50,59,67,0.1);
 }
 
 .wrapper--fullHeight {
@@ -18,8 +30,24 @@
   position: absolute;
   top: 0;
   right: 0;
-  width: 2.5em;
-  margin: 0.5em 0;
+  height: 2.5em;
+  overflow: hidden;
+  min-width: 0.75em;
+}
+
+.buttonHandle {
+  background-color: rgba(0, 0, 0, 0.25);
+  height: 100%;
+  width: 0.75em;
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-radius: 0 3px 0 3px;
+}
+
+.buttons {
+  background-color: rgba(0, 0, 0, 0.25);
+  border-radius: 0 3px 0 3px;
 }
 
 .componentWrapper {

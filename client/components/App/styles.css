@@ -27,7 +27,7 @@ body {
   z-index: 2;
   position: absolute;
   right: 0; top: 0; bottom: 0; left: 0;
-  background-color: white;
+  background-color: #f4f7f9;
   transition: transform 150ms ease-in-out, width 150ms ease-in-out;
   position: relative;
 }

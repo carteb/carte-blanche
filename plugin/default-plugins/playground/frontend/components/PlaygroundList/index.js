@@ -13,6 +13,7 @@ import randomValues from '../../utils/randomValues';
 import propsToVariation from '../../utils/propsToVariation';
 import variationsToProps from '../../utils/variationsToProps';
 import generateKey from '../../utils/generateKey';
+import getComponentNameFromPath from '../../../../../../utils/getComponentNameFromPath';
 
 import Playground from '../Playground';
 import PropForm from '../PropForm';
@@ -210,6 +211,9 @@ class PlaygroundList extends Component {
       );
     return (
       <div className={styles.wrapper}>
+        <h2 className={styles.title}>
+          {getComponentNameFromPath(this.props.componentPath)}
+        </h2>
         {/* EDIT MODE MODAL */}
         {(this.state.selected) ? (
           <Modal
