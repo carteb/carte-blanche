@@ -1,5 +1,6 @@
 .wrapper {
   width: 39%;
+  overflow: auto;
   background: #EEE;
   border-right: 1px solid #CCC;
 }

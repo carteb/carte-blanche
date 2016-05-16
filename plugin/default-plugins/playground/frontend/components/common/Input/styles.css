@@ -6,7 +6,6 @@
 
 .wrapper--nested {
   composes: wrapper;
-  border: 1px solid #DDD;
   margin-top: 1em;
 }
 
@@ -20,6 +19,8 @@
 .wrapper--nested--without-label {
   composes: wrapper--nested;
   padding-top: 0;
+  padding-left: 1rem;
+  border: none;
 }
 
 .wrapper--nested--without-label:first-child {
@@ -46,4 +47,6 @@
 
 .wrapper--without-label .input,
 .wrapper--nested--without-label .input {
+  margin-left: 0;
+  margin-right: 0;
 }
