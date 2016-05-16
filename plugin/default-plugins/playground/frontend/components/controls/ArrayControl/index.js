@@ -5,7 +5,6 @@ import Label from '../../common/Label';
 import valueOrNullOrUndefined from '../../../utils/valueOrNullOrUndefined';
 import getControl from '../../../utils/getControl';
 
-import inputStyles from '../../common/Input/styles.css';
 import objectControlStyles from '../ObjectControl/styles.css';
 
 const ArrayControl = (props) => {
