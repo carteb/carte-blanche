@@ -155,6 +155,10 @@ class PlaygroundList extends Component {
     });
   };
 
+  randomiseEverything = (path) => {
+    this.updateVariation(path, this.getRandomValues());
+  };
+
   selectVariation = (id) => {
     this.setState({
       selected: id,
@@ -162,16 +166,17 @@ class PlaygroundList extends Component {
   };
 
   startEditMode = (id) => {
+    document.body.style.overflow = 'hidden';
     this.setState({
       editMode: true,
       selected: id,
     });
   };
 
-  closePropForm = () => {
+  stopEditMode = () => {
+    document.body.style.overflow = '';
     this.setState({
       editMode: false,
-      selected: undefined,
     });
   };
 
@@ -187,23 +192,31 @@ class PlaygroundList extends Component {
       );
     return (
       <div className={styles.wrapper}>
-        <Modal visible={this.state.editMode}>
-          <PropForm
-            metadataWithControls={this.state.metadataWithControls}
-            variationProps={selectedVariationProps}
-            variationPath={this.state.selected}
-            onVariationPropsChange={this.updateVariation}
-            onCloseClick={this.closePropForm}
-            open={this.state.editMode}
-          />
-          <Playground
-            component={component}
-            fullHeight
-            onDeleteButtonClick={this.deleteVariation}
-            variationProps={selectedVariationProps}
-            variationPath={this.state.selected}
-          />
-        </Modal>
+        {/* EDIT MODE MODAL */}
+        {(this.state.selected) ? (
+          <Modal
+            visible={this.state.editMode}
+            onCloseClick={this.stopEditMode}
+          >
+            <div className={styles.modalWrapper}>
+              <PropForm
+                metadataWithControls={this.state.metadataWithControls}
+                onVariationPropsChange={this.updateVariation}
+                onRandomClick={this.randomiseEverything.bind(this, this.state.selected)} // eslint-disable-line react/jsx-no-bind,max-len
+                open={this.state.editMode}
+                variationPath={this.state.selected}
+                variationProps={selectedVariationProps}
+              />
+              <Playground
+                component={component}
+                fullHeight
+                variationProps={selectedVariationProps}
+                variationPath={this.state.selected}
+              />
+            </div>
+          </Modal>
+        ) : null}
+        {/* MAIN AREA WITH PLAYGROUNDS */}
         {values(mapValues(this.state.variationPropsList, (variationProps, variationPath) => (
           <Playground
             key={variationPath}

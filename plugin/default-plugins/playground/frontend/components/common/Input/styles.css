@@ -2,13 +2,6 @@
   width: 100%;
   padding-top: 0.5rem;
   position: relative;
-  min-height: 3em;
-  background: #282830; /* Old browsers */
-  background: -moz-linear-gradient(top, #282830 0%, #26262e 100%); /* FF3.6-15 */
-  background: -webkit-linear-gradient(top, #282830 0%,#26262e 100%); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to bottom, #282830 0%,#26262e 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#282830', endColorstr='#26262e',GradientType=0 );
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .wrapper--nested {
@@ -34,21 +27,23 @@
 }
 
 .input {
-  padding: 1rem;
-  width: 100%;
+  width: calc(100% - 2rem);
   border: none;
   outline: 0px;
   font-size: 1em;
-  margin-top: 0.5rem;
-  background-color: #42424a;
-  color: rgba(255, 255, 255, 0.5);
+  background-color: white;
+  padding: 0.5em;
+  margin: 0.25em 1rem;
+  border-radius: 3px;
+  -webkit-box-shadow: inset 0px 1px 2px 0px rgba(50, 50, 50, 0.25);
+  -moz-box-shadow: inset 0px 1px 2px 0px rgba(50, 50, 50, 0.25);
+  box-shadow: inset 0px 1px 2px 0px rgba(50, 50, 50, 0.25);
+  color: #666;
 }
 
 .input:focus {
-  color: white;
 }
 
 .wrapper--without-label .input,
 .wrapper--nested--without-label .input {
-  padding: 0.8125em 1pc;
 }
