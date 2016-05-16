@@ -1,15 +1,11 @@
 .wrapper {
-  width: 15em;
-  background: #282830; /* Old browsers */
-  background: -moz-linear-gradient(top, #282830 0%, #26262e 100%); /* FF3.6-15 */
-  background: -webkit-linear-gradient(top, #282830 0%,#26262e 100%); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to bottom, #282830 0%,#26262e 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#282830', endColorstr='#26262e',GradientType=0 );
+  width: 39%;
+  background: #EEE;
+  border-right: 1px solid #CCC;
 }
 
 .header {
   padding: 2rem 1rem;
-  border-bottom: 1px solid rgba(0,0,0,.25);
   margin: 0;
   position: relative;
 }
@@ -17,21 +13,7 @@
 .header h2 {
   margin: 0;
   padding: 0;
-  color: white;
+  color: black;
   font-family: Helvetica,Arial,sans-serif;
   font-weight: 300;
-}
-
-.closeBtn {
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding: 0.5rem;
-  border: none;
-  background-color: transparent;
-}
-
-.closeBtnSvg {
-  stroke: white;
-  stroke-width: 3px;
 }

@@ -155,6 +155,10 @@ class PlaygroundList extends Component {
     });
   };
 
+  randomiseEverything = (path) => {
+    this.updateVariation(path, this.getRandomValues());
+  };
+
   selectVariation = (id) => {
     this.setState({
       selected: id,
@@ -197,10 +201,11 @@ class PlaygroundList extends Component {
             <div className={styles.modalWrapper}>
               <PropForm
                 metadataWithControls={this.state.metadataWithControls}
-                variationProps={selectedVariationProps}
-                variationPath={this.state.selected}
                 onVariationPropsChange={this.updateVariation}
+                onRandomClick={this.randomiseEverything.bind(this, this.state.selected)} // eslint-disable-line react/jsx-no-bind,max-len
                 open={this.state.editMode}
+                variationPath={this.state.selected}
+                variationProps={selectedVariationProps}
               />
               <Playground
                 component={component}
