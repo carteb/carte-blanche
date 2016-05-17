@@ -1,0 +1,29 @@
+.wrapper {
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.svg {
+  width: 5%;
+  margin: 3em;
+}
+
+.svg line {
+  stroke: #CCC;
+}
+
+.wrapper:hover line {
+  stroke: #AAA;
+}
+
+.input {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px dotted #AAA;
+  font-size: 2em;
+  outline: none;
+  color: #999;
+}

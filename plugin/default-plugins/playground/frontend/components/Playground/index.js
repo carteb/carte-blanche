@@ -9,6 +9,7 @@ import { VelocityComponent } from 'velocity-react';
 
 import EditButton from '../common/EditButton';
 import DeleteButton from '../common/DeleteButton';
+import Card from '../common/Card';
 import styles from './styles.css';
 
 class Playground extends React.Component {
@@ -53,7 +54,7 @@ class Playground extends React.Component {
     const Component = this.props.component;
 
     return (
-      <div
+      <Card
         className={
           (this.props.fullHeight) ?
           styles.fulHeight :
@@ -107,7 +108,7 @@ class Playground extends React.Component {
         <div className={styles.componentWrapper}>
           <Component {...this.props.variationProps} />
         </div>
-      </div>
+      </Card>
     );
   }
 }

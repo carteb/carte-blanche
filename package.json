@@ -42,7 +42,7 @@
     "client:build": "webpack --config client/webpack.prod.babel.js --progress -p",
     "build": "npm run client:build",
     "lint": "npm run lint:eslint && npm run lint:flow",
-    "lint:eslint": "eslint ./",
+    "lint:eslint": "eslint ./ --ignore-path .gitignore",
     "lint:eslint:fix": "eslint --fix ./",
     "lint:flow": "flow status",
     "test": "node_modules/.bin/mocha --compilers js:babel-core/register --require testHelper.js client/**/__test__/*.js plugin/**/__test__/*.js utils/**/__test__/*.js",
@@ -62,6 +62,7 @@
     "react-addons-create-fragment": "^15.0.1",
     "react-dom": "=15.0.1",
     "react-router": "2.3.0",
+    "speakingurl": "^9.0.0",
     "velocity-react": "^1.1.5",
     "whatwg-fetch": "^1.0.0"
   },

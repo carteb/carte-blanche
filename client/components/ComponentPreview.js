@@ -31,7 +31,7 @@ class ComponentPreview extends React.Component {
         componentData: styleguideClientApi.cache[this.state.componentPath].component,
       });
     }
-  }
+  };
 
   render() {
     if (!this.state.componentData || !this.state.componentData.meta) {

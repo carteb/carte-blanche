@@ -1,5 +1,7 @@
 .wrapper {
   background-color: #f4f7f9;
+  height: 100%;
+  width: 100%;
 }
 
 .title {
