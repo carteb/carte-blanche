@@ -10,9 +10,9 @@ function Label(props) {
       htmlFor={props.text}
     >
       {props.text}
-      {(props.onRandomClick) ? (
+      {(props.onRandomClick) && (
         <RandomButton onClick={props.onRandomClick} />
-      ) : null}
+      )}
     </label>
   );
 }

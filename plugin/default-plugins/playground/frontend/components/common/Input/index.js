@@ -13,13 +13,13 @@ function Input(props) {
   }
   return (
     <div className={wrapperClassname}>
-      {(props.label) ? (
+      {(props.label) && (
         <Label
           text={props.label}
           isNested={props.isNested}
           onRandomClick={props.onRandomClick}
         />
-      ) : null}
+      )}
       {/* TODO HANDLE UNDEFINED AND NULL */}
       <input
         {...props}

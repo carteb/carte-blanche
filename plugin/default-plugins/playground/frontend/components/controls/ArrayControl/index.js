@@ -33,7 +33,7 @@ const ArrayControl = (props) => {
         text={label}
         onRandomClick={() => onUpdate({ value: ArrayControl.randomValue(propTypeData) })}
       />
-      {(size !== 0) ? (
+      {(size !== 0) && (
         <div
           className={
             (isNested) ?
@@ -54,7 +54,7 @@ const ArrayControl = (props) => {
             return cloneElement(control, newProps);
           })}
         </div>
-      ) : null}
+      )}
     </div>
   );
 };

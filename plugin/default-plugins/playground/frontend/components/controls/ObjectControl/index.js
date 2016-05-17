@@ -34,7 +34,7 @@ const ObjectControl = ({ label, propTypeData, value, onUpdate, isNested, require
   return (
     <div className={styles.wrapper}>
       {/* inside arrays there is no label for the object */}
-      {(label) ? (
+      {(label) && (
         <Label
           text={label}
           isNested={isNested}
@@ -42,7 +42,7 @@ const ObjectControl = ({ label, propTypeData, value, onUpdate, isNested, require
             value: ObjectControl.randomValue(propTypeData, required),
           })}
         />
-      ) : null}
+      )}
       <div className={controlWrapperClassName}>
         {renderControls(normalizedPropsWithControls, value, updatePropertyValues, true)}
       </div>

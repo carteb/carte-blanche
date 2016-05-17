@@ -73,9 +73,9 @@ class Playground extends React.Component {
         onMouseLeave={this.hideButtons}
       >
         {/* Title */}
-        {(this.props.title) ? (
+        {(this.props.title) && (
           <h3 className={styles.title}>{this.props.title}</h3>
-        ) : null}
+        )}
         <Card
           className={styles.card}
           id={this.props.variationPath}
@@ -83,7 +83,7 @@ class Playground extends React.Component {
         >
 
           {/* Don't render anything if neither button actions are specified*/}
-          {(this.props.onEditButtonClick || this.props.onDeleteButtonClick) ? (
+          {(this.props.onEditButtonClick || this.props.onDeleteButtonClick) && (
             <VelocityComponent
               animation={{
                 opacity: this.state.buttonsVisible ? 1 : 0,
@@ -97,21 +97,21 @@ class Playground extends React.Component {
                 onMouseEnter={this.showButtonsDirectly}
                 onMouseLeave={this.activateDelay}
               >
-                {(this.props.onEditButtonClick) ? (
+                {this.props.onEditButtonClick && (
                   <EditButton
                     className={styles.button}
                     onClick={this.onEditButtonClick}
                   />
-                ) : null}
-                {(this.props.onDeleteButtonClick) ? (
+                )}
+                {this.props.onDeleteButtonClick && (
                   <DeleteButton
                     className={styles.button}
                     onClick={this.onDeleteButtonClick}
                   />
-                ) : null}
+                )}
               </div>
             </VelocityComponent>
-          ) : null}
+          )}
 
           {/* Render the actual component */}
           <div className={styles.componentWrapper}>

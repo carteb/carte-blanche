@@ -34,7 +34,7 @@
 .buttonWrapper {
   position: absolute;
   top: 0;
-  right: -2.5em;
+  left: -2.5em;
   width: 2.5em;
 }
 
