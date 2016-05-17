@@ -62,6 +62,7 @@
     "react-addons-create-fragment": "^15.0.1",
     "react-dom": "=15.0.1",
     "react-router": "2.3.0",
+    "speakingurl": "^9.0.0",
     "velocity-react": "^1.1.5",
     "whatwg-fetch": "^1.0.0"
   },
