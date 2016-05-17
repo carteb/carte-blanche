@@ -9,7 +9,7 @@ import React from 'react';
 import styles from './styles.css';
 
 const DeleteButton = (props) => (
-  <button {...props} className={styles.base}>
+  <button {...props} className={`${styles.base} ${props.className}`}>
     <svg
       className={styles.svg}
       height={(props.height) ? props.height : '24'}

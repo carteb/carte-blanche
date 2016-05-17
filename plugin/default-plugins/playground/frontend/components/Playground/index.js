@@ -98,10 +98,16 @@ class Playground extends React.Component {
                 onMouseLeave={this.activateDelay}
               >
                 {(this.props.onEditButtonClick) ? (
-                  <EditButton onClick={this.onEditButtonClick} />
+                  <EditButton
+                    className={styles.button}
+                    onClick={this.onEditButtonClick}
+                  />
                 ) : null}
                 {(this.props.onDeleteButtonClick) ? (
-                  <DeleteButton onClick={this.onDeleteButtonClick} />
+                  <DeleteButton
+                    className={styles.button}
+                    onClick={this.onDeleteButtonClick}
+                  />
                 ) : null}
               </div>
             </VelocityComponent>

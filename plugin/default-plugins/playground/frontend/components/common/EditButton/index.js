@@ -9,7 +9,7 @@ import React from 'react';
 import styles from './styles.css';
 
 const EditButton = (props) => (
-  <button {...props} className={styles.base}>
+  <button {...props} className={`${styles.base} ${props.className}`}>
     <svg
       height={(props.height) ? props.height : '24'}
       width={(props.width) ? props.width : '24'}
