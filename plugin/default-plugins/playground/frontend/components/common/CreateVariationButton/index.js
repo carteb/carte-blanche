@@ -32,7 +32,9 @@ class CreateVariationButton extends Component {
         inputVisible: newState || !this.state.inputVisible,
       });
     } else {
-      this.submitForm();
+      if (this.state.inputValue !== '') {
+        this.submitForm();
+      }
     }
   };
 

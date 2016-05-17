@@ -90,7 +90,7 @@ class PlaygroundList extends Component {
 
   createVariation = (name) => {
     const slug = getSlug(name);
-    if (this.state.variationPropsList[`v-${slug}`] !== undefined) {
+    if (this.state.variationPropsList[`${slug}`] !== undefined) {
       this.setState({
         createVariationError: `A variation with the name ${name} already exists.`,
       });
@@ -108,9 +108,7 @@ class PlaygroundList extends Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        // The name should start with `v-` in order to whitelist by this pattern.
-        // This way system files like .DS_Store will be ignored.
-        variation: `v-${slug}`,
+        variation: `${slug}`,
         code,
       }),
     })
