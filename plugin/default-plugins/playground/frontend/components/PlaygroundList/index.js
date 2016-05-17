@@ -62,7 +62,7 @@ class PlaygroundList extends Component {
 
   fetchVariations = () => {
     // TODO dynamic host
-    fetch(`http://localhost:8000/${this.props.componentPath}`)
+    fetch(`http://localhost:8000/variations/${this.props.componentPath}`)
       .then((response) => response.json())
       .then((json) => {
         const variationPropsList = this.variationsToProps(json.data);
@@ -101,7 +101,7 @@ class PlaygroundList extends Component {
     });
     const code = this.propsToVariation(this.getRandomValues());
     // TODO dynamic host
-    fetch(`http://localhost:8000/${this.props.componentPath}`, {
+    fetch(`http://localhost:8000/variations/${this.props.componentPath}`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -122,7 +122,7 @@ class PlaygroundList extends Component {
   };
 
   deleteVariation = (variationPath) => {
-    fetch(`http://localhost:8000/${this.props.componentPath}?variation=${variationPath}`, {
+    fetch(`http://localhost:8000/variations/${this.props.componentPath}?variation=${variationPath}`, {
       method: 'DELETE',
       headers: {
         Accept: 'application/json',
@@ -142,7 +142,7 @@ class PlaygroundList extends Component {
   };
 
   persistVariationUpdate = (variationPath, props) => {
-    fetch(`http://localhost:8000/${this.props.componentPath}`, {
+    fetch(`http://localhost:8000/variations/${this.props.componentPath}`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
