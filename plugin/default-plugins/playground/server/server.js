@@ -153,6 +153,37 @@ var start = (projectBasePath, variationsBasePath, port) => {
     res.json({ data: content.replace("module.exports = ", '') });
   });
 
+  /**
+   * POST Variation
+   */
+  app.post('/components/*', jsonBodyParser, (req, res) => {
+    var relativeComponentPath = getRelativeCompPathFromComponents(req);
+    var componentPath = path.join(projectBasePath, relativeComponentPath);
+    if (fileExists(componentPath) === false) {
+      res.status(404).send('');
+      return;
+    }
+
+    var componentName = getComponentNameFromPath(relativeComponentPath);
+    var variationComponentPath = path.join(variationsBasePath, componentName);
+    var componentMetaPath = path.join(variationComponentPath, 'meta.js');
+
+    if (!fs.existsSync(variationComponentPath)) {
+      mkdirp.sync(variationComponentPath);
+    };
+
+    fs.closeSync(fs.openSync(componentMetaPath, 'w'));
+    try {
+      var content = 'module.exports = ' + req.body.code;
+      fs.writeFileSync(componentMetaPath, content);
+    } catch (error) {
+      res.status(500).send('');
+      return;
+    }
+
+    res.status(200).send(`POST`);
+  });
+
   server = app.listen(port);
 }
 
