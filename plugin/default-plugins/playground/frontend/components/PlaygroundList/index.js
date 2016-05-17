@@ -29,10 +29,10 @@ let PERSISTENCE_TIMEOUT;
 class PlaygroundList extends Component {
   state = {
     variationPropsList: {},
-    selected: undefined,
+    variationEditMode: false,
+    selectedVariationId: undefined,
     metaData: undefined,
     metadataWithControls: null,
-    editMode: false,
     createVariationError: '',
     loadingMetaData: true,
     loadingVariations: true,
@@ -165,7 +165,7 @@ class PlaygroundList extends Component {
     })
     .then(() => {
       this.setState({
-        editMode: false,
+        variationEditMode: false,
       });
       this.fetchVariations();
     })
@@ -224,22 +224,22 @@ class PlaygroundList extends Component {
 
   selectVariation = (id) => {
     this.setState({
-      selected: id,
+      selectedVariationId: id,
     });
   };
 
   startEditMode = (id) => {
     document.body.style.overflow = 'hidden';
     this.setState({
-      editMode: true,
-      selected: id,
+      variationEditMode: true,
+      selectedVariationId: id,
     });
   };
 
   stopEditMode = () => {
     document.body.style.overflow = '';
     this.setState({
-      editMode: false,
+      variationEditMode: false,
     });
   };
 
@@ -252,17 +252,17 @@ class PlaygroundList extends Component {
     const selectedVariation =
       find(
         this.state.variationPropsList,
-        (variationProps, key) => this.state.selected === key
+        (variationProps, key) => this.state.selectedVariationId === key
       );
     return (
       <div className={styles.wrapper}>
         <h2 className={styles.title}>
           {getComponentNameFromPath(this.props.componentPath)}
         </h2>
-        {/* EDIT MODE MODAL */}
-        {(this.state.selected) ? (
+        {/* VARIATION EDIT MODE MODAL */}
+        {(this.state.selectedVariationId) ? (
           <Modal
-            visible={this.state.editMode}
+            visible={this.state.variationEditMode}
             onCloseClick={this.stopEditMode}
           >
             <div className={styles.modalWrapper}>
@@ -270,15 +270,15 @@ class PlaygroundList extends Component {
                 metadataWithControls={this.state.metadataWithControls}
                 onVariationPropsChange={this.updateVariation}
                 onRandomClick={this.randomiseEverything.bind(this, this.state.selected)} // eslint-disable-line react/jsx-no-bind,max-len
-                open={this.state.editMode}
-                variationPath={this.state.selected}
+                open={this.state.variationEditMode}
+                variationPath={this.state.selectedVariationId}
                 variationProps={selectedVariation.props}
               />
               <Playground
                 component={component}
                 fullHeight
                 variationProps={selectedVariation.props}
-                variationPath={this.state.selected}
+                variationPath={this.state.selectedVariationId}
               />
             </div>
           </Modal>
