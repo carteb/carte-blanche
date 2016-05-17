@@ -6,6 +6,7 @@ import React, { Component } from 'react';
 import map from 'lodash/map';
 import mapValues from 'lodash/mapValues';
 import find from 'lodash/find';
+import debounce from 'lodash/debounce';
 import 'whatwg-fetch';
 import getSlug from 'speakingurl';
 
@@ -14,6 +15,7 @@ import randomValues from '../../utils/randomValues';
 import propsToVariation from '../../utils/propsToVariation';
 import variationsToProps from '../../utils/variationsToProps';
 import convertCodeToMetaData from '../../utils/convertCodeToMetaData';
+import customMetadataToCode from '../../utils/customMetadataToCode';
 import getComponentNameFromPath from '../../../../../../utils/getComponentNameFromPath';
 
 import Playground from '../Playground';
@@ -24,7 +26,6 @@ import CreateVariationButton from '../common/CreateVariationButton';
 import styles from './styles.css';
 
 const PERSISTENCE_DELAY = 1000;
-let PERSISTENCE_TIMEOUT;
 
 class PlaygroundList extends Component {
   state = {
@@ -39,6 +40,15 @@ class PlaygroundList extends Component {
   };
 
   componentWillMount() {
+    this.debouncedPersistVariation = debounce(
+      (variationPath, props) => { this.persistVariation(variationPath, props); },
+      PERSISTENCE_DELAY
+    );
+    this.debouncedPersistCustomMetadata = debounce(
+      (metaData) => { this.persistCustomMetadata(metaData); },
+      PERSISTENCE_DELAY
+    );
+
     this.fetchMetaData();
     this.fetchVariations();
   }
@@ -175,7 +185,7 @@ class PlaygroundList extends Component {
     });
   };
 
-  persistVariationUpdate = (variationPath, props) => {
+  persistVariation = (variationPath, props) => {
     const data = this.getDataFromProps({
       props,
       name: this.state.variationPropsList[variationPath].name,
@@ -187,8 +197,34 @@ class PlaygroundList extends Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        variation: `${variationPath}`,
+        variation: variationPath,
         code: data,
+      }),
+    })
+    .then(() => {
+      this.fetchVariations();
+    })
+    .catch((err) => {
+      // TODO PROPER ERROR HANDLING
+      console.trace(err); // eslint-disable-line no-console
+    });
+  };
+
+  updateCustomMetaData = (metaData) => {
+    this.generateMetadataWithControls(metaData);
+    // Persist changes to server every PERSISTENCE_TIMEOUT milliseconds
+    this.debouncedPersistCustomMetadata(metaData);
+  }
+
+  persistCustomMetadata = (metaData) => {
+    fetch(`http://localhost:8000/components/${this.props.componentPath}`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        code: customMetadataToCode(metaData),
       }),
     })
     .then(() => {
@@ -211,15 +247,13 @@ class PlaygroundList extends Component {
         },
       },
     });
+
     // Persist changes to server every PERSISTENCE_TIMEOUT milliseconds
-    clearTimeout(PERSISTENCE_TIMEOUT);
-    PERSISTENCE_TIMEOUT = setTimeout(() => {
-      this.persistVariationUpdate(variationPath, props);
-    }, PERSISTENCE_DELAY);
+    this.debouncedPersistVariation(variationPath, props);
   };
 
   randomiseEverything = (path) => {
-    this.persistVariationUpdate(path, this.getRandomValues());
+    this.persistVariation(path, this.getRandomValues());
   };
 
   selectVariation = (id) => {
