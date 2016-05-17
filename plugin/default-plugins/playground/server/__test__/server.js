@@ -31,10 +31,10 @@ describe('server', () => {
         .end((err, res) => {
           expect(res.status).to.equal(200);
           expect(res.body.error).to.be.false; // eslint-disable-line no-unused-expressions
-          expect(res.body.data).to.have.keys(['v-firstVariation', 'v-secondVariation']);
+          expect(res.body.data).to.have.keys(['firstVariation', 'secondVariation']);
 
           let firstVariation;
-          eval(`firstVariation = ${res.body.data['v-firstVariation']}`); // eslint-disable-line no-eval, max-len
+          eval(`firstVariation = ${res.body.data.firstVariation}`); // eslint-disable-line no-eval
           const expected = {
             props: {
               className: {
@@ -57,7 +57,7 @@ describe('server', () => {
           expect(firstVariation).to.deep.equal(expected); // eslint-disable-line no-undef
 
           let secondVariation;
-          eval(`secondVariation = ${res.body.data['v-secondVariation']}`); // eslint-disable-line no-eval, max-len
+          eval(`secondVariation = ${res.body.data.secondVariation}`); // eslint-disable-line no-eval, max-len
           const secondExpected = {
             props: {
               age: {
@@ -89,7 +89,7 @@ describe('server', () => {
 
   describe('DELETE:variations', () => {
     it('should remove the variation', (done) => {
-      const variationPath = path.join(variationsBasePath, 'ComponentA', 'toBeRemoved.js');
+      const variationPath = path.join(variationsBasePath, 'ComponentA', 'v-toBeRemoved.js');
       fs.closeSync(fs.openSync(variationPath, 'w'));
 
       request
@@ -128,7 +128,7 @@ describe('server', () => {
   describe('POST:variations', () => {
     describe('write new variation', () => {
       const variationComponentPath = path.join(variationsBasePath, 'ComponentB');
-      const variationPath = path.join(variationComponentPath, 'newVariation.js');
+      const variationPath = path.join(variationComponentPath, 'v-newVariation.js');
       const code = `{
         props: {
           name: {
@@ -164,7 +164,7 @@ describe('server', () => {
     });
 
     describe('overwrite existing variation', () => {
-      const variationPath = path.join(variationsBasePath, 'ComponentA', 'existingVariation.js');
+      const variationPath = path.join(variationsBasePath, 'ComponentA', 'v-existingVariation.js');
       const code = `{
         props: {
           name: {

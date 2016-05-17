@@ -61,7 +61,8 @@ var start = (projectBasePath, variationsBasePath, port) => {
       var filePath = path.join(variationComponentPath, fileName);
       // TODO make this async and wait for all files to be finished
       var content = fs.readFileSync(filePath, { encoding: 'utf8' });
-      variations[fileName.replace('.js', '')] = content.replace("module.exports = ", '');
+      var variationName = fileName.replace(/\.js$/, '').replace(/^v-/, '');
+      variations[variationName] = content.replace("module.exports = ", '');
     });
     res.json({ data: variations });
   });
@@ -81,7 +82,7 @@ var start = (projectBasePath, variationsBasePath, port) => {
     var variationPath = path.join(
       variationsBasePath,
       componentName,
-      `${req.query.variation}.js`
+      `v-${req.query.variation}.js`
     );
 
     fs.unlink(variationPath, (err) => {
@@ -107,7 +108,7 @@ var start = (projectBasePath, variationsBasePath, port) => {
 
     var componentName = getComponentNameFromPath(relativeComponentPath);
     var variationComponentPath = path.join(variationsBasePath, componentName);
-    var variationPath = path.join(variationComponentPath, `${req.body.variation}.js`);
+    var variationPath = path.join(variationComponentPath, `v-${req.body.variation}.js`);
 
     if (!fs.existsSync(variationComponentPath)) {
       mkdirp.sync(variationComponentPath);
