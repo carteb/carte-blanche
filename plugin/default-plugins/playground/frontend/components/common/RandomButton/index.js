@@ -16,8 +16,8 @@ const RandomButton = (props) => (
     >
       <g
         stroke="#000"
-        stroke-linejoin="round"
-        stroke-miterlimit="10"
+        strokeLinejoin="round"
+        strokeMiterlimit="10"
         fill="none"
       >
         <path
