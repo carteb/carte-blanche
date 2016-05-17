@@ -11,8 +11,8 @@ import styles from './styles.css';
 const EditButton = (props) => (
   <button {...props} className={styles.base}>
     <svg
-      height="1.5em"
-      width="1.5em"
+      height={(props.height) ? props.height : '24'}
+      width={(props.width) ? props.width : '24'}
       version="1.1"
       viewBox="0 0 24 24"
       x="0px"

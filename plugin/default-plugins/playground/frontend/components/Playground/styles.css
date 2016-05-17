@@ -3,9 +3,10 @@
   min-height: 25vh;
   align-items: center;
   justify-content: center;
-  width: 90%;
+  width: 100%;
   margin: 1.5em auto;
   flex-direction: column;
+  position: relative;
 }
 
 .wrapper--fullHeight {
@@ -17,12 +18,12 @@
 
 .card {
   height: 100%;
-  width: 100%;
+  width: 90%;
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 25vh;
-  margin: 0;
+  margin: 0 auto;
 }
 
 .title {
@@ -33,25 +34,8 @@
 .buttonWrapper {
   position: absolute;
   top: 0;
-  right: 0;
-  height: 2.5em;
-  overflow: hidden;
-  min-width: 0.75em;
-}
-
-.buttonHandle {
-  background-color: rgba(0, 0, 0, 0.25);
-  height: 100%;
-  width: 0.75em;
-  position: absolute;
-  top: 0;
-  right: 0;
-  border-radius: 0 3px 0 3px;
-}
-
-.buttons {
-  background-color: rgba(0, 0, 0, 0.25);
-  border-radius: 0 3px 0 3px;
+  right: -3%;
+  width: 2.5em;
 }
 
 .componentWrapper {

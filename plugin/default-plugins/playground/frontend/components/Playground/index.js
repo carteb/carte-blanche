@@ -14,8 +14,8 @@ import styles from './styles.css';
 
 class Playground extends React.Component {
   state = {
-    buttonHandleVisible: false,
     buttonsVisible: false,
+    delay: true,
   };
 
   onEditButtonClick = () => {
@@ -24,18 +24,6 @@ class Playground extends React.Component {
 
   onDeleteButtonClick = () => {
     this.props.onDeleteButtonClick(this.props.variationPath);
-  };
-
-  onMouseEnter = () => {
-    this.setState({
-      buttonHandleVisible: true,
-    });
-  };
-
-  onMouseLeave = () => {
-    this.setState({
-      buttonHandleVisible: false,
-    });
   };
 
   showButtons = () => {
@@ -50,8 +38,30 @@ class Playground extends React.Component {
     });
   };
 
+  showButtonsDirectly = () => {
+    this.setState({
+      buttonsVisible: true,
+      delay: false,
+    });
+  };
+
+  activateDelay = () => {
+    this.setState({
+      delay: true,
+    });
+  };
+
   render() {
     const Component = this.props.component;
+
+    // Delay the fade in and the fade out for 500ms
+    // Don't delay the fade in at all if we're directly hovering over the buttons
+    let delay;
+    if (this.state.delay) {
+      delay = 500;
+    } else {
+      delay = 0;
+    }
 
     return (
       <div
@@ -60,57 +70,44 @@ class Playground extends React.Component {
           styles['wrapper--fullHeight'] :
           styles.wrapper
         }
+        onMouseLeave={this.hideButtons}
       >
+        {/* Title */}
         {(this.props.title) ? (
           <h3 className={styles.title}>{this.props.title}</h3>
         ) : null}
         <Card
           className={styles.card}
           id={this.props.variationPath}
-          onMouseEnter={this.onMouseEnter}
-          onMouseLeave={this.onMouseLeave}
+          onMouseEnter={this.showButtons}
         >
+
           {/* Don't render anything if neither button actions are specified*/}
           {(this.props.onEditButtonClick || this.props.onDeleteButtonClick) ? (
             <VelocityComponent
               animation={{
-                opacity: this.state.buttonHandleVisible ? 1 : 0,
+                opacity: this.state.buttonsVisible ? 1 : 0,
               }}
-              duration={150}
-              /* Delay the fade in for 500ms, but not the fade out */
-              delay={(this.state.buttonHandleVisible) ? 500 : 0}
+              duration={100}
+              delay={delay}
               easing="ease-in-out"
-              display={(this.state.buttonHandleVisible) ? 'block' : 'none'}
             >
               <div
                 className={styles.buttonWrapper}
-                onMouseLeave={this.hideButtons}
+                onMouseEnter={this.showButtonsDirectly}
+                onMouseLeave={this.activateDelay}
               >
-                <div
-                  className={styles.buttonHandle}
-                  onMouseEnter={this.showButtons}
-                />
-                <VelocityComponent
-                  animation={{
-                    translateX: (this.state.buttonsVisible) ? '0%' : '100%',
-                  }}
-                  duration={150}
-                  easing="ease-in-out"
-                  delay={(this.state.buttonsVisible) ? 0 : 500}
-                  display={(this.state.buttonsVisible) ? 'block' : 'none'}
-                >
-                  <div className={styles.buttons}>
-                    {(this.props.onEditButtonClick) ? (
-                      <EditButton onClick={this.onEditButtonClick} />
-                    ) : null}
-                    {(this.props.onDeleteButtonClick) ? (
-                      <DeleteButton onClick={this.onDeleteButtonClick} />
-                    ) : null}
-                  </div>
-                </VelocityComponent>
+                {(this.props.onEditButtonClick) ? (
+                  <EditButton onClick={this.onEditButtonClick} />
+                ) : null}
+                {(this.props.onDeleteButtonClick) ? (
+                  <DeleteButton onClick={this.onDeleteButtonClick} />
+                ) : null}
               </div>
             </VelocityComponent>
           ) : null}
+
+          {/* Render the actual component */}
           <div className={styles.componentWrapper}>
             <Component {...this.props.variationProps} />
           </div>
