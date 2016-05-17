@@ -43,15 +43,27 @@ class PlaygroundList extends Component {
 
   generateMetadataWithControls = () => {
     const { meta } = this.props;
+
+    // TODO only works with button
+    const metaData = {
+      props: {
+        type: {
+          controlType: 'string',
+          randomParams: {
+            maxLength: 20,
+          },
+        },
+      },
+    };
+
     // Attach controls to propTypes meta information
     let metadataWithControls;
     if (meta.props) {
-      metadataWithControls = mapValues(meta.props, (prop) => {
-        if (!prop.control) {
-          prop.control = getControl(prop); // eslint-disable-line no-param-reassign
-        }
-
-        return prop;
+      metadataWithControls = mapValues(meta.props, (prop, propKey) => {
+        const newProp = { ...prop };
+        const propMeta = metaData && metaData.props ? metaData.props[propKey] : undefined;
+        newProp.control = getControl(newProp, propMeta);
+        return newProp;
       });
     }
 
