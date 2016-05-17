@@ -13,6 +13,7 @@ import getControl from '../../utils/getControl';
 import randomValues from '../../utils/randomValues';
 import propsToVariation from '../../utils/propsToVariation';
 import variationsToProps from '../../utils/variationsToProps';
+import convertCodeToMetaData from '../../utils/convertCodeToMetaData';
 import getComponentNameFromPath from '../../../../../../utils/getComponentNameFromPath';
 
 import Playground from '../Playground';
@@ -29,13 +30,16 @@ class PlaygroundList extends Component {
   state = {
     variationPropsList: {},
     selected: undefined,
+    metaData: undefined,
     metadataWithControls: null,
     editMode: false,
     createVariationError: '',
+    loadingMetaData: true,
+    loadingVariations: true,
   };
 
   componentWillMount() {
-    this.generateMetadataWithControls();
+    this.fetchMetaData();
     this.fetchVariations();
   }
 
@@ -52,22 +56,37 @@ class PlaygroundList extends Component {
     return propsString.replace(/^(\s*){/, `$1{\n  "name": "${name}",`);
   };
 
-  generateMetadataWithControls = () => {
+  fetchMetaData = () => {
+    // TODO dynamic host
+    fetch(`http://localhost:8000/components/${this.props.componentPath}`)
+      .then((response) => response.json())
+      .then((json) => {
+        const metaData = convertCodeToMetaData(json.data);
+        this.generateMetadataWithControls(metaData);
+      }).catch((ex) => {
+        // TODO proper error handling
+        console.error('meta data parsing failed', ex); // eslint-disable-line no-console
+      });
+  };
+
+  generateMetadataWithControls = (metaData) => {
     const { meta } = this.props;
+
     // Attach controls to propTypes meta information
     let metadataWithControls;
     if (meta.props) {
-      metadataWithControls = mapValues(meta.props, (prop) => {
-        if (!prop.control) {
-          prop.control = getControl(prop); // eslint-disable-line no-param-reassign
-        }
-
-        return prop;
+      metadataWithControls = mapValues(meta.props, (prop, propKey) => {
+        const newProp = { ...prop };
+        const propMeta = metaData && metaData.props ? metaData.props[propKey] : undefined;
+        newProp.control = getControl(newProp, propMeta);
+        return newProp;
       });
     }
 
     this.setState({
       metadataWithControls,
+      metaData,
+      loadingMetaData: false,
     });
   };
 
@@ -79,6 +98,7 @@ class PlaygroundList extends Component {
         const variationPropsList = variationsToProps(json.data);
         this.setState({
           variationPropsList,
+          loadingVariations: false,
         });
 
         const links = map(variationPropsList, (variation, key) => (
@@ -95,7 +115,7 @@ class PlaygroundList extends Component {
         );
       }).catch((ex) => {
         // TODO proper error handling
-        console.log('parsing failed', ex); // eslint-disable-line no-console
+        console.error('parsing failed', ex); // eslint-disable-line no-console
       });
   };
 
@@ -131,7 +151,7 @@ class PlaygroundList extends Component {
         this.fetchVariations();
       }).catch((err) => {
         // TODO proper error handling
-        console.log('parsing failed', err); // eslint-disable-line no-console
+        console.error('parsing failed', err); // eslint-disable-line no-console
       });
   };
 
@@ -224,6 +244,10 @@ class PlaygroundList extends Component {
   };
 
   render() {
+    if (this.state.loadingMetaData && this.state.loadingVariations) {
+      return <div>Loading …</div>;
+    }
+
     const { component } = this.props;
     const selectedVariation =
       find(

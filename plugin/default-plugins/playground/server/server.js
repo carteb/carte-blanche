@@ -141,16 +141,15 @@ var start = (projectBasePath, variationsBasePath, port) => {
     }
 
     var componentName = getComponentNameFromPath(relativeComponentPath);
-    var variationComponentPath = path.join(variationsBasePath, componentName);
+    var metaPath = path.join(variationsBasePath, componentName, 'meta.js');
 
-    if (!fs.existsSync(variationComponentPath)) {
-      res.json({ data: {} });
+    if (!fs.existsSync(metaPath)) {
+      res.json({ data: '{}' });
       return;
     };
 
     // Get the meta data of this component
-    var filePath = path.join(variationComponentPath, 'meta.js');
-    var content = fs.readFileSync(filePath, { encoding: 'utf8' });
+    var content = fs.readFileSync(metaPath, { encoding: 'utf8' });
     res.json({ data: content.replace("module.exports = ", '') });
   });
 

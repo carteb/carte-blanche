@@ -18,13 +18,17 @@ import ObjectControl from '../components/controls/ObjectControl';
 import FlowArrayControl from '../components/controls/FlowArrayControl';
 import FlowUnionControl from '../components/controls/FlowUnionControl';
 
-const getControl = (propType) => {
+const getControl = (propType, propMeta) => {
+  const controlType = propMeta && propMeta.controlType ? propMeta.controlType : propType.name;
+  const randomParams = propMeta && propMeta.randomParams ? propMeta.randomParams : {};
   const generalProps = {
     // If something is required, don't randomise it to null/undefined
     required: propType.required,
+    randomParams: { ...randomParams },
   };
+
   let control;
-  switch (propType.name) {
+  switch (controlType) {
     case 'bool': // proptypes boolean
       control = <BooleanControl {...generalProps} />;
       break;
