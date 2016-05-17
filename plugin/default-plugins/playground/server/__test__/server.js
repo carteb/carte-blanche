@@ -22,7 +22,7 @@ describe('variations server', () => {
     server.stop(done);
   });
 
-  describe('get', () => {
+  describe('get variations', () => {
     it('should get all data for a valid component with variations data', (done) => {
       request
         .get('/variations/components/ComponentA.js')
@@ -75,7 +75,7 @@ describe('variations server', () => {
         });
     });
 
-    it('should return an empty data object in case the component does not exist', (done) => {
+    it('should return a 404 in case the component does not exist', (done) => {
       request
         .get('/variations/variations/components/ComponentNotAvailable.js')
         .expect('Content-type', /json/)
@@ -87,7 +87,7 @@ describe('variations server', () => {
     });
   });
 
-  describe('delete', () => {
+  describe('delete variation', () => {
     it('should remove the variation', (done) => {
       const variationPath = path.join(variationsBasePath, 'ComponentA', 'toBeRemoved.js');
       fs.closeSync(fs.openSync(variationPath, 'w'));
@@ -125,7 +125,7 @@ describe('variations server', () => {
     });
   });
 
-  describe('post', () => {
+  describe('post variation', () => {
     describe('write new variation', () => {
       const variationComponentPath = path.join(variationsBasePath, 'ComponentB');
       const variationPath = path.join(variationComponentPath, 'newVariation.js');
@@ -206,6 +206,43 @@ describe('variations server', () => {
     it('should fail in case the component does not exist', (done) => {
       request
         .post('/variations/components/ComponentNotAvailable.js')
+        .expect('Content-type', /json/)
+        .expect(404)
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          done();
+        });
+    });
+  });
+
+  describe('get components', () => {
+    it('should get all data for a valid component with variations data', (done) => {
+      request
+        .get('/components/components/ComponentA.js')
+        .expect('Content-type', /json/)
+        .expect(200)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.error).to.be.false; // eslint-disable-line no-unused-expressions
+
+          let metaData;
+          eval(`metaData = ${res.body.data}`); // eslint-disable-line no-eval
+          const expected = {
+            props: {
+              age: {
+                min: 0,
+                max: 140,
+              },
+            },
+          };
+          expect(metaData).to.deep.equal(expected); // eslint-disable-line no-undef
+          done();
+        });
+    });
+
+    it('should return a 404 in case the component does not exist', (done) => {
+      request
+        .get('/components/components/ComponentNotAvailable.js')
         .expect('Content-type', /json/)
         .expect(404)
         .end((err, res) => {

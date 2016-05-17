@@ -24,17 +24,18 @@ var fileExists = (path) => {
   }
 }
 
-var getRelativeComponentPath = (req) => req.params[0].replace(/^\/variations/, '');
+var getRelativeCompPathFromVariations = (req) => req.params[0].replace(/^\/variations/, '');
+var getRelativeCompPathFromComponents = (req) => req.params[0].replace(/^\/components/, '');
 
 var start = (projectBasePath, variationsBasePath, port) => {
   var app = express();
   app.use(cors());
 
   /**
-   * GET
+   * GET Variations
    */
   app.get('/variations/*', (req, res) => {
-    var relativeComponentPath = getRelativeComponentPath(req);
+    var relativeComponentPath = getRelativeCompPathFromVariations(req);
     // Get the path of the component from the base path and the passed in parameter
     var componentPath = path.join(projectBasePath, relativeComponentPath);
 
@@ -66,10 +67,10 @@ var start = (projectBasePath, variationsBasePath, port) => {
   });
 
   /**
-   * DELETE
+   * DELETE Variation
    */
   app.delete('/variations/*', (req, res) => {
-    var relativeComponentPath = getRelativeComponentPath(req);
+    var relativeComponentPath = getRelativeCompPathFromVariations(req);
     var componentPath = path.join(projectBasePath, relativeComponentPath);
     if (fileExists(componentPath) === false) {
       res.status(404).send('');
@@ -94,10 +95,10 @@ var start = (projectBasePath, variationsBasePath, port) => {
   });
 
   /**
-   * POST
+   * POST Variation
    */
   app.post('/variations/*', jsonBodyParser, (req, res) => {
-    var relativeComponentPath = getRelativeComponentPath(req);
+    var relativeComponentPath = getRelativeCompPathFromVariations(req);
     var componentPath = path.join(projectBasePath, relativeComponentPath);
     if (fileExists(componentPath) === false) {
       res.status(404).send('');
@@ -122,6 +123,34 @@ var start = (projectBasePath, variationsBasePath, port) => {
     }
 
     res.status(200).send(`POST`);
+  });
+
+  /**
+   * GET Component Meta data
+   */
+  app.get('/components/*', (req, res) => {
+    var relativeComponentPath = getRelativeCompPathFromComponents(req);
+    // Get the path of the component from the base path and the passed in parameter
+    var componentPath = path.join(projectBasePath, relativeComponentPath);
+
+    // If no file exists at the component path, bail out early
+    if (fileExists(componentPath) === false) {
+      res.status(404).send('');
+      return;
+    }
+
+    var componentName = getComponentNameFromPath(relativeComponentPath);
+    var variationComponentPath = path.join(variationsBasePath, componentName);
+
+    if (!fs.existsSync(variationComponentPath)) {
+      res.json({ data: {} });
+      return;
+    };
+
+    // Get the meta data of this component
+    var filePath = path.join(variationComponentPath, 'meta.js');
+    var content = fs.readFileSync(filePath, { encoding: 'utf8' });
+    res.json({ data: content.replace("module.exports = ", '') });
   });
 
   server = app.listen(port);
