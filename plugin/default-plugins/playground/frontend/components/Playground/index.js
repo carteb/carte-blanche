@@ -6,7 +6,6 @@
 
 import React, { PropTypes } from 'react';
 import { VelocityComponent } from 'velocity-react';
-import cx from 'classnames';
 
 import EditButton from '../common/EditButton';
 import DeleteButton from '../common/DeleteButton';
@@ -52,13 +51,15 @@ class Playground extends React.Component {
 
   render() {
     const Component = this.props.component;
-    const classname = cx(styles.wrapper, {
-      [styles['wrapper--fullHeight']]: this.props.fullHeight,
-    });
 
     return (
       <div
-        className={classname}
+        className={
+          (this.props.fullHeight) ?
+          styles.fulHeight :
+          styles.wrapper
+        }
+        id={this.props.variationPath}
         onMouseEnter={this.onMouseEnter}
         onMouseLeave={this.onMouseLeave}
       >

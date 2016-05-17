@@ -22,6 +22,7 @@
 }
 
 .wrapper--fullHeight {
+  composes: wrapper;
   height: 100%;
   border: none;
 }
