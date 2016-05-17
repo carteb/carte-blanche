@@ -54,61 +54,68 @@ class Playground extends React.Component {
     const Component = this.props.component;
 
     return (
-      <Card
+      <div
         className={
           (this.props.fullHeight) ?
-          styles.fulHeight :
+          styles['wrapper--fullHeight'] :
           styles.wrapper
         }
-        id={this.props.variationPath}
-        onMouseEnter={this.onMouseEnter}
-        onMouseLeave={this.onMouseLeave}
       >
-        {/* Don't render anything if neither button actions are specified*/}
-        {(this.props.onEditButtonClick || this.props.onDeleteButtonClick) ? (
-          <VelocityComponent
-            animation={{
-              opacity: this.state.buttonHandleVisible ? 1 : 0,
-            }}
-            duration={150}
-            /* Delay the fade in for 500ms, but not the fade out */
-            delay={(this.state.buttonHandleVisible) ? 500 : 0}
-            easing="ease-in-out"
-            display={(this.state.buttonHandleVisible) ? 'block' : 'none'}
-          >
-            <div
-              className={styles.buttonWrapper}
-              onMouseLeave={this.hideButtons}
+        {(this.props.title) ? (
+          <h3 className={styles.title}>{this.props.title}</h3>
+        ) : null}
+        <Card
+          className={styles.card}
+          id={this.props.variationPath}
+          onMouseEnter={this.onMouseEnter}
+          onMouseLeave={this.onMouseLeave}
+        >
+          {/* Don't render anything if neither button actions are specified*/}
+          {(this.props.onEditButtonClick || this.props.onDeleteButtonClick) ? (
+            <VelocityComponent
+              animation={{
+                opacity: this.state.buttonHandleVisible ? 1 : 0,
+              }}
+              duration={150}
+              /* Delay the fade in for 500ms, but not the fade out */
+              delay={(this.state.buttonHandleVisible) ? 500 : 0}
+              easing="ease-in-out"
+              display={(this.state.buttonHandleVisible) ? 'block' : 'none'}
             >
               <div
-                className={styles.buttonHandle}
-                onMouseEnter={this.showButtons}
-              />
-              <VelocityComponent
-                animation={{
-                  translateX: (this.state.buttonsVisible) ? '0%' : '100%',
-                }}
-                duration={150}
-                easing="ease-in-out"
-                delay={(this.state.buttonsVisible) ? 0 : 500}
-                display={(this.state.buttonsVisible) ? 'block' : 'none'}
+                className={styles.buttonWrapper}
+                onMouseLeave={this.hideButtons}
               >
-                <div className={styles.buttons}>
-                  {(this.props.onEditButtonClick) ? (
-                    <EditButton onClick={this.onEditButtonClick} />
-                  ) : null}
-                  {(this.props.onDeleteButtonClick) ? (
-                    <DeleteButton onClick={this.onDeleteButtonClick} />
-                  ) : null}
-                </div>
-              </VelocityComponent>
-            </div>
-          </VelocityComponent>
-        ) : null}
-        <div className={styles.componentWrapper}>
-          <Component {...this.props.variationProps} />
-        </div>
-      </Card>
+                <div
+                  className={styles.buttonHandle}
+                  onMouseEnter={this.showButtons}
+                />
+                <VelocityComponent
+                  animation={{
+                    translateX: (this.state.buttonsVisible) ? '0%' : '100%',
+                  }}
+                  duration={150}
+                  easing="ease-in-out"
+                  delay={(this.state.buttonsVisible) ? 0 : 500}
+                  display={(this.state.buttonsVisible) ? 'block' : 'none'}
+                >
+                  <div className={styles.buttons}>
+                    {(this.props.onEditButtonClick) ? (
+                      <EditButton onClick={this.onEditButtonClick} />
+                    ) : null}
+                    {(this.props.onDeleteButtonClick) ? (
+                      <DeleteButton onClick={this.onDeleteButtonClick} />
+                    ) : null}
+                  </div>
+                </VelocityComponent>
+              </div>
+            </VelocityComponent>
+          ) : null}
+          <div className={styles.componentWrapper}>
+            <Component {...this.props.variationProps} />
+          </div>
+        </Card>
+      </div>
     );
   }
 }
@@ -120,6 +127,7 @@ Playground.propTypes = {
   onDeleteButtonClick: PropTypes.func,
   fullHeight: PropTypes.bool,
   variationPath: PropTypes.string.isRequired,
+  title: PropTypes.string,
 };
 
 export default Playground;

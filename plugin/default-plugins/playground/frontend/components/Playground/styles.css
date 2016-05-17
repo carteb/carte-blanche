@@ -4,12 +4,30 @@
   align-items: center;
   justify-content: center;
   width: 90%;
+  margin: 1.5em auto;
+  flex-direction: column;
 }
 
 .wrapper--fullHeight {
   composes: wrapper;
   height: 100%;
   border: none;
+  margin: 0 auto;
+}
+
+.card {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 25vh;
+  margin: 0;
+}
+
+.title {
+  font-size: 1.5em;
+  font-weight: 300;
 }
 
 .buttonWrapper {

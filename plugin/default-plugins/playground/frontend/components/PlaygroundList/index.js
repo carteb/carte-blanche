@@ -41,6 +41,17 @@ class PlaygroundList extends Component {
 
   getRandomValues = () => randomValues(this.state.metadataWithControls);
 
+  getDataFromProps = (data) => {
+    const {
+      props,
+      name,
+    } = data;
+    // Generate a human-readable JSON string from the props
+    const propsString = propsToVariation(props);
+    // Add the name to the data we save
+    return propsString.replace(/^(\s*){/, `$1{\n  "name": "${name}",`);
+  };
+
   generateMetadataWithControls = () => {
     const { meta } = this.props;
 
@@ -77,14 +88,14 @@ class PlaygroundList extends Component {
     fetch(`http://localhost:8000/variations/${this.props.componentPath}`)
       .then((response) => response.json())
       .then((json) => {
-        const variationPropsList = this.variationsToProps(json.data);
+        const variationPropsList = variationsToProps(json.data);
         this.setState({
           variationPropsList,
         });
 
-        const links = map(variationPropsList, (value, key) => (
+        const links = map(variationPropsList, (variation, key) => (
           {
-            title: key,
+            title: variation.name,
             id: key,
           }
         ));
@@ -111,7 +122,10 @@ class PlaygroundList extends Component {
     this.setState({
       createVariationError: '',
     });
-    const code = this.propsToVariation(this.getRandomValues());
+    const data = this.getDataFromProps({
+      props: this.getRandomValues(),
+      name,
+    });
     // TODO dynamic host
     fetch(`http://localhost:8000/variations/${this.props.componentPath}`, {
       method: 'POST',
@@ -121,7 +135,7 @@ class PlaygroundList extends Component {
       },
       body: JSON.stringify({
         variation: `${slug}`,
-        code,
+        code: data,
       }),
     })
       .then(() => {
@@ -154,6 +168,10 @@ class PlaygroundList extends Component {
   };
 
   persistVariationUpdate = (variationPath, props) => {
+    const data = this.getDataFromProps({
+      props,
+      name: this.state.variationPropsList[variationPath].name,
+    });
     fetch(`http://localhost:8000/variations/${this.props.componentPath}`, {
       method: 'POST',
       headers: {
@@ -161,9 +179,8 @@ class PlaygroundList extends Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        // TODO use a proper name (think about the UX adding/chaning names)
         variation: `${variationPath}`,
-        code: this.propsToVariation(props),
+        code: data,
       }),
     })
     .then(() => {
@@ -180,7 +197,10 @@ class PlaygroundList extends Component {
     this.setState({
       variationPropsList: {
         ...this.state.variationPropsList,
-        [variationPath]: props,
+        [variationPath]: {
+          ...this.state.variationPropsList[variationPath],
+          props,
+        },
       },
     });
     // Persist changes to server every PERSISTENCE_TIMEOUT milliseconds
@@ -215,12 +235,9 @@ class PlaygroundList extends Component {
     });
   };
 
-  propsToVariation = propsToVariation;
-  variationsToProps = variationsToProps;
-
   render() {
     const { component } = this.props;
-    const selectedVariationProps =
+    const selectedVariation =
       find(
         this.state.variationPropsList,
         (variationProps, key) => this.state.selected === key
@@ -243,23 +260,24 @@ class PlaygroundList extends Component {
                 onRandomClick={this.randomiseEverything.bind(this, this.state.selected)} // eslint-disable-line react/jsx-no-bind,max-len
                 open={this.state.editMode}
                 variationPath={this.state.selected}
-                variationProps={selectedVariationProps}
+                variationProps={selectedVariation.props}
               />
               <Playground
                 component={component}
                 fullHeight
-                variationProps={selectedVariationProps}
+                variationProps={selectedVariation.props}
                 variationPath={this.state.selected}
               />
             </div>
           </Modal>
         ) : null}
         {/* MAIN AREA WITH PLAYGROUNDS */}
-        {map(this.state.variationPropsList, (variationProps, variationPath) => (
+        {map(this.state.variationPropsList, (variation, variationPath) => (
           <Playground
             key={variationPath}
             component={component}
-            variationProps={variationProps}
+            title={variation.name}
+            variationProps={variation.props}
             variationPath={variationPath}
             onDeleteButtonClick={this.deleteVariation}
             onEditButtonClick={this.startEditMode}
