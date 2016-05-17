@@ -39,14 +39,14 @@ class Navigation extends React.Component {
     this.setState({
       filterString: event.target.value,
     });
-  }
+  };
 
   setScrollPosition = () => {
     const element = document.getElementById(this.props.activeItemId);
     if (element) {
       window.scroll(window.scrollX, element.offsetTop);
     }
-  }
+  };
 
   setQueryParamForActiveItemId = () => {
     const plugins = getPlugins(this.props.activeComponentPath);
@@ -63,7 +63,7 @@ class Navigation extends React.Component {
       // in case the id is not set
       window.location.hash = window.location.hash.replace(/\?/, `?id=${activeId}&`);
     }
-  }
+  };
 
   renderSubNavigation = (componentPath) => {
     if (this.props.activeComponentPath === componentPath) {
@@ -95,7 +95,7 @@ class Navigation extends React.Component {
     }
 
     return null;
-  }
+  };
 
   renderComponents = () => (
     // Iterate through all components and generate a list
@@ -122,7 +122,7 @@ class Navigation extends React.Component {
         return null;
       }
     )
-  )
+  );
 
   render() {
     return (
