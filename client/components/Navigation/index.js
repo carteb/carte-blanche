@@ -8,8 +8,7 @@ import { IndexLink } from 'react-router';
 
 import getComponentNameFromPath from '../../../utils/getComponentNameFromPath';
 import styles from './styles.css';
-import mapValues from 'lodash/mapValues';
-import values from 'lodash/values';
+import map from 'lodash/map';
 import has from 'lodash/has';
 import throttle from 'lodash/throttle';
 import find from 'lodash/find';
@@ -50,7 +49,7 @@ class Navigation extends React.Component {
 
   setQueryParamForActiveItemId = () => {
     const plugins = getPlugins(this.props.activeComponentPath);
-    const ids = flatten(values(mapValues(plugins, (plugin) => values(mapValues(plugin, (link) => link.id)))));
+    const ids = flatten(map(plugins, (plugin) => map(plugin, (link) => link.id)));
 
     const activeId = find(ids, (id) => {
       const element = document.getElementById(id);
@@ -69,10 +68,10 @@ class Navigation extends React.Component {
     if (this.props.activeComponentPath === componentPath) {
       if (has(window.STYLEGUIDE_PLUGIN_CLIENT_API.cache, componentPath)) {
         const plugins = getPlugins(componentPath);
-        return values(mapValues(plugins, (plugin, pluginKey) => (
+        return map(plugins, (plugin, pluginKey) => (
           <div key={pluginKey}>
             {
-              values(mapValues(plugin, (link) => (
+              map(plugin, (link) => (
                 <div
                   className={styles.subListItemWrapper}
                   key={link.id}
@@ -85,10 +84,10 @@ class Navigation extends React.Component {
                     {link.title}
                   </IndexLink>
                 </div>
-              )))
+              ))
             }
           </div>
-        )));
+        ));
       }
 
       return null;
