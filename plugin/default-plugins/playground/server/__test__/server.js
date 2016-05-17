@@ -25,7 +25,7 @@ describe('variations server', () => {
   describe('get', () => {
     it('should get all data for a valid component with variations data', (done) => {
       request
-        .get('/components/ComponentA.js')
+        .get('/variations/components/ComponentA.js')
         .expect('Content-type', /json/)
         .expect(200)
         .end((err, res) => {
@@ -77,7 +77,7 @@ describe('variations server', () => {
 
     it('should return an empty data object in case the component does not exist', (done) => {
       request
-        .get('/components/ComponentNotAvailable.js')
+        .get('/variations/variations/components/ComponentNotAvailable.js')
         .expect('Content-type', /json/)
         .expect(404)
         .end((err, res) => {
@@ -93,7 +93,7 @@ describe('variations server', () => {
       fs.closeSync(fs.openSync(variationPath, 'w'));
 
       request
-        .delete('/components/ComponentA.js?variation=toBeRemoved')
+        .delete('/variations/components/ComponentA.js?variation=toBeRemoved')
         .expect('Content-type', /json/)
         .expect(200)
         .end((err, res) => {
@@ -104,7 +104,7 @@ describe('variations server', () => {
 
     it('should fail in case the component does not exist', (done) => {
       request
-        .delete('/components/ComponentNotAvailable.js')
+        .delete('/variations/components/ComponentNotAvailable.js')
         .expect('Content-type', /json/)
         .expect(404)
         .end((err, res) => {
@@ -115,7 +115,7 @@ describe('variations server', () => {
 
     it('should fail in case the variation does not exist', (done) => {
       request
-        .delete('/components/ComponentA.js?variation=notAvailableVariation')
+        .delete('/variations/variations/components/ComponentA.js?variation=notAvailableVariation')
         .expect('Content-type', /json/)
         .expect(404)
         .end((err, res) => {
@@ -146,7 +146,7 @@ describe('variations server', () => {
 
       it('should create a new file with the provided data', (done) => {
         request
-          .post('/components/ComponentB/index.js')
+          .post('/variations/components/ComponentB/index.js')
           .type('json')
           .send({
             variation: 'newVariation',
@@ -186,7 +186,7 @@ describe('variations server', () => {
         fs.closeSync(fs.openSync(variationPath, 'w'));
 
         request
-          .post('/components/ComponentA.js')
+          .post('/variations/components/ComponentA.js')
           .type('json')
           .send({
             variation: 'existingVariation',
@@ -205,7 +205,7 @@ describe('variations server', () => {
 
     it('should fail in case the component does not exist', (done) => {
       request
-        .post('/components/ComponentNotAvailable.js')
+        .post('/variations/components/ComponentNotAvailable.js')
         .expect('Content-type', /json/)
         .expect(404)
         .end((err, res) => {

@@ -24,6 +24,8 @@ var fileExists = (path) => {
   }
 }
 
+var getRelativeComponentPath = (req) => req.params[0].replace(/^\/variations/, '');
+
 var start = (projectBasePath, variationsBasePath, port) => {
   var app = express();
   app.use(cors());
@@ -31,9 +33,10 @@ var start = (projectBasePath, variationsBasePath, port) => {
   /**
    * GET
    */
-  app.get('/*', (req, res) => {
+  app.get('/variations/*', (req, res) => {
+    var relativeComponentPath = getRelativeComponentPath(req);
     // Get the path of the component from the base path and the passed in parameter
-    var componentPath = path.join(projectBasePath, req.params[0]);
+    var componentPath = path.join(projectBasePath, relativeComponentPath);
 
     // If no file exists at the component path, bail out early
     if (fileExists(componentPath) === false) {
@@ -41,7 +44,7 @@ var start = (projectBasePath, variationsBasePath, port) => {
       return;
     }
 
-    var componentName = getComponentNameFromPath(req.params[0]);
+    var componentName = getComponentNameFromPath(relativeComponentPath);
     var variationComponentPath = path.join(variationsBasePath, componentName);
 
     if (!fs.existsSync(variationComponentPath)) {
@@ -65,14 +68,15 @@ var start = (projectBasePath, variationsBasePath, port) => {
   /**
    * DELETE
    */
-  app.delete('/*', (req, res) => {
-    var componentPath = path.join(projectBasePath, req.params[0]);
+  app.delete('/variations/*', (req, res) => {
+    var relativeComponentPath = getRelativeComponentPath(req);
+    var componentPath = path.join(projectBasePath, relativeComponentPath);
     if (fileExists(componentPath) === false) {
       res.status(404).send('');
       return;
     }
 
-    var componentName = getComponentNameFromPath(req.params[0]);
+    var componentName = getComponentNameFromPath(relativeComponentPath);
     var variationPath = path.join(
       variationsBasePath,
       componentName,
@@ -92,14 +96,15 @@ var start = (projectBasePath, variationsBasePath, port) => {
   /**
    * POST
    */
-  app.post('/*', jsonBodyParser, (req, res) => {
-    var componentPath = path.join(projectBasePath, req.params[0]);
+  app.post('/variations/*', jsonBodyParser, (req, res) => {
+    var relativeComponentPath = getRelativeComponentPath(req);
+    var componentPath = path.join(projectBasePath, relativeComponentPath);
     if (fileExists(componentPath) === false) {
       res.status(404).send('');
       return;
     }
 
-    var componentName = getComponentNameFromPath(req.params[0]);
+    var componentName = getComponentNameFromPath(relativeComponentPath);
     var variationComponentPath = path.join(variationsBasePath, componentName);
     var variationPath = path.join(variationComponentPath, `${req.body.variation}.js`);
 
