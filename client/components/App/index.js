@@ -28,7 +28,7 @@ class App extends React.Component {
       <div className={styles.main}>
         <Navigation
           activeComponentPath={activeComponentPath}
-          activeItemId={this.props.location.query.id}
+          location={this.props.location}
         />
         <div className={(!this.state.drawerVisible) ? styles.preview : styles.previewOpen}>
           <MenuButton

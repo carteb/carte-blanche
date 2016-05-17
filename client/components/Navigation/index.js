@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { IndexLink } from 'react-router';
+import { hashHistory, IndexLink } from 'react-router';
 import offsetTopFromPage from './offsetTopFromPage';
 import getComponentNameFromPath from '../../../utils/getComponentNameFromPath';
 import styles from './styles.css';
@@ -13,6 +13,8 @@ import has from 'lodash/has';
 import throttle from 'lodash/throttle';
 import find from 'lodash/find';
 import flatten from 'lodash/flatten';
+
+window.hashHistory = hashHistory;
 
 const getPlugins = (path) => window.STYLEGUIDE_PLUGIN_CLIENT_API.cache[path].navigation;
 
@@ -31,7 +33,11 @@ class Navigation extends React.Component {
     );
 
     window.addEventListener('scroll', throttle(this.setQueryParamForActiveItemId, 50), false);
-    // window.addEventListener('hashchange', this.setScrollPosition, false);
+    hashHistory.listen((location) => {
+      if (location.state === null || !location.state.preventScroll) {
+        this.setScrollPosition(location.query.id);
+      }
+    });
   }
 
   setFilter = (event) => {
@@ -40,10 +46,10 @@ class Navigation extends React.Component {
     });
   };
 
-  setScrollPosition = () => {
-    const element = document.getElementById(this.props.activeItemId);
+  setScrollPosition = (activeItemId) => {
+    const element = document.getElementById(activeItemId);
     if (element) {
-      window.scroll(window.scrollX, element.offsetTop);
+      window.scroll(window.scrollX, offsetTopFromPage(element));
     }
   };
 
@@ -55,12 +61,13 @@ class Navigation extends React.Component {
       const element = document.getElementById(id);
       return window.scrollY <= offsetTopFromPage(element);
     });
-
-    if (this.props.activeItemId) {
-      window.location.hash = window.location.hash.replace(/id=.+&/, `id=${activeId}&`);
-    } else {
-      // in case the id is not set
-      window.location.hash = window.location.hash.replace(/\?/, `?id=${activeId}&`);
+    const activeItemId = this.props.location.query.id;
+    if (activeId !== activeItemId || activeItemId === undefined) {
+      hashHistory.replace({
+        pathname: this.props.location.pathname,
+        query: { id: activeId },
+        state: { preventScroll: true },
+      });
     }
   };
 
