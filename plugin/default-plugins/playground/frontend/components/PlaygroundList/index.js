@@ -6,6 +6,7 @@ import React, { Component } from 'react';
 import map from 'lodash/map';
 import mapValues from 'lodash/mapValues';
 import find from 'lodash/find';
+import debounce from 'lodash/debounce';
 import 'whatwg-fetch';
 import getSlug from 'speakingurl';
 
@@ -13,7 +14,8 @@ import getControl from '../../utils/getControl';
 import randomValues from '../../utils/randomValues';
 import propsToVariation from '../../utils/propsToVariation';
 import variationsToProps from '../../utils/variationsToProps';
-import convertCodeToMetaData from '../../utils/convertCodeToMetaData';
+import codeToCustomMetadata from '../../utils/codeToCustomMetadata';
+import customMetadataToCode from '../../utils/customMetadataToCode';
 import getComponentNameFromPath from '../../../../../../utils/getComponentNameFromPath';
 
 import Playground from '../Playground';
@@ -24,22 +26,30 @@ import CreateVariationButton from '../common/CreateVariationButton';
 import styles from './styles.css';
 
 const PERSISTENCE_DELAY = 1000;
-let PERSISTENCE_TIMEOUT;
 
 class PlaygroundList extends Component {
   state = {
     variationPropsList: {},
     variationEditMode: false,
     selectedVariationId: undefined,
-    metaData: undefined,
+    customMetadata: undefined,
     metadataWithControls: null,
     createVariationError: '',
-    loadingMetaData: true,
+    loadingMetadata: true,
     loadingVariations: true,
   };
 
   componentWillMount() {
-    this.fetchMetaData();
+    this.debouncedPersistVariation = debounce(
+      (variationPath, props) => { this.persistVariation(variationPath, props); },
+      PERSISTENCE_DELAY
+    );
+    this.debouncedPersistCustomMetadata = debounce(
+      (customMetadata) => { this.persistCustomMetadata(customMetadata); },
+      PERSISTENCE_DELAY
+    );
+
+    this.fetchMetadata();
     this.fetchVariations();
   }
 
@@ -56,20 +66,20 @@ class PlaygroundList extends Component {
     return propsString.replace(/^(\s*){/, `$1{\n  "name": "${name}",`);
   };
 
-  fetchMetaData = () => {
+  fetchMetadata = () => {
     // TODO dynamic host
     fetch(`http://localhost:8000/components/${this.props.componentPath}`)
       .then((response) => response.json())
       .then((json) => {
-        const metaData = convertCodeToMetaData(json.data);
-        this.generateMetadataWithControls(metaData);
+        const customMetadata = codeToCustomMetadata(json.data);
+        this.generateMetadataWithControls(customMetadata);
       }).catch((ex) => {
         // TODO proper error handling
         console.error('meta data parsing failed', ex); // eslint-disable-line no-console
       });
   };
 
-  generateMetadataWithControls = (metaData) => {
+  generateMetadataWithControls = (customMetadata) => {
     const { meta } = this.props;
 
     // Attach controls to propTypes meta information
@@ -77,7 +87,7 @@ class PlaygroundList extends Component {
     if (meta.props) {
       metadataWithControls = mapValues(meta.props, (prop, propKey) => {
         const newProp = { ...prop };
-        const propMeta = metaData && metaData.props ? metaData.props[propKey] : undefined;
+        const propMeta = customMetadata && customMetadata.props && customMetadata.props[propKey];
         newProp.control = getControl(newProp, propMeta);
         return newProp;
       });
@@ -85,8 +95,8 @@ class PlaygroundList extends Component {
 
     this.setState({
       metadataWithControls,
-      metaData,
-      loadingMetaData: false,
+      customMetadata,
+      loadingMetadata: false,
     });
   };
 
@@ -175,7 +185,7 @@ class PlaygroundList extends Component {
     });
   };
 
-  persistVariationUpdate = (variationPath, props) => {
+  persistVariation = (variationPath, props) => {
     const data = this.getDataFromProps({
       props,
       name: this.state.variationPropsList[variationPath].name,
@@ -187,8 +197,34 @@ class PlaygroundList extends Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        variation: `${variationPath}`,
+        variation: variationPath,
         code: data,
+      }),
+    })
+    .then(() => {
+      this.fetchVariations();
+    })
+    .catch((err) => {
+      // TODO PROPER ERROR HANDLING
+      console.trace(err); // eslint-disable-line no-console
+    });
+  };
+
+  updateCustomMetadata = (customMetadata) => {
+    this.generateMetadataWithControls(customMetadata);
+    // Persist changes to server every PERSISTENCE_TIMEOUT milliseconds
+    this.debouncedPersistCustomMetadata(customMetadata);
+  }
+
+  persistCustomMetadata = (customMetadata) => {
+    fetch(`http://localhost:8000/components/${this.props.componentPath}`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        code: customMetadataToCode(customMetadata),
       }),
     })
     .then(() => {
@@ -211,15 +247,13 @@ class PlaygroundList extends Component {
         },
       },
     });
+
     // Persist changes to server every PERSISTENCE_TIMEOUT milliseconds
-    clearTimeout(PERSISTENCE_TIMEOUT);
-    PERSISTENCE_TIMEOUT = setTimeout(() => {
-      this.persistVariationUpdate(variationPath, props);
-    }, PERSISTENCE_DELAY);
+    this.debouncedPersistVariation(variationPath, props);
   };
 
   randomiseEverything = (path) => {
-    this.persistVariationUpdate(path, this.getRandomValues());
+    this.persistVariation(path, this.getRandomValues());
   };
 
   selectVariation = (id) => {
@@ -244,7 +278,7 @@ class PlaygroundList extends Component {
   };
 
   render() {
-    if (this.state.loadingMetaData && this.state.loadingVariations) {
+    if (this.state.loadingMetadata && this.state.loadingVariations) {
       return <div>Loading …</div>;
     }
 

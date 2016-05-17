@@ -225,8 +225,8 @@ describe('server', () => {
           expect(res.status).to.equal(200);
           expect(res.body.error).to.be.false; // eslint-disable-line no-unused-expressions
 
-          let metaData;
-          eval(`metaData = ${res.body.data}`); // eslint-disable-line no-eval
+          let metadata;
+          eval(`metadata = ${res.body.data}`); // eslint-disable-line no-eval
           const expected = {
             props: {
               age: {
@@ -235,7 +235,7 @@ describe('server', () => {
               },
             },
           };
-          expect(metaData).to.deep.equal(expected); // eslint-disable-line no-undef
+          expect(metadata).to.deep.equal(expected); // eslint-disable-line no-undef
           done();
         });
     });
