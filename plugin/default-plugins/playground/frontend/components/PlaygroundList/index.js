@@ -3,9 +3,9 @@
  */
 
 import React, { Component } from 'react';
+import map from 'lodash/map';
 import mapValues from 'lodash/mapValues';
 import find from 'lodash/find';
-import values from 'lodash/values';
 import 'whatwg-fetch';
 import getSlug from 'speakingurl';
 
@@ -81,12 +81,12 @@ class PlaygroundList extends Component {
           variationPropsList,
         });
 
-        const links = values(mapValues(variationPropsList, (variation, key) => (
+        const links = map(variationPropsList, (variation, key) => (
           {
             title: variation.name,
             id: key,
           }
-        )));
+        ));
 
         window.STYLEGUIDE_PLUGIN_CLIENT_API.updateNavigation(
           this.props.componentPath,
@@ -260,7 +260,7 @@ class PlaygroundList extends Component {
           </Modal>
         ) : null}
         {/* MAIN AREA WITH PLAYGROUNDS */}
-        {values(mapValues(this.state.variationPropsList, (variation, variationPath) => (
+        {map(this.state.variationPropsList, (variation, variationPath) => (
           <Playground
             key={variationPath}
             component={component}
@@ -270,7 +270,7 @@ class PlaygroundList extends Component {
             onDeleteButtonClick={this.deleteVariation}
             onEditButtonClick={this.startEditMode}
           />
-        )))}
+        ))}
         <CreateVariationButton
           error={this.state.createVariationError}
           onSubmit={this.createVariation}
