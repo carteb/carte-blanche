@@ -303,7 +303,7 @@ class PlaygroundList extends Component {
               <PropForm
                 metadataWithControls={this.state.metadataWithControls}
                 onVariationPropsChange={this.updateVariation}
-                onRandomClick={this.randomiseEverything.bind(this, this.state.selected)} // eslint-disable-line react/jsx-no-bind,max-len
+                onRandomClick={this.randomiseEverything.bind(this, this.state.selectedVariationId)} // eslint-disable-line react/jsx-no-bind,max-len
                 open={this.state.variationEditMode}
                 variationPath={this.state.selectedVariationId}
                 variationProps={selectedVariation.props}
