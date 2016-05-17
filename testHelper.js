@@ -28,7 +28,7 @@ global.navigator = {
   userAgent: 'node.js',
 };
 
-//documentRef = document;
+// documentRef = document;
 
 // prevent mocha tests from breaking when trying to require a less or css file
 require.extensions['.less'] = noop;
