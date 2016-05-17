@@ -5,7 +5,7 @@
 
 import React from 'react';
 import { IndexLink } from 'react-router';
-
+import offsetTopFromPage from './offsetTopFromPage';
 import getComponentNameFromPath from '../../../utils/getComponentNameFromPath';
 import styles from './styles.css';
 import map from 'lodash/map';
@@ -31,7 +31,7 @@ class Navigation extends React.Component {
     );
 
     window.addEventListener('scroll', throttle(this.setQueryParamForActiveItemId, 50), false);
-    window.addEventListener('hashchange', this.setScrollPosition, false);
+    // window.addEventListener('hashchange', this.setScrollPosition, false);
   }
 
   setFilter = (event) => {
@@ -53,7 +53,7 @@ class Navigation extends React.Component {
 
     const activeId = find(ids, (id) => {
       const element = document.getElementById(id);
-      return window.scrollY <= element.offsetTop;
+      return window.scrollY <= offsetTopFromPage(element);
     });
 
     if (this.props.activeItemId) {
