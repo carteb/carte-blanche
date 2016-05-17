@@ -1,7 +1,7 @@
 import { expect } from 'chai';
-import convertCodeToMetaData from '../convertCodeToMetaData';
+import codeToCustomMetadata from '../codeToCustomMetadata';
 
-describe('convertCodeToMetaData', () => {
+describe('codeToCustomMetadata', () => {
   it('should convert a number prop', () => {
     const code = `{
   "props": {
@@ -13,12 +13,12 @@ describe('convertCodeToMetaData', () => {
         age: 22,
       },
     };
-    expect(convertCodeToMetaData(code)).to.deep.equal(expected);
+    expect(codeToCustomMetadata(code)).to.deep.equal(expected);
   });
 
   it('should convert an empty object', () => {
     const code = '{};';
     const expected = {};
-    expect(convertCodeToMetaData(code)).to.deep.equal(expected);
+    expect(codeToCustomMetadata(code)).to.deep.equal(expected);
   });
 });

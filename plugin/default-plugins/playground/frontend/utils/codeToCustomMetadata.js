@@ -1,7 +1,7 @@
 const MATCH_LAST_SEMICOLON_REGEX = /;\s*$/;
 
-const convertCodeToMetaData = (code) => (
+const codeToCustomMetadata = (code) => (
   JSON.parse(code.replace(MATCH_LAST_SEMICOLON_REGEX, ''))
 );
 
-export default convertCodeToMetaData;
+export default codeToCustomMetadata;

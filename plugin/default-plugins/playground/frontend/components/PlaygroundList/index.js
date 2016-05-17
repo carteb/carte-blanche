@@ -14,7 +14,7 @@ import getControl from '../../utils/getControl';
 import randomValues from '../../utils/randomValues';
 import propsToVariation from '../../utils/propsToVariation';
 import variationsToProps from '../../utils/variationsToProps';
-import convertCodeToMetaData from '../../utils/convertCodeToMetaData';
+import codeToCustomMetadata from '../../utils/codeToCustomMetadata';
 import customMetadataToCode from '../../utils/customMetadataToCode';
 import getComponentNameFromPath from '../../../../../../utils/getComponentNameFromPath';
 
@@ -32,10 +32,10 @@ class PlaygroundList extends Component {
     variationPropsList: {},
     variationEditMode: false,
     selectedVariationId: undefined,
-    metaData: undefined,
+    customMetadata: undefined,
     metadataWithControls: null,
     createVariationError: '',
-    loadingMetaData: true,
+    loadingMetadata: true,
     loadingVariations: true,
   };
 
@@ -45,11 +45,11 @@ class PlaygroundList extends Component {
       PERSISTENCE_DELAY
     );
     this.debouncedPersistCustomMetadata = debounce(
-      (metaData) => { this.persistCustomMetadata(metaData); },
+      (customMetadata) => { this.persistCustomMetadata(customMetadata); },
       PERSISTENCE_DELAY
     );
 
-    this.fetchMetaData();
+    this.fetchMetadata();
     this.fetchVariations();
   }
 
@@ -66,20 +66,20 @@ class PlaygroundList extends Component {
     return propsString.replace(/^(\s*){/, `$1{\n  "name": "${name}",`);
   };
 
-  fetchMetaData = () => {
+  fetchMetadata = () => {
     // TODO dynamic host
     fetch(`http://localhost:8000/components/${this.props.componentPath}`)
       .then((response) => response.json())
       .then((json) => {
-        const metaData = convertCodeToMetaData(json.data);
-        this.generateMetadataWithControls(metaData);
+        const customMetadata = codeToCustomMetadata(json.data);
+        this.generateMetadataWithControls(customMetadata);
       }).catch((ex) => {
         // TODO proper error handling
         console.error('meta data parsing failed', ex); // eslint-disable-line no-console
       });
   };
 
-  generateMetadataWithControls = (metaData) => {
+  generateMetadataWithControls = (customMetadata) => {
     const { meta } = this.props;
 
     // Attach controls to propTypes meta information
@@ -87,7 +87,7 @@ class PlaygroundList extends Component {
     if (meta.props) {
       metadataWithControls = mapValues(meta.props, (prop, propKey) => {
         const newProp = { ...prop };
-        const propMeta = metaData && metaData.props ? metaData.props[propKey] : undefined;
+        const propMeta = customMetadata && customMetadata.props && customMetadata.props[propKey];
         newProp.control = getControl(newProp, propMeta);
         return newProp;
       });
@@ -95,8 +95,8 @@ class PlaygroundList extends Component {
 
     this.setState({
       metadataWithControls,
-      metaData,
-      loadingMetaData: false,
+      customMetadata,
+      loadingMetadata: false,
     });
   };
 
@@ -210,13 +210,13 @@ class PlaygroundList extends Component {
     });
   };
 
-  updateCustomMetaData = (metaData) => {
-    this.generateMetadataWithControls(metaData);
+  updateCustomMetadata = (customMetadata) => {
+    this.generateMetadataWithControls(customMetadata);
     // Persist changes to server every PERSISTENCE_TIMEOUT milliseconds
-    this.debouncedPersistCustomMetadata(metaData);
+    this.debouncedPersistCustomMetadata(customMetadata);
   }
 
-  persistCustomMetadata = (metaData) => {
+  persistCustomMetadata = (customMetadata) => {
     fetch(`http://localhost:8000/components/${this.props.componentPath}`, {
       method: 'POST',
       headers: {
@@ -224,7 +224,7 @@ class PlaygroundList extends Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        code: customMetadataToCode(metaData),
+        code: customMetadataToCode(customMetadata),
       }),
     })
     .then(() => {
@@ -278,7 +278,7 @@ class PlaygroundList extends Component {
   };
 
   render() {
-    if (this.state.loadingMetaData && this.state.loadingVariations) {
+    if (this.state.loadingMetadata && this.state.loadingVariations) {
       return <div>Loading …</div>;
     }
 
