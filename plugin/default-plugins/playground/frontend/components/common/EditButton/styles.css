@@ -1,15 +1,20 @@
 .base {
   cursor: pointer;
-  padding: 0.5rem;
+  padding: 0.25rem 0.5rem;
   background-color: transparent;
   border: none;
   font-size: 1rem;
 }
 
-.svg {
-  fill: #282830;
+.svg polygon,
+.svg line,
+.svg circle {
+  stroke: #999;
+  transition: stroke 150ms;
 }
 
-.svg polygon {
-  stroke: #282830;
+.base:hover .svg polygon,
+.base:hover .svg line,
+.base:hover .svg circle {
+  stroke: #333;
 }
