@@ -9,7 +9,7 @@ const projectBasePath = __dirname;
 const variationsBasePath = path.join(__dirname, 'variations');
 const request = supertest.agent(`http://localhost:${port}`);
 
-describe('variations server', () => {
+describe('server', () => {
   let server;
 
   beforeEach(() => {
@@ -22,10 +22,10 @@ describe('variations server', () => {
     server.stop(done);
   });
 
-  describe('get', () => {
+  describe('GET:variations', () => {
     it('should get all data for a valid component with variations data', (done) => {
       request
-        .get('/components/ComponentA.js')
+        .get('/variations/components/ComponentA.js')
         .expect('Content-type', /json/)
         .expect(200)
         .end((err, res) => {
@@ -75,9 +75,9 @@ describe('variations server', () => {
         });
     });
 
-    it('should return an empty data object in case the component does not exist', (done) => {
+    it('should return a 404 in case the component does not exist', (done) => {
       request
-        .get('/components/ComponentNotAvailable.js')
+        .get('/variations/variations/components/ComponentNotAvailable.js')
         .expect('Content-type', /json/)
         .expect(404)
         .end((err, res) => {
@@ -87,13 +87,13 @@ describe('variations server', () => {
     });
   });
 
-  describe('delete', () => {
+  describe('DELETE:variations', () => {
     it('should remove the variation', (done) => {
       const variationPath = path.join(variationsBasePath, 'ComponentA', 'toBeRemoved.js');
       fs.closeSync(fs.openSync(variationPath, 'w'));
 
       request
-        .delete('/components/ComponentA.js?variation=toBeRemoved')
+        .delete('/variations/components/ComponentA.js?variation=toBeRemoved')
         .expect('Content-type', /json/)
         .expect(200)
         .end((err, res) => {
@@ -104,7 +104,7 @@ describe('variations server', () => {
 
     it('should fail in case the component does not exist', (done) => {
       request
-        .delete('/components/ComponentNotAvailable.js')
+        .delete('/variations/components/ComponentNotAvailable.js')
         .expect('Content-type', /json/)
         .expect(404)
         .end((err, res) => {
@@ -115,7 +115,7 @@ describe('variations server', () => {
 
     it('should fail in case the variation does not exist', (done) => {
       request
-        .delete('/components/ComponentA.js?variation=notAvailableVariation')
+        .delete('/variations/variations/components/ComponentA.js?variation=notAvailableVariation')
         .expect('Content-type', /json/)
         .expect(404)
         .end((err, res) => {
@@ -125,7 +125,7 @@ describe('variations server', () => {
     });
   });
 
-  describe('post', () => {
+  describe('POST:variations', () => {
     describe('write new variation', () => {
       const variationComponentPath = path.join(variationsBasePath, 'ComponentB');
       const variationPath = path.join(variationComponentPath, 'newVariation.js');
@@ -146,7 +146,7 @@ describe('variations server', () => {
 
       it('should create a new file with the provided data', (done) => {
         request
-          .post('/components/ComponentB/index.js')
+          .post('/variations/components/ComponentB/index.js')
           .type('json')
           .send({
             variation: 'newVariation',
@@ -186,7 +186,7 @@ describe('variations server', () => {
         fs.closeSync(fs.openSync(variationPath, 'w'));
 
         request
-          .post('/components/ComponentA.js')
+          .post('/variations/components/ComponentA.js')
           .type('json')
           .send({
             variation: 'existingVariation',
@@ -205,7 +205,91 @@ describe('variations server', () => {
 
     it('should fail in case the component does not exist', (done) => {
       request
-        .post('/components/ComponentNotAvailable.js')
+        .post('/variations/components/ComponentNotAvailable.js')
+        .expect('Content-type', /json/)
+        .expect(404)
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          done();
+        });
+    });
+  });
+
+  describe('GET:componentsMeta', () => {
+    it('should get all data for a valid component with variations data', (done) => {
+      request
+        .get('/components/components/ComponentA.js')
+        .expect('Content-type', /json/)
+        .expect(200)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.error).to.be.false; // eslint-disable-line no-unused-expressions
+
+          let metaData;
+          eval(`metaData = ${res.body.data}`); // eslint-disable-line no-eval
+          const expected = {
+            props: {
+              age: {
+                min: 0,
+                max: 140,
+              },
+            },
+          };
+          expect(metaData).to.deep.equal(expected); // eslint-disable-line no-undef
+          done();
+        });
+    });
+
+    it('should return a 404 in case the component does not exist', (done) => {
+      request
+        .get('/components/components/ComponentNotAvailable.js')
+        .expect('Content-type', /json/)
+        .expect(404)
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          done();
+        });
+    });
+  });
+
+  describe('POST:componentsMeta', () => {
+    describe('write new meta file', () => {
+      const variationComponentPath = path.join(variationsBasePath, 'ComponentC');
+      const componentMetaPath = path.join(variationComponentPath, 'meta.js');
+      const code = `{
+        props: {
+          age: {
+            min: 0,
+            max: 120,
+          },
+        },
+      };`;
+
+      afterEach((done) => {
+        rimraf(variationComponentPath, done);
+      });
+
+      it('should create a new file with the provided meta data', (done) => {
+        request
+          .post('/components/components/ComponentC.js')
+          .type('json')
+          .send({
+            code,
+          })
+          .expect(200)
+          .end((err, res) => {
+            expect(res.status).to.equal(200);
+            fs.readFile(componentMetaPath, { encoding: 'utf8' }, (_, fileContent) => {
+              expect(`module.exports = ${code}`).to.equal(fileContent);
+              done();
+            });
+          });
+      });
+    });
+
+    it('should fail in case the component does not exist', (done) => {
+      request
+        .post('/components/components/ComponentNotAvailable.js')
         .expect('Content-type', /json/)
         .expect(404)
         .end((err, res) => {
