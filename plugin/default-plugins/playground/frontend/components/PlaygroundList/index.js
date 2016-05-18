@@ -22,6 +22,7 @@ import Playground from '../Playground';
 import PropForm from '../PropForm';
 import Modal from '../Modal';
 import CreateVariationButton from '../common/CreateVariationButton';
+import CustomMetadataForm from '../CustomMetadataForm';
 
 import styles from './styles.css';
 
@@ -31,6 +32,7 @@ class PlaygroundList extends Component {
   state = {
     variationPropsList: {},
     variationEditMode: false,
+    customMetadataEditMode: false,
     selectedVariationId: undefined,
     customMetadata: undefined,
     metadataWithControls: null,
@@ -262,7 +264,21 @@ class PlaygroundList extends Component {
     });
   };
 
-  startEditMode = (id) => {
+  startCustomMetadataEditMode = () => {
+    document.body.style.overflow = 'hidden';
+    this.setState({
+      customMetadataEditMode: true,
+    });
+  };
+
+  stopCustomMetadataEditMode = () => {
+    document.body.style.overflow = '';
+    this.setState({
+      customMetadataEditMode: false,
+    });
+  };
+
+  startVariationEditMode = (id) => {
     document.body.style.overflow = 'hidden';
     this.setState({
       variationEditMode: true,
@@ -270,7 +286,7 @@ class PlaygroundList extends Component {
     });
   };
 
-  stopEditMode = () => {
+  stopVariationEditMode = () => {
     document.body.style.overflow = '';
     this.setState({
       variationEditMode: false,
@@ -293,11 +309,31 @@ class PlaygroundList extends Component {
         <h2 className={styles.title}>
           {getComponentNameFromPath(this.props.componentPath)}
         </h2>
+        <button
+          onClick={this.startCustomMetadataEditMode}
+          style={{
+            margin: '0 auto',
+            display: 'block',
+          }}
+        >
+          Edit Metadata
+        </button>
+        {/* METADATA EDIT MODE MODAL */}
+        <Modal
+          visible={this.state.customMetadataEditMode}
+          onCloseClick={this.stopCustomMetadataEditMode}
+        >
+          <CustomMetadataForm
+            customMetadata={this.state.customMetadata}
+            parsedMetadata={this.props.meta}
+            updateCustomMetadata={this.updateCustomMetadata}
+          />
+        </Modal>
         {/* VARIATION EDIT MODE MODAL */}
         {(this.state.selectedVariationId) && (
           <Modal
             visible={this.state.variationEditMode}
-            onCloseClick={this.stopEditMode}
+            onCloseClick={this.stopVariationEditMode}
           >
             <div className={styles.modalWrapper}>
               <PropForm
@@ -326,7 +362,7 @@ class PlaygroundList extends Component {
             variationProps={variation.props}
             variationPath={variationPath}
             onDeleteButtonClick={this.deleteVariation}
-            onEditButtonClick={this.startEditMode}
+            onEditButtonClick={this.startVariationEditMode}
           />
         ))}
         <CreateVariationButton
