@@ -1,4 +1,6 @@
-# styleguide
+# Styleguide
+
+NOTE: This is a highly experimental project. Please help us by not sharing it yet :)
 
 ## Setup
 
