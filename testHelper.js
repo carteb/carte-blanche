@@ -30,6 +30,5 @@ global.navigator = {
 
 // documentRef = document;
 
-// prevent mocha tests from breaking when trying to require a less or css file
-require.extensions['.less'] = noop;
+// prevent mocha tests from breaking when trying to require a css file
 require.extensions['.css'] = noop;
