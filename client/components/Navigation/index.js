@@ -13,6 +13,7 @@ import has from 'lodash/has';
 import throttle from 'lodash/throttle';
 import find from 'lodash/find';
 import flatten from 'lodash/flatten';
+import smoothscroll from 'smoothscroll';
 
 window.hashHistory = hashHistory;
 
@@ -49,7 +50,8 @@ class Navigation extends React.Component {
   setScrollPosition = (activeItemId) => {
     const element = document.getElementById(activeItemId);
     if (element) {
-      window.scroll(window.scrollX, offsetTopFromPage(element));
+      const SMOOTH_SCROLL_SPEED = 250;
+      smoothscroll(offsetTopFromPage(element), SMOOTH_SCROLL_SPEED);
     }
   };
 

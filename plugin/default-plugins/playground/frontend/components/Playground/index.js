@@ -70,6 +70,7 @@ class Playground extends React.Component {
           styles['wrapper--fullHeight'] :
           styles.wrapper
         }
+        id={this.props.variationPath}
         onMouseLeave={this.hideButtons}
       >
         {/* Title */}
@@ -78,7 +79,6 @@ class Playground extends React.Component {
         )}
         <Card
           className={styles.card}
-          id={this.props.variationPath}
           onMouseEnter={this.showButtons}
         >
 
