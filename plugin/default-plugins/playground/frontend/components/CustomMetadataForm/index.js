@@ -3,6 +3,7 @@ import React from 'react';
 import styles from './styles.css';
 import Select from '../common/Select';
 import controlTypes from './controlTypes';
+import uniq from 'lodash/uniq';
 
 function CustomMetadataForm(props) {
   let propKeys = [];
@@ -12,6 +13,7 @@ function CustomMetadataForm(props) {
   if (props.parsedMetadata.props) {
     propKeys = propKeys.concat(Object.keys(props.parsedMetadata.props));
   }
+  propKeys = uniq(propKeys);
   return (
     <div className={styles.wrapper}>
       {
