@@ -20,7 +20,7 @@ const IntegerControl = (props) => {
       value={value}
       isNested={isNested}
       onChange={(event) => onUpdate({ value: parseInt(event.target.value, 10) })}
-      onRandomClick={() => onUpdate({ value: IntegerControl.randomValue(props, props.required) })}
+      onRandomClick={() => onUpdate({ value: IntegerControl.randomValue(props) })}
     />
   );
 };

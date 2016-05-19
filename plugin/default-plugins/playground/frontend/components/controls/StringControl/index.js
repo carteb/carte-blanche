@@ -13,7 +13,7 @@ const StringControl = (props) => {
       value={value}
       isNested={isNested}
       onChange={(e) => onUpdate({ value: e.target.value })}
-      onRandomClick={() => onUpdate({ value: StringControl.randomValue(props, props.required) })}
+      onRandomClick={() => onUpdate({ value: StringControl.randomValue(props) })}
     />
   );
 };

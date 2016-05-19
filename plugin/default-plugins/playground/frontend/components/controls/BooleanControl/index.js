@@ -29,7 +29,7 @@ const BooleanControl = (props) => {
           label: 'false',
         },
       ]}
-      onRandomClick={() => onUpdate({ value: BooleanControl.randomValue(props, props.required) })}
+      onRandomClick={() => onUpdate({ value: BooleanControl.randomValue(props) })}
     />
   );
 };

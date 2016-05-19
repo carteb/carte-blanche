@@ -14,7 +14,7 @@ import Label from '../../common/Label';
 
 import styles from './styles.css';
 
-const ObjectControl = ({ label, propTypeData, value, onUpdate, isNested, required }) => {
+const ObjectControl = ({ label, propTypeData, value, onUpdate, isNested }) => {
   const updatePropertyValues = (values) => {
     onUpdate({ value: values });
   };
@@ -39,7 +39,7 @@ const ObjectControl = ({ label, propTypeData, value, onUpdate, isNested, require
           text={label}
           isNested={isNested}
           onRandomClick={() => onUpdate({
-            value: ObjectControl.randomValue(propTypeData, required),
+            value: ObjectControl.randomValue(propTypeData),
           })}
         />
       )}
