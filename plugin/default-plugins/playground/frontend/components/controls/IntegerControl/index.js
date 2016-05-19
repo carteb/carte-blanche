@@ -38,11 +38,31 @@ IntegerControl.randomValue = (props) => {
 };
 
 
-// IntegerControl.OptionsForm = () => {
-//   // onChange of any input has to trigger an update on the metadata
-//   return (
-//     <div><input type="number" /></div>
-//   );
-// };
+IntegerControl.ConstraintsForm = (props) => { // eslint-disable-line
+  // onChange of any input has to trigger an update on the metadata
+  // TODO validate that min is not larger than max
+  const { constraints = {} } = props;
+  // const updateMin = (min) => {
+  //   this.props.onUpdate({});
+  // };
+  return (
+    <div>
+      <input
+        type="number"
+        placeholder="min"
+        // update the whole constraints object
+        // onChange={ updateMin }
+        value={constraints.min}
+      />
+      <input
+        type="number"
+        placeholder="max"
+        // update the whole constraints object
+        // onChange={}
+        value={constraints.max}
+      />
+    </div>
+  );
+};
 
 export default IntegerControl;

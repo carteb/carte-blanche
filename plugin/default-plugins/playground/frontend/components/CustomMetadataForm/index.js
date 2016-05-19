@@ -3,7 +3,15 @@ import React from 'react';
 import styles from './styles.css';
 import Select from '../common/Select';
 import controlTypes from './controlTypes';
+import getControl from '../../utils/getControl';
 import uniq from 'lodash/uniq';
+
+function renderConstraintForm(controlType) {
+  const control = getControl({ name: controlType });
+  const ConstraintsForm = control.type.ConstraintsForm;
+  if (!ConstraintsForm) return null;
+  return <ConstraintsForm />;
+}
 
 function CustomMetadataForm(props) {
   let propKeys = [];
@@ -43,6 +51,7 @@ function CustomMetadataForm(props) {
                 }}
                 options={controlTypes.map((type) => ({ value: type }))}
               />
+              {renderConstraintForm(controlType)}
             </div>
           );
         })
