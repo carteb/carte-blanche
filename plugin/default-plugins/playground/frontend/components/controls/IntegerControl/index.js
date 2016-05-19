@@ -6,6 +6,7 @@
 
 import React from 'react';
 import valueOrNullOrUndefined from '../../../utils/valueOrNullOrUndefined';
+import faker from 'faker/build/build/faker';
 
 import Input from '../../common/Input';
 
@@ -28,19 +29,20 @@ const IntegerControl = (props) => {
  * Generates a random integer
  */
 IntegerControl.randomValue = (props) => {
-  const {
-    min = Number.MAX_SAFE_INTEGER,
-    max = Number.MIN_SAFE_INTEGER,
-    step = 1,
-  } = props;
-  const canBeNull = !props.required;
-  const canBeUndefined = !props.required;
-  let number;
-  do {
-    number = Math.floor(Math.random() * (max - min + 1)) + min;
-  } while (number % step === 1);
-
-  return valueOrNullOrUndefined(number, canBeNull, canBeUndefined);
+  const { constraints, required } = props;
+  const canBeNull = !required;
+  const canBeUndefined = !required;
+  // https://github.com/Marak/faker.js/wiki/Basic-Random-Data
+  const randomNumber = faker.random.number(constraints);
+  return valueOrNullOrUndefined(randomNumber, canBeNull, canBeUndefined);
 };
+
+
+// IntegerControl.OptionsForm = () => {
+//   // onChange of any input has to trigger an update on the metadata
+//   return (
+//     <div><input type="number" /></div>
+//   );
+// };
 
 export default IntegerControl;
