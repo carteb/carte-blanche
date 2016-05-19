@@ -20,11 +20,11 @@ import FlowUnionControl from '../components/controls/FlowUnionControl';
 
 const getControl = (propType, propMeta) => {
   const controlType = propMeta && propMeta.controlType ? propMeta.controlType : propType.name;
-  const randomParams = propMeta && propMeta.randomParams ? propMeta.randomParams : {};
+  const constraints = propMeta && propMeta.constraints ? propMeta.constraints : {};
   const generalProps = {
     // If something is required, don't randomise it to null/undefined
     required: propType.required,
-    randomParams: { ...randomParams },
+    constraints,
   };
 
   let control;
