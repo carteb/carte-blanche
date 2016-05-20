@@ -42,10 +42,15 @@
   padding: 0.25rem 0.5rem;
 }
 
-.componentWrapper {
+.componentFrame {
+  border: none;
   width: 100%;
   height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  position: absolute;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 3px; /* Same as Card component main div */
 }

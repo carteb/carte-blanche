@@ -6,6 +6,7 @@
 
 import React, { PropTypes } from 'react';
 import { VelocityComponent } from 'velocity-react';
+import Frame from 'react-frame-component';
 
 import EditButton from '../common/EditButton';
 import DeleteButton from '../common/DeleteButton';
@@ -114,9 +115,30 @@ class Playground extends React.Component {
           )}
 
           {/* Render the actual component */}
-          <div className={styles.componentWrapper}>
+          <Frame
+            initialContent={`
+              <!DOCTYPE html>
+              <html style="height: 100%; width: 100%;">
+                <head></head>
+                <body style="height: 100%; width: 100%;">
+                  <div
+                    id="root"
+                    style="
+                      height: 100%;
+                      width: 100%;
+                      display: flex;
+                      justify-content: center;
+                      align-items: center;
+                    "
+                  ></div>
+                </body>
+              </html>
+            `}
+            mountTarget="#root"
+            className={styles.componentFrame}
+          >
             <Component {...this.props.variationProps} />
-          </div>
+          </Frame>
         </Card>
       </div>
     );
