@@ -1,7 +1,5 @@
 import React from 'react';
-import valueOrNullOrUndefined from '../../../utils/valueOrNullOrUndefined';
-import faker from 'faker/build/build/faker';
-
+import randomValue from './randomValue';
 import Input from '../../common/Input';
 
 const StringControl = (props) => {
@@ -18,11 +16,6 @@ const StringControl = (props) => {
   );
 };
 
-StringControl.randomValue = (props) => {
-  const canBeUndefined = !props.required;
-  const canBeNull = !props.required;
-  const randomString = faker.lorem.sentence();
-  return valueOrNullOrUndefined(randomString, canBeNull, canBeUndefined);
-};
+StringControl.randomValue = randomValue;
 
 export default StringControl;

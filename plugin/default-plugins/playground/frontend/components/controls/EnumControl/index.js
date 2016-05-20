@@ -6,6 +6,7 @@
 
 import React from 'react';
 import Select from '../../common/Select';
+import randomValue from './randomValue';
 
 const EnumControl = (props) => {
   const {
@@ -31,11 +32,6 @@ const EnumControl = (props) => {
 /**
  * Generates a random boolean value
  */
-EnumControl.randomValue = (propTypeData) => {
-  const randomValue = propTypeData.value[Math.floor(Math.random() * propTypeData.value.length)];
-
-  // TODO check for randomValue.computed == true;
-  return eval(randomValue.value); // eslint-disable-line no-eval
-};
+EnumControl.randomValue = randomValue;
 
 export default EnumControl;
