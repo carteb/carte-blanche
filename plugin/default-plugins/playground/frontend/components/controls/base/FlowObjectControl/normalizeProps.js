@@ -1,4 +1,4 @@
-import getControl from '../../../utils/getControl';
+import getControl from '../../../../utils/getControl';
 import keyBy from 'lodash/keyBy';
 import mapValues from 'lodash/mapValues';
 

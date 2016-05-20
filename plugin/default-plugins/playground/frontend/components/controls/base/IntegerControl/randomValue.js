@@ -1,4 +1,4 @@
-import valueOrNullOrUndefined from '../../../utils/valueOrNullOrUndefined';
+import valueOrNullOrUndefined from '../../../../utils/valueOrNullOrUndefined';
 import faker from 'faker/build/build/faker';
 
 export default (props) => {

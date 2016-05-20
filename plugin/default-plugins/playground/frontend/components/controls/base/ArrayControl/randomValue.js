@@ -1,6 +1,6 @@
 import range from 'lodash/range';
-import valueOrNullOrUndefined from '../../../utils/valueOrNullOrUndefined';
-import getControl from '../../../utils/getControl';
+import valueOrNullOrUndefined from '../../../../utils/valueOrNullOrUndefined';
+import getControl from '../../../../utils/getControl';
 
 export default (propTypeData) => {
   const canBeNull = !propTypeData.required;

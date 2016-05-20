@@ -1,4 +1,4 @@
-import valueOrNullOrUndefined from '../../../utils/valueOrNullOrUndefined';
+import valueOrNullOrUndefined from '../../../../utils/valueOrNullOrUndefined';
 
 export default (props) => {
   const canBeNull = !props.required;

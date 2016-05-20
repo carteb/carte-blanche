@@ -1,6 +1,6 @@
 import React from 'react';
 import randomValue from './randomValue';
-import Input from '../../common/Input';
+import Input from '../../../common/Input';
 
 const StringControl = (props) => {
   const { label, value, onUpdate, isNested } = props;

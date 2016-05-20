@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 
 import Label from '../Label';
 import styles from './styles.css';
-import objectControlStyles from '../../controls/ObjectControl/styles.css';
+import objectControlStyles from '../../controls/base/ObjectControl/styles.css';
 
 function Input(props) {
   let wrapperClassname = objectControlStyles.wrapper;

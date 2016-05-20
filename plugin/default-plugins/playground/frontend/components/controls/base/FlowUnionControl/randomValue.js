@@ -1,5 +1,5 @@
-import valueOrNullOrUndefined from '../../../utils/valueOrNullOrUndefined';
-import getControl from '../../../utils/getControl';
+import valueOrNullOrUndefined from '../../../../utils/valueOrNullOrUndefined';
+import getControl from '../../../../utils/getControl';
 
 export default (propTypeData) => {
   const type = propTypeData.elements[Math.floor(Math.random() * propTypeData.elements.length)];

@@ -7,7 +7,7 @@
 import React from 'react';
 import ConstraintsForm from './ConstraintsForm';
 import randomValue from './randomValue';
-import Input from '../../common/Input';
+import Input from '../../../common/Input';
 
 const IntegerControl = (props) => {
   const { label, value, onUpdate, isNested } = props;

@@ -1,6 +1,6 @@
 import React from 'react';
 import toNumber from 'lodash/toNumber';
-import Input from '../../../common/Input';
+import Input from '../../../../common/Input';
 
 const defaultConstraints = {
   min: 0,
