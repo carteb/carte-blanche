@@ -26,20 +26,18 @@ export default {
       inject: true,
       template: path.join(__dirname, './src/index.html'),
     }),
+    new StyleguidePlugin({
+      src: 'src/components/**/*.jsx',
+    }),
   ],
   module: {
     loaders: [
       {
-        test: /\.js$/,
+        test: /\.jsx?$/,
         loaders: ['babel'],
-
-        // this is a hack for development
-        // in the final version we compile it before shipping
-        include: [path.join(__dirname, './src'), path.join(__dirname, '../../plugin')],
       }, {
         test: /\.css/,
         loader: 'style!css?modules&importLoaders=1&localIdentName=[local]__[path][name]__[hash:base64:5]!postcss-loader', // eslint-disable-line max-len
-        include: [path.join(__dirname, './src'), path.join(__dirname, '../../plugin')],
       }, {
         test: /\.(png|jpg|gif)$/,
         loaders: ['url?limit=10000'],
