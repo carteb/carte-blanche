@@ -2,8 +2,8 @@ import React, { cloneElement } from 'react';
 import cloneDeep from 'lodash/cloneDeep';
 import range from 'lodash/range';
 import randomValue from './randomValue';
-import Label from '../../common/Label';
-import getControl from '../../../utils/getControl';
+import Label from '../../../common/Label';
+import getControl from '../../../../utils/getControl';
 
 import objectControlStyles from '../ObjectControl/styles.css';
 

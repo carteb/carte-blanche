@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-import Select from '../../common/Select';
+import Select from '../../../common/Select';
 import randomValue from './randomValue';
 
 const BooleanControl = (props) => {

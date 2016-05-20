@@ -1,5 +1,5 @@
-import valueOrNullOrUndefined from '../../../utils/valueOrNullOrUndefined';
-import randomValues from '../../../utils/randomValues';
+import valueOrNullOrUndefined from '../../../../utils/valueOrNullOrUndefined';
+import randomValues from '../../../../utils/randomValues';
 import normalizeProps from './normalizeProps';
 
 export default (propTypeData) => {

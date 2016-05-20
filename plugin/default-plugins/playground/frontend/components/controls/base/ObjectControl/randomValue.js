@@ -1,7 +1,7 @@
-import getControl from '../../../utils/getControl';
+import getControl from '../../../../utils/getControl';
 import mapValues from 'lodash/mapValues';
-import randomValues from '../../../utils/randomValues';
-import valueOrNullOrUndefined from '../../../utils/valueOrNullOrUndefined';
+import randomValues from '../../../../utils/randomValues';
+import valueOrNullOrUndefined from '../../../../utils/valueOrNullOrUndefined';
 
 export default (propTypeData) => {
   const canBeNull = !propTypeData.required;

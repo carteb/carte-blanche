@@ -5,8 +5,8 @@
  */
 
 import React, { cloneElement } from 'react';
-import getControl from '../../../utils/getControl';
-import RandomButton from '../../common/RandomButton';
+import getControl from '../../../../utils/getControl';
+import RandomButton from '../../../common/RandomButton';
 import randomValue from './randomValue';
 
 const FlowUnionControl = ({ label, propTypeData, value, onUpdate }) => {

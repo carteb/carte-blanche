@@ -4,9 +4,9 @@
  * Renders an information field mentioning that this property can't be generated.
  */
 
-import renderControls from '../../../utils/renderControls';
+import renderControls from '../../../../utils/renderControls';
 import React from 'react';
-import RandomButton from '../../common/RandomButton';
+import RandomButton from '../../../common/RandomButton';
 import normalizeProps from './normalizeProps';
 import randomValue from './randomValue';
 

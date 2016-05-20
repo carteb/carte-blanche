@@ -4,11 +4,11 @@
  * Renders an information field mentioning that this property can't be generated.
  */
 
-import renderControls from '../../../utils/renderControls';
-import getControl from '../../../utils/getControl';
+import renderControls from '../../../../utils/renderControls';
+import getControl from '../../../../utils/getControl';
 import React from 'react';
 import mapValues from 'lodash/mapValues';
-import Label from '../../common/Label';
+import Label from '../../../common/Label';
 import randomValue from './randomValue';
 
 import styles from './styles.css';

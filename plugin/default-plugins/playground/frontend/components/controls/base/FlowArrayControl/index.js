@@ -1,8 +1,8 @@
 import React, { cloneElement } from 'react';
 import range from 'lodash/range';
 import cloneDeep from 'lodash/cloneDeep';
-import RandomButton from '../../common/RandomButton';
-import getControl from '../../../utils/getControl';
+import RandomButton from '../../../common/RandomButton';
+import getControl from '../../../../utils/getControl';
 import randomValue from './randomValue';
 
 const FlowArrayControl = (props) => {
