@@ -7,8 +7,14 @@
 import React from 'react';
 import valueOrNullOrUndefined from '../../../utils/valueOrNullOrUndefined';
 import faker from 'faker/build/build/faker';
+import toNumber from 'lodash/toNumber';
 
 import Input from '../../common/Input';
+
+const defaultConstraints = {
+  min: 0,
+  max: 1000,
+};
 
 const IntegerControl = (props) => {
   const { label, value, onUpdate, isNested } = props;
@@ -38,28 +44,32 @@ IntegerControl.randomValue = (props) => {
 };
 
 
-IntegerControl.ConstraintsForm = (props) => { // eslint-disable-line
-  // onChange of any input has to trigger an update on the metadata
-  // TODO validate that min is not larger than max
-  const { constraints = {} } = props;
-  // const updateMin = (min) => {
-  //   this.props.onUpdate({});
-  // };
+IntegerControl.ConstraintsForm = ({ constraints = {}, onUpdate }) => {
+  const {
+    min = defaultConstraints.min,
+    max = defaultConstraints.max,
+  } = constraints;
+
+  const updateMin = (evt) => {
+    onUpdate({ min: toNumber(evt.target.value) });
+  };
+  const updateMax = (evt) => {
+    onUpdate({ max: toNumber(evt.target.value) });
+  };
+
   return (
     <div>
-      <input
+      <Input
         type="number"
-        placeholder="min"
-        // update the whole constraints object
-        // onChange={ updateMin }
-        value={constraints.min}
+        label="Min"
+        onChange={updateMin}
+        value={min}
       />
-      <input
+      <Input
         type="number"
-        placeholder="max"
-        // update the whole constraints object
-        // onChange={}
-        value={constraints.max}
+        label="Max"
+        onChange={updateMax}
+        value={max}
       />
     </div>
   );
