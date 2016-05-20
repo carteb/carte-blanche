@@ -5,22 +5,10 @@
  */
 
 import renderControls from '../../../utils/renderControls';
-import getControl from '../../../utils/getControl';
 import React from 'react';
-import keyBy from 'lodash/keyBy';
-import mapValues from 'lodash/mapValues';
-import randomValues from '../../../utils/randomValues';
-import valueOrNullOrUndefined from '../../../utils/valueOrNullOrUndefined';
 import RandomButton from '../../common/RandomButton';
-
-const normalizeProps = (props) => {
-  const propsObject = keyBy(props, 'key');
-  const normalizedProps = mapValues(propsObject, (prop) => prop.value);
-  return mapValues(normalizedProps, (prop) => {
-    prop.control = getControl(prop); // eslint-disable-line no-param-reassign
-    return prop;
-  });
-};
+import normalizeProps from './normalizeProps';
+import randomValue from './randomValue';
 
 const FlowObjectControl = ({ label, propTypeData, value, onUpdate }) => {
   const updatePropertyValues = (values) => {
@@ -45,12 +33,6 @@ const FlowObjectControl = ({ label, propTypeData, value, onUpdate }) => {
   );
 };
 
-FlowObjectControl.randomValue = (propTypeData) => {
-  const canBeNull = true;
-  const canBeUndefined = true;
-  const normalizedPropsWithControls = normalizeProps(propTypeData.signature.properties);
-  const value = randomValues(normalizedPropsWithControls);
-  return valueOrNullOrUndefined(value, canBeNull, canBeUndefined);
-};
+FlowObjectControl.randomValue = randomValue;
 
 export default FlowObjectControl;

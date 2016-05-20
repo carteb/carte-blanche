@@ -6,7 +6,7 @@
 
 import React from 'react';
 import Select from '../../common/Select';
-import valueOrNullOrUndefined from '../../../utils/valueOrNullOrUndefined';
+import randomValue from './randomValue';
 
 const BooleanControl = (props) => {
   const { label, value, onUpdate } = props;
@@ -37,11 +37,6 @@ const BooleanControl = (props) => {
 /**
  * Generates a random boolean value
  */
-BooleanControl.randomValue = (props) => {
-  const canBeNull = !props.required;
-  const canBeUndefined = !props.required;
-  const value = Math.random() >= 0.5;
-  return valueOrNullOrUndefined(value, canBeNull, canBeUndefined);
-};
+BooleanControl.randomValue = randomValue;
 
 export default BooleanControl;

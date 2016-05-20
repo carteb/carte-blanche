@@ -5,9 +5,9 @@
  */
 
 import React, { cloneElement } from 'react';
-import valueOrNullOrUndefined from '../../../utils/valueOrNullOrUndefined';
 import getControl from '../../../utils/getControl';
 import RandomButton from '../../common/RandomButton';
+import randomValue from './randomValue';
 
 const FlowUnionControl = ({ label, propTypeData, value, onUpdate }) => {
   let clonedControl;
@@ -51,11 +51,6 @@ const FlowUnionControl = ({ label, propTypeData, value, onUpdate }) => {
   );
 };
 
-FlowUnionControl.randomValue = (propTypeData) => {
-  const type = propTypeData.elements[Math.floor(Math.random() * propTypeData.elements.length)];
-  const control = getControl(type);
-  const value = control.type.randomValue({});
-  return valueOrNullOrUndefined(value, true, true);
-};
+FlowUnionControl.randomValue = randomValue;
 
 export default FlowUnionControl;
