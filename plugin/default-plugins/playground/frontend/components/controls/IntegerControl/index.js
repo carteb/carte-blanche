@@ -5,8 +5,8 @@
  */
 
 import React from 'react';
-import valueOrNullOrUndefined from '../../../utils/valueOrNullOrUndefined';
-
+import ConstraintsForm from './ConstraintsForm';
+import randomValue from './randomValue';
 import Input from '../../common/Input';
 
 const IntegerControl = (props) => {
@@ -19,7 +19,7 @@ const IntegerControl = (props) => {
       value={value}
       isNested={isNested}
       onChange={(event) => onUpdate({ value: parseInt(event.target.value, 10) })}
-      onRandomClick={() => onUpdate({ value: IntegerControl.randomValue(props, props.required) })}
+      onRandomClick={() => onUpdate({ value: IntegerControl.randomValue(props) })}
     />
   );
 };
@@ -27,20 +27,8 @@ const IntegerControl = (props) => {
 /**
  * Generates a random integer
  */
-IntegerControl.randomValue = (props) => {
-  const {
-    min = Number.MAX_SAFE_INTEGER,
-    max = Number.MIN_SAFE_INTEGER,
-    step = 1,
-  } = props;
-  const canBeNull = !props.required;
-  const canBeUndefined = !props.required;
-  let number;
-  do {
-    number = Math.floor(Math.random() * (max - min + 1)) + min;
-  } while (number % step === 1);
+IntegerControl.randomValue = randomValue;
 
-  return valueOrNullOrUndefined(number, canBeNull, canBeUndefined);
-};
+IntegerControl.ConstraintsForm = ConstraintsForm;
 
 export default IntegerControl;
