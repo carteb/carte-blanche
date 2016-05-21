@@ -13,7 +13,7 @@ import has from 'lodash/has';
 import throttle from 'lodash/throttle';
 import find from 'lodash/find';
 import flatten from 'lodash/flatten';
-import smoothscroll from 'smoothscroll';
+import smoothscroll from './smoothscroll';
 
 window.hashHistory = hashHistory;
 
