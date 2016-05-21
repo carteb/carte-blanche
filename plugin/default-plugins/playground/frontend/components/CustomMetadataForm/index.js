@@ -5,6 +5,7 @@ import Select from '../common/Select';
 import controlTypes from './controlTypes';
 import getControl from '../../utils/getControl';
 import uniq from 'lodash/uniq';
+import set from 'lodash/set';
 
 function renderConstraintForm(propKey, controlType, updateCustomMetadata, customMetadata) {
   // retrieving the ConstraintsForm based on the controlType string/key
@@ -59,12 +60,8 @@ function CustomMetadataForm(props) {
                 value={controlType}
                 onChange={(event) => {
                   const newCustomMetadata = { ...props.customMetadata };
-                  newCustomMetadata.props = newCustomMetadata.props ?
-                                            newCustomMetadata.props :
-                                            {};
-                  newCustomMetadata.props[propKey] = newCustomMetadata.props[propKey] ?
-                                                     newCustomMetadata.props[propKey] :
-                                                     {};
+                  // overwrite they current propKey which also removes constraints
+                  set(newCustomMetadata, ['props', propKey], {});
                   newCustomMetadata.props[propKey].controlType = event.target.value;
                   props.updateCustomMetadata(newCustomMetadata);
                 }}
