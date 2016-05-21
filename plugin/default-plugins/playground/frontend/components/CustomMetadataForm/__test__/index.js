@@ -32,7 +32,7 @@ describe('<CustomMetadataForm />', () => {
     const maxInput = wrapper.find('#Min');
     maxInput.simulate('change', { target: { value: 4 } });
     sinon.assert.calledWith(updateCustomMetadata, {
-      props: { className: { constraints: { min: 4 }, controlType: 'number' } }
+      props: { className: { constraints: { min: 4 }, controlType: 'number' } },
     });
   });
 
@@ -40,7 +40,7 @@ describe('<CustomMetadataForm />', () => {
     const maxInput = wrapper.find('#Max');
     maxInput.simulate('change', { target: { value: 100 } });
     sinon.assert.calledWith(updateCustomMetadata, {
-      props: { className: { constraints: { max: 100 }, controlType: 'number' } }
+      props: { className: { constraints: { max: 100 }, controlType: 'number' } },
     });
   });
 
@@ -48,7 +48,7 @@ describe('<CustomMetadataForm />', () => {
     const select = wrapper.find('select').first();
     select.simulate('change');
     sinon.assert.calledWith(updateCustomMetadata, {
-      props: { className: { controlType: 'number' } }
+      props: { className: { controlType: 'number' } },
     });
   });
 
@@ -56,7 +56,7 @@ describe('<CustomMetadataForm />', () => {
     const select = wrapper.find('select').first();
     select.simulate('change', { target: { value: 'enum' } });
     sinon.assert.calledWith(updateCustomMetadata, {
-      props: { className: { controlType: 'enum' } }
+      props: { className: { controlType: 'enum' } },
     });
   });
 });
