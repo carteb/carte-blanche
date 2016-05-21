@@ -23,10 +23,14 @@ function renderConstraintForm(propKey, controlType, updateCustomMetadata, custom
     updateCustomMetadata(newCustomMetadata);
   };
 
+  const constraints = customMetadata.props && customMetadata.props[propKey] ?
+                      customMetadata.props[propKey].constraints :
+                      {};
+
   return (
     <ConstraintsForm
       onUpdate={onUpdateConstraints}
-      constraints={customMetadata.props[propKey].constraints}
+      constraints={constraints}
     />
   );
 }
