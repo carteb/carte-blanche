@@ -11,6 +11,7 @@ import FlowUnionControl from './base/FlowUnionControl';
 import FunctionControl from './base/FunctionControl';
 
 import AvatarControl from './advanced/AvatarControl';
+import NameControl from './advanced/NameControl';
 
 const defaultControls = {
   // Basic
@@ -66,6 +67,10 @@ const defaultControls = {
   // Advanced
   avatar: {
     control: AvatarControl,
+    nested: false,
+  },
+  name: {
+    control: NameControl,
     nested: false,
   },
 };

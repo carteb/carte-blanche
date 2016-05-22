@@ -5,6 +5,7 @@ const controlTypes = [
   'enum',
   'node',
   'avatar',
+  'name',
   // 'shape',
   // 'arrayOf',
 ];
