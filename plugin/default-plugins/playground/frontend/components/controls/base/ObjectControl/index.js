@@ -1,5 +1,5 @@
 /**
- * FlowObjectControl
+ * ObjectControl
  *
  * Renders an information field mentioning that this property can't be generated.
  */
@@ -10,7 +10,6 @@ import React from 'react';
 import mapValues from 'lodash/mapValues';
 import Label from '../../../common/Label';
 import randomValue from './randomValue';
-
 import styles from './styles.css';
 
 const ObjectControl = ({ label, propTypeData, value, onUpdate, isNested }) => {
