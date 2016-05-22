@@ -72,6 +72,9 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
         data.loaders.unshift(loaderRequest);
       }
 
+      // if (data.rawRequest.indexOf('test-file') >= 0) {
+      //   debugger
+      // }
       console.log('rawRequest:', data.rawRequest);
       console.log('loaders   :', data.loaders);
       console.log('------------');
@@ -85,6 +88,7 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
     // Generate a string with a script tag for every component
     const paths = {};
     Object.keys(cache).forEach((request) => {
+      // debugger
       const requestPath = request.replace(/^.+!/, '').replace(/\?.+$/, '');
       const relativePath = path.relative(compiler.options.context, requestPath);
 

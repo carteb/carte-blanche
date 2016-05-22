@@ -27,13 +27,13 @@ export default {
       template: path.join(__dirname, './src/index.html'),
     }),
     new StyleguidePlugin({
-      src: 'src/components/**/*.js',
+      src: 'src/components/**/*.jsx',
     }),
   ],
   module: {
     loaders: [
       {
-        test: /\.js$/,
+        test: /\.jsx?$/,
         loaders: ['babel'],
 
         // this is a hack for development
