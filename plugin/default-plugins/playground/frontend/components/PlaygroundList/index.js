@@ -119,6 +119,7 @@ class PlaygroundList extends Component {
   };
 
   connectToSocket = () => {
+    // TODO dynamic host
     this.socket = io.connect('http://localhost:8000');
     this.socket.on('componentMetadataChanged', this.onComponentMetadataChanged);
     this.socket.on('componentVariationChanged', this.onComponentVariationChanged);
