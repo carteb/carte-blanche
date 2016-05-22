@@ -30,8 +30,6 @@ var getRelativeCompPathFromComponents = (req) => req.params[0].replace(/^\/compo
 
 var start = (projectBasePath, variationsBasePath, port) => {
   var app = express();
-  var http = require('http').Server(app);
-  var io = require('socket.io')(http);
 
   app.use(cors());
 
@@ -202,12 +200,7 @@ var start = (projectBasePath, variationsBasePath, port) => {
   });
 
   server = app.listen(port);
-
-  // FIXE: It should be possible to listen on the same port as the express server eq 8000
-  var socketPort = Number(port) + 1;
-  http.listen(socketPort, function() {
-    console.log('SocketIO listening on port ' + socketPort);
-  });
+  var io = require('socket.io')(server);
 }
 
 var stop = (callback) => {
