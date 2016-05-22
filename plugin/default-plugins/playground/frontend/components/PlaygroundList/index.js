@@ -61,6 +61,16 @@ class PlaygroundList extends Component {
     this.disconnectFromSocket();
   }
 
+  onComponentMetadataChanged = (event) => {
+    const { data } = event;
+    this.generateMetadataWithControls(data);
+  };
+
+  onComponentVariationChanged = (event) => {
+    const { data: { name, props } } = event;
+    this.updateVariation(name.toLowerCase(), props);
+  };
+
   getRandomValues = () => randomValues(this.state.metadataWithControls);
 
   getDataFromProps = (data) => {
@@ -120,16 +130,6 @@ class PlaygroundList extends Component {
     if (this.socket) {
       this.socket.disconnect();
     }
-  };
-
-  onComponentMetadataChanged = (event) => {
-    const { data } = event;
-    this.generateMetadataWithControls(data);
-  };
-
-  onComponentVariationChanged = (event) => {
-    const { data: { name, props } } = event;
-    this.updateVariation(name.toLowerCase(), props);
   };
 
   fetchVariations = () => {
