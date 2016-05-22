@@ -6,6 +6,7 @@ import React, { Component } from 'react';
 import map from 'lodash/map';
 import mapValues from 'lodash/mapValues';
 import find from 'lodash/find';
+import filter from 'lodash/filter';
 import debounce from 'lodash/debounce';
 import 'whatwg-fetch';
 import getSlug from 'speakingurl';
@@ -27,6 +28,7 @@ import CustomMetadataForm from '../CustomMetadataForm';
 import styles from './styles.css';
 
 const PERSISTENCE_DELAY = 1000;
+const STYLE_TAGS_OF_INTERFACE = 3;
 
 class PlaygroundList extends Component {
   state = {
@@ -216,7 +218,7 @@ class PlaygroundList extends Component {
     this.generateMetadataWithControls(customMetadata);
     // Persist changes to server every PERSISTENCE_TIMEOUT milliseconds
     this.debouncedPersistCustomMetadata(customMetadata);
-  }
+  };
 
   persistCustomMetadata = (customMetadata) => {
     fetch(`http://localhost:8000/components/${this.props.componentPath}`, {
@@ -299,11 +301,24 @@ class PlaygroundList extends Component {
     }
 
     const { component } = this.props;
+    // Find the selected variation
     const selectedVariation =
       find(
         this.state.variationPropsList,
         (variationProps, key) => this.state.selectedVariationId === key
       );
+    // Get all the styling of the components. These tags are injected by style-loader
+    // and we can grab all of them and inject them into each iframe of the variations
+    const stylingNodes = document.querySelectorAll('link[rel=stylesheet], style');
+    // Discard STYLE_TAGS_OF_INTERFACE amount of <style> tags, they style the interface
+    let filteredStylingNodes = 0;
+    const userStylingNodes = filter(stylingNodes, (styleNode) => {
+      if (styleNode.nodeName === 'STYLE' && filteredStylingNodes <= STYLE_TAGS_OF_INTERFACE) {
+        filteredStylingNodes++;
+        return false;
+      }
+      return true;
+    });
     return (
       <div className={styles.wrapper}>
         <h2 className={styles.title}>
@@ -363,6 +378,7 @@ class PlaygroundList extends Component {
             variationPath={variationPath}
             onDeleteButtonClick={this.deleteVariation}
             onEditButtonClick={this.startVariationEditMode}
+            stylingNodes={userStylingNodes}
           />
         ))}
         <CreateVariationButton
