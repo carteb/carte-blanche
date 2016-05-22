@@ -13,7 +13,7 @@ import LimitChunkCountPlugin from 'webpack/lib/optimize/LimitChunkCountPlugin';
 import path from 'path';
 
 module.exports = function styleguideLoader(source) {
-  this.cacheable();
+  // this.cacheable();
   return source;
 };
 
@@ -51,16 +51,16 @@ module.exports.pitch = function pitch(request) {
   childCompiler.apply(new LimitChunkCountPlugin({ maxChunks: 1 }));
 
   // TODO Explain this part, what do subCaches do and why do we need them?
-  const subCache = `subcache ${__dirname} ${request}`;
-  childCompiler.plugin('compilation', (compilation) => {
-    if (compilation.cache) {
-      if (!compilation.cache[subCache]) {
-        compilation.cache[subCache] = {}; // eslint-disable-line no-param-reassign
-      }
-
-      compilation.cache = compilation.cache[subCache]; // eslint-disable-line no-param-reassign
-    }
-  });
+  // const subCache = `subcache ${__dirname} ${request}`;
+  // childCompiler.plugin('compilation', (compilation) => {
+  //   if (compilation.cache) {
+  //     if (!compilation.cache[subCache]) {
+  //       compilation.cache[subCache] = {}; // eslint-disable-line no-param-reassign
+  //     }
+  //
+  //     compilation.cache = compilation.cache[subCache]; // eslint-disable-line no-param-reassign
+  //   }
+  // });
 
   const callback = this.async();
   childCompiler.runAsChild((err, entries, compilation) => {

@@ -72,6 +72,10 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
         data.loaders.unshift(loaderRequest);
       }
 
+      // console.log('rawRequest:', data.rawRequest);
+      // console.log('loaders   :', data.loaders);
+      // console.log('------------');
+
       callback(null, data);
       return undefined;
     });
