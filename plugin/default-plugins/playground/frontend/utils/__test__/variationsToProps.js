@@ -306,7 +306,7 @@ describe('variationsToProps', () => {
 
     it('should handle names and props in one', () => {
       const variations = {
-        'variationA.js':
+        variationA:
 `{
   "name": "Disabled Button",
   "props": {
@@ -315,7 +315,7 @@ describe('variationsToProps', () => {
 };`,
       };
       const expected = {
-        'variationA.js': {
+        variationA: {
           name: 'Disabled Button',
           props: {
             age: 22,
@@ -323,6 +323,34 @@ describe('variationsToProps', () => {
         },
       };
       expect(variationsToProps(variations)).to.deep.equal(expected);
+    });
+
+    it('should handle a function prop', () => {
+      const variations = {
+        variationA: `{
+    "props": {
+      "onClick": function onClick() {
+          return undefined;
+        }
+    }
+  };`,
+      };
+      expect(variationsToProps(variations).variationA.props.onClick).to.be.an('function');
+    });
+
+    it('should handle a nested function prop', () => {
+      const variations = {
+        variationA: `{
+    "props": {
+      "hairs": {
+        "onClick": function onClick() {
+            return undefined;
+          }
+      }
+    }
+  };`,
+      };
+      expect(variationsToProps(variations).variationA.props.hairs.onClick).to.be.an('function');
     });
   });
 });
