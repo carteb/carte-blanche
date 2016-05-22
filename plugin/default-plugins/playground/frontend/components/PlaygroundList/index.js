@@ -112,6 +112,8 @@ class PlaygroundList extends Component {
     this.socket = io.connect('http://localhost:8000');
     this.socket.on('componentMetadataChanged', this.onComponentMetadataChanged);
     this.socket.on('componentVariationChanged', this.onComponentVariationChanged);
+    this.socket.on('componentVariationAdded', this.fetchVariations);
+    this.socket.on('componentVariationRemoved', this.fetchVariations);
   };
 
   disconnectFromSocket = () => {

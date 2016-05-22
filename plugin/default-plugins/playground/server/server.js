@@ -35,17 +35,32 @@ var start = (projectBasePath, variationsBasePath, port) => {
 
   // TODO make variations path dynamic?
   chokidar.watch('examples/dev/variations/**/*.js', {ignored: /[\/\\]\./}).on('all', (event, path) => {
-    if (event == 'change') {
-      var content = fs.readFileSync(path, { encoding: 'utf8' });
-      var componentName = path.split('/').reverse()[1];
+    switch (event) {
+      case 'change':
+        var content = fs.readFileSync(path, { encoding: 'utf8' });
+        var componentName = path.split('/').reverse()[1];
 
-      // TODO eval evil?
-      var data = null;
-      eval(content.replace('module.exports = ', 'data = '));
+        // TODO eval evil?
+        var data = null;
+        eval(content.replace('module.exports = ', 'data = '));
 
-      var eventName = path.match(/meta\.js/) ? 'componentMetadataChanged' : 'componentVariationChanged';
+        var eventName = path.match(/meta\.js/) ? 'componentMetadataChanged' : 'componentVariationChanged';
 
-      io.sockets.emit(eventName, { component: componentName, data: data });
+        io.sockets.emit(eventName, { component: componentName, data: data });
+        break;
+
+      case 'add':
+        var eventName = 'componentVariationAdded';
+        io.sockets.emit(eventName, {});
+        break;
+
+      case 'unlink':
+        var eventName = 'componentVariationRemoved';
+        io.sockets.emit(eventName, {});
+        break;
+
+      default:
+        break;
     }
   });
 
