@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 import RandomButton from '../index';
 
 describe('<RandomButton />', () => {
-  it('on click calls the onClick prop', () => {
+  it('should call the onClick prop on click', () => {
     const onRandomClick = sinon.spy();
     const component = shallow(<RandomButton onClick={onRandomClick} id="test" />);
     const btn = component.find('div').first();
