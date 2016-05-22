@@ -111,6 +111,7 @@ class PlaygroundList extends Component {
   connectToSocket = () => {
     this.socket = io.connect('http://localhost:8000');
     this.socket.on('componentMetadataChanged', this.onComponentMetadataChanged);
+    this.socket.on('componentVariationChanged', this.onComponentVariationChanged);
   };
 
   disconnectFromSocket = () => {
@@ -122,6 +123,11 @@ class PlaygroundList extends Component {
   onComponentMetadataChanged = (event) => {
     const { data } = event;
     this.generateMetadataWithControls(data);
+  };
+
+  onComponentVariationChanged = (event) => {
+    const { data: { name, props } } = event;
+    this.updateVariation(name.toLowerCase(), props);
   };
 
   fetchVariations = () => {

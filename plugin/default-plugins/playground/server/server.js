@@ -33,16 +33,18 @@ var start = (projectBasePath, variationsBasePath, port) => {
 
   app.use(cors());
 
-  chokidar.watch('examples/dev/variations/**/meta.js', {ignored: /[\/\\]\./}).on('all', (event, path) => {
+  chokidar.watch('examples/dev/variations/**/*.js', {ignored: /[\/\\]\./}).on('all', (event, path) => {
     if (event == 'change') {
       var content = fs.readFileSync(path, { encoding: 'utf8' });
-      var component = path.split('/').reverse()[1];
+      var componentName = path.split('/').reverse()[1];
 
       var data = null;
       eval(content.replace('module.exports = ', 'data = '));
 
-      io.sockets.emit('componentMetadataChanged', { component: component, data: data });
-      console.log('Component metadata changed: ' + component);
+      var eventName = path.match(/meta\.js/) ? 'componentMetadataChanged' : 'componentVariationChanged';
+
+      io.sockets.emit(eventName, { component: componentName, data: data });
+      console.log(eventName + ': ' + componentName, data);
     }
   });
 
