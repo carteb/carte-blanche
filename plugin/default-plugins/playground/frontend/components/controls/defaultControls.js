@@ -9,7 +9,10 @@ import ObjectControl from './base/ObjectControl';
 import FlowArrayControl from './base/FlowArrayControl';
 import FlowUnionControl from './base/FlowUnionControl';
 
+import AvatarControl from './advanced/AvatarControl';
+
 const defaultControls = {
+  // Basic
   bool: {
     control: BooleanControl,
     nested: false,
@@ -46,6 +49,7 @@ const defaultControls = {
     control: ObjectControl,
     nested: true,
   },
+  // Flow specific
   signature: {
     control: FlowObjectControl,
     nested: true,
@@ -53,6 +57,11 @@ const defaultControls = {
   union: {
     control: FlowUnionControl,
     nested: true,
+  },
+  // Advanced
+  avatar: {
+    control: AvatarControl,
+    nested: false,
   },
 };
 
