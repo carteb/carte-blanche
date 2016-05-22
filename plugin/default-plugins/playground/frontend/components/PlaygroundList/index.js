@@ -53,6 +53,7 @@ class PlaygroundList extends Component {
 
     this.fetchMetadata();
     this.fetchVariations();
+    this.connectToSocket();
   }
 
   getRandomValues = () => randomValues(this.state.metadataWithControls);
@@ -101,6 +102,14 @@ class PlaygroundList extends Component {
       loadingMetadata: false,
     });
   };
+
+  connectToSocket = () => {
+    this.socket = io.connect('http://localhost:8001');
+    this.socket.on('componentMetadataChanged', (event) => {
+      const { data } = event;
+      this.generateMetadataWithControls(data);
+    });
+  }
 
   fetchVariations = () => {
     // TODO dynamic host

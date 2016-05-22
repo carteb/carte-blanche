@@ -8,6 +8,7 @@ var mkdirp = require('mkdirp');
 var server;
 var jsonBodyParser = bodyParser.json();
 var getComponentNameFromPath = require('../../../../utils/getComponentNameFromPath');
+var chokidar = require('chokidar');
 
 /**
  * Checks if a file at a certain path exists
@@ -29,7 +30,23 @@ var getRelativeCompPathFromComponents = (req) => req.params[0].replace(/^\/compo
 
 var start = (projectBasePath, variationsBasePath, port) => {
   var app = express();
+  var http = require('http').Server(app);
+  var io = require('socket.io')(http);
+
   app.use(cors());
+
+  chokidar.watch('examples/dev/variations/**/meta.js', {ignored: /[\/\\]\./}).on('all', (event, path) => {
+    if (event == 'change') {
+      var content = fs.readFileSync(path, { encoding: 'utf8' });
+      var component = path.split('/').reverse()[1];
+
+      var data = null;
+      eval(content.replace('module.exports = ', 'data = '));
+
+      io.sockets.emit('componentMetadataChanged', { component: component, data: data });
+      console.log('Component metadata changed: ' + component);
+    }
+  });
 
   /**
    * GET Variations
@@ -185,6 +202,12 @@ var start = (projectBasePath, variationsBasePath, port) => {
   });
 
   server = app.listen(port);
+
+  // FIXE: It should be possible to listen on the same port as the express server eq 8000
+  var socketPort = Number(port) + 1;
+  http.listen(socketPort, function() {
+    console.log('SocketIO listening on port ' + socketPort);
+  });
 }
 
 var stop = (callback) => {
