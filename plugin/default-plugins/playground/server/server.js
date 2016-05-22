@@ -33,18 +33,19 @@ var start = (projectBasePath, variationsBasePath, port) => {
 
   app.use(cors());
 
+  // TODO make variations path dynamic?
   chokidar.watch('examples/dev/variations/**/*.js', {ignored: /[\/\\]\./}).on('all', (event, path) => {
     if (event == 'change') {
       var content = fs.readFileSync(path, { encoding: 'utf8' });
       var componentName = path.split('/').reverse()[1];
 
+      // TODO eval evil?
       var data = null;
       eval(content.replace('module.exports = ', 'data = '));
 
       var eventName = path.match(/meta\.js/) ? 'componentMetadataChanged' : 'componentVariationChanged';
 
       io.sockets.emit(eventName, { component: componentName, data: data });
-      console.log(eventName + ': ' + componentName, data);
     }
   });
 
