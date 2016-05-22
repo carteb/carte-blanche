@@ -4,7 +4,6 @@ import range from 'lodash/range';
 import randomValue from './randomValue';
 import Label from '../../../common/Label';
 import getControl from '../../../../utils/getControl';
-
 import objectControlStyles from '../ObjectControl/styles.css';
 
 const ArrayControl = (props) => {
