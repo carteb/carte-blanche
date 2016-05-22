@@ -6,7 +6,7 @@
 
 import React, { cloneElement } from 'react';
 import getControl from '../../../../utils/getControl';
-import RandomButton from '../../../common/RandomButton';
+import Label from '../../../common/Label';
 import randomValue from './randomValue';
 
 const FlowUnionControl = ({ label, propTypeData, value, onUpdate }) => {
@@ -25,7 +25,12 @@ const FlowUnionControl = ({ label, propTypeData, value, onUpdate }) => {
 
   return (
     <div>
-      {label}
+      <Label
+        text={label}
+        onRandomClick={() => onUpdate({
+          value: FlowUnionControl.randomValue(propTypeData),
+        })}
+      />
       <select
         value={typeof value}
         onChange={(event) => {
@@ -43,9 +48,6 @@ const FlowUnionControl = ({ label, propTypeData, value, onUpdate }) => {
           </option>
         ))}
       </select>
-      <RandomButton
-        onClick={() => onUpdate({ value: FlowUnionControl.randomValue(propTypeData) })}
-      />
       {clonedControl}
     </div>
   );
