@@ -8,6 +8,7 @@ import FlowObjectControl from './base/FlowObjectControl';
 import ObjectControl from './base/ObjectControl';
 import FlowArrayControl from './base/FlowArrayControl';
 import FlowUnionControl from './base/FlowUnionControl';
+import FunctionControl from './base/FunctionControl';
 
 const defaultControls = {
   bool: {
@@ -53,6 +54,10 @@ const defaultControls = {
   union: {
     control: FlowUnionControl,
     nested: true,
+  },
+  func: {
+    control: FunctionControl,
+    nested: false,
   },
 };
 

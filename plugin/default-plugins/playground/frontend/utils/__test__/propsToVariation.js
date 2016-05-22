@@ -204,4 +204,19 @@ describe('propsToVariation', () => {
 };`;
     expect(propsToVariation(props)).to.deep.equal(expected);
   });
+
+  it('should convert a function prop', () => {
+    const props = {
+      onClick: () => undefined,
+    };
+    const expected =
+`{
+  "props": {
+    "onClick": function onClick() {
+        return undefined;
+      }
+  }
+};`;
+    expect(propsToVariation(props)).to.deep.equal(expected);
+  });
 });
