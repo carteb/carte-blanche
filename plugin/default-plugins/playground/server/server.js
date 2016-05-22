@@ -8,6 +8,7 @@ var mkdirp = require('mkdirp');
 var server;
 var jsonBodyParser = bodyParser.json();
 var getComponentNameFromPath = require('../../../../utils/getComponentNameFromPath');
+var chokidar = require('chokidar');
 
 /**
  * Checks if a file at a certain path exists
@@ -29,7 +30,39 @@ var getRelativeCompPathFromComponents = (req) => req.params[0].replace(/^\/compo
 
 var start = (projectBasePath, variationsBasePath, port) => {
   var app = express();
+
   app.use(cors());
+
+  // TODO make variations path dynamic?
+  chokidar.watch(variationsBasePath + '/**/*.js', {ignored: /[\/\\]\./}).on('all', (event, path) => {
+    switch (event) {
+      case 'change':
+        var content = fs.readFileSync(path, { encoding: 'utf8' });
+        var componentName = path.split('/').reverse()[1];
+
+        // TODO eval evil?
+        var data = null;
+        eval(content.replace('module.exports = ', 'data = '));
+
+        var eventName = path.match(/meta\.js/) ? 'componentMetadataChanged' : 'componentVariationChanged';
+
+        io.sockets.emit(eventName, { component: componentName, data: data });
+        break;
+
+      case 'add':
+        var eventName = 'componentVariationAdded';
+        io.sockets.emit(eventName, {});
+        break;
+
+      case 'unlink':
+        var eventName = 'componentVariationRemoved';
+        io.sockets.emit(eventName, {});
+        break;
+
+      default:
+        break;
+    }
+  });
 
   /**
    * GET Variations
@@ -185,6 +218,7 @@ var start = (projectBasePath, variationsBasePath, port) => {
   });
 
   server = app.listen(port);
+  var io = require('socket.io')(server);
 }
 
 var stop = (callback) => {

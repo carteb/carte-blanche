@@ -1,3 +1,4 @@
+/* global io */
 /**
  * Playground Store
  */
@@ -53,7 +54,22 @@ class PlaygroundList extends Component {
 
     this.fetchMetadata();
     this.fetchVariations();
+    this.connectToSocket();
   }
+
+  componentWillUnmount() {
+    this.disconnectFromSocket();
+  }
+
+  onComponentMetadataChanged = (event) => {
+    const { data } = event;
+    this.generateMetadataWithControls(data);
+  };
+
+  onComponentVariationChanged = (event) => {
+    const { data: { name, props } } = event;
+    this.updateVariation(name.toLowerCase(), props);
+  };
 
   getRandomValues = () => randomValues(this.state.metadataWithControls);
 
@@ -100,6 +116,21 @@ class PlaygroundList extends Component {
       customMetadata,
       loadingMetadata: false,
     });
+  };
+
+  connectToSocket = () => {
+    // TODO dynamic host
+    this.socket = io.connect('http://localhost:8000');
+    this.socket.on('componentMetadataChanged', this.onComponentMetadataChanged);
+    this.socket.on('componentVariationChanged', this.onComponentVariationChanged);
+    this.socket.on('componentVariationAdded', this.fetchVariations);
+    this.socket.on('componentVariationRemoved', this.fetchVariations);
+  };
+
+  disconnectFromSocket = () => {
+    if (this.socket) {
+      this.socket.disconnect();
+    }
   };
 
   fetchVariations = () => {
@@ -229,9 +260,10 @@ class PlaygroundList extends Component {
         code: customMetadataToCode(customMetadata),
       }),
     })
-    .then(() => {
-      this.fetchVariations();
-    })
+    // Unnecessary since this happens now via sockets
+    // .then(() => {
+    //   this.fetchVariations();
+    // })
     .catch((err) => {
       // TODO PROPER ERROR HANDLING
       console.trace(err); // eslint-disable-line no-console
