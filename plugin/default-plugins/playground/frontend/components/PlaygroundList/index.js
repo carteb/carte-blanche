@@ -110,16 +110,18 @@ class PlaygroundList extends Component {
 
   connectToSocket = () => {
     this.socket = io.connect('http://localhost:8001');
-    this.socket.on('componentMetadataChanged', (event) => {
-      const { data } = event;
-      this.generateMetadataWithControls(data);
-    });
+    this.socket.on('componentMetadataChanged', this.onComponentMetadataChanged);
   };
 
   disconnectFromSocket = () => {
     if (this.socket) {
       this.socket.disconnect();
     }
+  };
+
+  onComponentMetadataChanged = (event) => {
+    const { data } = event;
+    this.generateMetadataWithControls(data);
   };
 
   fetchVariations = () => {
