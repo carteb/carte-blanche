@@ -15,11 +15,11 @@ describe('<Modal />', () => {
     wrapper = mount(<Modal {...props} />);
   });
 
-  it('renders children prop', () => {
+  it('should render children prop', () => {
     expect(wrapper.text()).to.contain('test-drive');
   });
 
-  it('calls onCloseClick', () => {
+  it('should call onCloseClick', () => {
     const btn = wrapper.find('button').first();
     btn.simulate('click');
     sinon.assert.calledOnce(onCloseClick);
