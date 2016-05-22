@@ -63,17 +63,17 @@ describe('<PropForm />', () => {
     />);
   });
 
-  it('renders the random button', () => {
+  it('should render the random button', () => {
     expect(wrapper.containsMatchingElement(<RandomButton />)).to.equal(true);
   });
 
-  it('renders all controls', () => {
+  it('should render all controls', () => {
     expect(wrapper.containsMatchingElement(<EnumControl />)).to.equal(true);
     expect(wrapper.containsMatchingElement(<IntegerControl />)).to.equal(true);
     expect(wrapper.containsMatchingElement(<StringControl />)).to.equal(true);
   });
 
-  it('calls onRandomClick when clicking on RandomButton', () => {
+  it('should call onRandomClick when clicking on RandomButton', () => {
     // we need to add a static class on the button
     // this will break by the slightest component restructuring
     const randomBtn = wrapper.find('div').children().children().at(1);
@@ -81,7 +81,7 @@ describe('<PropForm />', () => {
     sinon.assert.calledOnce(onRandomClick);
   });
 
-  it('control calls onVariationChange', () => {
+  it('should call onVariationChange when clicking on control', () => {
     wrapper = mount(<PropForm
       variationPath="abc"
       variationProps={variationProps}

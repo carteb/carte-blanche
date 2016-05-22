@@ -118,9 +118,9 @@ class Playground extends React.Component {
           <Frame
             initialContent={`
               <!DOCTYPE html>
-              <html style="height: 100%; width: 100%;">
+              <html style="height: 100%; width: 100%; margin: 0; padding: 0;">
                 <head></head>
-                <body style="height: 100%; width: 100%;">
+                <body style="height: 100%; width: 100%; margin: 0; padding: 0;">
                   <div
                     id="root"
                     style="

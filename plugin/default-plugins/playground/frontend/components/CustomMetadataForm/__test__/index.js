@@ -28,7 +28,7 @@ describe('<CustomMetadataForm />', () => {
     wrapper = mount(<CustomMetadataForm {...props} />);
   });
 
-  it('changing min value calls updateCustomMetadata', () => {
+  it('should call updateCustomMetadata when changing min value ', () => {
     const maxInput = wrapper.find('#Min');
     maxInput.simulate('change', { target: { value: 4 } });
     sinon.assert.calledWith(updateCustomMetadata, {
@@ -36,7 +36,7 @@ describe('<CustomMetadataForm />', () => {
     });
   });
 
-  it('changing max value calls updateCustomMetadata', () => {
+  it('should call call updateCustomMetadata when changing max value', () => {
     const maxInput = wrapper.find('#Max');
     maxInput.simulate('change', { target: { value: 100 } });
     sinon.assert.calledWith(updateCustomMetadata, {
@@ -44,7 +44,7 @@ describe('<CustomMetadataForm />', () => {
     });
   });
 
-  it('select calls updateCustomMetadata', () => {
+  it('should call calls updateCustomMetadata when selecting option', () => {
     const select = wrapper.find('select').first();
     select.simulate('change');
     sinon.assert.calledWith(updateCustomMetadata, {
@@ -52,7 +52,7 @@ describe('<CustomMetadataForm />', () => {
     });
   });
 
-  it('select option enum calls updateCustomMetadata with controlType enum', () => {
+  it('should call updateCustomMetadata with controlType enum when selecting option enum', () => {
     const select = wrapper.find('select').first();
     select.simulate('change', { target: { value: 'enum' } });
     sinon.assert.calledWith(updateCustomMetadata, {

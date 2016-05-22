@@ -31,26 +31,26 @@ describe('<Playground />', () => {
     wrapper = mount(<Playground {...props} />);
   });
 
-  it('renders title prop', () => {
+  it('should render title prop', () => {
     expect(wrapper.find('h3').text()).to.equal(title);
   });
 
-  it('renders an iframe', () => {
+  it('should render an iframe', () => {
     expect(wrapper.find('iframe').length).to.equal(1);
   });
 
-  it('renders a <Card />', () => {
+  it('should render a <Card />', () => {
     wrapper = shallow(<Playground {...props} />);
     expect(wrapper.text()).to.contain('<Card />');
   });
 
-  it('editButtonClick calls onEditButtonClick', () => {
+  it('show call onEditButtonClick when clicking editButtonClick', () => {
     const clickBtn = wrapper.find('button').first();
     clickBtn.simulate('click');
     sinon.assert.calledWith(onEditButtonClick, props.variationPath);
   });
 
-  it('deleteButtonClick calls onDeleteButtonClick', () => {
+  it('should call onDeleteButtonClick when clicking deleteButtonClick', () => {
     const clickBtn = wrapper.find('button').last();
     clickBtn.simulate('click');
     sinon.assert.calledWith(onDeleteButtonClick, props.variationPath);
