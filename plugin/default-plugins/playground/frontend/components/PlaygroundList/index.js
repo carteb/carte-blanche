@@ -249,9 +249,10 @@ class PlaygroundList extends Component {
         code: customMetadataToCode(customMetadata),
       }),
     })
-    .then(() => {
-      this.fetchVariations();
-    })
+    // Unnecessary since this happens now via sockets
+    // .then(() => {
+    //   this.fetchVariations();
+    // })
     .catch((err) => {
       // TODO PROPER ERROR HANDLING
       console.trace(err); // eslint-disable-line no-console
