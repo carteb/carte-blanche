@@ -1,3 +1,4 @@
+/* global io */
 /**
  * Playground Store
  */
@@ -56,6 +57,10 @@ class PlaygroundList extends Component {
     this.connectToSocket();
   }
 
+  componentWillUnmount() {
+    this.disconnectFromSocket();
+  }
+
   getRandomValues = () => randomValues(this.state.metadataWithControls);
 
   getDataFromProps = (data) => {
@@ -109,7 +114,13 @@ class PlaygroundList extends Component {
       const { data } = event;
       this.generateMetadataWithControls(data);
     });
-  }
+  };
+
+  disconnectFromSocket = () => {
+    if (this.socket) {
+      this.socket.disconnect();
+    }
+  };
 
   fetchVariations = () => {
     // TODO dynamic host
