@@ -9,8 +9,10 @@ const variationsToProps = (variations) => (
     // in the saved files
     const variationAsCode = variation.replace(MATCH_LAST_SEMICOLON_REGEX, '');
     // Parse the JSON
-    return JSON.parse(variationAsCode);
-  }
-));
+    let wrapper;
+    eval(`wrapper = ${variationAsCode}`); // eslint-disable-line no-eval
+    return wrapper;
+  })
+);
 
 export default variationsToProps;
