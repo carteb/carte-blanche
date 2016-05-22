@@ -6,7 +6,6 @@
 
 import renderControls from '../../../../utils/renderControls';
 import React from 'react';
-import mapValues from 'lodash/mapValues';
 import Label from '../../../common/Label';
 import normalizeProps from './normalizeProps';
 import randomValue from './randomValue';
