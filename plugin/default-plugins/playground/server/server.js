@@ -34,7 +34,7 @@ var start = (projectBasePath, variationsBasePath, port) => {
   app.use(cors());
 
   // TODO make variations path dynamic?
-  chokidar.watch('examples/dev/variations/**/*.js', {ignored: /[\/\\]\./}).on('all', (event, path) => {
+  chokidar.watch(variationsBasePath + '/**/*.js', {ignored: /[\/\\]\./}).on('all', (event, path) => {
     switch (event) {
       case 'change':
         var content = fs.readFileSync(path, { encoding: 'utf8' });
