@@ -1,5 +1,6 @@
 import React from 'react';
 import Input from '../../../common/Input';
+import ConstraintsForm from './ConstraintsForm';
 
 import randomValue from './randomValue';
 
@@ -18,5 +19,6 @@ const NameControl = (props) => {
 };
 
 NameControl.randomValue = randomValue;
+NameControl.ConstraintsForm = ConstraintsForm;
 
 export default NameControl;
