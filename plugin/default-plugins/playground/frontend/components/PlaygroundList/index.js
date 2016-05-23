@@ -16,6 +16,7 @@ import propsToVariation from '../../utils/propsToVariation';
 import variationsToProps from '../../utils/variationsToProps';
 import codeToCustomMetadata from '../../utils/codeToCustomMetadata';
 import customMetadataToCode from '../../utils/customMetadataToCode';
+import addDataToVariation from '../../utils/addDataToVariation';
 import getComponentNameFromPath from '../../../../../../utils/getComponentNameFromPath';
 import getStylingNodes from '../../../../../../utils/getStylingNodes';
 
@@ -84,7 +85,7 @@ class PlaygroundList extends Component {
     // Generate a human-readable JSON string from the props
     const propsString = propsToVariation(props);
     // Add the name to the data we save
-    return propsString.replace(/^(\s*){/, `$1{\n  "name": "${name}",`);
+    return addDataToVariation(propsString, { name });
   };
 
   fetchMetadata = () => {
