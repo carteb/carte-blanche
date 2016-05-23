@@ -9,19 +9,20 @@ import minimatch from 'minimatch';
 import fs from 'fs';
 import path from 'path';
 import PlaygroundPlugin from './default-plugins/playground/plugin';
+import some from 'lodash/some';
 
 let id = -1;
 /**
  * Instantiates the plugin
- * @param {Object} options       The options
- * @param {String} options.src   A glob pattern that matches the components that should be display
- * @param {String} options.dest  The destination the styleguide should be emitted at
+ * @param {Object} options           The options
+ * @param {String} options.include   A list of glob patterns that matches the components
+ * @param {String} options.dest      The destination the styleguide should be emitted at
  */
 function StyleguidePlugin(options) {
   this.id = (++id);
 
-  if (!options.src) {
-    throw new Error('You need to specify where your components are in the "src" option!\n\n');
+  if (!options.include) {
+    throw new Error('You need to specify where your components are in the "include" option!\n\n');
   }
 
   // Assert that a HTML file was specified in the dest option
@@ -66,10 +67,13 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
         return callback(null, data);
       }
 
-      // Load all files hat are matched by the directory glob specified in options.src
-      // with the loader in ./loader.js
+      // Load all files hat are matched by the directory glob specified in
+      // options.include with the loader in ./loader.js
       // (minimatch checks if a path matches a glob pattern)
-      if (minimatch(path.relative(compiler.context, data.userRequest), this.options.src)) {
+      const matched = some(this.options.include, (pattern) => (
+        minimatch(path.relative(compiler.context, data.userRequest), pattern)
+      ));
+      if (matched) {
         data.loaders.unshift(loaderRequest);
       }
 

@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
-// import Card from '../Card';
-const test = require('../../test-file.jsx');
-const Button = require('../Button.jsx');
+import test from './test-file';
+import Button from '../Button';
 
 const Nested = ({ name }) => (
   <div>
