@@ -1,7 +1,7 @@
-var borderRadius = '3px';
-var fontFamily = 'Helvetica, Arial, sans-serif';
+const borderRadius = '3px';
+const fontFamily = 'Helvetica, Arial, sans-serif';
 
-var styles = {
+const styles = {
   card: {
     backgroundColor: 'white',
     borderRadius,
@@ -54,4 +54,4 @@ var styles = {
   },
 };
 
-module.exports = styles;
+export default styles;

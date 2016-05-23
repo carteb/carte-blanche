@@ -4,8 +4,6 @@ import ReactDOM from 'react-dom';
 import Profile from './components/Profile/index.js';
 import styles from './styles';
 
-import testStyles from './components/Profile/test-styles';
-
 ReactDOM.render(
   <div style={styles.wrapper}>
     <style>{`

@@ -12,7 +12,7 @@ class Profile extends Component {
   };
 
   onAddFriend = () => {
-    alert(`Add @${this.props.username} as a friend`);
+    alert(`Add @${this.props.username} as a friend`); // eslint-disable-line no-alert
   };
 
   render() {
