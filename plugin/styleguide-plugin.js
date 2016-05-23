@@ -61,6 +61,7 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
 
   compiler.plugin('normal-module-factory', (nmf) => {
     nmf.plugin('after-resolve', (data, callback) => {
+      // Once the loader is already in loaders bail out and don't inject it again
       if (data.loaders.indexOf(loaderRequest) >= 0) {
         return callback(null, data);
       }
@@ -71,13 +72,6 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
       if (minimatch(path.relative(compiler.context, data.userRequest), this.options.src)) {
         data.loaders.unshift(loaderRequest);
       }
-
-      // if (data.rawRequest.indexOf('test-file') >= 0) {
-      //   debugger
-      // }
-      console.log('rawRequest:', data.rawRequest);
-      console.log('loaders   :', data.loaders);
-      console.log('------------');
 
       callback(null, data);
       return undefined;
