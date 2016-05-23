@@ -28,10 +28,10 @@ export default {
     }),
     new StyleguidePlugin({
       include: [
-        // match components like Button.js
-        'src/components/**/[A-Z][a-zA-Z]*.js',
         // match components like Button/index.js
         'src/components/**/[A-Z][a-zA-Z]*/index.js',
+        // match components like Button.js
+        'src/components/**/[A-Z][a-zA-Z]*.js',
       ],
     }),
   ],

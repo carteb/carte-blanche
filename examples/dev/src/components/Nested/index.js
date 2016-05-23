@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react';
-import test from './test-file';
+import styles from './styles';
 import Button from '../Button';
 
 const Nested = ({ name }) => (
-  <div>
+  <div style={styles.border}>
     {name}
     <Button>test</Button>
   </div>
