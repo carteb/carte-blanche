@@ -67,7 +67,10 @@ class PlaygroundList extends Component {
   };
 
   onComponentVariationChanged = (event) => {
-    const { data: { name, props } } = event;
+    // Get the real data from the string we were sent
+    let data = null; // eslint-disable-line prefer-const
+    eval(event.content.replace('module.exports = ', 'data = ')); // eslint-disable-line no-eval
+    const { name, props } = data;
     this.updateVariation(name.toLowerCase(), props);
   };
 

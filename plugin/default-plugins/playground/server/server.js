@@ -40,13 +40,9 @@ var start = (projectBasePath, variationsBasePath, port) => {
         var content = fs.readFileSync(path, { encoding: 'utf8' });
         var componentName = path.split('/').reverse()[1];
 
-        // TODO eval evil?
-        var data = null;
-        eval(content.replace('module.exports = ', 'data = '));
-
         var eventName = path.match(/meta\.js/) ? 'componentMetadataChanged' : 'componentVariationChanged';
 
-        io.sockets.emit(eventName, { component: componentName, data: data });
+        io.sockets.emit(eventName, { component: componentName, content: content });
         break;
 
       case 'add':
