@@ -7,6 +7,7 @@
 import React, { PropTypes } from 'react';
 import { VelocityComponent } from 'velocity-react';
 import Frame from 'react-frame-component';
+import map from 'lodash/map';
 
 import EditButton from '../common/EditButton';
 import DeleteButton from '../common/DeleteButton';
@@ -119,7 +120,9 @@ class Playground extends React.Component {
             initialContent={`
               <!DOCTYPE html>
               <html style="height: 100%; width: 100%; margin: 0; padding: 0;">
-                <head></head>
+                <head>
+                  ${map(this.props.stylingNodes, (styleNode) => styleNode.outerHTML).join('')}
+                </head>
                 <body style="height: 100%; width: 100%; margin: 0; padding: 0;">
                   <div
                     id="root"
@@ -153,6 +156,7 @@ Playground.propTypes = {
   fullHeight: PropTypes.bool,
   variationPath: PropTypes.string.isRequired,
   title: PropTypes.string,
+  stylingNodes: PropTypes.array,
 };
 
 export default Playground;

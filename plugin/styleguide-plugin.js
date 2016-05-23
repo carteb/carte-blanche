@@ -107,6 +107,7 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
       <body>
         <div id='styleguide-root'>Root</div>
         <script src="/styleguide/client-api.js"></script>
+        <script src="http://localhost:8000/socket.io/socket.io.js"></script>
         <script>
           window.STYLEGUIDE_PLUGIN_CLIENT_API.scripts = ${JSON.stringify(paths)};
         </script>
