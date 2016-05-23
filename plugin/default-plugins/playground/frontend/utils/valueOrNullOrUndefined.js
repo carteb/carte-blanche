@@ -1,11 +1,11 @@
 /**
- * Depending on if null & undefined are allowed they are returned about 10% of the time
+ * Depending on if null & undefined are allowed they are returned about 5% of the time
  *
  * @param  {any}    value          The value we use if it's not null or undefined
  * @param  {bool} canBeNull        If the returned value can be null
  * @param  {bool} canBeUndefined   If the returned value can be undefined
  *
- * @return {any}    Either the initial value or, in 10% of the cases, null or undefined
+ * @return {any}    Either the initial value or, in 5% of the cases, null or undefined
  */
 const valueOrNullOrUndefined = (value, canBeNull, canBeUndefined) => {
   const random = Math.random();
