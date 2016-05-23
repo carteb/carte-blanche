@@ -6,7 +6,6 @@ import React, { Component } from 'react';
 import map from 'lodash/map';
 import mapValues from 'lodash/mapValues';
 import find from 'lodash/find';
-import filter from 'lodash/filter';
 import debounce from 'lodash/debounce';
 import 'whatwg-fetch';
 import getSlug from 'speakingurl';
@@ -18,6 +17,7 @@ import variationsToProps from '../../utils/variationsToProps';
 import codeToCustomMetadata from '../../utils/codeToCustomMetadata';
 import customMetadataToCode from '../../utils/customMetadataToCode';
 import getComponentNameFromPath from '../../../../../../utils/getComponentNameFromPath';
+import getStylingNodes from '../../../../../../utils/getStylingNodes';
 
 import Playground from '../Playground';
 import PropForm from '../PropForm';
@@ -28,7 +28,6 @@ import CustomMetadataForm from '../CustomMetadataForm';
 import styles from './styles.css';
 
 const PERSISTENCE_DELAY = 1000;
-const STYLE_TAGS_OF_INTERFACE = 3;
 
 class PlaygroundList extends Component {
   state = {
@@ -309,16 +308,7 @@ class PlaygroundList extends Component {
       );
     // Get all the styling of the components. These tags are injected by style-loader
     // and we can grab all of them and inject them into each iframe of the variations
-    const stylingNodes = document.querySelectorAll('link[rel=stylesheet], style');
-    // Discard STYLE_TAGS_OF_INTERFACE amount of <style> tags, they style the interface
-    let filteredStylingNodes = 0;
-    const userStylingNodes = filter(stylingNodes, (styleNode) => {
-      if (styleNode.nodeName === 'STYLE' && filteredStylingNodes <= STYLE_TAGS_OF_INTERFACE) {
-        filteredStylingNodes++;
-        return false;
-      }
-      return true;
-    });
+    const userStylingNodes = getStylingNodes();
     return (
       <div className={styles.wrapper}>
         <h2 className={styles.title}>
