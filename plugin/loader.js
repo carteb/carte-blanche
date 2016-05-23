@@ -71,7 +71,6 @@ module.exports.pitch = function pitch(request) {
 
   const callback = this.async();
   childCompiler.runAsChild((err, entries, compilation) => {
-    // debugger
     if (err) {
       return callback(err);
     }
