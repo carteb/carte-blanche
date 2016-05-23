@@ -1,4 +1,3 @@
-/* global io */
 /**
  * Playground Store
  */
@@ -7,8 +6,9 @@ import React, { Component } from 'react';
 import map from 'lodash/map';
 import mapValues from 'lodash/mapValues';
 import debounce from 'lodash/debounce';
-import 'whatwg-fetch';
+import io from 'socket.io-client';
 import getSlug from 'speakingurl';
+import 'whatwg-fetch';
 
 import getControl from '../../utils/getControl';
 import randomValues from '../../utils/randomValues';
