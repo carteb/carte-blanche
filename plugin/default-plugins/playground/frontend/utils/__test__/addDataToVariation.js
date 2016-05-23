@@ -22,7 +22,7 @@ describe('addDataToVariation', () => {
     expect(addDataToVariation(variation, data)).to.equal(expected);
   });
 
-  it.only('should add multiple simple data to the variation', () => {
+  it('should add multiple simple data to the variation', () => {
     const variation =
 `{
   "props": {
