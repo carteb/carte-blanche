@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-import Radium from 'radium';
 
-import Button from '../Button/index.jsx';
-
-import styles from './styles';
+const styles = {};
 
 class Profile extends Component {
   static propTypes = {
@@ -15,7 +12,7 @@ class Profile extends Component {
   };
 
   onAddFriend = () => {
-    alert(`Add @${this.props.username} as a friend`);
+    alert(`Add @${this.props.username} as a friend`); // eslint-disable-line no-alert
   };
 
   render() {
@@ -36,13 +33,10 @@ class Profile extends Component {
         </div>
         <p style={styles.paragraph}>{this.props.bio}</p>
         <div style={styles.buttonWrapper}>
-          <Button type="secondary" onClick={this.onAddFriend}>
-            Add friend!
-          </Button>
         </div>
       </div>
     );
   }
 }
 
-export default Radium(Profile);
+export default Profile;

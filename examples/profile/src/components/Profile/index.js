@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import Button from '../Button/index.jsx';
+import Button from '../Button';
 
 import styles from './styles';
 
@@ -14,7 +14,7 @@ class Profile extends Component {
   };
 
   onAddFriend = () => {
-    alert(`Add @${this.props.username} as a friend`);
+    alert(`Add @${this.props.username} as a friend`); // eslint-disable-line no-alert
   };
 
   render() {
