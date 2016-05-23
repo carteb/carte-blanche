@@ -1,0 +1,5 @@
+instrumentation:
+  excludes:
+    - 'client/**/__test__/*.js'
+    - 'plugin/**/__test__/*.js'
+    - 'utils/**/__test__/*.js'
