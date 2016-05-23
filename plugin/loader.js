@@ -1,3 +1,5 @@
+/* eslint-disable no-underscore-dangle */
+
 /**
  * loader.js
  *
@@ -23,25 +25,22 @@ module.exports.pitch = function pitch(request) {
     return undefined;
   }
 
-  // debugger
   // Get the path we want the emitted bundle of the component at
-  // const sanitizedFileName = path.basename(request.replace(/^.+!/, '').replace(/\?.+$/, ''));
   const sanitizedFileName = path.relative(this._compiler.context, request.replace(/^.+!/, ''));
   const childFilename = path.join('styleguide-plugin', sanitizedFileName);
 
   // Save the component to the cache so we have it in the main plugin file
   const cacheIndex = parseInt(this.query.substr(1), 10);
 
-  debugger
-  this._compiler.styleguideCache[cacheIndex][request] = childFilename; // eslint-disable-line
+  this._compiler.styleguideCache[cacheIndex][request] = childFilename;
 
   // Compile the component with a childCompiler to the path calculated above
-  const publicPath = this._compilation.outputOptions.publicPath; // eslint-disable-line
+  const publicPath = this._compilation.outputOptions.publicPath;
   const outputOptions = {
     filename: childFilename,
     publicPath,
   };
-  const childCompiler = this._compilation.createChildCompiler( // eslint-disable-line
+  const childCompiler = this._compilation.createChildCompiler(
     'styleguide-plugin',
     outputOptions
   );
@@ -83,4 +82,5 @@ module.exports.pitch = function pitch(request) {
 
     return callback(null);
   });
+  return undefined;
 };
