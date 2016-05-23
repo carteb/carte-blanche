@@ -6,7 +6,6 @@
 import React, { Component } from 'react';
 import map from 'lodash/map';
 import mapValues from 'lodash/mapValues';
-import find from 'lodash/find';
 import debounce from 'lodash/debounce';
 import 'whatwg-fetch';
 import getSlug from 'speakingurl';
@@ -333,11 +332,8 @@ class PlaygroundList extends Component {
 
     const { component } = this.props;
     // Find the selected variation
-    const selectedVariation =
-      find(
-        this.state.variationPropsList,
-        (variationProps, key) => this.state.selectedVariationId === key
-      );
+    const selectedVariation = this.state.variationPropsList[this.state.selectedVariationId];
+
     // Get all the styling of the components. These tags are injected by style-loader
     // and we can grab all of them and inject them into each iframe of the variations
     const userStylingNodes = getStylingNodes();
