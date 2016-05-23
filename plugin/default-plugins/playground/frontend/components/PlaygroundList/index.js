@@ -18,6 +18,7 @@ import variationsToProps from '../../utils/variationsToProps';
 import codeToCustomMetadata from '../../utils/codeToCustomMetadata';
 import customMetadataToCode from '../../utils/customMetadataToCode';
 import getComponentNameFromPath from '../../../../../../utils/getComponentNameFromPath';
+import getStylingNodes from '../../../../../../utils/getStylingNodes';
 
 import Playground from '../Playground';
 import PropForm from '../PropForm';
@@ -247,7 +248,7 @@ class PlaygroundList extends Component {
     this.generateMetadataWithControls(customMetadata);
     // Persist changes to server every PERSISTENCE_TIMEOUT milliseconds
     this.debouncedPersistCustomMetadata(customMetadata);
-  }
+  };
 
   persistCustomMetadata = (customMetadata) => {
     fetch(`http://localhost:8000/components/${this.props.componentPath}`, {
@@ -331,11 +332,15 @@ class PlaygroundList extends Component {
     }
 
     const { component } = this.props;
+    // Find the selected variation
     const selectedVariation =
       find(
         this.state.variationPropsList,
         (variationProps, key) => this.state.selectedVariationId === key
       );
+    // Get all the styling of the components. These tags are injected by style-loader
+    // and we can grab all of them and inject them into each iframe of the variations
+    const userStylingNodes = getStylingNodes();
     return (
       <div className={styles.wrapper}>
         <h2 className={styles.title}>
@@ -395,6 +400,7 @@ class PlaygroundList extends Component {
             variationPath={variationPath}
             onDeleteButtonClick={this.deleteVariation}
             onEditButtonClick={this.startVariationEditMode}
+            stylingNodes={userStylingNodes}
           />
         ))}
         <CreateVariationButton
