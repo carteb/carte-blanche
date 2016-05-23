@@ -7,7 +7,7 @@ import extend from 'jss-extend';
 jss.use(extend());
 import styles from './styles';
 
-import Button from '../Button/index.jsx';
+import Button from '../Button';
 
 class Profile extends Component {
   static propTypes = {
@@ -19,7 +19,7 @@ class Profile extends Component {
   };
 
   onAddFriend = () => {
-    alert(`Add @${this.props.username} as a friend`);
+    alert(`Add @${this.props.username} as a friend`); // eslint-disable-line no-alert
   };
 
   render() {
