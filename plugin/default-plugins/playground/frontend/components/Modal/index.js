@@ -17,7 +17,6 @@ function Modal(props) {
         display={(props.visible) ? 'block' : 'none'}
         duration={ANIMATION_DURATION}
         easing={ANIMATION_EASING}
-        runOnMount
       >
         <div
           className={styles.modalBackground}
@@ -34,7 +33,6 @@ function Modal(props) {
         display={(props.visible) ? 'block' : 'none'}
         duration={ANIMATION_DURATION}
         easing={ANIMATION_EASING}
-        runOnMount
       >
         <div className={styles.modal}>
           <button

@@ -363,11 +363,11 @@ class PlaygroundList extends Component {
           />
         </Modal>
         {/* VARIATION EDIT MODE MODAL */}
-        {(this.state.selectedVariationId) && (
-          <Modal
-            visible={this.state.variationEditMode}
-            onCloseClick={this.stopVariationEditMode}
-          >
+        <Modal
+          visible={this.state.variationEditMode}
+          onCloseClick={this.stopVariationEditMode}
+        >
+          {(this.state.selectedVariationId) && (
             <div className={styles.modalWrapper}>
               <PropForm
                 metadataWithControls={this.state.metadataWithControls}
@@ -384,8 +384,8 @@ class PlaygroundList extends Component {
                 variationPath={this.state.selectedVariationId}
               />
             </div>
-          </Modal>
-        )}
+          )}
+        </Modal>
         {/* MAIN AREA WITH PLAYGROUNDS */}
         {map(this.state.variationPropsList, (variation, variationPath) => (
           <Playground
