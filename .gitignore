@@ -7,4 +7,4 @@ dist
 stats.json
 plugin/client-bundle.js
 
-examples/dev/variations/
+examples/*/variations/
