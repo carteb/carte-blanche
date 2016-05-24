@@ -9,6 +9,8 @@ import { VelocityComponent } from 'velocity-react';
 import Frame from 'react-frame-component';
 import map from 'lodash/map';
 
+import reactDOM from 'react-dom';
+
 import EditButton from '../common/EditButton';
 import DeleteButton from '../common/DeleteButton';
 import Card from '../common/Card';
@@ -20,12 +22,32 @@ class Playground extends React.Component {
     delay: true,
   };
 
+  componentDidMount = () => {
+    this.resizeCard();
+  };
+
+  componentDidUpdate = () => {
+    this.resizeCard();
+  };
+
   onEditButtonClick = () => {
     this.props.onEditButtonClick(this.props.variationPath);
   };
 
   onDeleteButtonClick = () => {
     this.props.onDeleteButtonClick(this.props.variationPath);
+  };
+
+  resizeCard = () => {
+    // FIXME: access frame and card through refs! currently not possible because of this issue:
+    // https://github.com/pure-ui/styleguide/issues/126
+    const element = reactDOM.findDOMNode(this);
+    const frame = element.querySelector('iframe');
+    const card = element.querySelector('[class^=card__]');
+
+    // This seems to be the most accurate methode to calculate the real iframe height
+    const frameHeight = frame.contentDocument.querySelector('#root > div').scrollHeight;
+    card.style.height = `${frameHeight}px`;
   };
 
   showButtons = () => {
