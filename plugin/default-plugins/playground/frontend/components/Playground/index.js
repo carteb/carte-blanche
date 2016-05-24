@@ -42,12 +42,15 @@ class Playground extends React.Component {
     // FIXME: access frame and card through refs! currently not possible because of this issue:
     // https://github.com/pure-ui/styleguide/issues/126
     const element = reactDOM.findDOMNode(this);
-    const frame = element.querySelector('iframe');
-    const card = element.querySelector('[class^=card__]');
 
-    // This seems to be the most accurate methode to calculate the real iframe height
-    const frameHeight = frame.contentDocument.querySelector('#root > div').scrollHeight;
-    card.style.height = `${frameHeight}px`;
+    if (element) {
+      const frame = element.querySelector('iframe');
+      const card = element.querySelector('[class^=card__]');
+
+      // This seems to be the most accurate methode to calculate the real iframe height
+      const frameHeight = frame.contentDocument.querySelector('#root > div').scrollHeight;
+      card.style.height = `${frameHeight}px`;
+    }
   };
 
   showButtons = () => {
