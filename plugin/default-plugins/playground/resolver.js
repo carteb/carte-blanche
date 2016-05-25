@@ -8,30 +8,28 @@ const {
 
 const normalizeClassDefinition = normalizeClassDefiniton;
 
-export default function findAllReactCreateClassCalls(ast, recast) {
+export default function findReactComponent(ast, recast) {
   let definition;
 
-  function classVisitor(path) {
+  function findComponent(path) {
     if (isReactComponentClass(path)) {
       normalizeClassDefinition(path);
       definition = path;
     }
-    return false;
-  }
 
-  function isHighOrderComponent(path) {
     if (isStatelessComponent(path)) {
       definition = path;
     }
+
     return false;
   }
 
   recast.visit(ast, {
-    visitFunctionDeclaration: isHighOrderComponent,
-    visitFunctionExpression: isHighOrderComponent,
-    visitArrowFunctionExpression: isHighOrderComponent,
-    visitClassExpression: classVisitor,
-    visitClassDeclaration: classVisitor,
+    visitFunctionDeclaration: findComponent,
+    visitFunctionExpression: findComponent,
+    visitArrowFunctionExpression: findComponent,
+    visitClassExpression: findComponent,
+    visitClassDeclaration: findComponent,
   });
 
   return definition;
