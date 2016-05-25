@@ -1,6 +1,7 @@
 const fork = require('child_process').fork;
 const path = require('path');
 const reactDocs = require('react-docgen');
+const styleguideResolver = require('./resolver.js').default;
 
 function PlaygroundPlugin(options) {
   this.options = options || {};
@@ -19,7 +20,8 @@ PlaygroundPlugin.prototype.apply = function apply(compiler) {
     compilation.plugin(
       'styleguide-plugin-before-processing',
       (data) => {
-        data.reactDocs = reactDocs.parse(data.source);  // eslint-disable-line no-param-reassign
+        // eslint-disable-next-line no-param-reassign
+        data.reactDocs = reactDocs.parse(data.source, styleguideResolver);
       }
     );
 
