@@ -312,17 +312,22 @@ describe('server', () => {
   });
 
   describe('POST:componentsMeta', () => {
-    describe('write new meta file', () => {
-      const variationComponentPath = path.join(variationsBasePath, 'ComponentC');
-      const componentMetaPath = path.join(variationComponentPath, 'meta.js');
-      const code = `{
-        props: {
-          age: {
-            min: 0,
-            max: 120,
-          },
+    const code = `{
+      props: {
+        age: {
+          min: 0,
+          max: 120,
         },
-      };`;
+      },
+    };`;
+
+    describe('write new meta file', () => {
+      const variationComponentPath = path.join(
+        variationsBasePath,
+        'components',
+        'ComponentC'
+      );
+      const componentMetaPath = path.join(variationComponentPath, 'meta.js');
 
       afterEach((done) => {
         rimraf(variationComponentPath, done);
@@ -331,6 +336,37 @@ describe('server', () => {
       it('should create a new file with the provided meta data', (done) => {
         request
           .post('/components/components/ComponentC.js')
+          .type('json')
+          .send({
+            code,
+          })
+          .expect(200)
+          .end((err, res) => {
+            expect(res.status).to.equal(200);
+            fs.readFile(componentMetaPath, { encoding: 'utf8' }, (_, fileContent) => {
+              expect(`module.exports = ${code}`).to.equal(fileContent);
+              done();
+            });
+          });
+      });
+    });
+
+    describe('write new meta file for a nested component', () => {
+      const variationComponentPath = path.join(
+        variationsBasePath,
+        'components',
+        'otherComponents',
+        'ComponentF'
+      );
+      const componentMetaPath = path.join(variationComponentPath, 'meta.js');
+
+      afterEach((done) => {
+        rimraf(variationComponentPath, done);
+      });
+
+      it('should create a new file with the provided meta data', (done) => {
+        request
+          .post('/components/components/otherComponents/ComponentF.js')
           .type('json')
           .send({
             code,
