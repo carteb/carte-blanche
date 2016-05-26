@@ -3,7 +3,7 @@ import faker from 'faker/build/build/faker';
 
 export default (props) => {
   const {
-    constraints,
+    constraints = {},
     required,
   } = props;
   const canBeUndefined = !required;

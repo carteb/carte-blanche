@@ -42,6 +42,8 @@ var start = (projectBasePath, variationsBasePath, port) => {
 
         var eventName = path.match(/meta\.js/) ? 'componentMetadataChanged' : 'componentVariationChanged';
 
+        // TODO do we need this? Should we pass in the path to every event to
+        // avoid unnecessary fetches?
         io.sockets.emit(eventName, { component: componentName, content: content });
         break;
 
