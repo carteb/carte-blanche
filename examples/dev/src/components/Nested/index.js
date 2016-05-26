@@ -1,11 +1,13 @@
 import React, { PropTypes } from 'react';
 import styles from './styles';
 import Button from '../Button';
+import Card from './Card';
 
 const Nested = ({ name }) => (
   <div style={styles.border}>
     {name}
     <Button>test</Button>
+    <Card />
   </div>
 );
 
