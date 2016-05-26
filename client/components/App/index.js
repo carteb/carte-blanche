@@ -9,11 +9,9 @@ import MenuButton from '../MenuButton';
 import styles from './styles.css';
 
 class App extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      drawerVisible: false,
-    };
+
+  state = {
+    drawerVisible: true,
   }
 
   toggleMenu = () => {
