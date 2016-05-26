@@ -2,9 +2,10 @@ import React from 'react';
 import styles from './styles.css';
 import Select from '../../../../common/Select';
 import set from 'lodash/set';
+import has from 'lodash/has';
+import uniq from 'lodash/uniq';
 import controlTypes from '../../../../CustomMetadataForm/controlTypes';
 import getControl from '../../../../../utils/getControl';
-// import Input from '../../../../common/Input';
 
 function renderConstraintForm(
   propKey,
@@ -18,12 +19,20 @@ function renderConstraintForm(
   const ConstraintsForm = control.type.ConstraintsForm;
   if (!ConstraintsForm) return null;
 
-  // console.log(parsedMetadata);
-  // console.log(JSON.stringify(parsedMetadata));
+  const relevantParsedMetadata = has(parsedMetadata, ['value', propKey]) ?
+    parsedMetadata.value[propKey] :
+    undefined;
+
+  const relevantCustomMetadata = has(customMetadata, ['props', propKey]) ?
+    customMetadata.props[propKey] :
+    undefined;
 
   // create an update function that simply overwrites the updated constraints
   const onUpdateConstraints = (constraintChanges) => {
     const newCustomMetadata = { ...customMetadata };
+    if (!has(newCustomMetadata, ['props', propKey])) {
+      set(newCustomMetadata, ['props', propKey], {});
+    }
     newCustomMetadata.props[propKey].constraints = {
       ...newCustomMetadata.props[propKey].constraints,
       ...constraintChanges,
@@ -37,7 +46,8 @@ function renderConstraintForm(
     <ConstraintsForm
       onUpdate={onUpdateConstraints}
       constraints={constraints}
-      parsedMetadata={parsedMetadata}
+      parsedMetadata={relevantParsedMetadata}
+      customMetadata={relevantCustomMetadata}
     />
   );
 }
@@ -45,36 +55,31 @@ function renderConstraintForm(
 export default (props) => {
   // retriev all propKeys from the parsed & custom metadata
   let propKeys = [];
-  // if (props.customMetadata.props) {
-  //   propKeys = propKeys.concat(Object.keys(props.customMetadata.props));
-  // }
+  if (has(props.customMetadata, ['constraints', 'props'])) {
+    propKeys = propKeys.concat(Object.keys(props.customMetadata.constraints.props));
+  }
   if (props.parsedMetadata.value) {
     propKeys = propKeys.concat(Object.keys(props.parsedMetadata.value));
   }
+  propKeys = uniq(propKeys);
 
   return (
     <div className={styles.wrapper}>
       {
         propKeys.map((propKey) => {
           let controlType;
-
-          controlType = props.parsedMetadata.value[propKey].name;
-
-          const relevantParsedMetadata = props.parsedMetadata &&
-            props.parsedMetadata.value &&
-            props.parsedMetadata.value[propKey] ?
-            props.parsedMetadata.value[propKey] :
-            undefined;
-
+          if (has(props.customMetadata, ['constraints', 'props', propKey, 'controlType'])) {
+            controlType = props.customMetadata.constraints.props[propKey].controlType;
+          } else {
+            controlType = props.parsedMetadata.value[propKey].name;
+          }
           return (
             <div key={propKey}>
               <div className={styles.propLabel}>
                 {propKey}
               </div>
               <Select
-                label={props.parsedMetadata &&
-                  props.parsedMetadata.value &&
-                 props.parsedMetadata.value[propKey].name ?
+                label={has(props.parsedMetadata, ['value', propKey, 'name']) ?
                  props.parsedMetadata.value[propKey].name :
                  'Not defined'}
                 value={controlType}
@@ -83,16 +88,16 @@ export default (props) => {
                   // overwrite they current propKey which also removes constraints
                   set(newCustomMetadata, ['props', propKey], {});
                   newCustomMetadata.props[propKey].controlType = event.target.value;
-                  props.updateCustomMetadata(newCustomMetadata);
+                  props.onUpdate(newCustomMetadata);
                 }}
                 options={controlTypes.map((type) => ({ value: type }))}
               />
             {renderConstraintForm(
               propKey,
               controlType,
-              props.updateCustomMetadata,
+              props.onUpdate,
               props.customMetadata,
-              relevantParsedMetadata
+              props.parsedMetadata
             )}
             </div>
           );
