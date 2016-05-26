@@ -393,6 +393,7 @@ class PlaygroundList extends Component {
                 fullHeight
                 variationProps={selectedVariation.props}
                 variationPath={this.state.selectedVariationId}
+                stylingNodes={userStylingNodes}
               />
             </div>
           )}
