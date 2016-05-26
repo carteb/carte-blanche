@@ -62,19 +62,6 @@ class PlaygroundList extends Component {
     this.disconnectFromSocket();
   }
 
-  onComponentMetadataChanged = (event) => {
-    const { data } = event;
-    this.generateMetadataWithControls(data);
-  };
-
-  onComponentVariationChanged = (event) => {
-    // Get the real data from the string we were sent
-    let data = null; // eslint-disable-line prefer-const
-    eval(event.content.replace('module.exports = ', 'data = ')); // eslint-disable-line no-eval
-    const { name, props } = data;
-    this.updateVariation(name.toLowerCase(), props);
-  };
-
   getRandomValues = () => randomValues(this.state.metadataWithControls);
 
   getDataFromProps = (data) => {
@@ -125,8 +112,8 @@ class PlaygroundList extends Component {
   connectToSocket = () => {
     // TODO dynamic host
     this.socket = io.connect('http://localhost:8000');
-    this.socket.on('componentMetadataChanged', this.onComponentMetadataChanged);
-    this.socket.on('componentVariationChanged', this.onComponentVariationChanged);
+    this.socket.on('componentMetadataChanged', this.fetchMetadata);
+    this.socket.on('componentVariationChanged', this.fetchVariations);
     this.socket.on('componentVariationAdded', this.fetchVariations);
     this.socket.on('componentVariationRemoved', this.fetchVariations);
   };
