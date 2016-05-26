@@ -8,6 +8,7 @@ var mkdirp = require('mkdirp');
 var server;
 var jsonBodyParser = bodyParser.json();
 var getComponentNameFromPath = require('../../../../utils/getComponentNameFromPath');
+var getVariationComponentPath = require('./getVariationComponentPath');
 var chokidar = require('chokidar');
 
 /**
@@ -33,7 +34,6 @@ var start = (projectBasePath, variationsBasePath, port) => {
 
   app.use(cors());
 
-  // TODO make variations path dynamic?
   chokidar.watch(variationsBasePath + '/**/*.js', {ignored: /[\/\\]\./}).on('all', (event, path) => {
     switch (event) {
       case 'change':
@@ -76,8 +76,10 @@ var start = (projectBasePath, variationsBasePath, port) => {
       return;
     }
 
-    var componentName = getComponentNameFromPath(relativeComponentPath);
-    var variationComponentPath = path.join(variationsBasePath, componentName);
+    var variationComponentPath = getVariationComponentPath(
+      relativeComponentPath,
+      variationsBasePath
+    );
 
     if (!fs.existsSync(variationComponentPath)) {
       res.json({ data: {} });
@@ -109,12 +111,15 @@ var start = (projectBasePath, variationsBasePath, port) => {
       return;
     }
 
-    var componentName = getComponentNameFromPath(relativeComponentPath);
+    var variationComponentPath = getVariationComponentPath(
+      relativeComponentPath,
+      variationsBasePath
+    );
     var variationPath = path.join(
-      variationsBasePath,
-      componentName,
+      variationComponentPath,
       `v-${req.query.variation}.js`
     );
+
 
     fs.unlink(variationPath, (err) => {
       if (err) {

@@ -75,6 +75,28 @@ describe('server', () => {
         });
     });
 
+    it('should get all data for a deeper nested component with variations data', (done) => {
+      request
+        .get('/variations/components/otherComponents/ComponentD.js')
+        .expect('Content-type', /json/)
+        .expect(200)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.error).to.be.false; // eslint-disable-line no-unused-expressions
+          expect(res.body.data).to.have.keys(['testVariation']);
+
+          let testVariation;
+          eval(`testVariation = ${res.body.data.testVariation}`); // eslint-disable-line no-eval
+          const expected = {
+            props: {
+              age: 22,
+            },
+          };
+          expect(testVariation).to.deep.equal(expected); // eslint-disable-line no-undef
+          done();
+        });
+    });
+
     it('should return a 404 in case the component does not exist', (done) => {
       request
         .get('/variations/variations/components/ComponentNotAvailable.js')
@@ -87,9 +109,14 @@ describe('server', () => {
     });
   });
 
-  describe('DELETE:variations', () => {
+  describe.only('DELETE:variations', () => {
     it('should remove the variation', (done) => {
-      const variationPath = path.join(variationsBasePath, 'ComponentA', 'v-toBeRemoved.js');
+      const variationPath = path.join(
+        variationsBasePath,
+        'components',
+        'ComponentA',
+        'v-toBeRemoved.js'
+      );
       fs.closeSync(fs.openSync(variationPath, 'w'));
 
       request

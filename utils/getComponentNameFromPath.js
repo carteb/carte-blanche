@@ -1,6 +1,8 @@
 /* eslint-disable no-var, vars-on-top */
 
 // Regexes
+
+// TODO make file-ending dynamic
 var FILE_ENDING_REGEX = /\.jsx?|\.es6?/gi;
 var INDEX_PATH_REGEX = /\/index/gi;
 var PATH_REGEX = /.+\/|.+\\/gi;
