@@ -2,6 +2,7 @@
  * Playground Store
  */
 
+// External
 import React, { Component } from 'react';
 import map from 'lodash/map';
 import mapValues from 'lodash/mapValues';
@@ -10,6 +11,7 @@ import io from 'socket.io-client';
 import getSlug from 'speakingurl';
 import 'whatwg-fetch';
 
+// Utilities
 import getControl from '../../utils/getControl';
 import randomValues from '../../utils/randomValues';
 import propsToVariation from '../../utils/propsToVariation';
@@ -20,14 +22,17 @@ import addDataToVariation from '../../utils/addDataToVariation';
 import getComponentNameFromPath from '../../../../../../utils/getComponentNameFromPath';
 import getStylingNodes from '../../../../../../utils/getStylingNodes';
 
+// Components
 import Playground from '../Playground';
 import PropForm from '../PropForm';
 import Modal from '../Modal';
 import CreateVariationButton from '../common/CreateVariationButton';
 import CustomMetadataForm from '../CustomMetadataForm';
 
+// Styles
 import styles from './styles.css';
 
+// Global settings
 const PERSISTENCE_DELAY = 1000;
 
 class PlaygroundList extends Component {
@@ -44,27 +49,34 @@ class PlaygroundList extends Component {
   };
 
   componentWillMount() {
+    // Create a debounced method from the persistVariation method
     this.debouncedPersistVariation = debounce(
       (variationPath, props) => { this.persistVariation(variationPath, props); },
       PERSISTENCE_DELAY
     );
+    // Create a debounced method from the persistCustomMetadata method
     this.debouncedPersistCustomMetadata = debounce(
       (customMetadata) => { this.persistCustomMetadata(customMetadata); },
       PERSISTENCE_DELAY
     );
 
+    // Fetch the metadata and the variations of first render
     this.fetchMetadata();
     this.fetchVariations();
+    // Connect to the socket server
     this.connectToSocket();
   }
 
   componentWillUnmount() {
+    // Disconnet from the socker server before we unmount
     this.disconnectFromSocket();
   }
 
+  // Get random values
   getRandomValues = () => randomValues(this.state.metadataWithControls);
 
-  getDataFromProps = (data) => {
+  // Generete the variation string from the props object
+  getVariationStringFromProps = (data) => {
     const {
       props,
       name,
@@ -75,55 +87,65 @@ class PlaygroundList extends Component {
     return addDataToVariation(propsString, { name });
   };
 
+  // Fetch the metadata of the current component
   fetchMetadata = () => {
     // TODO dynamic host
     fetch(`http://localhost:8000/components/${this.props.componentPath}`)
       .then((response) => response.json())
       .then((json) => {
         const customMetadata = codeToCustomMetadata(json.data);
-        this.generateMetadataWithControls(customMetadata);
+        const metadataWithControls = this.generateMetadataWithControls(
+          this.props.meta,
+          customMetadata
+        );
+
+        this.setState({
+          metadataWithControls,
+          customMetadata,
+          loadingMetadata: false,
+        });
       }).catch((ex) => {
         // TODO proper error handling
         console.error('meta data parsing failed', ex); // eslint-disable-line no-console
       });
   };
 
-  generateMetadataWithControls = (customMetadata) => {
-    const { meta } = this.props;
-
-    // Attach controls to propTypes meta information
+  // Attach the correct controls to the component metadata
+  generateMetadataWithControls = (docgenMetadata, customMetadata) => {
     let metadataWithControls;
-    if (meta.props) {
-      metadataWithControls = mapValues(meta.props, (prop, propKey) => {
+    if (docgenMetadata.props) {
+      metadataWithControls = mapValues(docgenMetadata.props, (prop, propKey) => {
         const newProp = { ...prop };
+        // Get the metadata for this property
         const propMeta = customMetadata && customMetadata.props && customMetadata.props[propKey];
+        // Attach the control
         newProp.control = getControl(newProp, propMeta);
         return newProp;
       });
     }
 
-    this.setState({
-      metadataWithControls,
-      customMetadata,
-      loadingMetadata: false,
-    });
+    return metadataWithControls;
   };
 
+  // Connect to the socket server
   connectToSocket = () => {
     // TODO dynamic host
     this.socket = io.connect('http://localhost:8000');
+    // Listen to the events dispatched by the socket server
     this.socket.on('componentMetadataChanged', this.fetchMetadata);
     this.socket.on('componentVariationChanged', this.fetchVariations);
     this.socket.on('componentVariationAdded', this.fetchVariations);
     this.socket.on('componentVariationRemoved', this.fetchVariations);
   };
 
+  // Disconnect from the socker server
   disconnectFromSocket = () => {
     if (this.socket) {
       this.socket.disconnect();
     }
   };
 
+  // Fetch all variations for the current component
   fetchVariations = () => {
     // TODO dynamic host
     fetch(`http://localhost:8000/variations/${this.props.componentPath}`)
@@ -164,7 +186,7 @@ class PlaygroundList extends Component {
     this.setState({
       createVariationError: '',
     });
-    const data = this.getDataFromProps({
+    const data = this.getVariationStringFromProps({
       props: this.getRandomValues(),
       name,
     });
@@ -210,7 +232,7 @@ class PlaygroundList extends Component {
   };
 
   persistVariation = (variationPath, props) => {
-    const data = this.getDataFromProps({
+    const data = this.getVariationStringFromProps({
       props,
       name: this.state.variationPropsList[variationPath].name,
     });
@@ -235,8 +257,13 @@ class PlaygroundList extends Component {
   };
 
   updateCustomMetadata = (customMetadata) => {
-    this.generateMetadataWithControls(customMetadata);
-    // Persist changes to server every PERSISTENCE_TIMEOUT milliseconds
+    const metadataWithControls = this.generateMetadataWithControls(this.props.meta, customMetadata);
+    this.setState({
+      metadataWithControls,
+      customMetadata,
+      loadingMetadata: false,
+    });
+    // Persist changes to metadata to server
     this.debouncedPersistCustomMetadata(customMetadata);
   };
 
@@ -251,10 +278,6 @@ class PlaygroundList extends Component {
         code: customMetadataToCode(customMetadata),
       }),
     })
-    // Unnecessary since this happens now via sockets
-    // .then(() => {
-    //   this.fetchVariations();
-    // })
     .catch((err) => {
       // TODO PROPER ERROR HANDLING
       console.trace(err); // eslint-disable-line no-console
@@ -262,7 +285,7 @@ class PlaygroundList extends Component {
   };
 
   updateVariation = (variationPath, props) => {
-    // Update changes locally for snappy UI
+    // Update changes locally immediately for snappy UI
     this.setState({
       variationPropsList: {
         ...this.state.variationPropsList,
@@ -273,7 +296,7 @@ class PlaygroundList extends Component {
       },
     });
 
-    // Persist changes to server every PERSISTENCE_TIMEOUT milliseconds
+    // Persist changes to server
     this.debouncedPersistVariation(variationPath, props);
   };
 
