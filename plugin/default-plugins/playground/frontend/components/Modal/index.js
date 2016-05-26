@@ -65,7 +65,7 @@ function Modal(props) {
 
 Modal.propTypes = {
   visible: PropTypes.bool.isRequired,
-  children: PropTypes.any.isRequired,
+  children: PropTypes.node,
   onCloseClick: PropTypes.func.isRequired,
 };
 
