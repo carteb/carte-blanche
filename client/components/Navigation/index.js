@@ -76,16 +76,6 @@ class Navigation extends React.Component {
     }
   };
 
-  // remove this for now
-  // navigation should have no idea about any style tags
-  // this should happen inside a service
-  clearStyleNodes = () => {
-    // const componentStylingNodes = getStylingNodes();
-    // map(componentStylingNodes, (stylingNode) => {
-    //   stylingNode.parentNode.removeChild(stylingNode);
-    // });
-  };
-
   renderSubNavigation = (componentPath) => {
     if (this.props.activeComponentPath === componentPath) {
       if (has(window.STYLEGUIDE_PLUGIN_CLIENT_API.cache, componentPath)) {

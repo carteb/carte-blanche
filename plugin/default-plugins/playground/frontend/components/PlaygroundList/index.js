@@ -351,10 +351,12 @@ class PlaygroundList extends Component {
 
     // Get all the styling of the components. These tags are injected by style-loader
     // and we can grab all of them and inject them into each iframe of the variations
+    // -------------------------------------------------------------------------------
     // quick setup for now. will be moved into a service.
+    // fetch any style definition 
     const userStylingNodes = document.getElementsByTagName('head')[0]
       .querySelectorAll('link[rel=stylesheet], style');
-    console.log(userStylingNodes);
+
     return (
       <div className={styles.wrapper}>
         <h2 className={styles.title}>
