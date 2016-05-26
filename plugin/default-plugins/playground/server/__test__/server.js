@@ -109,7 +109,7 @@ describe('server', () => {
     });
   });
 
-  describe.only('DELETE:variations', () => {
+  describe('DELETE:variations', () => {
     it('should remove the variation', (done) => {
       const variationPath = path.join(
         variationsBasePath,
@@ -153,19 +153,24 @@ describe('server', () => {
   });
 
   describe('POST:variations', () => {
-    describe('write new variation', () => {
-      const variationComponentPath = path.join(variationsBasePath, 'ComponentB');
-      const variationPath = path.join(variationComponentPath, 'v-newVariation.js');
-      const code = `{
-        props: {
-          name: {
-            value: 'Ada Lovelace',
-          },
-          onClick: {
-            value: () => true,
-          },
+    const code = `{
+      props: {
+        name: {
+          value: 'Ada Lovelace',
         },
-      };`;
+        onClick: {
+          value: () => true,
+        },
+      },
+    };`;
+
+    describe('write new variation', () => {
+      const variationComponentPath = path.join(
+        variationsBasePath,
+        'components',
+        'ComponentB',
+      );
+      const variationPath = path.join(variationComponentPath, 'v-newVariation.js');
 
       afterEach((done) => {
         rimraf(variationComponentPath, done);
@@ -190,18 +195,45 @@ describe('server', () => {
       });
     });
 
+    describe('write new variation in nested path', () => {
+      const variationComponentPath = path.join(
+        variationsBasePath,
+        'components',
+        'otherComponents',
+        'ComponentD',
+      );
+      const variationPath = path.join(variationComponentPath, 'v-newVariation.js');
+
+      afterEach((done) => {
+        rimraf(variationComponentPath, done);
+      });
+
+      it('should create a new file with the provided data', (done) => {
+        request
+          .post('/variations/components/otherComponents/ComponentD.js')
+          .type('json')
+          .send({
+            variation: 'newVariation',
+            code,
+          })
+          .expect(200)
+          .end((err, res) => {
+            expect(res.status).to.equal(200);
+            fs.readFile(variationPath, { encoding: 'utf8' }, (_, fileContent) => {
+              expect(`module.exports = ${code}`).to.equal(fileContent);
+              done();
+            });
+          });
+      });
+    });
+
     describe('overwrite existing variation', () => {
-      const variationPath = path.join(variationsBasePath, 'ComponentA', 'v-existingVariation.js');
-      const code = `{
-        props: {
-          name: {
-            value: 'Marie Curie',
-          },
-          onSelect: {
-            value: () => true,
-          },
-        },
-      };`;
+      const variationPath = path.join(
+        variationsBasePath,
+        'components',
+        'ComponentA',
+        'v-existingVariation.js'
+      );
 
       afterEach((done) => {
         fs.unlink(variationPath, () => {

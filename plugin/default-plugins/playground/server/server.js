@@ -142,8 +142,10 @@ var start = (projectBasePath, variationsBasePath, port) => {
       return;
     }
 
-    var componentName = getComponentNameFromPath(relativeComponentPath);
-    var variationComponentPath = path.join(variationsBasePath, componentName);
+    var variationComponentPath = getVariationComponentPath(
+      relativeComponentPath,
+      variationsBasePath
+    );
     var variationPath = path.join(variationComponentPath, `v-${req.body.variation}.js`);
 
     if (!fs.existsSync(variationComponentPath)) {
