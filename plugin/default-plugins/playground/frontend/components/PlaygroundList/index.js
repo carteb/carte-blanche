@@ -27,6 +27,7 @@ import Playground from '../Playground';
 import PropForm from '../PropForm';
 import Modal from '../Modal';
 import CreateVariationButton from '../common/CreateVariationButton';
+import EditButton from '../common/EditButton';
 import CustomMetadataForm from '../CustomMetadataForm';
 
 // Styles
@@ -355,16 +356,12 @@ class PlaygroundList extends Component {
       <div className={styles.wrapper}>
         <h2 className={styles.title}>
           {getComponentNameFromPath(this.props.componentPath)}
+          <EditButton
+            onClick={this.startCustomMetadataEditMode}
+            className={styles.componentEditButton}
+          />
         </h2>
-        <button
-          onClick={this.startCustomMetadataEditMode}
-          style={{
-            margin: '0 auto',
-            display: 'block',
-          }}
-        >
-          Edit Metadata
-        </button>
+
         {/* METADATA EDIT MODE MODAL */}
         <Modal
           visible={this.state.customMetadataEditMode}
