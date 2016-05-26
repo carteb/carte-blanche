@@ -23,9 +23,9 @@ function renderConstraintForm(
     parsedMetadata.value[propKey] :
     undefined;
 
-  const relevantCustomMetadata = has(customMetadata, ['props', propKey]) ?
-    customMetadata.props[propKey] :
-    undefined;
+  const relevantCustomMetadata = has(customMetadata, ['constraints', 'props', propKey]) ?
+    customMetadata.constraints.props[propKey] :
+    {};
 
   // create an update function that simply overwrites the updated constraints
   const onUpdateConstraints = (constraintChanges) => {
@@ -84,7 +84,9 @@ export default (props) => {
                  'Not defined'}
                 value={controlType}
                 onChange={(event) => {
-                  const newCustomMetadata = { ...props.customMetadata.constraints };
+                  const newCustomMetadata = props.customMetadata.constraints ?
+                    { ...props.customMetadata.constraints } :
+                    {};
                   // overwrite they current propKey which also removes constraints
                   set(newCustomMetadata, ['props', propKey], {});
                   newCustomMetadata.props[propKey].controlType = event.target.value;

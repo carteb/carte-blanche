@@ -26,11 +26,9 @@ function renderConstraintForm(
     parsedMetadata.props[propKey] :
     undefined;
 
-  const relevantCustomMetadata = customMetadata &&
-    customMetadata.props &&
-    customMetadata.props[propKey] ?
+  const relevantCustomMetadata = has(customMetadata, ['props', propKey]) ?
     customMetadata.props[propKey] :
-    undefined;
+    {};
 
   // create an update function that simply overwrites the updated constraints
   const onUpdateConstraints = (constraintChanges) => {
