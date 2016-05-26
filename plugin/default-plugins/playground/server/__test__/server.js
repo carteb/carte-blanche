@@ -164,7 +164,7 @@ describe('server', () => {
       },
     };`;
 
-    describe('write new variation', () => {
+    describe.only('write new variation', () => {
       const variationComponentPath = path.join(
         variationsBasePath,
         'components',
@@ -200,7 +200,7 @@ describe('server', () => {
         variationsBasePath,
         'components',
         'otherComponents',
-        'ComponentD',
+        'ComponentE',
       );
       const variationPath = path.join(variationComponentPath, 'v-newVariation.js');
 
@@ -210,7 +210,7 @@ describe('server', () => {
 
       it('should create a new file with the provided data', (done) => {
         request
-          .post('/variations/components/otherComponents/ComponentD.js')
+          .post('/variations/components/otherComponents/ComponentE.js')
           .type('json')
           .send({
             variation: 'newVariation',
