@@ -6,6 +6,7 @@ const controlTypes = [
   'node',
   'avatar',
   'name',
+  'date',
   // 'shape',
   // 'arrayOf',
 ];
