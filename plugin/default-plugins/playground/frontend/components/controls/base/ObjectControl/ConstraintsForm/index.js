@@ -1,11 +1,10 @@
 import React from 'react';
-
 import styles from './styles.css';
-import Select from '../common/Select';
-import controlTypes from './controlTypes';
-import getControl from '../../utils/getControl';
-import uniq from 'lodash/uniq';
+import Select from '../../../../common/Select';
 import set from 'lodash/set';
+import controlTypes from '../../../../CustomMetadataForm/controlTypes';
+import getControl from '../../../../../utils/getControl';
+// import Input from '../../../../common/Input';
 
 function renderConstraintForm(
   propKey,
@@ -19,6 +18,9 @@ function renderConstraintForm(
   const ConstraintsForm = control.type.ConstraintsForm;
   if (!ConstraintsForm) return null;
 
+  // console.log(parsedMetadata);
+  // console.log(JSON.stringify(parsedMetadata));
+
   // create an update function that simply overwrites the updated constraints
   const onUpdateConstraints = (constraintChanges) => {
     const newCustomMetadata = { ...customMetadata };
@@ -29,9 +31,7 @@ function renderConstraintForm(
     updateCustomMetadata(newCustomMetadata);
   };
 
-  const constraints = customMetadata.props && customMetadata.props[propKey] ?
-                      customMetadata.props[propKey].constraints :
-                      {};
+  const constraints = {};
 
   return (
     <ConstraintsForm
@@ -42,33 +42,28 @@ function renderConstraintForm(
   );
 }
 
-function CustomMetadataForm(props) {
+export default (props) => {
   // retriev all propKeys from the parsed & custom metadata
   let propKeys = [];
-  if (props.customMetadata.props) {
-    propKeys = propKeys.concat(Object.keys(props.customMetadata.props));
+  // if (props.customMetadata.props) {
+  //   propKeys = propKeys.concat(Object.keys(props.customMetadata.props));
+  // }
+  if (props.parsedMetadata.value) {
+    propKeys = propKeys.concat(Object.keys(props.parsedMetadata.value));
   }
-  if (props.parsedMetadata.props) {
-    propKeys = propKeys.concat(Object.keys(props.parsedMetadata.props));
-  }
-  propKeys = uniq(propKeys);
 
   return (
     <div className={styles.wrapper}>
-      <h2 className={styles.title}>Edit Metadata</h2>
       {
         propKeys.map((propKey) => {
           let controlType;
-          if (props.customMetadata.props && props.customMetadata.props[propKey]) {
-            controlType = props.customMetadata.props[propKey].controlType;
-          } else {
-            controlType = props.parsedMetadata.props[propKey].name;
-          }
+
+          controlType = props.parsedMetadata.value[propKey].name;
 
           const relevantParsedMetadata = props.parsedMetadata &&
-            props.parsedMetadata.props &&
-            props.parsedMetadata.props[propKey] ?
-            props.parsedMetadata.props[propKey] :
+            props.parsedMetadata.value &&
+            props.parsedMetadata.value[propKey] ?
+            props.parsedMetadata.value[propKey] :
             undefined;
 
           return (
@@ -77,10 +72,10 @@ function CustomMetadataForm(props) {
                 {propKey}
               </div>
               <Select
-                label={props.parsedMetadata.props &&
-                 props.parsedMetadata.props[propKey] &&
-                 props.parsedMetadata.props[propKey].name ?
-                 props.parsedMetadata.props[propKey].name :
+                label={props.parsedMetadata &&
+                  props.parsedMetadata.value &&
+                 props.parsedMetadata.value[propKey].name ?
+                 props.parsedMetadata.value[propKey].name :
                  'Not defined'}
                 value={controlType}
                 onChange={(event) => {
@@ -105,6 +100,4 @@ function CustomMetadataForm(props) {
       }
     </div>
   );
-}
-
-export default CustomMetadataForm;
+};

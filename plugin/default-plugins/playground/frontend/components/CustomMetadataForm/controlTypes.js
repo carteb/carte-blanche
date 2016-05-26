@@ -7,7 +7,7 @@ const controlTypes = [
   'avatar',
   'name',
   'func',
-  // 'shape',
+  'shape',
   // 'arrayOf',
 ];
 
