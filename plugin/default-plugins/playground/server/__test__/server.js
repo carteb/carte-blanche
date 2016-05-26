@@ -164,7 +164,7 @@ describe('server', () => {
       },
     };`;
 
-    describe.only('write new variation', () => {
+    describe('write new variation', () => {
       const variationComponentPath = path.join(
         variationsBasePath,
         'components',

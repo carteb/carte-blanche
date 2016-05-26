@@ -178,8 +178,11 @@ var start = (projectBasePath, variationsBasePath, port) => {
       return;
     }
 
-    var componentName = getComponentNameFromPath(relativeComponentPath);
-    var metaPath = path.join(variationsBasePath, componentName, 'meta.js');
+    var variationComponentPath = getVariationComponentPath(
+      relativeComponentPath,
+      variationsBasePath
+    );
+    var metaPath = path.join(variationComponentPath, 'meta.js');
 
     if (!fs.existsSync(metaPath)) {
       res.json({ data: '{}' });
