@@ -6,7 +6,7 @@ const xt = ExtractTextPlugin.extract.bind(ExtractTextPlugin);
 export default {
   devtool: 'eval',
   output: {
-    path: path.join(__dirname, './plugin'),
+    path: path.join(__dirname, './plugin/build'),
     filename: '[name]-bundle.js',
     publicPath: '/',
   },

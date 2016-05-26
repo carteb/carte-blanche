@@ -124,7 +124,7 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
 
     // Add styleguide base javascript
     if (!compilation.assets['styleguide/client-bundle.js']) {
-      const clientJs = fs.readFileSync(path.join(__dirname, 'client-bundle.js'));
+      const clientJs = fs.readFileSync(path.join(__dirname, './build/client-bundle.js'));
       compilation.assets['styleguide/client-bundle.js'] = { // eslint-disable-line no-param-reassign
         source: () => clientJs,
         size: () => clientJs.length,
@@ -132,7 +132,7 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
     }
 
     if (!compilation.assets['styleguide/client-api.js']) {
-      const clientJs = fs.readFileSync(path.join(__dirname, 'client-api.js'));
+      const clientJs = fs.readFileSync(path.join(__dirname, './client-api.js'));
       compilation.assets['styleguide/client-api.js'] = { // eslint-disable-line no-param-reassign
         source: () => clientJs,
         size: () => clientJs.length,
@@ -140,7 +140,7 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
     }
 
     if (!compilation.assets['styleguide/client.css']) {
-      const clientCSS = fs.readFileSync(path.join(__dirname, 'client.css'));
+      const clientCSS = fs.readFileSync(path.join(__dirname, './build/client.css'));
       compilation.assets['styleguide/client.css'] = { // eslint-disable-line no-param-reassign
         source: () => clientCSS,
         size: () => clientCSS.length,
@@ -148,7 +148,7 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
     }
 
     if (!compilation.assets['styleguide/playground.css']) {
-      const playgroundCSS = fs.readFileSync(path.join(__dirname, 'playground.css'));
+      const playgroundCSS = fs.readFileSync(path.join(__dirname, './build/playground.css'));
       compilation.assets['styleguide/playground.css'] = { // eslint-disable-line no-param-reassign
         source: () => playgroundCSS,
         size: () => playgroundCSS.length,
