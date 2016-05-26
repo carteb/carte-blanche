@@ -7,7 +7,6 @@ var cors = require('cors');
 var mkdirp = require('mkdirp');
 var server;
 var jsonBodyParser = bodyParser.json();
-var getComponentNameFromPath = require('../../../../utils/getComponentNameFromPath');
 var getVariationComponentPath = require('./getVariationComponentPath');
 var chokidar = require('chokidar');
 
