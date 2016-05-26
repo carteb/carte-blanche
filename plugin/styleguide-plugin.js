@@ -93,6 +93,7 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
       paths[relativePath] = `/${cache[request]}`;
     });
 
+    // TODO add option for hot reloading and identify port automatically
     // Inject the component script tags and the client js into a basic HTML template
     const html = `
     <!DOCTYPE html>
@@ -108,6 +109,7 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
           window.STYLEGUIDE_PLUGIN_CLIENT_API.scripts = ${JSON.stringify(paths)};
         </script>
         <script src="/styleguide/client-bundle.js"></script>
+        <script src="http://localhost:8080/webpack-dev-server.js"></script>
       </body>
     </html>`;
     const styleguidePath = this.options.dest || 'styleguide/index.html';

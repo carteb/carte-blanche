@@ -11,13 +11,11 @@
 
 .wrapper--fullHeight {
   composes: wrapper;
-  height: 100%;
   border: none;
   margin: 0 auto;
 }
 
 .card {
-  height: 100%;
   width: 90%;
   display: flex;
   justify-content: center;
@@ -47,7 +45,6 @@
   width: 100%;
   height: 100%;
   position: absolute;
-  height: 100%;
   top: 0;
   left: 0;
   right: 0;

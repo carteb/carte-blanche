@@ -25,6 +25,7 @@
   -webkit-box-shadow: 0px 0px 28px 9px rgba(0,0,0,0.33);
   -moz-box-shadow: 0px 0px 28px 9px rgba(0,0,0,0.33);
   box-shadow: 0px 0px 28px 9px rgba(0,0,0,0.33);
+  overflow-y: scroll;
 }
 
 .closeBtn {

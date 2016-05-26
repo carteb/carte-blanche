@@ -72,27 +72,6 @@ class PlaygroundList extends Component {
     this.disconnectFromSocket();
   }
 
-  // Called when the component metadata was changed from the form
-  onComponentMetadataChanged = (event) => {
-    const { content } = event;
-    const metadataWithControls = this.generateMetadataWithControls(this.props.meta, content);
-    this.setState({
-      metadataWithControls,
-      customMetadata: content,
-      loadingMetadata: false,
-    });
-  };
-
-  // Called when a variation file was changed and we were notified by socket.io
-  onComponentVariationChanged = (event) => {
-    // Get the data from the string we were sent
-    let data = null; // eslint-disable-line prefer-const
-    eval(event.content.replace('module.exports = ', 'data = ')); // eslint-disable-line no-eval
-    const { name, props } = data;
-    // Update the variation with the new data
-    this.updateVariation(name.toLowerCase(), props);
-  };
-
   // Get random values
   getRandomValues = () => randomValues(this.state.metadataWithControls);
 
@@ -153,8 +132,8 @@ class PlaygroundList extends Component {
     // TODO dynamic host
     this.socket = io.connect('http://localhost:8000');
     // Listen to the events dispatched by the socket server
-    this.socket.on('componentMetadataChanged', this.onComponentMetadataChanged);
-    this.socket.on('componentVariationChanged', this.onComponentVariationChanged);
+    this.socket.on('componentMetadataChanged', this.fetchMetadata);
+    this.socket.on('componentVariationChanged', this.fetchVariations);
     this.socket.on('componentVariationAdded', this.fetchVariations);
     this.socket.on('componentVariationRemoved', this.fetchVariations);
   };
