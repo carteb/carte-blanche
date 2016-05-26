@@ -75,6 +75,28 @@ describe('server', () => {
         });
     });
 
+    it('should get all data for a deeper nested component with variations data', (done) => {
+      request
+        .get('/variations/components/otherComponents/ComponentD.js')
+        .expect('Content-type', /json/)
+        .expect(200)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.error).to.be.false; // eslint-disable-line no-unused-expressions
+          expect(res.body.data).to.have.keys(['testVariation']);
+
+          let testVariation;
+          eval(`testVariation = ${res.body.data.testVariation}`); // eslint-disable-line no-eval
+          const expected = {
+            props: {
+              age: 22,
+            },
+          };
+          expect(testVariation).to.deep.equal(expected); // eslint-disable-line no-undef
+          done();
+        });
+    });
+
     it('should return a 404 in case the component does not exist', (done) => {
       request
         .get('/variations/variations/components/ComponentNotAvailable.js')
@@ -89,7 +111,12 @@ describe('server', () => {
 
   describe('DELETE:variations', () => {
     it('should remove the variation', (done) => {
-      const variationPath = path.join(variationsBasePath, 'ComponentA', 'v-toBeRemoved.js');
+      const variationPath = path.join(
+        variationsBasePath,
+        'components',
+        'ComponentA',
+        'v-toBeRemoved.js'
+      );
       fs.closeSync(fs.openSync(variationPath, 'w'));
 
       request
@@ -126,19 +153,24 @@ describe('server', () => {
   });
 
   describe('POST:variations', () => {
-    describe('write new variation', () => {
-      const variationComponentPath = path.join(variationsBasePath, 'ComponentB');
-      const variationPath = path.join(variationComponentPath, 'v-newVariation.js');
-      const code = `{
-        props: {
-          name: {
-            value: 'Ada Lovelace',
-          },
-          onClick: {
-            value: () => true,
-          },
+    const code = `{
+      props: {
+        name: {
+          value: 'Ada Lovelace',
         },
-      };`;
+        onClick: {
+          value: () => true,
+        },
+      },
+    };`;
+
+    describe('write new variation', () => {
+      const variationComponentPath = path.join(
+        variationsBasePath,
+        'components',
+        'ComponentB',
+      );
+      const variationPath = path.join(variationComponentPath, 'v-newVariation.js');
 
       afterEach((done) => {
         rimraf(variationComponentPath, done);
@@ -163,18 +195,45 @@ describe('server', () => {
       });
     });
 
+    describe('write new variation in nested path', () => {
+      const variationComponentPath = path.join(
+        variationsBasePath,
+        'components',
+        'otherComponents',
+        'ComponentE',
+      );
+      const variationPath = path.join(variationComponentPath, 'v-newVariation.js');
+
+      afterEach((done) => {
+        rimraf(variationComponentPath, done);
+      });
+
+      it('should create a new file with the provided data', (done) => {
+        request
+          .post('/variations/components/otherComponents/ComponentE.js')
+          .type('json')
+          .send({
+            variation: 'newVariation',
+            code,
+          })
+          .expect(200)
+          .end((err, res) => {
+            expect(res.status).to.equal(200);
+            fs.readFile(variationPath, { encoding: 'utf8' }, (_, fileContent) => {
+              expect(`module.exports = ${code}`).to.equal(fileContent);
+              done();
+            });
+          });
+      });
+    });
+
     describe('overwrite existing variation', () => {
-      const variationPath = path.join(variationsBasePath, 'ComponentA', 'v-existingVariation.js');
-      const code = `{
-        props: {
-          name: {
-            value: 'Marie Curie',
-          },
-          onSelect: {
-            value: () => true,
-          },
-        },
-      };`;
+      const variationPath = path.join(
+        variationsBasePath,
+        'components',
+        'ComponentA',
+        'v-existingVariation.js'
+      );
 
       afterEach((done) => {
         fs.unlink(variationPath, () => {
@@ -253,17 +312,22 @@ describe('server', () => {
   });
 
   describe('POST:componentsMeta', () => {
-    describe('write new meta file', () => {
-      const variationComponentPath = path.join(variationsBasePath, 'ComponentC');
-      const componentMetaPath = path.join(variationComponentPath, 'meta.js');
-      const code = `{
-        props: {
-          age: {
-            min: 0,
-            max: 120,
-          },
+    const code = `{
+      props: {
+        age: {
+          min: 0,
+          max: 120,
         },
-      };`;
+      },
+    };`;
+
+    describe('write new meta file', () => {
+      const variationComponentPath = path.join(
+        variationsBasePath,
+        'components',
+        'ComponentC'
+      );
+      const componentMetaPath = path.join(variationComponentPath, 'meta.js');
 
       afterEach((done) => {
         rimraf(variationComponentPath, done);
@@ -272,6 +336,37 @@ describe('server', () => {
       it('should create a new file with the provided meta data', (done) => {
         request
           .post('/components/components/ComponentC.js')
+          .type('json')
+          .send({
+            code,
+          })
+          .expect(200)
+          .end((err, res) => {
+            expect(res.status).to.equal(200);
+            fs.readFile(componentMetaPath, { encoding: 'utf8' }, (_, fileContent) => {
+              expect(`module.exports = ${code}`).to.equal(fileContent);
+              done();
+            });
+          });
+      });
+    });
+
+    describe('write new meta file for a nested component', () => {
+      const variationComponentPath = path.join(
+        variationsBasePath,
+        'components',
+        'otherComponents',
+        'ComponentF'
+      );
+      const componentMetaPath = path.join(variationComponentPath, 'meta.js');
+
+      afterEach((done) => {
+        rimraf(variationComponentPath, done);
+      });
+
+      it('should create a new file with the provided meta data', (done) => {
+        request
+          .post('/components/components/otherComponents/ComponentF.js')
           .type('json')
           .send({
             code,
