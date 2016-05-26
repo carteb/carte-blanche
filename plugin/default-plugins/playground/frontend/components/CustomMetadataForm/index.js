@@ -48,6 +48,7 @@ function CustomMetadataForm(props) {
 
   return (
     <div className={styles.wrapper}>
+      <h2 className={styles.title}>Edit Metadata</h2>
       {
         propKeys.map((propKey) => {
           let controlType;
@@ -59,8 +60,15 @@ function CustomMetadataForm(props) {
 
           return (
             <div key={propKey}>
+              <div className={styles.propLabel}>
+                {propKey}
+              </div>
               <Select
-                label={propKey}
+                label={props.parsedMetadata.props &&
+                 props.parsedMetadata.props[propKey] &&
+                 props.parsedMetadata.props[propKey].name ?
+                 props.parsedMetadata.props[propKey].name :
+                 'Not defined'}
                 value={controlType}
                 onChange={(event) => {
                   const newCustomMetadata = { ...props.customMetadata };

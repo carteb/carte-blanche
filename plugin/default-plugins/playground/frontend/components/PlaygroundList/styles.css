@@ -6,7 +6,7 @@
 
 .title {
   text-align: center;
-  margin: 2em;
+  margin-top: 1em;
 }
 
 .modalWrapper {
@@ -14,4 +14,9 @@
   height: 100%;
   display: flex;
   flex-direction: row;
+}
+
+.componentEditButton {
+  position: relative;
+  top: 3px;
 }
