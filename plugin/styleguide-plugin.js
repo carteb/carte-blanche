@@ -93,6 +93,7 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
       paths[relativePath] = `/${cache[request]}`;
     });
 
+    // TODO add option for hot reloading and identify port automatically
     // Inject the component script tags and the client js into a basic HTML template
     const html = `
     <!DOCTYPE html>
