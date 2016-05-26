@@ -84,7 +84,7 @@ export default (props) => {
                  'Not defined'}
                 value={controlType}
                 onChange={(event) => {
-                  const newCustomMetadata = { ...props.customMetadata };
+                  const newCustomMetadata = { ...props.customMetadata.constraints };
                   // overwrite they current propKey which also removes constraints
                   set(newCustomMetadata, ['props', propKey], {});
                   newCustomMetadata.props[propKey].controlType = event.target.value;
