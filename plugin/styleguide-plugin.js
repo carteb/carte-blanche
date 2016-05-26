@@ -108,6 +108,8 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
         <script>
           window.STYLEGUIDE_PLUGIN_CLIENT_API.scripts = ${JSON.stringify(paths)};
         </script>
+        <link rel="stylesheet" type="text/css" href="/styleguide/client.css" />
+        <link rel="stylesheet" type="text/css" href="/styleguide/playground.css" />
         <script src="/styleguide/client-bundle.js"></script>
         <script src="http://localhost:8080/webpack-dev-server.js"></script>
       </body>
@@ -134,6 +136,22 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
       compilation.assets['styleguide/client-api.js'] = { // eslint-disable-line no-param-reassign
         source: () => clientJs,
         size: () => clientJs.length,
+      };
+    }
+    
+    if (!compilation.assets['styleguide/client.css']) {
+      const clientCSS = fs.readFileSync(path.join(__dirname, 'client.css'));
+      compilation.assets['styleguide/client.css'] = { // eslint-disable-line no-param-reassign
+        source: () => clientCSS,
+        size: () => clientCSS.length,
+      };
+    }
+
+    if (!compilation.assets['styleguide/playground.css']) {
+      const playgroundCSS = fs.readFileSync(path.join(__dirname, 'playground.css'));
+      compilation.assets['styleguide/playground.css'] = { // eslint-disable-line no-param-reassign
+        source: () => playgroundCSS,
+        size: () => playgroundCSS.length,
       };
     }
 

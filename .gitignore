@@ -6,5 +6,8 @@ npm-debug.log.*
 dist
 stats.json
 plugin/client-bundle.js
+plugin/client.css
+plugin/playground-bundle.js
+plugin/playground.css
 
 examples/*/variations/

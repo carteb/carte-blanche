@@ -76,11 +76,14 @@ class Navigation extends React.Component {
     }
   };
 
+  // remove this for now
+  // navigation should have no idea about any style tags
+  // this should happen inside a service
   clearStyleNodes = () => {
-    const componentStylingNodes = getStylingNodes();
-    map(componentStylingNodes, (stylingNode) => {
-      stylingNode.parentNode.removeChild(stylingNode);
-    });
+    // const componentStylingNodes = getStylingNodes();
+    // map(componentStylingNodes, (stylingNode) => {
+    //   stylingNode.parentNode.removeChild(stylingNode);
+    // });
   };
 
   renderSubNavigation = (componentPath) => {
@@ -128,7 +131,6 @@ class Navigation extends React.Component {
             <div key={componentPath} >
               <IndexLink
                 to={`/${componentPath}`}
-                onClick={this.clearStyleNodes}
                 className={styles.listItem}
                 activeClassName={styles.listItemActive}
               >

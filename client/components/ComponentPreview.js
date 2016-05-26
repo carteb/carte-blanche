@@ -18,7 +18,9 @@ class ComponentPreview extends React.Component {
   componentDidMount() {
     styleguideClientApi.on(this.state.componentPath, this.refreshComponentData);
     this.refreshComponentData();
-    styleguideClientApi.load(this.state.componentPath);
+    if (!has(styleguideClientApi.cache, this.state.componentPath)) {
+      styleguideClientApi.load(this.state.componentPath);
+    }
   }
 
   componentWillUnmount() {
