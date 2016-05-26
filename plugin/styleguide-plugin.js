@@ -138,7 +138,7 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
         size: () => clientJs.length,
       };
     }
-    
+
     if (!compilation.assets['styleguide/client.css']) {
       const clientCSS = fs.readFileSync(path.join(__dirname, 'client.css'));
       compilation.assets['styleguide/client.css'] = { // eslint-disable-line no-param-reassign

@@ -14,7 +14,6 @@ import flatten from 'lodash/flatten';
 import smoothscroll from './smoothscroll';
 import offsetTopFromPage from './offsetTopFromPage';
 import getComponentNameFromPath from '../../../utils/getComponentNameFromPath';
-import getStylingNodes from '../../../utils/getStylingNodes';
 
 import styles from './styles.css';
 

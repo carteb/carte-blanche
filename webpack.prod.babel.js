@@ -12,7 +12,7 @@ export default {
   },
   entry: {
     client: path.join(__dirname, './client/client.js'),
-    playground: path.join(__dirname, './plugin/default-plugins/playground/frontend/components/PlaygroundList/index.js'),
+    playground: path.join(__dirname, './plugin/default-plugins/playground/frontend/components/PlaygroundList/index.js'), // eslint-disable-line max-len
   },
   plugins: [
     new webpack.DefinePlugin({
