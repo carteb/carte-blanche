@@ -1,7 +1,7 @@
 import path from 'path';
 import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-// import StyleguidePlugin from '../../plugin/styleguide-plugin';
+import StyleguidePlugin from '../../plugin/styleguide-plugin';
 import autoprefixer from 'autoprefixer';
 
 export default {
@@ -26,9 +26,14 @@ export default {
       inject: true,
       template: path.join(__dirname, './src/index.html'),
     }),
-    // new StyleguidePlugin({
-    //   src: 'src/components/**/*.jsx',
-    // }),
+    new StyleguidePlugin({
+      include: [
+        // match components like Button/index.js
+        'src/components/**/[A-Z][a-zA-Z]*/index.js',
+        // match components like Button.js
+        'src/components/**/[A-Z][a-zA-Z]*.js',
+      ],
+    }),
   ],
   module: {
     loaders: [

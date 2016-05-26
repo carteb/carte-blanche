@@ -7,6 +7,9 @@
 import React, { PropTypes } from 'react';
 import { VelocityComponent } from 'velocity-react';
 import Frame from 'react-frame-component';
+import map from 'lodash/map';
+
+import reactDOM from 'react-dom';
 
 import EditButton from '../common/EditButton';
 import DeleteButton from '../common/DeleteButton';
@@ -19,12 +22,37 @@ class Playground extends React.Component {
     delay: true,
   };
 
+  componentDidMount = () => {
+    this.resizeCard();
+  };
+
+  componentDidUpdate = () => {
+    this.resizeCard();
+  };
+
   onEditButtonClick = () => {
     this.props.onEditButtonClick(this.props.variationPath);
   };
 
   onDeleteButtonClick = () => {
     this.props.onDeleteButtonClick(this.props.variationPath);
+  };
+
+  resizeCard = () => {
+    // FIXME: access frame and card through refs! currently not possible because of this issue:
+    // https://github.com/pure-ui/styleguide/issues/126
+    const element = reactDOM.findDOMNode(this);
+
+    if (element) {
+      const frame = element.querySelector('iframe');
+      const card = element.querySelector('[class^=card__]');
+
+      // This seems to be the most accurate methode to calculate the real iframe height
+      if (frame && card) {
+        const frameHeight = frame.contentDocument.querySelector('#root > div').scrollHeight;
+        card.style.height = `${frameHeight}px`;
+      }
+    }
   };
 
   showButtons = () => {
@@ -119,7 +147,9 @@ class Playground extends React.Component {
             initialContent={`
               <!DOCTYPE html>
               <html style="height: 100%; width: 100%; margin: 0; padding: 0;">
-                <head></head>
+                <head>
+                  ${map(this.props.stylingNodes, (styleNode) => styleNode.outerHTML).join('')}
+                </head>
                 <body style="height: 100%; width: 100%; margin: 0; padding: 0;">
                   <div
                     id="root"
@@ -153,6 +183,7 @@ Playground.propTypes = {
   fullHeight: PropTypes.bool,
   variationPath: PropTypes.string.isRequired,
   title: PropTypes.string,
+  stylingNodes: PropTypes.array,
 };
 
 export default Playground;

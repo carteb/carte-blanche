@@ -5,10 +5,10 @@
 import React, { Component } from 'react';
 import map from 'lodash/map';
 import mapValues from 'lodash/mapValues';
-import find from 'lodash/find';
 import debounce from 'lodash/debounce';
-import 'whatwg-fetch';
+import io from 'socket.io-client';
 import getSlug from 'speakingurl';
+import 'whatwg-fetch';
 
 import getControl from '../../utils/getControl';
 import randomValues from '../../utils/randomValues';
@@ -16,7 +16,9 @@ import propsToVariation from '../../utils/propsToVariation';
 import variationsToProps from '../../utils/variationsToProps';
 import codeToCustomMetadata from '../../utils/codeToCustomMetadata';
 import customMetadataToCode from '../../utils/customMetadataToCode';
+import addDataToVariation from '../../utils/addDataToVariation';
 import getComponentNameFromPath from '../../../../../../utils/getComponentNameFromPath';
+import getStylingNodes from '../../../../../../utils/getStylingNodes';
 
 import Playground from '../Playground';
 import PropForm from '../PropForm';
@@ -53,7 +55,25 @@ class PlaygroundList extends Component {
 
     this.fetchMetadata();
     this.fetchVariations();
+    this.connectToSocket();
   }
+
+  componentWillUnmount() {
+    this.disconnectFromSocket();
+  }
+
+  onComponentMetadataChanged = (event) => {
+    const { data } = event;
+    this.generateMetadataWithControls(data);
+  };
+
+  onComponentVariationChanged = (event) => {
+    // Get the real data from the string we were sent
+    let data = null; // eslint-disable-line prefer-const
+    eval(event.content.replace('module.exports = ', 'data = ')); // eslint-disable-line no-eval
+    const { name, props } = data;
+    this.updateVariation(name.toLowerCase(), props);
+  };
 
   getRandomValues = () => randomValues(this.state.metadataWithControls);
 
@@ -65,7 +85,7 @@ class PlaygroundList extends Component {
     // Generate a human-readable JSON string from the props
     const propsString = propsToVariation(props);
     // Add the name to the data we save
-    return propsString.replace(/^(\s*){/, `$1{\n  "name": "${name}",`);
+    return addDataToVariation(propsString, { name });
   };
 
   fetchMetadata = () => {
@@ -100,6 +120,21 @@ class PlaygroundList extends Component {
       customMetadata,
       loadingMetadata: false,
     });
+  };
+
+  connectToSocket = () => {
+    // TODO dynamic host
+    this.socket = io.connect('http://localhost:8000');
+    this.socket.on('componentMetadataChanged', this.onComponentMetadataChanged);
+    this.socket.on('componentVariationChanged', this.onComponentVariationChanged);
+    this.socket.on('componentVariationAdded', this.fetchVariations);
+    this.socket.on('componentVariationRemoved', this.fetchVariations);
+  };
+
+  disconnectFromSocket = () => {
+    if (this.socket) {
+      this.socket.disconnect();
+    }
   };
 
   fetchVariations = () => {
@@ -216,7 +251,7 @@ class PlaygroundList extends Component {
     this.generateMetadataWithControls(customMetadata);
     // Persist changes to server every PERSISTENCE_TIMEOUT milliseconds
     this.debouncedPersistCustomMetadata(customMetadata);
-  }
+  };
 
   persistCustomMetadata = (customMetadata) => {
     fetch(`http://localhost:8000/components/${this.props.componentPath}`, {
@@ -229,9 +264,10 @@ class PlaygroundList extends Component {
         code: customMetadataToCode(customMetadata),
       }),
     })
-    .then(() => {
-      this.fetchVariations();
-    })
+    // Unnecessary since this happens now via sockets
+    // .then(() => {
+    //   this.fetchVariations();
+    // })
     .catch((err) => {
       // TODO PROPER ERROR HANDLING
       console.trace(err); // eslint-disable-line no-console
@@ -299,11 +335,12 @@ class PlaygroundList extends Component {
     }
 
     const { component } = this.props;
-    const selectedVariation =
-      find(
-        this.state.variationPropsList,
-        (variationProps, key) => this.state.selectedVariationId === key
-      );
+    // Find the selected variation
+    const selectedVariation = this.state.variationPropsList[this.state.selectedVariationId];
+
+    // Get all the styling of the components. These tags are injected by style-loader
+    // and we can grab all of them and inject them into each iframe of the variations
+    const userStylingNodes = getStylingNodes();
     return (
       <div className={styles.wrapper}>
         <h2 className={styles.title}>
@@ -330,11 +367,11 @@ class PlaygroundList extends Component {
           />
         </Modal>
         {/* VARIATION EDIT MODE MODAL */}
-        {(this.state.selectedVariationId) && (
-          <Modal
-            visible={this.state.variationEditMode}
-            onCloseClick={this.stopVariationEditMode}
-          >
+        <Modal
+          visible={this.state.variationEditMode}
+          onCloseClick={this.stopVariationEditMode}
+        >
+          {(this.state.selectedVariationId) && (
             <div className={styles.modalWrapper}>
               <PropForm
                 metadataWithControls={this.state.metadataWithControls}
@@ -351,8 +388,8 @@ class PlaygroundList extends Component {
                 variationPath={this.state.selectedVariationId}
               />
             </div>
-          </Modal>
-        )}
+          )}
+        </Modal>
         {/* MAIN AREA WITH PLAYGROUNDS */}
         {map(this.state.variationPropsList, (variation, variationPath) => (
           <Playground
@@ -363,6 +400,7 @@ class PlaygroundList extends Component {
             variationPath={variationPath}
             onDeleteButtonClick={this.deleteVariation}
             onEditButtonClick={this.startVariationEditMode}
+            stylingNodes={userStylingNodes}
           />
         ))}
         <CreateVariationButton
