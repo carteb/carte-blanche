@@ -6,6 +6,6 @@ npm-debug.log.*
 dist
 stats.json
 plugin/client-bundle.js
-plugin/build/*
+plugin/main.css
 
 examples/*/variations/

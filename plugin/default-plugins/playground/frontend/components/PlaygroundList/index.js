@@ -21,6 +21,7 @@ import customMetadataToCode from '../../utils/customMetadataToCode';
 import addDataToVariation from '../../utils/addDataToVariation';
 import KeyCodes from '../../utils/keycodes';
 import getComponentNameFromPath from '../../../../../../utils/getComponentNameFromPath';
+import getStylingNodes from '../../../../../../utils/getStylingNodes';
 
 // Components
 import Playground from '../Playground';
@@ -363,11 +364,7 @@ class PlaygroundList extends Component {
 
     // Get all the styling of the components. These tags are injected by style-loader
     // and we can grab all of them and inject them into each iframe of the variations
-    // -------------------------------------------------------------------------------
-    // quick setup for now. will be moved into a service.
-    // fetch any style definition
-    // eslint-disable-next-line max-len
-    const userStylingNodes = document.getElementsByTagName('head')[0].querySelectorAll('link[rel=stylesheet], style');
+    const userStylingNodes = getStylingNodes();
 
     return (
       <div className={styles.wrapper} onKeyDown={this.handleKeyPress}>
