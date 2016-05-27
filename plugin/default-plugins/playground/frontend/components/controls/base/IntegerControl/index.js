@@ -29,6 +29,9 @@ const IntegerControl = (props) => {
  */
 IntegerControl.randomValue = randomValue;
 
+/**
+ * The form to manage the types of the constraints.
+ */
 IntegerControl.ConstraintsForm = ConstraintsForm;
 
 export default IntegerControl;
