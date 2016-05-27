@@ -91,7 +91,7 @@ class PlaygroundList extends Component {
   // Fetch the metadata of the current component
   fetchMetadata = () => {
     // TODO dynamic host
-    fetch(`http://localhost:8000/components/${this.props.componentPath}`)
+    fetch(`http://${this.props.hostname}:${this.props.port}/components/${this.props.componentPath}`)
       .then((response) => response.json())
       .then((json) => {
         const customMetadata = codeToCustomMetadata(json.data);
@@ -131,7 +131,7 @@ class PlaygroundList extends Component {
   // Connect to the socket server
   connectToSocket = () => {
     // TODO dynamic host
-    this.socket = io.connect('http://localhost:8000');
+    this.socket = io.connect(`http://${this.props.hostname}:${this.props.port}`);
     // Listen to the events dispatched by the socket server
     this.socket.on('componentMetadataChanged', this.fetchMetadata);
     this.socket.on('componentVariationChanged', this.fetchVariations);
@@ -149,7 +149,7 @@ class PlaygroundList extends Component {
   // Fetch all variations for the current component
   fetchVariations = () => {
     // TODO dynamic host
-    fetch(`http://localhost:8000/variations/${this.props.componentPath}`)
+    fetch(`http://${this.props.hostname}:${this.props.port}/variations/${this.props.componentPath}`)
       .then((response) => response.json())
       .then((json) => {
         const variationPropsList = variationsToProps(json.data);
@@ -192,7 +192,7 @@ class PlaygroundList extends Component {
       name,
     });
     // TODO dynamic host
-    fetch(`http://localhost:8000/variations/${this.props.componentPath}`, {
+    fetch(`http://${this.props.hostname}:${this.props.port}/variations/${this.props.componentPath}`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -213,7 +213,7 @@ class PlaygroundList extends Component {
   };
 
   deleteVariation = (variationPath) => {
-    fetch(`http://localhost:8000/variations/${this.props.componentPath}?variation=${variationPath}`, {
+    fetch(`http://${this.props.hostname}:${this.props.port}/variations/${this.props.componentPath}?variation=${variationPath}`, {
       method: 'DELETE',
       headers: {
         Accept: 'application/json',
@@ -237,7 +237,7 @@ class PlaygroundList extends Component {
       props,
       name: this.state.variationPropsList[variationPath].name,
     });
-    fetch(`http://localhost:8000/variations/${this.props.componentPath}`, {
+    fetch(`http://${this.props.hostname}:${this.props.port}/variations/${this.props.componentPath}`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -269,7 +269,7 @@ class PlaygroundList extends Component {
   };
 
   persistCustomMetadata = (customMetadata) => {
-    fetch(`http://localhost:8000/components/${this.props.componentPath}`, {
+    fetch(`http://${this.props.hostname}:${this.props.port}/components/${this.props.componentPath}`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',

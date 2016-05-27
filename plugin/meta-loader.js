@@ -46,7 +46,7 @@ module.exports = function metaLoader(source) {
           return (require(${JSON.stringify(styleguidePlugin.frontendPlugin)}))
             .default.apply(
               this,
-              Array.prototype.concat.apply([this.result, data], arguments)
+              Array.prototype.concat.apply([this.result.options, data], arguments)
             )
         }`;
         return `{

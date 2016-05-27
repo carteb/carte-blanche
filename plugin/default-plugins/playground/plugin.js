@@ -10,7 +10,11 @@ function PlaygroundPlugin(options) {
  * Initializes the plugin, called after the main StyleguidePlugin function above
  */
 PlaygroundPlugin.prototype.apply = function apply(compiler) {
-  const options = this.options;
+  // Default options
+  const options = {
+    hostname: (this.options && this.options.hostname) || 'localhost',
+    port: (this.options && this.options.port) || 8000,
+  };
   const projectBasePath = compiler.options.context;
 
   fork(path.resolve(__dirname, './server/run.js'), [

@@ -4,10 +4,11 @@ import { expect } from 'chai';
 import fs from 'fs';
 import rimraf from 'rimraf';
 
+const hostname = 'localhost';
 const port = 8003;
 const projectBasePath = __dirname;
 const variationsBasePath = path.join(__dirname, 'variations');
-const request = supertest.agent(`http://localhost:${port}`);
+const request = supertest.agent(`http://${hostname}:${port}`);
 
 describe('server', () => {
   let server;
@@ -15,7 +16,10 @@ describe('server', () => {
   beforeEach(() => {
     delete require.cache[require.resolve('./server')];
     server = require('../server'); // eslint-disable-line global-require
-    server.start(projectBasePath, variationsBasePath, port);
+    server.start(projectBasePath, variationsBasePath, {
+      port,
+      hostname,
+    });
   });
 
   afterEach((done) => {
