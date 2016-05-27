@@ -29,9 +29,7 @@ function renderConstraintForm(
 
   // create an update function that simply overwrites the updated constraints
   const onUpdateConstraints = (newConstraint) => {
-    console.log('constraintChanges', { ...newConstraint });
-    const newCustomMetadata = {};
-    console.log('newCustomMetadata', { ...newCustomMetadata });
+    const newCustomMetadata = { ...constraints };
     if (!has(newCustomMetadata, ['props', propKey])) {
       set(newCustomMetadata, ['props', propKey], {});
     }
@@ -64,9 +62,6 @@ export default (props) => {
     }
   */
 
-  console.log('a', props.constraints);
-  console.log('b', props.parsedMetadata);
-
   // retriev all propKeys from the parsed & custom metadata
   let propKeys = [];
   if (props.constraints.props) {
@@ -83,10 +78,8 @@ export default (props) => {
         propKeys.map((propKey) => {
           let controlType;
           if (has(props.constraints, ['props', propKey, 'controlType'])) {
-            console.log('in x');
             controlType = props.constraints.props[propKey].controlType;
           } else {
-            console.log('in y');
             controlType = props.parsedMetadata.value[propKey].name;
           }
           return (
@@ -100,13 +93,11 @@ export default (props) => {
                  'Not defined'}
                 value={controlType}
                 onChange={(event) => {
-                  console.log('constraints', { ...props.constraints.props });
                   // take existing constraints.props
                   const newCustomMetadata = has(props, ['constraints', 'props']) ?
                     { ...props.constraints.props } :
                     {};
 
-                  console.log('newCustomMetadata', { ...newCustomMetadata });
                   // set an empty object for the wanted key to
                   //  which also removes inner constraints in case they exist
                   set(newCustomMetadata, [propKey], {});
@@ -116,13 +107,13 @@ export default (props) => {
                 }}
                 options={controlTypes.map((type) => ({ value: type }))}
               />
-            {renderConstraintForm(
-              propKey,
-              controlType,
-              props.onUpdate,
-              props.constraints,
-              props.parsedMetadata
-            )}
+              {renderConstraintForm(
+                propKey,
+                controlType,
+                props.onUpdate,
+                props.constraints,
+                props.parsedMetadata
+              )}
             </div>
           );
         })
