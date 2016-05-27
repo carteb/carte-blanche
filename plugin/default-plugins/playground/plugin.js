@@ -1,6 +1,7 @@
 const fork = require('child_process').fork;
 const path = require('path');
 const reactDocs = require('react-docgen');
+const defaults = require('lodash/defaults');
 const styleguideResolver = require('./resolver.js').default;
 
 function PlaygroundPlugin(options) {
@@ -11,10 +12,11 @@ function PlaygroundPlugin(options) {
  */
 PlaygroundPlugin.prototype.apply = function apply(compiler) {
   // Default options
-  const options = {
-    hostname: (this.options && this.options.hostname) || 'localhost',
-    port: (this.options && this.options.port) || 8000,
-  };
+  const options = defaults({}, this.options, {
+    hostname: 'localhost',
+    port: 8000,
+    variationFolderName: 'variations',
+  });
   const projectBasePath = compiler.options.context;
 
   fork(path.resolve(__dirname, './server/run.js'), [
