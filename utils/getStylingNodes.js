@@ -2,7 +2,7 @@
 
 var filter = require('lodash/filter');
 
-var NUMBER_OF_STYLE_TAGS_BY_INTERFACE = 3;
+var NUMBER_OF_STYLE_TAGS_BY_INTERFACE = 0;
 
 /**
  * Returns all styling related notes on the page. If the first argument is set

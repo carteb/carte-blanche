@@ -120,6 +120,7 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
         <script>
           window.STYLEGUIDE_PLUGIN_CLIENT_API.scripts = ${JSON.stringify(paths)};
         </script>
+        <link rel="stylesheet" type="text/css" href="/styleguide/client.css" />
         <script src="/styleguide/client-bundle.js"></script>
         <script src="http://localhost:8080/webpack-dev-server.js"></script>
       </body>
@@ -134,7 +135,7 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
 
     // Add styleguide base javascript
     if (!compilation.assets['styleguide/client-bundle.js']) {
-      const clientJs = fs.readFileSync(path.join(__dirname, 'client-bundle.js'));
+      const clientJs = fs.readFileSync(path.join(__dirname, './client-bundle.js'));
       compilation.assets['styleguide/client-bundle.js'] = { // eslint-disable-line no-param-reassign
         source: () => clientJs,
         size: () => clientJs.length,
@@ -142,10 +143,18 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
     }
 
     if (!compilation.assets['styleguide/client-api.js']) {
-      const clientJs = fs.readFileSync(path.join(__dirname, 'client-api.js'));
+      const clientJs = fs.readFileSync(path.join(__dirname, './client-api.js'));
       compilation.assets['styleguide/client-api.js'] = { // eslint-disable-line no-param-reassign
         source: () => clientJs,
         size: () => clientJs.length,
+      };
+    }
+
+    if (!compilation.assets['styleguide/client.css']) {
+      const clientCSS = fs.readFileSync(path.join(__dirname, './main.css'));
+      compilation.assets['styleguide/client.css'] = { // eslint-disable-line no-param-reassign
+        source: () => clientCSS,
+        size: () => clientCSS.length,
       };
     }
 

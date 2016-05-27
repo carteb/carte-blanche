@@ -14,7 +14,6 @@ import flatten from 'lodash/flatten';
 import smoothscroll from './smoothscroll';
 import offsetTopFromPage from './offsetTopFromPage';
 import getComponentNameFromPath from '../../../utils/getComponentNameFromPath';
-import getStylingNodes from '../../../utils/getStylingNodes';
 
 import styles from './styles.css';
 
@@ -76,13 +75,6 @@ class Navigation extends React.Component {
     }
   };
 
-  clearStyleNodes = () => {
-    const componentStylingNodes = getStylingNodes();
-    map(componentStylingNodes, (stylingNode) => {
-      stylingNode.parentNode.removeChild(stylingNode);
-    });
-  };
-
   renderSubNavigation = (componentPath) => {
     if (this.props.activeComponentPath === componentPath) {
       if (has(window.STYLEGUIDE_PLUGIN_CLIENT_API.cache, componentPath)) {
@@ -128,7 +120,6 @@ class Navigation extends React.Component {
             <div key={componentPath} >
               <IndexLink
                 to={`/${componentPath}`}
-                onClick={this.clearStyleNodes}
                 className={styles.listItem}
                 activeClassName={styles.listItemActive}
               >

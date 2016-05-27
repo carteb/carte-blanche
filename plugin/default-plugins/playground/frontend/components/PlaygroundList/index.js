@@ -365,6 +365,7 @@ class PlaygroundList extends Component {
     // Get all the styling of the components. These tags are injected by style-loader
     // and we can grab all of them and inject them into each iframe of the variations
     const userStylingNodes = getStylingNodes();
+
     return (
       <div className={styles.wrapper} onKeyDown={this.handleKeyPress}>
         <h2 className={styles.title}>
@@ -406,6 +407,7 @@ class PlaygroundList extends Component {
                 fullHeight
                 variationProps={selectedVariation.props}
                 variationPath={this.state.selectedVariationId}
+                stylingNodes={userStylingNodes}
               />
             </div>
           )}
