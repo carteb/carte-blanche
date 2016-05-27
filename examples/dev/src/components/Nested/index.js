@@ -4,7 +4,7 @@ import Button from '../Button';
 import Card from './Card';
 
 const Nested = ({ name }) => (
-  <div style={styles.border}>
+  <div style={styles.wrapper}>
     {name}
     <Button>test</Button>
     <Card />

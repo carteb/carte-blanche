@@ -40,7 +40,7 @@ export default {
   module: {
     loaders: [
       {
-        test: /\.jsx?$/,
+        test: /\.js$/,
         loaders: ['react-hot', 'babel'],
         exclude: /node_modules/,
       }, {
