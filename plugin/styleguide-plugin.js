@@ -22,23 +22,22 @@ let id = -1;
  */
 function StyleguidePlugin(options) {
   this.id = (++id);
+  this.options = options || {};
 
   // Assert that the include option was specified
-  if (!options.include) {
+  if (!this.options.include) {
     throw new Error('You need to specify where your components are in the "include" option!\n\n');
   }
 
   // Assert that a HTML file was specified in the dest option
-  if (options.dest && options.dest.indexOf('.html') !== options.dest.length - 5) {
+  if (this.options.dest && this.options.dest.indexOf('.html') !== this.options.dest.length - 5) {
     throw new Error('You need to specify a .html file in the "dest" option!\n\n');
   }
 
   // Assert that the plugins option is an array if specified
-  if (options.plugins && !isArray(options.plugins)) {
+  if (this.options.plugins && !isArray(this.options.plugins)) {
     throw new Error('The "plugins" option needs to be an array!\n\n');
   }
-
-  this.options = options || {};
 }
 
 /**
