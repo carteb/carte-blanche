@@ -13,7 +13,10 @@ PlaygroundPlugin.prototype.apply = function apply(compiler) {
   const options = this.options;
   const projectBasePath = compiler.options.context;
 
-  fork(path.resolve(__dirname, './server/run.js'), [projectBasePath]);
+  fork(path.resolve(__dirname, './server/run.js'), [
+    projectBasePath, // process.argv[2]
+    JSON.stringify(options), // process.argv[3]
+  ]);
 
   compiler.plugin('compilation', (compilation) => {
     // Expose the react parse result to all other styleguide plugins
