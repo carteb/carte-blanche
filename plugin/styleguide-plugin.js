@@ -55,6 +55,7 @@ StyleguidePlugin.prototype.getCache = function getCache(compiler) {
  */
 StyleguidePlugin.prototype.apply = function apply(compiler) {
   this.registerDefaultPlugins(compiler);
+  this.registerPlugins(compiler);
 
   // Create the cache for this instace of the compiler
   const cache = this.getCache(compiler);
@@ -141,9 +142,22 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
   });
 };
 
+/**
+ * Register the default plugins
+ */
 StyleguidePlugin.prototype.registerDefaultPlugins = function registerDefaultPlugins(compiler) {
   const playgroundPlugin = new PlaygroundPlugin();
   playgroundPlugin.apply(compiler);
+};
+
+/**
+ * Register the custom, user defined plugins
+ */
+StyleguidePlugin.prototype.registerPlugins = function registerPlugins(compiler) {
+  const plugins = this.options.plugins;
+  for (let i = 0; i < plugins.length; i++) {
+    plugins[i].apply(compiler);
+  }
 };
 
 export default StyleguidePlugin;
