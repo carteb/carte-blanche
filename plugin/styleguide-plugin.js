@@ -54,8 +54,11 @@ StyleguidePlugin.prototype.getCache = function getCache(compiler) {
  * Initializes the plugin, called after the main StyleguidePlugin function above
  */
 StyleguidePlugin.prototype.apply = function apply(compiler) {
-  this.registerDefaultPlugins(compiler);
-  this.registerPlugins(compiler);
+  if (this.options.plugins && this.options.plugins.length > 0) {
+    this.registerPlugins(compiler);
+  } else {
+    this.registerDefaultPlugins(compiler);
+  }
 
   // Create the cache for this instace of the compiler
   const cache = this.getCache(compiler);
