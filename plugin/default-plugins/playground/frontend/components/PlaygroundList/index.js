@@ -19,6 +19,7 @@ import variationsToProps from '../../utils/variationsToProps';
 import codeToCustomMetadata from '../../utils/codeToCustomMetadata';
 import customMetadataToCode from '../../utils/customMetadataToCode';
 import addDataToVariation from '../../utils/addDataToVariation';
+import KeyCodes from '../../utils/keycodes';
 import getComponentNameFromPath from '../../../../../../utils/getComponentNameFromPath';
 import getStylingNodes from '../../../../../../utils/getStylingNodes';
 
@@ -301,6 +302,18 @@ class PlaygroundList extends Component {
     this.debouncedPersistVariation(variationPath, props);
   };
 
+  // Keyboard Controls
+  handleKeyPress = (evt) => {
+    if (evt.keyCode === KeyCodes.ESC) {
+      // If the ESC key was pressed, close the modal
+      if (this.state.customMetadataEditMode) {
+        this.stopCustomMetadataEditMode();
+      } else if (this.state.variationEditMode) {
+        this.stopVariationEditMode();
+      }
+    }
+  }
+
   randomiseEverything = (path) => {
     this.persistVariation(path, this.getRandomValues());
   };
@@ -353,7 +366,7 @@ class PlaygroundList extends Component {
     // and we can grab all of them and inject them into each iframe of the variations
     const userStylingNodes = getStylingNodes();
     return (
-      <div className={styles.wrapper}>
+      <div className={styles.wrapper} onKeyDown={this.handleKeyPress}>
         <h2 className={styles.title}>
           {getComponentNameFromPath(this.props.componentPath)}
           <EditButton
