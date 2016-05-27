@@ -33,7 +33,7 @@
   "scripts": {
     "start": "npm run example:dev",
     "preserver": "npm run client:build",
-    "server": "webpack-dev-server",
+    "server": "webpack-dev-server --hot",
     "example:dev": "npm run server -- --context examples/dev/ --config examples/dev/webpack.dev.babel.js",
     "example:dev:iron": "iron-node node_modules/webpack-dev-server/bin/webpack-dev-server.js --context examples/dev/ --config examples/dev/webpack.dev.babel.js",
     "example:dest": "npm run server -- --context examples/dest/ --config examples/dest/webpack.dev.babel.js",
@@ -106,8 +106,8 @@
     "html-loader": "^0.4.3",
     "html-webpack-plugin": "^2.16.0",
     "immutable": "^3.8.1",
-    "istanbul": "^1.0.0-alpha",
     "iron-node": "^2.2.17",
+    "istanbul": "^1.0.0-alpha",
     "jsdom": "^9.1.0",
     "json-loader": "0.5.4",
     "jss": "^3.11.1",
