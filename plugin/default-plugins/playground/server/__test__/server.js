@@ -6,8 +6,9 @@ import rimraf from 'rimraf';
 
 const hostname = 'localhost';
 const port = 8003;
+const variationFolderName = 'variations';
 const projectBasePath = __dirname;
-const variationsBasePath = path.join(__dirname, 'variations');
+const variationsBasePath = path.join(__dirname, variationFolderName);
 const request = supertest.agent(`http://${hostname}:${port}`);
 
 describe('server', () => {
@@ -19,6 +20,7 @@ describe('server', () => {
     server.start(projectBasePath, variationsBasePath, {
       port,
       hostname,
+      variationFolderName,
     });
   });
 
