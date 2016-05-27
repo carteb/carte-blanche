@@ -6,7 +6,7 @@ export default {
   devtool: 'inline-source-map',
   entry: [
     'webpack/hot/only-dev-server',
-    'webpack-dev-server/client?http://localhost:8080',
+    'webpack-dev-server/client',
     path.join(__dirname, './mock-entry.dev.js'),
   ],
   output: {
