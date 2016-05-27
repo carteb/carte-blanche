@@ -45,18 +45,22 @@ describe('<CustomMetadataForm />', () => {
   });
 
   it('should call calls updateCustomMetadata when selecting option', () => {
-    const select = wrapper.find('select').first();
+    const select = wrapper.find('select').at(1);
     select.simulate('change');
     sinon.assert.calledWith(updateCustomMetadata, {
-      props: { className: { controlType: 'number' } },
+      props: {
+        className: { controlType: 'number' },
+      },
     });
   });
 
   it('should call updateCustomMetadata with controlType enum when selecting option enum', () => {
-    const select = wrapper.find('select').first();
+    const select = wrapper.find('select').at(1);
     select.simulate('change', { target: { value: 'enum' } });
     sinon.assert.calledWith(updateCustomMetadata, {
-      props: { className: { controlType: 'enum' } },
+      props: {
+        className: { controlType: 'enum' },
+      },
     });
   });
 });

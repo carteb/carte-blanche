@@ -11,6 +11,7 @@ import mapValues from 'lodash/mapValues';
 import Label from '../../../common/Label';
 import randomValue from './randomValue';
 import styles from './styles.css';
+import ConstraintsForm from './ConstraintsForm';
 
 const ObjectControl = ({ label, propTypeData, value, onUpdate, isNested }) => {
   const updatePropertyValues = (values) => {
@@ -49,5 +50,10 @@ const ObjectControl = ({ label, propTypeData, value, onUpdate, isNested }) => {
 };
 
 ObjectControl.randomValue = randomValue;
+
+/**
+ * The form to manage the types of the object's children.
+ */
+ObjectControl.ConstraintsForm = ConstraintsForm;
 
 export default ObjectControl;
