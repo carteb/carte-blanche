@@ -3,108 +3,68 @@ import styles from './styles.css';
 import Select from '../../../../common/Select';
 import set from 'lodash/set';
 import has from 'lodash/has';
-import uniq from 'lodash/uniq';
 import controlTypes from '../../../../CustomMetadataForm/controlTypes';
-import getControl from '../../../../../utils/getControl';
+import renderConstraintForm from './renderConstraintForm';
+import getPropKeys from './getPropKeys';
+import getControlType from './getControlType';
 
-function renderConstraintForm(
-  propKey,
-  controlType,
-  updateCustomMetadata,
-  constraints,
-  parsedMetadata
-) {
-  // retrieving the ConstraintsForm based on the controlType string/key
-  const control = getControl({ name: controlType });
-  const ConstraintsForm = control.type.ConstraintsForm;
-  if (!ConstraintsForm) return null;
-
-  const relevantParsedMetadata = has(parsedMetadata, ['value', propKey]) ?
-    parsedMetadata.value[propKey] :
-    undefined;
-
-  const nestedConstraints = has(constraints, ['props', propKey, 'constraints']) ?
-    constraints.props[propKey].constraints :
-    {};
-
-  // create an update function that simply overwrites the updated constraints
-  const onUpdateConstraints = (newConstraint) => {
-    const newCustomMetadata = { ...constraints };
-    if (!has(newCustomMetadata, ['props', propKey])) {
-      set(newCustomMetadata, ['props', propKey], {});
-    }
-    newCustomMetadata.props[propKey].constraints = newConstraint;
-    updateCustomMetadata(newCustomMetadata);
-  };
-
-  return (
-    <ConstraintsForm
-      onUpdate={onUpdateConstraints}
-      constraints={nestedConstraints}
-      parsedMetadata={relevantParsedMetadata}
-    />
-  );
-}
-
-export default (props) => {
-  /*
-    constraints: {
-      props: {
-        a: …
-      }
-    }
-
-
-    parsedMetadata: {
-      value: {
-        a: …
-      }
-    }
-  */
-
+/*
+ * Rendering the selection & constraintform for nested objects
+ *
+ * The props should look like this:
+ * constraints: {
+ *   props: {
+ *     a: …
+ *   }
+ * }
+ * parsedMetadata: {
+ *   value: {
+ *     a: …
+ *   }
+ * }
+*/
+const ConstraintsForm = (props) => {
   // retriev all propKeys from the parsed & custom metadata
-  let propKeys = [];
-  if (props.constraints.props) {
-    propKeys = propKeys.concat(Object.keys(props.constraints.props));
-  }
-  if (props.parsedMetadata.value) {
-    propKeys = propKeys.concat(Object.keys(props.parsedMetadata.value));
-  }
-  propKeys = uniq(propKeys);
+  const propKeys = getPropKeys(props.constraints, props.parsedMetadata);
 
   return (
     <div className={styles.wrapper}>
       {
         propKeys.map((propKey) => {
-          let controlType;
-          if (has(props.constraints, ['props', propKey, 'controlType'])) {
-            controlType = props.constraints.props[propKey].controlType;
-          } else {
-            controlType = props.parsedMetadata.value[propKey].name;
-          }
+          const controlType = getControlType(
+            props.constraints,
+            props.parsedMetadata,
+            propKey
+          );
+
+          const propType = has(props.parsedMetadata, ['value', propKey, 'name']) ?
+            props.parsedMetadata.value[propKey].name :
+            'Not defined';
+
+          // updating the complete props object with only the controlType
+          // of the desired property changed and the constraints to be reset
+          const onChange = (event) => {
+            // take existing constraints.props
+            const newCustomMetadata = has(props, ['constraints', 'props']) ?
+              { ...props.constraints.props } :
+              {};
+            // set an empty object for the wanted key to
+            // which also removes inner constraints in case they exist
+            set(newCustomMetadata, [propKey], {});
+            newCustomMetadata[propKey].controlType = event.target.value;
+            // give back the props list
+            props.onUpdate({ props: newCustomMetadata });
+          };
+
           return (
             <div key={propKey}>
               <div className={styles.propLabel}>
                 {propKey}
               </div>
               <Select
-                label={has(props.parsedMetadata, ['value', propKey, 'name']) ?
-                 props.parsedMetadata.value[propKey].name :
-                 'Not defined'}
+                label={propType}
                 value={controlType}
-                onChange={(event) => {
-                  // take existing constraints.props
-                  const newCustomMetadata = has(props, ['constraints', 'props']) ?
-                    { ...props.constraints.props } :
-                    {};
-
-                  // set an empty object for the wanted key to
-                  //  which also removes inner constraints in case they exist
-                  set(newCustomMetadata, [propKey], {});
-                  newCustomMetadata[propKey].controlType = event.target.value;
-                  // give back the props list
-                  props.onUpdate({ props: newCustomMetadata });
-                }}
+                onChange={onChange}
                 options={controlTypes.map((type) => ({ value: type }))}
               />
               {renderConstraintForm(
@@ -121,3 +81,5 @@ export default (props) => {
     </div>
   );
 };
+
+export default ConstraintsForm;
