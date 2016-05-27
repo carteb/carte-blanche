@@ -1,7 +1,7 @@
 import path from 'path';
 import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import StyleguidePlugin from '../../plugin/styleguide-plugin';
+// import StyleguidePlugin from '../../plugin/styleguide-plugin';
 import autoprefixer from 'autoprefixer';
 
 export default {
@@ -12,6 +12,8 @@ export default {
     publicPath: '/',
   },
   entry: [
+    'webpack-dev-server/client?http://localhost:8080',
+    'webpack/hot/only-dev-server',
     path.join(__dirname, './src/index.js'),
   ],
   plugins: [
@@ -26,20 +28,21 @@ export default {
       inject: true,
       template: path.join(__dirname, './src/index.html'),
     }),
-    new StyleguidePlugin({
-      include: [
-        // match components like Button/index.js
-        'src/components/**/[A-Z][a-zA-Z]*/index.js',
-        // match components like Button.js
-        'src/components/**/[A-Z][a-zA-Z]*.js',
-      ],
-    }),
+    // new StyleguidePlugin({
+    //   include: [
+    //     // match components like Button/index.js
+    //     'src/components/**/[A-Z][a-zA-Z]*/index.js',
+    //     // match components like Button.js
+    //     'src/components/**/[A-Z][a-zA-Z]*.js',
+    //   ],
+    // }),
   ],
   module: {
     loaders: [
       {
         test: /\.jsx?$/,
-        loaders: ['babel'],
+        loaders: ['react-hot', 'babel'],
+        exclude: /node_modules/,
       }, {
         test: /\.css/,
         loader: 'style!css?modules&importLoaders=1&localIdentName=[local]__[path][name]__[hash:base64:5]!postcss-loader', // eslint-disable-line max-len
