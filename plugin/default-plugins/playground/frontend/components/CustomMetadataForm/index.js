@@ -20,39 +20,29 @@ function renderConstraintForm(
   const ConstraintsForm = control.type.ConstraintsForm;
   if (!ConstraintsForm) return null;
 
-  const relevantParsedMetadata = parsedMetadata &&
-    parsedMetadata.props &&
-    parsedMetadata.props[propKey] ?
+  const relevantParsedMetadata = has(parsedMetadata, ['props', propKey]) ?
     parsedMetadata.props[propKey] :
     undefined;
 
-  const relevantCustomMetadata = has(customMetadata, ['props', propKey]) ?
-    customMetadata.props[propKey] :
+  const constraints = has(customMetadata, ['props', propKey, 'constraints']) ?
+    customMetadata.props[propKey].constraints :
     {};
 
   // create an update function that simply overwrites the updated constraints
-  const onUpdateConstraints = (constraintChanges) => {
+  const onUpdateConstraints = (newConstraint) => {
     const newCustomMetadata = { ...customMetadata };
     if (!has(newCustomMetadata, ['props', propKey])) {
       set(newCustomMetadata, ['props', propKey], {});
     }
-    newCustomMetadata.props[propKey].constraints = {
-      ...newCustomMetadata.props[propKey].constraints,
-      ...constraintChanges,
-    };
+    newCustomMetadata.props[propKey].constraints = newConstraint;
     updateCustomMetadata(newCustomMetadata);
   };
-
-  const constraints = relevantCustomMetadata.constraints ?
-                      relevantCustomMetadata.constraints :
-                      {};
 
   return (
     <ConstraintsForm
       onUpdate={onUpdateConstraints}
       constraints={constraints}
       parsedMetadata={relevantParsedMetadata}
-      customMetadata={relevantCustomMetadata}
     />
   );
 }
@@ -74,6 +64,7 @@ function CustomMetadataForm(props) {
       {
         propKeys.map((propKey) => {
           let controlType;
+          // expects either a custom control type or a parsed type name
           if (has(props.customMetadata, ['props', propKey, 'controlType'])) {
             controlType = props.customMetadata.props[propKey].controlType;
           } else {

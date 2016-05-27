@@ -11,7 +11,7 @@ function renderConstraintForm(
   propKey,
   controlType,
   updateCustomMetadata,
-  customMetadata,
+  constraints,
   parsedMetadata
 ) {
   // retrieving the ConstraintsForm based on the controlType string/key
@@ -23,40 +23,54 @@ function renderConstraintForm(
     parsedMetadata.value[propKey] :
     undefined;
 
-  const relevantCustomMetadata = has(customMetadata, ['constraints', 'props', propKey]) ?
-    customMetadata.constraints.props[propKey] :
+  const nestedConstraints = has(constraints, ['props', propKey, 'constraints']) ?
+    constraints.props[propKey].constraints :
     {};
 
   // create an update function that simply overwrites the updated constraints
-  const onUpdateConstraints = (constraintChanges) => {
-    const newCustomMetadata = { ...customMetadata };
+  const onUpdateConstraints = (newConstraint) => {
+    console.log('constraintChanges', { ...newConstraint });
+    const newCustomMetadata = {};
+    console.log('newCustomMetadata', { ...newCustomMetadata });
     if (!has(newCustomMetadata, ['props', propKey])) {
       set(newCustomMetadata, ['props', propKey], {});
     }
-    newCustomMetadata.props[propKey].constraints = {
-      ...newCustomMetadata.props[propKey].constraints,
-      ...constraintChanges,
-    };
+    newCustomMetadata.props[propKey].constraints = newConstraint;
     updateCustomMetadata(newCustomMetadata);
   };
-
-  const constraints = {};
 
   return (
     <ConstraintsForm
       onUpdate={onUpdateConstraints}
-      constraints={constraints}
+      constraints={nestedConstraints}
       parsedMetadata={relevantParsedMetadata}
-      customMetadata={relevantCustomMetadata}
     />
   );
 }
 
 export default (props) => {
+  /*
+    constraints: {
+      props: {
+        a: …
+      }
+    }
+
+
+    parsedMetadata: {
+      value: {
+        a: …
+      }
+    }
+  */
+
+  console.log('a', props.constraints);
+  console.log('b', props.parsedMetadata);
+
   // retriev all propKeys from the parsed & custom metadata
   let propKeys = [];
-  if (has(props.customMetadata, ['constraints', 'props'])) {
-    propKeys = propKeys.concat(Object.keys(props.customMetadata.constraints.props));
+  if (props.constraints.props) {
+    propKeys = propKeys.concat(Object.keys(props.constraints.props));
   }
   if (props.parsedMetadata.value) {
     propKeys = propKeys.concat(Object.keys(props.parsedMetadata.value));
@@ -68,9 +82,11 @@ export default (props) => {
       {
         propKeys.map((propKey) => {
           let controlType;
-          if (has(props.customMetadata, ['constraints', 'props', propKey, 'controlType'])) {
-            controlType = props.customMetadata.constraints.props[propKey].controlType;
+          if (has(props.constraints, ['props', propKey, 'controlType'])) {
+            console.log('in x');
+            controlType = props.constraints.props[propKey].controlType;
           } else {
+            console.log('in y');
             controlType = props.parsedMetadata.value[propKey].name;
           }
           return (
@@ -84,13 +100,19 @@ export default (props) => {
                  'Not defined'}
                 value={controlType}
                 onChange={(event) => {
-                  const newCustomMetadata = props.customMetadata.constraints ?
-                    { ...props.customMetadata.constraints } :
+                  console.log('constraints', { ...props.constraints.props });
+                  // take existing constraints.props
+                  const newCustomMetadata = has(props, ['constraints', 'props']) ?
+                    { ...props.constraints.props } :
                     {};
-                  // overwrite they current propKey which also removes constraints
-                  set(newCustomMetadata, ['props', propKey], {});
-                  newCustomMetadata.props[propKey].controlType = event.target.value;
-                  props.onUpdate(newCustomMetadata);
+
+                  console.log('newCustomMetadata', { ...newCustomMetadata });
+                  // set an empty object for the wanted key to
+                  //  which also removes inner constraints in case they exist
+                  set(newCustomMetadata, [propKey], {});
+                  newCustomMetadata[propKey].controlType = event.target.value;
+                  // give back the props list
+                  props.onUpdate({ props: newCustomMetadata });
                 }}
                 options={controlTypes.map((type) => ({ value: type }))}
               />
@@ -98,7 +120,7 @@ export default (props) => {
               propKey,
               controlType,
               props.onUpdate,
-              props.customMetadata,
+              props.constraints,
               props.parsedMetadata
             )}
             </div>
