@@ -155,8 +155,10 @@ StyleguidePlugin.prototype.registerDefaultPlugins = function registerDefaultPlug
  */
 StyleguidePlugin.prototype.registerPlugins = function registerPlugins(compiler) {
   const plugins = this.options.plugins;
-  for (let i = 0; i < plugins.length; i++) {
-    plugins[i].apply(compiler);
+  if (plugins) {
+    for (let i = 0; i < plugins.length; i++) {
+      plugins[i].apply(compiler);
+    }
   }
 };
 
