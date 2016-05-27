@@ -28,8 +28,10 @@ var fileExists = (path) => {
 var getRelativeCompPathFromVariations = (req) => req.params[0].replace(/^\/variations/, '');
 var getRelativeCompPathFromComponents = (req) => req.params[0].replace(/^\/components/, '');
 
-var start = (projectBasePath, variationsBasePath, port) => {
+var start = (projectBasePath, variationsBasePath, options) => {
   var app = express();
+  var port = options.port;
+  var hostname = options.hostname;
 
   app.use(cors());
 
@@ -226,7 +228,7 @@ var start = (projectBasePath, variationsBasePath, port) => {
     res.status(200).send(`POST`);
   });
 
-  server = app.listen(port);
+  server = app.listen(port, hostname);
   var io = require('socket.io')(server);
 }
 
