@@ -3,3 +3,4 @@
 **/dist/**
 **/bin/**
 **/client-bundle.js
+**plugin/build/**

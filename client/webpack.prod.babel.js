@@ -1,5 +1,7 @@
 import path from 'path';
 import webpack from 'webpack';
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
+const xt = ExtractTextPlugin.extract.bind(ExtractTextPlugin);
 
 export default {
   devtool: 'eval',
@@ -17,15 +19,17 @@ export default {
         PRODUCTION: process.env.PRODUCTION,
       },
     }),
+    new ExtractTextPlugin('[name].css?[hash]', { allChunks: true }),
   ],
   module: {
     loaders: [
       {
         test: /\.js$/,
         loaders: ['babel'],
+        exclude: /node_modules/,
       }, {
         test: /\.css$/,
-        loader: 'style-loader!css-loader?modules&importLoaders=1!postcss-loader',
+        loader: xt('style', 'css?modules&importLoaders=1!postcss-loader'),
       },
     ],
   },
