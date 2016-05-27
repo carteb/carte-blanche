@@ -4,7 +4,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import StyleguidePlugin from '../../plugin/styleguide-plugin';
 import autoprefixer from 'autoprefixer';
 
-// import SourcePlugin from '../../plugin/default-plugins/source/plugin';
+import ReactPlugin from '../../plugin/default-plugins/playground/plugin';
 
 export default {
   devtool: 'inline-source-map',
@@ -35,9 +35,9 @@ export default {
         // match components like Button.js
         'src/components/**/[A-Z][a-zA-Z]*.js',
       ],
-      // plugins: [
-      //   new SourcePlugin(),
-      // ],
+      plugins: [
+        new ReactPlugin(),
+      ],
     }),
   ],
   module: {
