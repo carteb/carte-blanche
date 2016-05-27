@@ -12,7 +12,7 @@ export default {
     publicPath: '/',
   },
   entry: [
-    'webpack-dev-server/client?http://localhost:8080',
+    'webpack-dev-server/client',
     'webpack/hot/only-dev-server',
     path.join(__dirname, './src/index.js'),
   ],

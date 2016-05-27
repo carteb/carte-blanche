@@ -122,7 +122,6 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
         </script>
         <link rel="stylesheet" type="text/css" href="/styleguide/client.css" />
         <script src="/styleguide/client-bundle.js"></script>
-        <script src="http://localhost:8080/webpack-dev-server.js"></script>
       </body>
     </html>`;
     const styleguidePath = this.options.dest || 'styleguide/index.html';
