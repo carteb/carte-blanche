@@ -10,6 +10,7 @@ import fs from 'fs';
 import path from 'path';
 import PlaygroundPlugin from './default-plugins/playground/plugin';
 import some from 'lodash/some';
+import isArray from 'lodash/isArray';
 
 let id = -1;
 /**
@@ -17,10 +18,12 @@ let id = -1;
  * @param {Object} options           The options
  * @param {String} options.include   A list of glob patterns that matches the components
  * @param {String} options.dest      The destination the styleguide should be emitted at
+ * @param {Array}  options.plugins   The plugins to use for the project
  */
 function StyleguidePlugin(options) {
   this.id = (++id);
 
+  // Assert that the include option was specified
   if (!options.include) {
     throw new Error('You need to specify where your components are in the "include" option!\n\n');
   }
@@ -28,6 +31,11 @@ function StyleguidePlugin(options) {
   // Assert that a HTML file was specified in the dest option
   if (options.dest && options.dest.indexOf('.html') !== options.dest.length - 5) {
     throw new Error('You need to specify a .html file in the "dest" option!\n\n');
+  }
+
+  // Assert that the plugins option is an array if specified
+  if (options.plugins && !isArray(options.plugins)) {
+    throw new Error('The "plugins" option needs to be an array!\n\n');
   }
 
   this.options = options || {};
@@ -54,6 +62,7 @@ StyleguidePlugin.prototype.getCache = function getCache(compiler) {
  * Initializes the plugin, called after the main StyleguidePlugin function above
  */
 StyleguidePlugin.prototype.apply = function apply(compiler) {
+  // Register either the plugins or the default plugins
   if (this.options.plugins && this.options.plugins.length > 0) {
     this.registerPlugins(compiler);
   } else {
