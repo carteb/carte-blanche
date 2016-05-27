@@ -31,7 +31,9 @@ PlaygroundPlugin.prototype.apply = function apply(compiler) {
   // Default options
   const options = defaults({}, this.options, {
     hostname: 'localhost',
-    port: 8000,
+    // The default port is not really used by a popular service:
+    // https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers
+    port: 8082,
     variationFolderName: 'variations',
   });
   const projectBasePath = compiler.options.context;

@@ -5,7 +5,7 @@ import fs from 'fs';
 import rimraf from 'rimraf';
 
 const hostname = 'localhost';
-const port = 8003;
+const port = 8083;
 const variationFolderName = 'variations';
 const projectBasePath = __dirname;
 const variationsBasePath = path.join(__dirname, variationFolderName);
