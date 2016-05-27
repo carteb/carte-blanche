@@ -1,6 +1,7 @@
 const fork = require('child_process').fork;
 const path = require('path');
 const reactDocs = require('react-docgen');
+const defaults = require('lodash/defaults');
 const styleguideResolver = require('./resolver.js').default;
 
 function PlaygroundPlugin(options) {
@@ -10,10 +11,18 @@ function PlaygroundPlugin(options) {
  * Initializes the plugin, called after the main StyleguidePlugin function above
  */
 PlaygroundPlugin.prototype.apply = function apply(compiler) {
-  const options = this.options;
+  // Default options
+  const options = defaults({}, this.options, {
+    hostname: 'localhost',
+    port: 8000,
+    variationFolderName: 'variations',
+  });
   const projectBasePath = compiler.options.context;
 
-  fork(path.resolve(__dirname, './server/run.js'), [projectBasePath]);
+  fork(path.resolve(__dirname, './server/run.js'), [
+    projectBasePath, // process.argv[2]
+    JSON.stringify(options), // process.argv[3]
+  ]);
 
   compiler.plugin('compilation', (compilation) => {
     // Expose the react parse result to all other styleguide plugins

@@ -33,7 +33,7 @@
   "scripts": {
     "start": "npm run example:dev",
     "preserver": "webpack --config webpack.prod.babel.js --progress -p",
-    "server": "webpack-dev-server",
+    "server": "webpack-dev-server --hot",
     "example:dev": "npm run server -- --context examples/dev/ --config examples/dev/webpack.dev.babel.js",
     "example:dev:iron": "iron-node node_modules/webpack-dev-server/bin/webpack-dev-server.js --context examples/dev/ --config examples/dev/webpack.dev.babel.js",
     "example:dest": "npm run server -- --context examples/dest/ --config examples/dest/webpack.dev.babel.js",

@@ -12,6 +12,8 @@ export default {
     publicPath: '/',
   },
   entry: [
+    'webpack-dev-server/client?http://localhost:8080',
+    'webpack/hot/only-dev-server',
     path.join(__dirname, './src/index.js'),
   ],
   plugins: [
@@ -38,8 +40,9 @@ export default {
   module: {
     loaders: [
       {
-        test: /\.jsx?$/,
-        loaders: ['babel'],
+        test: /\.js$/,
+        loaders: ['react-hot', 'babel'],
+        exclude: /node_modules/,
       }, {
         test: /\.css/,
         loader: 'style!css?modules&importLoaders=1&localIdentName=[local]__[path][name]__[hash:base64:5]!postcss-loader', // eslint-disable-line max-len

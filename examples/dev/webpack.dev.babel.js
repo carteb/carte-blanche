@@ -4,7 +4,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import StyleguidePlugin from '../../plugin/styleguide-plugin';
 import autoprefixer from 'autoprefixer';
 
-// import SourcePlugin from '../../plugin/default-plugins/source/plugin';
+import ReactPlugin from '../../plugin/default-plugins/playground/plugin';
 
 export default {
   devtool: 'inline-source-map',
@@ -14,6 +14,8 @@ export default {
     publicPath: '/',
   },
   entry: [
+    'webpack-dev-server/client?http://localhost:8080',
+    'webpack/hot/only-dev-server',
     path.join(__dirname, './src/index.js'),
   ],
   plugins: [
@@ -35,17 +37,17 @@ export default {
         // match components like Button.js
         'src/components/**/[A-Z][a-zA-Z]*.js',
       ],
-      // plugins: [
-      //   new SourcePlugin(),
-      // ],
+      plugins: [
+        new ReactPlugin(),
+      ],
     }),
   ],
   module: {
     loaders: [
       {
-        test: /\.jsx?$/,
-        loaders: ['babel'],
-
+        test: /\.js$/,
+        loaders: ['react-hot', 'babel'],
+        exclude: /node_modules/,
         // this is a hack for development
         // in the final version we compile it before shipping
         include: [path.join(__dirname, './src'), path.join(__dirname, '../../plugin')],
