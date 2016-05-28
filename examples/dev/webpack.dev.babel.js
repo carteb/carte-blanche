@@ -4,7 +4,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import StyleguidePlugin from '../../webpack-plugin/styleguide-plugin';
 import autoprefixer from 'autoprefixer';
 
-import ReactPlugin from '../../plugins/playground/plugin';
+import ReactPlugin from '../../plugins/react/plugin';
 
 export default {
   devtool: 'inline-source-map',

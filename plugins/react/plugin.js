@@ -6,28 +6,28 @@ const isNaN = require('lodash/isNaN');
 const defaults = require('lodash/defaults');
 const styleguideResolver = require('./resolver.js').default;
 
-function PlaygroundPlugin(options) {
+function ReactPlugin(options) {
   this.options = options || {};
 
   // The hostname option must be a string
   if (this.options.hostname && !isString(this.options.hostname)) {
-    throw new Error('The "hostname" option of the PlaygroundPlugin must be a String!\n\n');
+    throw new Error('The "hostname" option of the ReactPlugin must be a String!\n\n');
   }
 
   // The port option must be something that can be made a number
   if (this.options.port && !isNaN(parseFloat(this.options.port))) {
-    throw new Error('The "port" option of the PlaygroundPlugin must be a Number!\n\n');
+    throw new Error('The "port" option of the ReactPlugin must be a Number!\n\n');
   }
 
   // The variationFolderName option must be a string
   if (this.options.variationFolderName && !isString(this.options.variationFolderName)) {
-    throw new Error('The "variationFolderName" option of the PlaygroundPlugin must be a String!\n\n'); // eslint-disable-line max-len
+    throw new Error('The "variationFolderName" option of the ReactPlugin must be a String!\n\n'); // eslint-disable-line max-len
   }
 }
 /**
  * Initializes the plugin, called after the main StyleguidePlugin function above
  */
-PlaygroundPlugin.prototype.apply = function apply(compiler) {
+ReactPlugin.prototype.apply = function apply(compiler) {
   // Default options
   const options = defaults({}, this.options, {
     hostname: 'localhost',
@@ -67,4 +67,4 @@ PlaygroundPlugin.prototype.apply = function apply(compiler) {
   });
 };
 
-export default PlaygroundPlugin;
+export default ReactPlugin;

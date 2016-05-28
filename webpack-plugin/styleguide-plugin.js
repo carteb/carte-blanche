@@ -8,7 +8,7 @@
 import minimatch from 'minimatch';
 import fs from 'fs';
 import path from 'path';
-import ReactPlugin from '../plugins/playground/plugin';
+import ReactPlugin from '../plugins/react/plugin';
 import some from 'lodash/some';
 import isArray from 'lodash/isArray';
 
