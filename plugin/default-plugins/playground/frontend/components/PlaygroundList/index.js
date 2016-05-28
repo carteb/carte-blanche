@@ -123,6 +123,7 @@ class PlaygroundList extends Component {
         const propMeta = customMetadata && customMetadata.props && customMetadata.props[propKey];
         // Attach the control
         newProp.control = getControl(newProp, propMeta);
+        newProp.controlType = propMeta && propMeta.controlType;
         return newProp;
       });
     }

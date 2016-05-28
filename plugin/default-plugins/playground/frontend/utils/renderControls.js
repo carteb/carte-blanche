@@ -21,7 +21,7 @@ const renderControls = (
   const controls = mapValues(metadataWithControls, (prop, keyPath) => {
     const props = {
       label: keyPath,
-      secondaryLabel: prop.name,
+      secondaryLabel: prop.controlType ? `${prop.controlType} (${prop.name})` : prop.name,
       value: get(globalComponentProps, keyPath),
       onUpdate: ({ value }) => updatePropertyValues(keyPath, value),
       isNested,
