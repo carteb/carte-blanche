@@ -11,6 +11,7 @@ import randomValue from './randomValue';
 const EnumControl = (props) => {
   const {
     label,
+    secondaryLabel,
     value,
     propTypeData,
     onUpdate,
@@ -18,6 +19,7 @@ const EnumControl = (props) => {
   return (
     <Select
       label={label}
+      secondaryLabel={secondaryLabel}
       value={value}
       onChange={(event) => {
         const newValue = event.target.value;

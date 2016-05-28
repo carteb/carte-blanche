@@ -5,6 +5,7 @@ import { mount } from 'enzyme';
 import EnumControl from '../index';
 
 const label = 'enum control';
+const secondaryLabel = 'secondary';
 const onUpdate = sinon.spy();
 const propTypeData = {
   description: '',
@@ -22,12 +23,16 @@ let wrapper;
 
 describe('<EnumControl />', () => {
   beforeEach(() => {
-    props = { label, onUpdate, value, propTypeData };
+    props = { label, onUpdate, value, propTypeData, secondaryLabel };
     wrapper = mount(<EnumControl {...props} />);
   });
 
   it('should render label prop', () => {
     expect(wrapper.text()).to.contain(label);
+  });
+
+  it('should render secondary label prop', () => {
+    expect(wrapper.text()).to.contain(secondaryLabel);
   });
 
   it('should render all options', () => {

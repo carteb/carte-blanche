@@ -4,7 +4,7 @@ import Input from '../../../common/Input';
 import randomValue from './randomValue';
 
 const AvatarControl = (props) => {
-  const { label, value, onUpdate, isNested } = props;
+  const { label, value, onUpdate, isNested, secondaryLabel } = props;
   return (
     <Input
       value={value}
@@ -12,6 +12,7 @@ const AvatarControl = (props) => {
       isNested={isNested}
       onChange={(data) => onUpdate({ value: data.value })}
       label={label}
+      secondaryLabel={secondaryLabel}
       onRandomClick={() => onUpdate({ value: AvatarControl.randomValue(props) })}
     />
   );

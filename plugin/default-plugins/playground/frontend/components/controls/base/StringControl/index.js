@@ -3,10 +3,11 @@ import randomValue from './randomValue';
 import Input from '../../../common/Input';
 
 const StringControl = (props) => {
-  const { label, value, onUpdate, isNested } = props;
+  const { label, value, onUpdate, isNested, secondaryLabel } = props;
   return (
     <Input
       label={label}
+      secondaryLabel={secondaryLabel}
       type="text"
       value={value}
       isNested={isNested}

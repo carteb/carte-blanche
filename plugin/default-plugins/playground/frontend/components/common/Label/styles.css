@@ -3,7 +3,7 @@
   margin: 0px;
   z-index: 1;
   font-size: 0.8em;
-  color: #999;
+  color: #333;
   font-weight: 400;
   cursor: text;
 }
@@ -11,4 +11,11 @@
 .label--array {
   composes: label;
   padding-bottom: 20px;
+}
+
+.label--secondary {
+  composes: label;
+  color: #999;
+  font-size: 0.6em;
+  display: block;
 }

@@ -10,10 +10,11 @@ import randomValue from './randomValue';
 import Input from '../../../common/Input';
 
 const IntegerControl = (props) => {
-  const { label, value, onUpdate, isNested } = props;
+  const { label, value, onUpdate, isNested, secondaryLabel } = props;
   return (
     <Input
       label={label}
+      secondaryLabel={secondaryLabel}
       type="number"
       step="1"
       value={value}

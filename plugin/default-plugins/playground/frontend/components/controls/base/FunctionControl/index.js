@@ -6,9 +6,9 @@
 
 import React from 'react';
 
-const FunctionControl = ({ label }) => (
+const FunctionControl = ({ label, secondaryLabel }) => (
   <div>
-    {label} - function
+    {label} - {secondaryLabel} - function
   </div>
 );
 
