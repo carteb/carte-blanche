@@ -354,7 +354,7 @@ describe('variationsToProps', () => {
     });
   });
 
-  describe.only('should properly handle errors', () => {
+  describe('should properly handle errors', () => {
     it('should handle a parsing error', () => {
       const variations = {
         variationA: `{

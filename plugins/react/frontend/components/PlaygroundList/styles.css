@@ -20,3 +20,23 @@
   position: relative;
   top: 3px;
 }
+
+.errWrapper {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(251, 79, 79, 0.75);
+  padding: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.err {
+  color: white;
+  white-space: pre-wrap;
+}

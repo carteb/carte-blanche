@@ -41,6 +41,7 @@ const PERSISTENCE_DELAY = 1000;
 
 class PlaygroundList extends Component {
   state = {
+    metadataError: null,
     variationPropsList: {},
     variationEditMode: false,
     customMetadataEditMode: false,
@@ -97,20 +98,26 @@ class PlaygroundList extends Component {
       .then((response) => response.json())
       .then((json) => {
         const customMetadata = codeToCustomMetadata(json.data);
-        const metadataWithControls = this.generateMetadataWithControls(
-          this.props.meta,
-          customMetadata
-        );
+        if (customMetadata.err) {
+          this.setState({
+            metadataError: customMetadata.err,
+          });
+        } else {
+          const metadataWithControls = this.generateMetadataWithControls(
+            this.props.meta,
+            customMetadata
+          );
 
-        this.setState({
-          metadataWithControls,
-          customMetadata,
-          loadingMetadata: false,
-        });
+          this.setState({
+            metadataWithControls,
+            customMetadata,
+            metadataError: null,
+            loadingMetadata: false,
+          });
+        }
       })
       .catch((ex) => {
-        // TODO proper error handling
-        console.error('meta data parsing failed', ex); // eslint-disable-line no-console
+        console.error('Generating metadata failed', ex); // eslint-disable-line no-console
       });
   };
 
@@ -358,6 +365,17 @@ class PlaygroundList extends Component {
   render() {
     if (this.state.loadingMetadata && this.state.loadingVariations) {
       return <div>Loading …</div>;
+    }
+
+    if (this.state.metadataError) {
+      return (
+        <div className={styles.errWrapper}>
+          <code className={styles.err}>
+            {`${this.state.metadataError}
+    in ${getVariationComponentPath(this.props.componentPath)}/meta.js`}
+          </code>
+        </div>
+      );
     }
 
     const { component } = this.props;
