@@ -13,7 +13,7 @@ const variationsToProps = (variations) => (
     try {
       eval(`wrapper = ${variationAsCode}`); // eslint-disable-line no-eval
     } catch (err) {
-      wrapper = { err: err.stack };
+      wrapper = { err: err.toString() };
     }
     return wrapper;
   })

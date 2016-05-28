@@ -144,7 +144,11 @@ class Playground extends React.Component {
           {/* Render error or the actual component */}
           {(this.props.err) ? (
             <div className={styles.errWrapper}>
-              <code className={styles.err}>{this.props.err}</code>
+              <code className={styles.err}>
+                {`
+${this.props.err}
+    at ${this.props.componentPath}/${this.props.variationPath}.js`}
+              </code>
             </div>
           ) : (
             <Frame

@@ -354,7 +354,7 @@ describe('variationsToProps', () => {
     });
   });
 
-  describe('should properly handle errors', () => {
+  describe.only('should properly handle errors', () => {
     it('should handle a parsing error', () => {
       const variations = {
         variationA: `{
@@ -365,8 +365,8 @@ describe('variationsToProps', () => {
       };
       const parsedVariations = variationsToProps(variations);
       expect(parsedVariations.variationA.err).to.exist();
-      // 48 = Length of "ReferenceError: …"
-      expect(parsedVariations.variationA.err).to.have.length.above(48);
+      expect(parsedVariations.variationA.err)
+        .to.equal('ReferenceError: undefinedVariable is not defined');
     });
 
     it('should parse other variations even if parsing error happened', () => {
@@ -393,8 +393,8 @@ describe('variationsToProps', () => {
       };
       const parsedVariations = variationsToProps(variations);
       expect(parsedVariations.variationA.err).to.exist();
-      // 48 = Length of "ReferenceError: …"
-      expect(parsedVariations.variationA.err).to.have.length.above(48);
+      expect(parsedVariations.variationA.err)
+        .to.equal('ReferenceError: undefinedVariable is not defined');
       expect(parsedVariations.variationB).to.deep.equal(expectedVariationB);
     });
   });
