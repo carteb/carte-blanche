@@ -25,6 +25,21 @@ var fileExists = (path) => {
   }
 }
 
+/**
+ * Get the absolute variation path from a component path
+ *
+ * @param  {String} variationsBasePath     The base variation path
+ * @param  {String} relativeComponentPath The relative component path, e.g. src/components/Button.js
+ *
+ * @return {String}                       The absolute variation path, e.g. /User/asdf/…
+ */
+var getAbsoluteVariationPath = (variationsBasePath, relativeComponentPath) => {
+  return path.join(
+    variationsBasePath,
+    getVariationPathFromComponentPath(relativeComponentPath)
+  );
+}
+
 var getRelativeCompPathFromVariations = (req) => req.params[0].replace(/^\/variations/, '');
 var getRelativeCompPathFromComponents = (req) => req.params[0].replace(/^\/components/, '');
 
@@ -77,9 +92,9 @@ var start = (projectBasePath, variationsBasePath, options) => {
       return;
     }
 
-    var variationComponentPath = path.join(
+    var variationComponentPath = getAbsoluteVariationPath(
       variationsBasePath,
-      getVariationPathFromComponentPath(relativeComponentPath)
+      relativeComponentPath
     );
 
 
@@ -113,9 +128,9 @@ var start = (projectBasePath, variationsBasePath, options) => {
       return;
     }
 
-    var variationComponentPath = path.join(
+    var variationComponentPath = getAbsoluteVariationPath(
       variationsBasePath,
-      getVariationPathFromComponentPath(relativeComponentPath)
+      relativeComponentPath
     );
     var variationPath = path.join(
       variationComponentPath,
@@ -144,9 +159,9 @@ var start = (projectBasePath, variationsBasePath, options) => {
       return;
     }
 
-    var variationComponentPath = path.join(
+    var variationComponentPath = getAbsoluteVariationPath(
       variationsBasePath,
-      getVariationPathFromComponentPath(relativeComponentPath)
+      relativeComponentPath
     );
     var variationPath = path.join(variationComponentPath, `v-${req.body.variation}.js`);
 
@@ -180,9 +195,9 @@ var start = (projectBasePath, variationsBasePath, options) => {
       return;
     }
 
-    var variationComponentPath = path.join(
+    var variationComponentPath = getAbsoluteVariationPath(
       variationsBasePath,
-      getVariationPathFromComponentPath(relativeComponentPath)
+      relativeComponentPath
     );
     var metaPath = path.join(variationComponentPath, 'meta.js');
 
@@ -207,9 +222,9 @@ var start = (projectBasePath, variationsBasePath, options) => {
       return;
     }
 
-    var variationComponentPath = path.join(
+    var variationComponentPath = getAbsoluteVariationPath(
       variationsBasePath,
-      getVariationPathFromComponentPath(relativeComponentPath)
+      relativeComponentPath
     );
     var componentMetaPath = path.join(variationComponentPath, 'meta.js');
 
