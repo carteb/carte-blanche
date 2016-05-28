@@ -8,7 +8,7 @@
 [include]
 
 [libs]
-./interfaces/GifModule.js
+./examples/dev/interfaces/GifModule.js
 
 [options]
 esproposal.class_static_fields=enable
