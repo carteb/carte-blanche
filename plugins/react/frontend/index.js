@@ -9,6 +9,7 @@ export default function playground(options, data, Component, componentPath) {
       port={options.port}
       componentPath={componentPath}
       component={Component}
+      variationBasePath={data.variationBasePath}
       meta={normalizeMetaInfo(data.reactDocs)}
     />
   );

@@ -147,7 +147,7 @@ class Playground extends React.Component {
               <code className={styles.err}>
                 {`
 ${this.props.err}
-    at ${this.props.componentPath}/${this.props.variationPath}.js`}
+    at ${this.props.variationBasePath}/${this.props.componentPath}/${this.props.variationPath}.js`}
               </code>
             </div>
           ) : (
@@ -194,6 +194,7 @@ Playground.propTypes = {
   variationPath: PropTypes.string,
   title: PropTypes.string,
   stylingNodes: PropTypes.array,
+  variationBasePath: PropTypes.string,
 };
 
 export default Playground;
