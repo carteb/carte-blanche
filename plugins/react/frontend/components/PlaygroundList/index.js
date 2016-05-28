@@ -20,8 +20,8 @@ import codeToCustomMetadata from '../../utils/codeToCustomMetadata';
 import customMetadataToCode from '../../utils/customMetadataToCode';
 import addDataToVariation from '../../utils/addDataToVariation';
 import KeyCodes from '../../utils/keycodes';
-import getVariationComponentPath from '../../utils/getVariationComponentPath';
 // Shared Utilities between ReactPlugin and Client
+import getVariationPathFromComponentPath from '../../../../../utils/getVariationPathFromComponentPath'; // eslint-disable-line max-len
 import getComponentNameFromPath from '../../../../../utils/getComponentNameFromPath';
 import getStylingNodes from '../../../../../utils/getStylingNodes';
 
@@ -373,7 +373,7 @@ class PlaygroundList extends Component {
           <code className={styles.err}>
             {/* eslint-disable max-len */}
             {`${this.state.metadataError}
-    in ${this.props.variationBasePath}/${getVariationComponentPath(this.props.componentPath)}/meta.js`}
+    in ${this.props.variationBasePath}/${getVariationPathFromComponentPath(this.props.componentPath)}/meta.js`}
             {/* eslint-enable max-len */}
           </code>
         </div>
@@ -440,7 +440,7 @@ class PlaygroundList extends Component {
             <Playground
               key={variationPath}
               variationPath={variationPath}
-              componentPath={getVariationComponentPath(this.props.componentPath)}
+              componentPath={getVariationPathFromComponentPath(this.props.componentPath)}
               variationBasePath={this.props.variationBasePath}
               err={variation.err}
             />

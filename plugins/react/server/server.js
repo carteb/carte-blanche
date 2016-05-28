@@ -7,7 +7,7 @@ var cors = require('cors');
 var mkdirp = require('mkdirp');
 var server;
 var jsonBodyParser = bodyParser.json();
-var getVariationComponentPath = require('./getVariationComponentPath');
+var getAbsoluteVariationPath = require('./utils/getAbsoluteVariationPath');
 var chokidar = require('chokidar');
 
 /**
@@ -77,10 +77,11 @@ var start = (projectBasePath, variationsBasePath, options) => {
       return;
     }
 
-    var variationComponentPath = getVariationComponentPath(
-      relativeComponentPath,
-      variationsBasePath
+    var variationComponentPath = getAbsoluteVariationPath(
+      variationsBasePath,
+      relativeComponentPath
     );
+
 
     if (!fs.existsSync(variationComponentPath)) {
       res.json({ data: {} });
@@ -112,9 +113,9 @@ var start = (projectBasePath, variationsBasePath, options) => {
       return;
     }
 
-    var variationComponentPath = getVariationComponentPath(
-      relativeComponentPath,
-      variationsBasePath
+    var variationComponentPath = getAbsoluteVariationPath(
+      variationsBasePath,
+      relativeComponentPath
     );
     var variationPath = path.join(
       variationComponentPath,
@@ -143,9 +144,9 @@ var start = (projectBasePath, variationsBasePath, options) => {
       return;
     }
 
-    var variationComponentPath = getVariationComponentPath(
-      relativeComponentPath,
-      variationsBasePath
+    var variationComponentPath = getAbsoluteVariationPath(
+      variationsBasePath,
+      relativeComponentPath
     );
     var variationPath = path.join(variationComponentPath, `v-${req.body.variation}.js`);
 
@@ -179,9 +180,9 @@ var start = (projectBasePath, variationsBasePath, options) => {
       return;
     }
 
-    var variationComponentPath = getVariationComponentPath(
-      relativeComponentPath,
-      variationsBasePath
+    var variationComponentPath = getAbsoluteVariationPath(
+      variationsBasePath,
+      relativeComponentPath
     );
     var metaPath = path.join(variationComponentPath, 'meta.js');
 
@@ -206,9 +207,9 @@ var start = (projectBasePath, variationsBasePath, options) => {
       return;
     }
 
-    var variationComponentPath = getVariationComponentPath(
-      relativeComponentPath,
-      variationsBasePath
+    var variationComponentPath = getAbsoluteVariationPath(
+      variationsBasePath,
+      relativeComponentPath
     );
     var componentMetaPath = path.join(variationComponentPath, 'meta.js');
 
