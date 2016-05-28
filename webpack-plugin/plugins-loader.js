@@ -1,4 +1,4 @@
-module.exports = function metaLoader(source) {
+module.exports = function pluginsLoader(source) {
   this.cacheable();
 
   // Define an api which can be called by the plugins

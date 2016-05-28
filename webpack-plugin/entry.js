@@ -4,7 +4,7 @@
 // so the styleguide client can pick them up
 window.STYLEGUIDE_PLUGIN_CLIENT_API.loadComplete('%%path%%', {
   name: '%%name%%',
-  plugins: require('!!%%metaLoader%%!%%requestPath%%'), // eslint-disable-line
+  plugins: require('!!%%pluginsLoader%%!%%requestPath%%'), // eslint-disable-line
   path: '%%path%%',
   component: (() => {
     var component = require('!!%%request%%'); // eslint-disable-line

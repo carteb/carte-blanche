@@ -11,6 +11,6 @@ module.exports = function styleguideLoader(source) {
           .replace(/%%request%%/g, query.request)
           .replace(/%%name%%/g, name)
           .replace(/%%path%%/g, relativePath)
-          .replace(/%%metaLoader%%/g, require.resolve('./meta-loader.js'))
+          .replace(/%%pluginsLoader%%/g, require.resolve('./plugins-loader.js'))
           .replace(/%%requestPath%%/g, requestPath);
 };
