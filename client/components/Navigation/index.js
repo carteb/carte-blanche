@@ -112,7 +112,6 @@ class Navigation extends React.Component {
     Object.keys(window.STYLEGUIDE_PLUGIN_CLIENT_API.scripts)
       .map((componentPath) => {
         // Clean the component name
-        // TODO Maybe do this earlier, not on every mount
         const componentName = getComponentNameFromPath(componentPath);
         if (componentName.toLowerCase().indexOf(this.state.filterString.toLowerCase()) > -1) {
           return (
