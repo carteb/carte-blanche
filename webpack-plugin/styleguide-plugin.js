@@ -8,7 +8,7 @@
 import minimatch from 'minimatch';
 import fs from 'fs';
 import path from 'path';
-import PlaygroundPlugin from './default-plugins/playground/plugin';
+import ReactPlugin from '../plugins/react/plugin';
 import some from 'lodash/some';
 import isArray from 'lodash/isArray';
 
@@ -165,8 +165,8 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
  * Register the default plugins
  */
 StyleguidePlugin.prototype.registerDefaultPlugins = function registerDefaultPlugins(compiler) {
-  const playgroundPlugin = new PlaygroundPlugin();
-  playgroundPlugin.apply(compiler);
+  const reactPlugin = new ReactPlugin();
+  reactPlugin.apply(compiler);
 };
 
 /**

@@ -20,8 +20,8 @@ import codeToCustomMetadata from '../../utils/codeToCustomMetadata';
 import customMetadataToCode from '../../utils/customMetadataToCode';
 import addDataToVariation from '../../utils/addDataToVariation';
 import KeyCodes from '../../utils/keycodes';
-import getComponentNameFromPath from '../../../../../../utils/getComponentNameFromPath';
-import getStylingNodes from '../../../../../../utils/getStylingNodes';
+import getComponentNameFromPath from '../../../../../utils/getComponentNameFromPath';
+import getStylingNodes from '../../../../../utils/getStylingNodes';
 
 // Components
 import Playground from '../Playground';
@@ -91,7 +91,6 @@ class PlaygroundList extends Component {
 
   // Fetch the metadata of the current component
   fetchMetadata = () => {
-    // TODO dynamic host
     fetch(`http://${this.props.hostname}:${this.props.port}/components/${this.props.componentPath}`)
       .then((response) => response.json())
       .then((json) => {
@@ -133,7 +132,6 @@ class PlaygroundList extends Component {
 
   // Connect to the socket server
   connectToSocket = () => {
-    // TODO dynamic host
     this.socket = io.connect(`http://${this.props.hostname}:${this.props.port}`);
     // Listen to the events dispatched by the socket server
     this.socket.on('componentMetadataChanged', this.fetchMetadata);
@@ -151,7 +149,6 @@ class PlaygroundList extends Component {
 
   // Fetch all variations for the current component
   fetchVariations = () => {
-    // TODO dynamic host
     fetch(`http://${this.props.hostname}:${this.props.port}/variations/${this.props.componentPath}`)
       .then((response) => response.json())
       .then((json) => {
@@ -195,7 +192,6 @@ class PlaygroundList extends Component {
       props: this.getRandomValues(),
       name,
     });
-    // TODO dynamic host
     fetch(`http://${this.props.hostname}:${this.props.port}/variations/${this.props.componentPath}`, {
       method: 'POST',
       headers: {

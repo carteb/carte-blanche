@@ -3,4 +3,4 @@
 **/dist/**
 **/bin/**
 **/client-bundle.js
-**plugin/build/**
+**webpack-plugin/build/**

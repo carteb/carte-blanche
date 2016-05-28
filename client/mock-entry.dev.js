@@ -1,7 +1,7 @@
 /**
  * Mocks the components for easier client developments
  */
-require('../plugin/client-api.js');
+require('../webpack-plugin/client-api.js');
 
 // Create routes exactly like the plugin would
 window.STYLEGUIDE_PLUGIN_CLIENT_API.scripts = {
@@ -16,13 +16,13 @@ window.STYLEGUIDE_PLUGIN_CLIENT_API.load = function load(path) {
   // Load the components from the example exactly like the plugin would:
   switch (path) {
     case '../examples/dev/src/components/Button.js':
-      return require('!!../plugin/component-loader.js?request=babel%21../examples/dev/src/components/Button.js!../plugin/entry.js'); // eslint-disable-line
+      return require('!!../webpack-plugin/component-loader.js?request=babel%21../examples/dev/src/components/Button.js!../webpack-plugin/entry.js'); // eslint-disable-line
     case '../examples/dev/src/components/Card/index.js':
-      return require('!!../plugin/component-loader.js?request=babel%21../examples/dev/src/components/Card/index.js!../plugin/entry.js'); // eslint-disable-line
+      return require('!!../webpack-plugin/component-loader.js?request=babel%21../examples/dev/src/components/Card/index.js!../webpack-plugin/entry.js'); // eslint-disable-line
     case '../examples/dev/src/components/Godzilla.js':
-      return require('!!../plugin/component-loader.js?request=babel%21../examples/dev/src/components/Godzilla.js!../plugin/entry.js'); // eslint-disable-line
+      return require('!!../webpack-plugin/component-loader.js?request=babel%21../examples/dev/src/components/Godzilla.js!../webpack-plugin/entry.js'); // eslint-disable-line
     case '../examples/dev/src/components/Ghidorah.js':
-      return require('!!../plugin/component-loader.js?request=babel%21../examples/dev/src/components/Ghidorah.js!../plugin/entry.js'); // eslint-disable-line
+      return require('!!../webpack-plugin/component-loader.js?request=babel%21../examples/dev/src/components/Ghidorah.js!../webpack-plugin/entry.js'); // eslint-disable-line
     default:
       throw new Error('invalid path');
   }
