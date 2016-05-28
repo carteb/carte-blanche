@@ -153,6 +153,7 @@ class PlaygroundList extends Component {
       .then((response) => response.json())
       .then((json) => {
         const variationPropsList = variationsToProps(json.data);
+
         this.setState({
           variationPropsList,
           loadingVariations: false,
@@ -173,7 +174,7 @@ class PlaygroundList extends Component {
       })
       .catch((ex) => {
         // TODO proper error handling
-        console.error('parsing failed', ex); // eslint-disable-line no-console
+        console.error(ex); // eslint-disable-line no-console
       });
   };
 
@@ -413,16 +414,23 @@ class PlaygroundList extends Component {
         </Modal>
         {/* MAIN AREA WITH PLAYGROUNDS */}
         {map(this.state.variationPropsList, (variation, variationPath) => (
-          <Playground
-            key={variationPath}
-            component={component}
-            title={variation.name}
-            variationProps={variation.props}
-            variationPath={variationPath}
-            onDeleteButtonClick={this.deleteVariation}
-            onEditButtonClick={this.startVariationEditMode}
-            stylingNodes={userStylingNodes}
-          />
+          variation.err ? (
+            <Playground
+              key={variationPath}
+              err={variation.err}
+            />
+          ) : (
+            <Playground
+              key={variationPath}
+              component={component}
+              title={variation.name}
+              variationProps={variation.props}
+              variationPath={variationPath}
+              onDeleteButtonClick={this.deleteVariation}
+              onEditButtonClick={this.startVariationEditMode}
+              stylingNodes={userStylingNodes}
+            />
+          )
         ))}
         <CreateVariationButton
           error={this.state.createVariationError}

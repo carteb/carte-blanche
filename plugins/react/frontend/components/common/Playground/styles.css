@@ -24,6 +24,27 @@
   margin: 0 auto;
 }
 
+.errWrapper {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(251, 79, 79, 0.75);
+  color: white;
+  padding: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 3px; /* Same as Card component main div */
+}
+
+.err {
+  white-space: pre-wrap;
+}
+
 .title {
   font-size: 1.5em;
   font-weight: 300;
