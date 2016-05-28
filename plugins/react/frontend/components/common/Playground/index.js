@@ -11,9 +11,9 @@ import map from 'lodash/map';
 
 import reactDOM from 'react-dom';
 
-import EditButton from '../common/EditButton';
-import DeleteButton from '../common/DeleteButton';
-import Card from '../common/Card';
+import EditButton from '../EditButton';
+import DeleteButton from '../DeleteButton';
+import Card from '../Card';
 import styles from './styles.css';
 
 class Playground extends React.Component {
