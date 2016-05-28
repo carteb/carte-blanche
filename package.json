@@ -41,6 +41,7 @@
     "example:profile": "npm run server -- --context examples/profile/ --config examples/profile/webpack.dev.babel.js",
     "example:radium": "npm run server -- --context examples/radium/ --config examples/radium/webpack.dev.babel.js",
     "example:jss": "npm run server -- --context examples/jss/ --config examples/jss/webpack.dev.babel.js",
+    "example:aphrodite": "npm run server -- --context examples/aphrodite/ --config examples/aphrodite/webpack.dev.babel.js",
     "client:dev": "webpack-dev-server --hot --config client/webpack.dev.babel.js",
     "client:build": "webpack --config client/webpack.prod.babel.js --progress -p",
     "build": "npm run client:build",
@@ -75,6 +76,7 @@
     "whatwg-fetch": "^1.0.0"
   },
   "devDependencies": {
+    "aphrodite": "^0.3.1",
     "autoprefixer-loader": "^3.2.0",
     "babel": "^6.5.2",
     "babel-cli": "^6.9.0",
