@@ -8,4 +8,4 @@ stats.json
 webpack-plugin/client-bundle.js
 webpack-plugin/main.css
 
-examples/*/variations/
+examples/**/variations/
