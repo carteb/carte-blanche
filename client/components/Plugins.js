@@ -1,5 +1,5 @@
 /**
- * Showcases a component
+ * Renders the frontend plugins of a component
  */
 
 import React from 'react';
@@ -7,7 +7,7 @@ import has from 'lodash/has';
 
 const styleguideClientApi = window.STYLEGUIDE_PLUGIN_CLIENT_API;
 
-class ComponentPreview extends React.Component {
+class Plugins extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -34,28 +34,28 @@ class ComponentPreview extends React.Component {
   };
 
   render() {
-    if (!this.state.componentData || !this.state.componentData.meta) {
+    if (!this.state.componentData || !this.state.componentData.plugins) {
       return (<div />);
     }
 
-    const componentMeta = this.state.componentData.meta;
+    const plugins = this.state.componentData.plugins;
     const Component = this.state.componentData.component;
-    // TODO Try if filtering first works for early-bail perf reasons
-    const componentPlugins = componentMeta
-      .filter(component => (
-        component !== undefined && component.frontendPlugin !== undefined
+    // Get the frontend components of the plugins that have one
+    const pluginComponents = plugins
+      .filter(plugin => (
+        plugin !== undefined && plugin.frontendPlugin !== undefined
       ))
-      .map(component => (
-        <div key={component.name}>
-          {component.frontendPlugin(Component, this.state.componentPath)}
+      .map(plugin => (
+        <div key={plugin.name}>
+          {plugin.frontendPlugin(Component, this.state.componentPath)}
         </div>
       ));
     return (
       <div>
-        {componentPlugins}
+        {pluginComponents}
       </div>
     );
   }
 }
 
-export default ComponentPreview;
+export default Plugins;
