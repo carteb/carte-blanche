@@ -1,14 +1,19 @@
 module.exports = function pluginsLoader(source) {
   this.cacheable();
 
-  // Define an api which can be called by the plugins
-  const styleguidePluginPromisses = [];
-  const renderToStyleguideApi = function renderToStyleguideApi(pluginOptions) {
+  const pluginPromises = [];
+  /**
+   * Define an api which can be called by the plugins in the
+   * styleguide-plugin-processing step
+   */
+  function renderToStyleguideAPI(pluginOptions) {
+    // Make the plugin name mandatory
     if (!pluginOptions || !pluginOptions.name) {
       throw new Error('Plugin name is mandatory');
     }
 
-    styleguidePluginPromisses.push(new Promise((resolve, reject) => {
+    // Load the frontend data and pass it to the frontend part of the plugin
+    pluginPromises.push(new Promise((resolve, reject) => {
       Promise.resolve(pluginOptions.frontendData)
         .then((result) => resolve({
           name: pluginOptions.name,
@@ -17,8 +22,9 @@ module.exports = function pluginsLoader(source) {
         }))
         .catch((err) => reject(err));
     }));
-  };
+  }
 
+   // Make the data an object so plugins can append info to it
   const data = { source };
 
   // Trigger events for styleguide child plugins
@@ -30,38 +36,47 @@ module.exports = function pluginsLoader(source) {
 
   this._compilation.applyPlugins( // eslint-disable-line no-underscore-dangle
     'styleguide-plugin-processing',
-    renderToStyleguideApi,
+    renderToStyleguideAPI,
     data,
     this
   );
 
-  // Execute all plugins and return the module code
+  // The callback sends webpack the result of this loader. By using this.async(),
+  // we tell webpack that this loader will asynchronously return the result.
+  // See http://mxs.is/goognh for more information.
   const callback = this.async();
-  Promise.all(styleguidePluginPromisses)
-    .then((styleguidPlugins) => styleguidPlugins
-      .filter((styleguidePlugin) => styleguidePlugin.result !== undefined)
-      .map((styleguidePlugin) => {
-        // Execute the default export of the plugins frontend module
-        const frontendCode = `function() {
-          return (require(${JSON.stringify(styleguidePlugin.frontendPlugin)}))
-            .default.apply(
-              this,
-              Array.prototype.concat.apply([this.result.options, data], arguments)
-            )
-        }`;
-        return `{
-          name: ${JSON.stringify(styleguidePlugin.name)},
-          result: ${JSON.stringify(styleguidePlugin.result)},
-          frontendPlugin: ${styleguidePlugin.frontendPlugin ? frontendCode : '""'}
-        }`;
-      })
-    )
-    .then((componentData) => callback(
-      null,
-      `
-      var data = ${JSON.stringify(data)};
-      module.exports = [${componentData.join(',')}];
-      `
-    ))
+  // Wait for all plugins to be loaded
+  Promise.all(pluginPromises)
+    .then((plugins) => { // eslint-disable-line arrow-body-style
+      // Get the component data from each plugin
+      return plugins
+        .filter((plugin) => plugin.result !== undefined)
+        .map((plugin) => {
+          // Execute the default export of the plugin frontend module
+          const frontendCode = `function() {
+            return (require(${JSON.stringify(plugin.frontendPlugin)}))
+              .default.apply(
+                this,
+                Array.prototype.concat.apply([this.result.options, data], arguments)
+              )
+          }`;
+          // Return the data of the plugin
+          return `{
+            name: ${JSON.stringify(plugin.name)},
+            result: ${JSON.stringify(plugin.result)},
+            frontendPlugin: ${plugin.frontendPlugin ? frontendCode : '""'}
+          }`;
+        });
+    })
+    // Send the data of all the plugins to the next loader via the callback
+    .then((pluginData) => {
+      callback(
+        null,
+        `
+        var data = ${JSON.stringify(data)};
+        module.exports = [${pluginData.join(',')}];
+        `
+      );
+    })
     .catch((err) => callback(err));
 };
