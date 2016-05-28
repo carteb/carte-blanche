@@ -21,4 +21,16 @@ describe('codeToCustomMetadata', () => {
     const expected = {};
     expect(codeToCustomMetadata(code)).to.deep.equal(expected);
   });
+
+  it('should catch errors correctly', () => {
+    const code = `{
+  "props": {
+    "age": undefinedVariable
+  }
+};`;
+    const expected = {
+      err: 'SyntaxError: Unexpected token u',
+    };
+    expect(codeToCustomMetadata(code)).to.deep.equal(expected);
+  });
 });
