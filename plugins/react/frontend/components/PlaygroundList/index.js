@@ -24,9 +24,9 @@ import getComponentNameFromPath from '../../../../../utils/getComponentNameFromP
 import getStylingNodes from '../../../../../utils/getStylingNodes';
 
 // Components
-import Playground from '../Playground';
+import Playground from '../common/Playground';
 import PropForm from '../PropForm';
-import Modal from '../Modal';
+import Modal from '../common/Modal';
 import CreateVariationButton from '../common/CreateVariationButton';
 import EditButton from '../common/EditButton';
 import CustomMetadataForm from '../CustomMetadataForm';
