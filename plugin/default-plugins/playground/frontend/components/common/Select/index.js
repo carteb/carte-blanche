@@ -13,6 +13,14 @@ function Select(props) {
         inputStyles.wrapper
       }
     >
+      {(props.secondaryLabel) && (
+        <Label
+          text={props.secondaryLabel}
+          isNested={props.isNested}
+          onRandomClick={props.onRandomClick}
+          secondary
+        />
+      )}
       <Label
         text={props.label}
         isNested={props.isNested}

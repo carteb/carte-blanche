@@ -13,6 +13,14 @@ function Input(props) {
   }
   return (
     <div className={wrapperClassname}>
+      {(props.secondaryLabel) && (
+        <Label
+          text={props.secondaryLabel}
+          isNested={props.isNested}
+          onRandomClick={props.onRandomClick}
+          secondary
+        />
+      )}
       {(props.label) && (
         <Label
           text={props.label}
@@ -32,6 +40,7 @@ function Input(props) {
 
 Input.propTypes = {
   label: PropTypes.string,
+  secondaryLabel: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   onRandomClick: PropTypes.func,
   value: PropTypes.any,

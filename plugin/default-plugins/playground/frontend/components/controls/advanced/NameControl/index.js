@@ -5,7 +5,7 @@ import ConstraintsForm from './ConstraintsForm';
 import randomValue from './randomValue';
 
 const NameControl = (props) => {
-  const { label, value, onUpdate, isNested } = props;
+  const { label, value, onUpdate, isNested, secondaryLabel } = props;
   return (
     <Input
       value={value}
@@ -13,6 +13,7 @@ const NameControl = (props) => {
       isNested={isNested}
       onChange={(data) => onUpdate({ value: data.value })}
       label={label}
+      secondaryLabel={secondaryLabel}
       onRandomClick={() => onUpdate({ value: NameControl.randomValue(props) })}
     />
   );

@@ -9,10 +9,11 @@ import Select from '../../../common/Select';
 import randomValue from './randomValue';
 
 const BooleanControl = (props) => {
-  const { label, value, onUpdate } = props;
+  const { label, value, onUpdate, secondaryLabel } = props;
   return (
     <Select
       label={label}
+      secondaryLabel={secondaryLabel}
       onChange={(event) => {
         // Need to eval, because we're getting 'true' and 'false' (strings)
         // instead of true and false (booleans) here
