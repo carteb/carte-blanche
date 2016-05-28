@@ -1,10 +1,10 @@
 import path from 'path';
 import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import StyleguidePlugin from '../../plugin/styleguide-plugin';
+import StyleguidePlugin from '../../webpack-plugin/styleguide-plugin';
 import autoprefixer from 'autoprefixer';
 
-import ReactPlugin from '../../plugin/default-plugins/playground/plugin';
+import ReactPlugin from '../../plugins/playground/plugin';
 
 export default {
   devtool: 'inline-source-map',
@@ -50,11 +50,19 @@ export default {
         exclude: /node_modules/,
         // this is a hack for development
         // in the final version we compile it before shipping
-        include: [path.join(__dirname, './src'), path.join(__dirname, '../../plugin')],
+        include: [
+          path.join(__dirname, './src'),
+          path.join(__dirname, '../../webpack-plugin'),
+          path.join(__dirname, '../../plugins'),
+        ],
       }, {
         test: /\.css/,
         loader: 'style!css?modules&importLoaders=1&localIdentName=[local]__[path][name]__[hash:base64:5]!postcss-loader', // eslint-disable-line max-len
-        include: [path.join(__dirname, './src'), path.join(__dirname, '../../plugin')],
+        include: [
+          path.join(__dirname, './src'),
+          path.join(__dirname, '../../webpack-plugin'),
+          path.join(__dirname, '../../plugins'),
+        ],
       }, {
         test: /\.(png|jpg|gif)$/,
         loaders: ['url?limit=10000'],
