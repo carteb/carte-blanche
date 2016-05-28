@@ -1,3 +1,8 @@
+/**
+ * Maps control components to prop/flow types
+ */
+
+// Basic Control Components
 import BooleanControl from './base/BooleanControl';
 import IntegerControl from './base/IntegerControl';
 import ArrayControl from './base/ArrayControl';
@@ -10,6 +15,7 @@ import FlowArrayControl from './base/FlowArrayControl';
 import FlowUnionControl from './base/FlowUnionControl';
 import FunctionControl from './base/FunctionControl';
 
+// Advanced Control Components
 import AvatarControl from './advanced/AvatarControl';
 import NameControl from './advanced/NameControl';
 
