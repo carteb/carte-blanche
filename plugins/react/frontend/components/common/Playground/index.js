@@ -141,34 +141,43 @@ class Playground extends React.Component {
               </div>
             </VelocityComponent>
           )}
-
-          {/* Render the actual component */}
-          <Frame
-            initialContent={`
-              <!DOCTYPE html>
-              <html style="height: 100%; width: 100%; margin: 0; padding: 0;">
-                <head>
-                  ${map(this.props.stylingNodes, (styleNode) => styleNode.outerHTML).join('')}
-                </head>
-                <body style="height: 100%; width: 100%; margin: 0; padding: 0;">
-                  <div
-                    id="root"
-                    style="
-                      height: 100%;
-                      width: 100%;
-                      display: flex;
-                      justify-content: center;
-                      align-items: center;
-                    "
-                  ></div>
-                </body>
-              </html>
-            `}
-            mountTarget="#root"
-            className={styles.componentFrame}
-          >
-            <Component {...this.props.variationProps} />
-          </Frame>
+          {/* Render error or the actual component */}
+          {(this.props.err) ? (
+            <div className={styles.errWrapper}>
+              <code className={styles.err}>
+                {`
+${this.props.err}
+    at ${this.props.componentPath}/${this.props.variationPath}.js`}
+              </code>
+            </div>
+          ) : (
+            <Frame
+              initialContent={`
+                <!DOCTYPE html>
+                <html style="height: 100%; width: 100%; margin: 0; padding: 0;">
+                  <head>
+                    ${map(this.props.stylingNodes, (styleNode) => styleNode.outerHTML).join('')}
+                  </head>
+                  <body style="height: 100%; width: 100%; margin: 0; padding: 0;">
+                    <div
+                      id="root"
+                      style="
+                        height: 100%;
+                        width: 100%;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                      "
+                    ></div>
+                  </body>
+                </html>
+              `}
+              mountTarget="#root"
+              className={styles.componentFrame}
+            >
+              <Component {...this.props.variationProps} />
+            </Frame>
+          )}
         </Card>
       </div>
     );
@@ -176,12 +185,13 @@ class Playground extends React.Component {
 }
 
 Playground.propTypes = {
-  variationProps: PropTypes.object.isRequired,
-  component: PropTypes.func.isRequired, // TODO is this really always a function
+  variationProps: PropTypes.object,
+  component: PropTypes.func, // TODO is this really always a function
   onEditButtonClick: PropTypes.func,
+  error: PropTypes.string,
   onDeleteButtonClick: PropTypes.func,
   fullHeight: PropTypes.bool,
-  variationPath: PropTypes.string.isRequired,
+  variationPath: PropTypes.string,
   title: PropTypes.string,
   stylingNodes: PropTypes.array,
 };

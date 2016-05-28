@@ -328,12 +328,12 @@ describe('variationsToProps', () => {
     it('should handle a function prop', () => {
       const variations = {
         variationA: `{
-    "props": {
-      "onClick": function onClick() {
-          return undefined;
-        }
-    }
-  };`,
+  "props": {
+    "onClick": function onClick() {
+        return undefined;
+      }
+  }
+};`,
       };
       expect(variationsToProps(variations).variationA.props.onClick).to.be.an('function');
     });
@@ -341,16 +341,61 @@ describe('variationsToProps', () => {
     it('should handle a nested function prop', () => {
       const variations = {
         variationA: `{
-    "props": {
-      "hairs": {
-        "onClick": function onClick() {
-            return undefined;
-          }
-      }
+  "props": {
+    "hairs": {
+      "onClick": function onClick() {
+          return undefined;
+        }
     }
-  };`,
+  }
+};`,
       };
       expect(variationsToProps(variations).variationA.props.hairs.onClick).to.be.an('function');
+    });
+  });
+
+  describe.only('should properly handle errors', () => {
+    it('should handle a parsing error', () => {
+      const variations = {
+        variationA: `{
+  "props": {
+    "hairs": undefinedVariable
+  }
+};`,
+      };
+      const parsedVariations = variationsToProps(variations);
+      expect(parsedVariations.variationA.err).to.exist();
+      expect(parsedVariations.variationA.err)
+        .to.equal('ReferenceError: undefinedVariable is not defined');
+    });
+
+    it('should parse other variations even if parsing error happened', () => {
+      const variations = {
+        variationA: `{
+  "props": {
+    "hairs": undefinedVariable
+  }
+};`,
+        variationB: `{
+  "props": {
+    "hairs": {
+      "length": 4
+    }
+  }
+}`,
+      };
+      const expectedVariationB = {
+        props: {
+          hairs: {
+            length: 4,
+          },
+        },
+      };
+      const parsedVariations = variationsToProps(variations);
+      expect(parsedVariations.variationA.err).to.exist();
+      expect(parsedVariations.variationA.err)
+        .to.equal('ReferenceError: undefinedVariable is not defined');
+      expect(parsedVariations.variationB).to.deep.equal(expectedVariationB);
     });
   });
 });
