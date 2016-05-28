@@ -106,7 +106,8 @@ class PlaygroundList extends Component {
           customMetadata,
           loadingMetadata: false,
         });
-      }).catch((ex) => {
+      })
+      .catch((ex) => {
         // TODO proper error handling
         console.error('meta data parsing failed', ex); // eslint-disable-line no-console
       });
@@ -171,7 +172,8 @@ class PlaygroundList extends Component {
           'playground-plugin',
           links
         );
-      }).catch((ex) => {
+      })
+      .catch((ex) => {
         // TODO proper error handling
         console.error('parsing failed', ex); // eslint-disable-line no-console
       });

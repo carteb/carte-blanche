@@ -76,7 +76,11 @@ describe('<PropForm />', () => {
   it('should call onRandomClick when clicking on RandomButton', () => {
     // we need to add a static class on the button
     // this will break by the slightest component restructuring
-    const randomBtn = wrapper.find('div').children().children().at(1);
+    const randomBtn = wrapper
+      .find('div')
+      .children()
+      .children()
+      .at(1);
     randomBtn.simulate('click');
     sinon.assert.calledOnce(onRandomClick);
   });
