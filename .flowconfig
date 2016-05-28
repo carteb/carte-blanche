@@ -18,4 +18,4 @@ module.name_mapper='.*\(.gif\)' -> 'GifModule'
 module.system=haste
 
 [version]
-0.23.0
+0.26.0
