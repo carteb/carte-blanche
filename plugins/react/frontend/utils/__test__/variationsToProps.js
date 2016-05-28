@@ -328,12 +328,12 @@ describe('variationsToProps', () => {
     it('should handle a function prop', () => {
       const variations = {
         variationA: `{
-    "props": {
-      "onClick": function onClick() {
-          return undefined;
-        }
-    }
-  };`,
+  "props": {
+    "onClick": function onClick() {
+        return undefined;
+      }
+  }
+};`,
       };
       expect(variationsToProps(variations).variationA.props.onClick).to.be.an('function');
     });
@@ -341,16 +341,61 @@ describe('variationsToProps', () => {
     it('should handle a nested function prop', () => {
       const variations = {
         variationA: `{
-    "props": {
-      "hairs": {
-        "onClick": function onClick() {
-            return undefined;
-          }
-      }
+  "props": {
+    "hairs": {
+      "onClick": function onClick() {
+          return undefined;
+        }
     }
-  };`,
+  }
+};`,
       };
       expect(variationsToProps(variations).variationA.props.hairs.onClick).to.be.an('function');
+    });
+  });
+
+  describe('should properly handle errors', () => {
+    it('should handle a parsing error', () => {
+      const variations = {
+        variationA: `{
+  "props": {
+    "hairs": undefinedVariable
+  }
+};`,
+      };
+      const parsedVariations = variationsToProps(variations);
+      expect(parsedVariations.variationA.err).to.exist();
+      // 48 = Length of "ReferenceError: …"
+      expect(parsedVariations.variationA.err).to.have.length.above(48);
+    });
+
+    it('should parse other variations even if parsing error happened', () => {
+      const variations = {
+        variationA: `{
+  "props": {
+    "hairs": undefinedVariable
+  }
+};`,
+        variationB: `{
+  "props": {
+    "hairs": {
+      "length": 4
+    }
+  }
+}`,
+      };
+      const expectedVariationB = {
+        props: {
+          hairs: {
+            length: 4,
+          },
+        },
+      };
+      const parsedVariations = variationsToProps(variations);
+      expect(parsedVariations.variationA.err).to.exist();
+      // 48 = Length of "ReferenceError: …"
+      expect(parsedVariations.variationA.err).to.have.length.above(48);
+      expect(parsedVariations.variationB).to.deep.equal(expectedVariationB);
     });
   });
 });

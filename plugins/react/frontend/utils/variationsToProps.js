@@ -10,7 +10,11 @@ const variationsToProps = (variations) => (
     const variationAsCode = variation.replace(MATCH_LAST_SEMICOLON_REGEX, '');
     // Parse the JSON
     let wrapper;
-    eval(`wrapper = ${variationAsCode}`); // eslint-disable-line no-eval
+    try {
+      eval(`wrapper = ${variationAsCode}`); // eslint-disable-line no-eval
+    } catch (err) {
+      wrapper = { err: err.stack };
+    }
     return wrapper;
   })
 );
