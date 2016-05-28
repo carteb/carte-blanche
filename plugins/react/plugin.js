@@ -37,6 +37,8 @@ ReactPlugin.prototype.apply = function apply(compiler) {
     variationFolderName: 'variations',
   });
   const projectBasePath = compiler.options.context;
+  const variationBasePath = path.join(projectBasePath, options.variationFolderName);
+  options.variationBasePath = variationBasePath;
 
   fork(path.resolve(__dirname, './server/run.js'), [
     projectBasePath, // process.argv[2]
@@ -50,6 +52,8 @@ ReactPlugin.prototype.apply = function apply(compiler) {
       (data) => {
         // eslint-disable-next-line no-param-reassign
         data.reactDocs = reactDocs.parse(data.source, styleguideResolver);
+        // eslint-disable-next-line no-param-reassign
+        data.variationBasePath = variationBasePath;
       }
     );
 
