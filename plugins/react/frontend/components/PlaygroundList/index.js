@@ -371,8 +371,10 @@ class PlaygroundList extends Component {
       return (
         <div className={styles.errWrapper}>
           <code className={styles.err}>
+            {/* eslint-disable max-len */}
             {`${this.state.metadataError}
-    in ${getVariationComponentPath(this.props.componentPath)}/meta.js`}
+    in ${this.props.variationBasePath}/${getVariationComponentPath(this.props.componentPath)}/meta.js`}
+            {/* eslint-enable max-len */}
           </code>
         </div>
       );
@@ -439,6 +441,7 @@ class PlaygroundList extends Component {
               key={variationPath}
               variationPath={variationPath}
               componentPath={getVariationComponentPath(this.props.componentPath)}
+              variationBasePath={this.props.variationBasePath}
               err={variation.err}
             />
           ) : (
