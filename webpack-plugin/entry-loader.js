@@ -13,6 +13,7 @@ const FILE_EXTENSION_REGEX = /\..+/;
  * @return {String}               A string of the filled out entry file template with the component data
  */
 module.exports = function entryLoader(entryTemplate) {
+  // Flag this loader as cacheable to webpack
   this.cacheable();
   // this.query is the full, raw loader query e.g. "?request=/Users/asdf/…/node_modules/babel-loader/index.js%21/Users/asdf/…/src/components/Button.js"
   // parseQuery strips out the "?request=" from the query, returning an object { request: "…" }
