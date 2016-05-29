@@ -5,8 +5,6 @@
   display: flex;
   box-sizing: border-box;
   position: relative;
-
-  margin-bottom: 2em;
 }
 
 .isUndefined {

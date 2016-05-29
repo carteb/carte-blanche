@@ -1,6 +1,13 @@
 .root {
   box-sizing: border-box;
   width: 100%;
-  position: relative;
-  overflow: auto;
+}
+
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
 }

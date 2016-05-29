@@ -49,7 +49,15 @@ class App extends React.Component {
         <Grid>
           <Row>
             <LeftColumn>left</LeftColumn>
-            <RightColumn>right</RightColumn>
+            <RightColumn>
+              <AtriumInput
+                value={this.state.fourthValue}
+                fallbackValue=""
+                onChange={this.onChangeFourthValue}
+                hasRandomButton
+                hasSettings
+              />
+            </RightColumn>
           </Row>
           <Row>
             <LeftColumn>left</LeftColumn>
@@ -67,7 +75,14 @@ class App extends React.Component {
               <RightColumn>nested right</RightColumn>
               <Row>
                 <LeftColumn nestedLevel={2}>nested left 2</LeftColumn>
-                <RightColumn>nested right 2</RightColumn>
+                <RightColumn>
+                  <AtriumInput
+                    value={this.state.thirdValue}
+                    fallbackValue=""
+                    onChange={this.onChangeThirdValue}
+                    hasRandomButton
+                  />
+                </RightColumn>
               </Row>
               <Row>
                 <LeftColumn nestedLevel={2}>nested left 2</LeftColumn>
@@ -89,19 +104,6 @@ class App extends React.Component {
           value={this.state.secondValue}
           fallbackValue=""
           onChange={this.onChangeSecondValue}
-          hasSettings
-        />
-        <AtriumInput
-          value={this.state.thirdValue}
-          fallbackValue=""
-          onChange={this.onChangeThirdValue}
-          hasRandomButton
-        />
-        <AtriumInput
-          value={this.state.fourthValue}
-          fallbackValue=""
-          onChange={this.onChangeFourthValue}
-          hasRandomButton
           hasSettings
         />
       </div>
