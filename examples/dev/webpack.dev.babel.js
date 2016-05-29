@@ -31,14 +31,7 @@ export default {
       template: path.join(__dirname, './src/index.html'),
     }),
     new StyleguidePlugin({
-      include: [
-        // match components like Button/index.js
-        'src/components/**/[A-Z][a-zA-Z]*/index.js',
-        // match components like Button.js
-        'src/components/**/[A-Z][a-zA-Z]*.js',
-      ],
       componentRoot: './src/components/',
-      filter: /([A-Z][a-zA-Z]*\/index\.js|[A-Z][a-zA-Z]*\.js)$/,
       plugins: [
         new ReactPlugin(),
       ],

@@ -158,6 +158,7 @@ class Navigation extends React.Component {
     const footerClassname = (
       shortcutHelpVisible || informationVisible
     ) ? styles.footerExpanded : styles.footer;
+    console.log(this.props.components);
     return (
       <div className={styles.drawer}>
         <IndexLink
@@ -174,7 +175,7 @@ class Navigation extends React.Component {
           onChange={this.setFilter}
         />
         <div className={styles.list}>
-          {this.renderComponents()}
+          {/*{this.renderComponents()}*/}
         </div>
         <div className={footerClassname}>
           {/* &#8984; &#8679; / &#8963; &#8679; */}

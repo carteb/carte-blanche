@@ -23,16 +23,16 @@ module.exports = function dynamicResolve() {
 
   return `
     // Dynamic webpack loading for every loader
-    var ressources = {
+    var resources = {
       ${loaders.map((loader) => `"${loader}":${loaderMapping[loader]}`)},
     };
     // Gather all loader information for every loader
     var components = {};
-    ressources['${loaders[0]}'].keys().forEach(function(componentFile) {
+    resources['${loaders[0]}'].keys().forEach(function(componentFile) {
      components[componentFile] = {};
-     Object.keys(ressources).forEach(function(loader) {
-       components[componentFile][loader] = function() {
-         return ressources['get' + loader.substr(0, 1).toUpperCase() + loader.substr(1)](componentFile);
+     Object.keys(resources).forEach(function(loader) {
+       components[componentFile]['get' + loader.substr(0, 1).toUpperCase() + loader.substr(1)] = function() {
+         return resources[loader](componentFile);
        };
      });
     });

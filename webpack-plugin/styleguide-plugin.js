@@ -25,8 +25,10 @@ function StyleguidePlugin(options) {
   this.options = options || {};
 
   // Assert that the include option was specified
-  if (!this.options.include) {
-    throw new Error('You need to specify where your components are in the "include" option!\n\n');
+  if (!this.options.componentRoot) {
+    throw new Error(
+      'You need to specify where your components are in the "componentRoot" option!\n\n'
+    );
   }
 
   // Assert that the plugins option is an array if specified
@@ -40,6 +42,7 @@ function StyleguidePlugin(options) {
  */
 StyleguidePlugin.prototype.apply = function apply(compiler) {
   const dest = this.options.dest || 'styleguide';
+  const filter = this.options.filter || /([A-Z][a-zA-Z]*\/index|[A-Z][a-zA-Z]*)\.(jsx?|es6)$/;
 
   // Register either the plugins or the default plugins
   if (this.options.plugins && this.options.plugins.length > 0) {
@@ -53,7 +56,7 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
     // Load the dynamic resolve loader with a placeholder file
     entry: `!!${require.resolve('./dynamic-resolve.js')}?${
       JSON.stringify({
-        filter: this.options.filter.toString(),
+        filter: filter.toString(),
         componentRoot: this.options.componentRoot,
         context: compiler.context,
       })}!${require.resolve('./dynamic-resolve.js')}`,
@@ -68,6 +71,12 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
   };
 
   compiler.plugin('emit', (compilation, callback) => {
+    // TODO Remove
+    const styleguideAssets = {
+      'index.html': fs.readFileSync(path.resolve(__dirname, './assets/client.html')),
+      'client-bundle.js': fs.readFileSync(path.resolve(__dirname, './assets/client-bundle.js')),
+      'client-bundle.css': fs.readFileSync(path.resolve(__dirname, './assets/main.css')),
+    };
     // Emit styleguide assets
     Object.keys(styleguideAssets).forEach((filename) => {
       compilation.assets[path.join(dest, filename)] = { // eslint-disable-line no-param-reassign
