@@ -44,18 +44,16 @@
   width: 38%;
   text-align: left;
   float: left;
-  background: #bde2d7;
-  margin-bottom: 10px;
+  /*background: url(http://odyniec.net/articles/turning-lists-into-trees/vline.png) repeat-y;*/
+  background-color: #bde2d7;
 }
 
 .leftPartNested {
   composes: leftPart;
-  padding-left: 20px;
 }
 
 .leftPartSecondNested {
-  composes: leftPart;
-  padding-left: 40px;
+  composes: leftPartNested;
 }
 
 .rightPart {
@@ -73,4 +71,11 @@
   background: #d2d2f5;
   position: absolute;
   right: 0;
+}
+
+.line {
+  float: left;
+  width: 10px;
+  border-left: 1px solid red;
+  margin-left: 10px;
 }

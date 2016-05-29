@@ -30,15 +30,11 @@ import styles from './styles.css';
 
   <Column>
     <Left><span>label</span></Left>
-    <Right>
-      <RightChild><span>from</span></RightChild>
-      <Column>
-        <Left><span>label</span></Left>
-        <Right>
-          <RightChild><span>form</span></RightChild>
-        </Right>
-      </Column>
-    </Right>
+    <Right><span>from</span></Right>
+    <Column>
+      <Left><span>label</span></Left>
+      <Right><span>form</span></Right>
+    </Column>
   </Column>
   />
 </Grid>*/}
@@ -61,15 +57,18 @@ const Grid = () => (
           Left
         </div>
         <div className={styles.rightPart}>
-          Right
-          <div className={styles.prop}>
-            <div className={styles.leftPartNested}>
-              Nested Left
-            </div>
-            <div className={styles.rightPart}>
-              <div className={styles.rightChild}>
-                Nested Right
-              </div>
+          <div className={styles.rightChild}>
+            Right
+          </div>
+        </div>
+        <div className={styles.prop}>
+          <div className={styles.leftPartNested}>
+            <div className={styles.line}>&nbsp;</div>
+            Nested Left
+          </div>
+          <div className={styles.rightPart}>
+            <div className={styles.rightChild}>
+              Nested Right
             </div>
           </div>
         </div>
@@ -81,11 +80,26 @@ const Grid = () => (
         <div className={styles.rightPart}>
           <div className={styles.prop}>
             <div className={styles.leftPartNested}>
+              <div className={styles.line}>&nbsp;</div>
               Nested Left
             </div>
             <div className={styles.rightPart}>
               <div className={styles.prop}>
                 <div className={styles.leftPartSecondNested}>
+                  <div className={styles.line}>&nbsp;</div>
+                  <div className={styles.line}>&nbsp;</div>
+                  Second Nested Left
+                </div>
+                <div className={styles.rightPart}>
+                  <div className={styles.rightChild}>
+                    Second Nested Right
+                  </div>
+                </div>
+              </div>
+              <div className={styles.prop}>
+                <div className={styles.leftPartSecondNested}>
+                  <div className={styles.line}>&nbsp;</div>
+                  <div className={styles.line}>&nbsp;</div>
                   Second Nested Left
                 </div>
                 <div className={styles.rightPart}>
