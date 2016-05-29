@@ -25,6 +25,8 @@ class Navigation extends React.Component {
 
   state = {
     filterString: '',
+    shortcutHelpVisible: false,
+    informationVisible: false,
   };
 
   componentDidMount() {
@@ -73,6 +75,20 @@ class Navigation extends React.Component {
         state: { preventScroll: true },
       });
     }
+  };
+
+  toggleShortcutHelp = () => {
+    this.setState({
+      shortcutHelpVisible: !this.state.shortcutHelpVisible,
+      informationVisible: false,
+    });
+  };
+
+  toggleInformation = () => {
+    this.setState({
+      informationVisible: !this.state.informationVisible,
+      shortcutHelpVisible: false,
+    });
   };
 
   renderSubNavigation = (componentPath) => {
@@ -134,6 +150,14 @@ class Navigation extends React.Component {
   );
 
   render() {
+    const {
+      shortcutHelpVisible,
+      informationVisible,
+    } = this.state;
+    // Get Footer Classname
+    const footerClassname = (
+      shortcutHelpVisible || informationVisible
+    ) ? styles.footerExpanded : styles.footer;
     return (
       <div className={styles.drawer}>
         <IndexLink
@@ -151,6 +175,57 @@ class Navigation extends React.Component {
         />
         <div className={styles.list}>
           {this.renderComponents()}
+        </div>
+        <div className={footerClassname}>
+          {/* &#8984; &#8679; / &#8963; &#8679; */}
+          <button
+            className={(shortcutHelpVisible) ? styles.footerButtonActive : styles.footerButton}
+            onClick={this.toggleShortcutHelp}
+          >
+            &#8984;
+          </button>
+          <button
+            className={(informationVisible) ? styles.footerButtonActive : styles.footerButton}
+            onClick={this.toggleInformation}
+          >
+            i
+          </button>
+          <div className={styles.footerContent}>
+            {/* CTRL: &#8963; */}
+            {(this.state.shortcutHelpVisible) && (
+              <div>
+                <h4 className={styles.footerHeading}>Keyboard Shortcuts</h4>
+                <p className={styles.paragraph}>
+                  {/* TODO Dynamically inject this from the ReactPlugin */}
+                  <code className={styles.keyboardShortcut}>ESC</code>
+                  {'Toggle Nav / Close Modal'}
+                </p>
+                <p className={styles.paragraph}>
+                  <code className={styles.keyboardShortcut}>&#8984;+&#8679;+&#x2193;</code>
+                  {'Next Component'}
+                </p>
+                <p className={styles.paragraph}>
+                  <code className={styles.keyboardShortcut}>&#8984;+&#8679;+&#x2191;</code>
+                  {'Prev Component'}
+                </p>
+              </div>
+            )}
+            {(this.state.informationVisible) && (
+              <div>
+                <h4 className={styles.footerHeading}>About</h4>
+                <p className={styles.paragraph}>
+                  Made by
+                  <a className={styles.footerLink} href="https://twitter.com/mxstbr"> Max Stoiber</a>,
+                  <a className={styles.footerLink} href="https://twitter.com/nikgraf"> Nik Graf</a>,
+                  <a className={styles.footerLink} href="https://twitter.com/jantimon"> Jan Nicklas </a>
+                  and collaborators.
+                </p>
+                <p className={styles.paragraph}>
+                  Submit bug reports and contribute on <a className={styles.footerLink} href="https://github.com/">Github</a>!
+                </p>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     );
