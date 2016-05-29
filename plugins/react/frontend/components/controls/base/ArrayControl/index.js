@@ -1,6 +1,7 @@
 import React, { cloneElement } from 'react';
 import cloneDeep from 'lodash/cloneDeep';
 import range from 'lodash/range';
+import first from 'lodash/first';
 import randomValue from './randomValue';
 import Label from '../../../common/Label';
 import getControl from '../../../../utils/getControl';
@@ -23,6 +24,11 @@ const ArrayControl = (props) => {
     newValue[index] = data;
     onUpdate({ value: newValue });
   };
+
+  // override propTypeData. make sure required is set to true
+  const requiredPropTypeData = Object.assign({}, propTypeData, { required: true });
+  const addItem = () => ({ value: [...value || [], first(ArrayControl.randomValue(requiredPropTypeData))] }); // eslint-disable-line max-len
+  const removeItem = () => ({ value: size > 0 ? [...value.slice(0, size - 1)] : [] });
 
   const control = getControl(propTypeData.value);
 
@@ -54,6 +60,10 @@ const ArrayControl = (props) => {
           })}
         </div>
       )}
+      <div>
+        <button onClick={() => onUpdate(addItem())}>+</button>
+        {size > 0 && <button onClick={() => onUpdate(removeItem())}>-</button>}
+      </div>
     </div>
   );
 };
