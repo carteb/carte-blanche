@@ -9,6 +9,34 @@ $ git clone https://github.com/pure-ui/styleguide
 $ npm install
 ```
 
+## Usage & Plugin Development
+
+## Development
+
+For the development of the plugin itself, we have a few example apps prepared.
+
+To use them, run
+
+```
+$ npm run example:<examplename>
+$ npm run example:dev
+```
+
+You can then visit `http://localhost:8080` to see the app and `http://localhost:8080/styleguide` to see the styleguide!
+
+> Note: `$ npm start` aliases to `$ npm run example:dev`
+
+Here the full list of examples:
+
+```
+$ npm run example:profile
+$ npm run example:dev
+$ npm run example:dest
+$ npm run example:radium
+$ npm run example:jss
+$ npm run example:aphrodite
+```
+
 ## Structure
 
 ```
@@ -42,23 +70,6 @@ $ npm run client:build
 ```
 
 > Note: Currently, it is not possible to use the live development version of the client during plugin development. You'll have to build it before the new version appears in the plugin.
-
-### Example Apps for Plugin Development
-
-#### Development
-
-For the development of the plugin itself, we have a few example apps prepared.
-
-To use them, run
-
-```
-$ npm run example:<examplename>
-$ npm run example:dev
-```
-
-You can then visit `http://localhost:3000` to see the app and `http://localhost:3000/styleguide.html` to see the styleguide!
-
-> Note: `$ npm start` aliases to `$ npm run example:dev`
 
 ##### `iron-node`
 
