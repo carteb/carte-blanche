@@ -1,0 +1,13 @@
+'use strict';
+
+// Add our component to window.STYLEGUIDE_PLUGIN_CLIENT_API
+// so the styleguide client can pick them up
+window.STYLEGUIDE_PLUGIN_CLIENT_API.loadComplete('{{path}}', {
+  name: '{{name}}',
+  plugins: require('!!{{pluginsLoader}}!{{requestPath}}'),
+  path: '{{path}}',
+  component: (() => {
+    var component = require('!!{{request}}');
+    return component.default || component;
+  })(),
+});

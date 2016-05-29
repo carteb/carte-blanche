@@ -28,9 +28,9 @@ module.exports = function entryLoader(entryTemplate) {
   const name = relativePath.replace(FILE_EXTENSION_REGEX, '');
   // Replace the variables in the entry file template with the right values
   return entryTemplate
-          .replace(/%%request%%/g, query.request)
-          .replace(/%%name%%/g, name)
-          .replace(/%%path%%/g, relativePath)
-          .replace(/%%pluginsLoader%%/g, require.resolve('./plugins-loader.js'))
-          .replace(/%%requestPath%%/g, requestPath);
+          .replace(/{{request}}/g, query.request)
+          .replace(/{{name}}/g, name)
+          .replace(/{{path}}/g, relativePath)
+          .replace(/{{pluginsLoader}}/g, require.resolve('./plugins-loader.js'))
+          .replace(/{{requestPath}}/g, requestPath);
 };
