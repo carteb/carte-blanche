@@ -145,28 +145,96 @@
 
 .footer {
   position: absolute;
-  bottom: 0;
+  bottom: -13.5em; /* 13.5em = height of footer - height of buttons */
   left: 0;
   right: 0;
-  background: linear-gradient(to bottom, #282830 0%,#26262e 100%);
+  height: 15em;
+  transform: translateY(0);
+  transition: transform 150ms ease-in-out;
   border-top: 1px solid rgba(255, 255, 255, 0.05);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
-  height: 1.5em;
 }
 
-.footerItem {
+.footerExpanded {
+  composes: footer;
+  transform: translateY(-13.5em);
+}
+
+.footerButton {
   width: 50%;
   border: none;
   background-color: transparent;
-  height: 100%;
+  height: 1.5em;
   font-size: 1em;
   color: rgba(255, 255, 255, 0.5);
   padding: 0;
   cursor: pointer;
   padding: 0;
   border-right: 1px solid rgba(0, 0, 0, 0.25);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+  border-top: 1px solid transparent;
+  background: linear-gradient(to bottom, #282830 0%,#26262e 100%);
+  outline: none;
 }
 
-.footerItem:hover {
+.footerButtonActive {
+  composes: footerButton;
+  color: rgba(255, 255, 255, 1);
+  background: rgb(23, 24, 28);
+  border-top: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+.footerButton:hover {
   color: rgba(255, 255, 255, 0.75);
+}
+
+.footerContent {
+  color: white;
+  height: 13.5em;
+  position: absolute;
+  top: 1.5em;
+  font-family: -apple-system, BlinkMacSystemFont,  "Segoe UI", "Roboto", "Oxygen",  "Ubuntu", "Cantarell", "Fira Sans",  "Droid Sans", "Helvetica Neue", sans-serif;
+  font-size: 1em;
+  padding: 0.5em;
+  width: 100%;
+}
+
+.footerHeading {
+  font-size: 1em;
+  font-weight: bold;
+  text-align: center;
+  margin: 0.5em 0;
+}
+
+.footerTabContent {
+  width: 100%;
+  height: 100%;
+}
+
+.footerTabContentVisible {
+  composes: footerTabContent;
+}
+
+.keyboardShortcut {
+  background-color: rgba(255, 255, 255, 0.25);
+  padding: 0.25em 0.5em;
+  border-radius: 3px;
+  font-size: 1.25em;
+  margin-right: 0.5em;
+}
+
+.paragraph {
+  width: 100%;
+  margin: 1em 0;
+  font-size: 0.8em;
+  line-height: 1.5em;
+}
+
+.paragraph:first-child {
+  margin-top: 0.5em;
+}
+
+.footerLink {
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
 }
