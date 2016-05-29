@@ -1,0 +1,79 @@
+.root {
+  display: flex;
+  box-sizing: border-box;
+  position: relative;
+  height: 600px;
+  border: 1px solid red;
+}
+
+.leftPane {
+  box-sizing: border-box;
+  width: 38%;
+  background: #F4F7F9;
+  height: 100%;
+  position: absolute;
+  border-right: 1px solid #EDEDED;
+  z-index: 0;
+}
+
+.rightPane {
+  box-sizing: border-box;
+  width: 62%;
+  height: 100%;
+  background: #F9F9F9;
+  position: absolute;
+  left: 38%;
+  z-index: 0;
+}
+
+.form {
+  box-sizing: border-box;
+  z-index: 1;
+  width: 100%;
+}
+
+.prop {
+  box-sizing: border-box;
+  width: 100%;
+  position: relative;
+  margin-top: 30px;
+}
+
+.leftPart {
+  box-sizing: border-box;
+  width: 100%;
+  text-align: left;
+}
+
+.leftChild {
+  box-sizing: border-box;
+  width: 38%;
+  background: #bde2d7;
+}
+
+.leftChildNested {
+  composes: leftChild;
+  padding-left: 20px;
+}
+
+.leftChildSecondNested {
+  composes: leftChild;
+  padding-left: 40px;
+}
+
+.rightPart {
+  box-sizing: border-box;
+  width: 100%;
+  position: absolute;
+  right: 0px;
+  text-align: right;
+  top: 0px;
+}
+
+.rightChild {
+  box-sizing: border-box;
+  width: 62%;
+  background: #d2d2f5;
+  position: absolute;
+  right: 0;
+}

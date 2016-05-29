@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import AtriumInput from './components/AtriumInput';
+import Grid from './components/Grid';
 import styles from './styles.css';
 
 class App extends React.Component {
@@ -40,6 +41,7 @@ class App extends React.Component {
   render() {
     return (
       <div className={styles.root}>
+        <Grid />
         <AtriumInput
           value={this.state.firstValue}
           fallbackValue=""
