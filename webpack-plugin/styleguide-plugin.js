@@ -15,6 +15,7 @@ import isArray from 'lodash/isArray';
 let id = -1;
 /**
  * Instantiates the plugin
+ *
  * @param {Object} options           The options
  * @param {String} options.include   A list of glob patterns that matches the components
  * @param {String} options.dest      The destination the styleguide should be emitted at
