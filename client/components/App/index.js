@@ -11,6 +11,17 @@ import throttle from 'lodash/throttle';
 
 import styles from './styles.css';
 
+/**
+ * Returns true if CMD or CTRL and SHIFT are pressed
+ */
+function modifiersPressed(evt) {
+  return (
+    // CTRL or CMD, cross-OS
+    evt.ctrlKey || evt.keyCode === 91 || evt.metaKey
+    // and SHIFT
+  ) && evt.shiftKey;
+}
+
 class App extends React.Component {
 
   state = {
@@ -78,13 +89,13 @@ class App extends React.Component {
     if (keyCode === KeyCodes.ESC) {
       // If the ESC key was pressed, toggle the menu
       this.throttledToggleMenu();
-    } else if (keyCode === KeyCodes.DownArrow && !!evt.metaKey && !!evt.shiftKey) {
+    } else if (keyCode === KeyCodes.DownArrow && modifiersPressed(evt)) {
       // If CMD+SHIFT+DOWN ARROW was pressed, go to the next component
       const nextComponentPath = this.getNextComponentPath();
       if (nextComponentPath !== '') {
         window.hashHistory.push(nextComponentPath);
       }
-    } else if (keyCode === KeyCodes.UpArrow && !!evt.metaKey && !!evt.shiftKey) {
+    } else if (keyCode === KeyCodes.UpArrow && modifiersPressed(evt)) {
       // If CMD+SHIFT+UP ARROW was pressed, go to the previous component
       const previousComponentPath = this.getPreviousComponentPath();
       if (previousComponentPath !== '') {
