@@ -13,7 +13,7 @@ module.exports = function pluginsLoader(source) {
    * Define an api which can be called by the plugins in the
    * styleguide-plugin-processing step
    */
-  function renderToStyleguideAPI(pluginOptions) {
+  function renderToClient(pluginOptions) {
     // Make the plugin name mandatory
     if (!pluginOptions || !pluginOptions.name) {
       throw new Error('Plugin name is mandatory');
@@ -22,9 +22,9 @@ module.exports = function pluginsLoader(source) {
     // Load the frontend data and pass it to the frontend part of the plugin
     pluginPromises.push(new Promise((resolve, reject) => {
       Promise.resolve(pluginOptions.frontendData)
-        .then((result) => resolve({
+        .then((frontendData) => resolve({
           name: pluginOptions.name,
-          result,
+          frontendData,
           frontendPlugin: pluginOptions.frontendPlugin,
         }))
         .catch((err) => reject(err));
@@ -32,19 +32,19 @@ module.exports = function pluginsLoader(source) {
   }
 
    // Pass the source code of the component to the plugins
-  const data = { source };
+  const pluginData = { source };
 
   // Trigger events for styleguide child plugins
   this._compilation.applyPlugins( // eslint-disable-line no-underscore-dangle
     'styleguide-plugin-before-processing',
-    data,
+    pluginData,
     this
   );
 
   this._compilation.applyPlugins( // eslint-disable-line no-underscore-dangle
     'styleguide-plugin-processing',
-    renderToStyleguideAPI,
-    data,
+    renderToClient,
+    pluginData,
     this
   );
 
@@ -57,31 +57,31 @@ module.exports = function pluginsLoader(source) {
     .then((plugins) => { // eslint-disable-line arrow-body-style
       // Get the component data from each plugin
       return plugins
-        .filter((plugin) => plugin.result !== undefined)
+        .filter((plugin) => plugin.frontendData !== undefined)
         .map((plugin) => {
           // Execute the default export of the plugin frontend module
           const frontendCode = `function() {
             return (require(${JSON.stringify(plugin.frontendPlugin)}))
               .default.apply(
                 this,
-                Array.prototype.concat.apply([this.result.options, data], arguments)
+                Array.prototype.concat.apply([this.frontendData, pluginData], arguments)
               )
           }`;
           // Return the data of the plugin
           return `{
             name: ${JSON.stringify(plugin.name)},
-            result: ${JSON.stringify(plugin.result)},
+            frontendData: ${JSON.stringify(plugin.frontendData)},
             frontendPlugin: ${plugin.frontendPlugin ? frontendCode : '""'}
           }`;
         });
     })
     // Send the data of all the plugins to the next loader via the callback
-    .then((pluginData) => {
+    .then((pluginsData) => {
       callback(
         null,
         `
-        var data = ${JSON.stringify(data)};
-        module.exports = [${pluginData.join(',')}];
+        var pluginData = ${JSON.stringify(pluginData)};
+        module.exports = [${pluginsData.join(',')}];
         `
       );
     })

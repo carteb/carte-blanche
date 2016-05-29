@@ -67,8 +67,6 @@ ReactPlugin.prototype.apply = function apply(compiler) {
       (data) => {
         // eslint-disable-next-line no-param-reassign
         data.reactDocs = reactDocs.parse(data.source, styleguideResolver);
-        // eslint-disable-next-line no-param-reassign
-        data.variationBasePath = variationBasePath;
       }
     );
 
