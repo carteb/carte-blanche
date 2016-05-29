@@ -8,7 +8,7 @@ const controlTypes = [
   'name',
   'func',
   'shape',
-  // 'arrayOf',
+  'arrayOf',
 ];
 
 export default controlTypes;
