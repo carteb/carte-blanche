@@ -1,6 +1,48 @@
 import React from 'react';
 import styles from './styles.css';
 
+
+{/*<Grid>
+  <LeftColumn>
+    <Children />
+  </LeftColumn>
+  <RightColumn>
+    <Children />
+    <LeftColumn>
+      <Children />
+    </LeftColumn>
+    <RightColumn>
+      <Children />
+    </RightColumn>
+  </RightColumn>
+
+
+  <Column
+    left={<span>label</span>}
+    right={<span>form</span>}
+    rightEscaped={
+      <Column
+        left={<span>label</span>}
+        right={<span>form</span>}
+      />
+    }
+  />
+
+  <Column>
+    <Left><span>label</span></Left>
+    <Right>
+      <RightChild><span>from</span></RightChild>
+      <Column>
+        <Left><span>label</span></Left>
+        <Right>
+          <RightChild><span>form</span></RightChild>
+        </Right>
+      </Column>
+    </Right>
+  </Column>
+  />
+</Grid>*/}
+
 const Grid = () => (
   <div className={styles.root}>
     <div className={styles.leftPane}></div>
@@ -8,28 +50,21 @@ const Grid = () => (
     <div className={styles.form}>
       <div className={styles.prop}>
         <div className={styles.leftPart}>
-          <div className={styles.leftChild}>
-            Left
-          </div>
+          Left
         </div>
         <div className={styles.rightPart}>
-          <div className={styles.rightChild}>
-            Right
-          </div>
+          Right
         </div>
       </div>
       <div className={styles.prop}>
         <div className={styles.leftPart}>
-          <div className={styles.leftChild}>
-            Left
-          </div>
+          Left
         </div>
         <div className={styles.rightPart}>
+          Right
           <div className={styles.prop}>
-            <div className={styles.leftPart}>
-              <div className={styles.leftChildNested}>
-                Nested Left
-              </div>
+            <div className={styles.leftPartNested}>
+              Nested Left
             </div>
             <div className={styles.rightPart}>
               <div className={styles.rightChild}>
@@ -41,23 +76,17 @@ const Grid = () => (
       </div>
       <div className={styles.prop}>
         <div className={styles.leftPart}>
-          <div className={styles.leftChild}>
-            Left
-          </div>
+          Left
         </div>
         <div className={styles.rightPart}>
           <div className={styles.prop}>
-            <div className={styles.leftPart}>
-              <div className={styles.leftChildNested}>
-                Nested Left
-              </div>
+            <div className={styles.leftPartNested}>
+              Nested Left
             </div>
             <div className={styles.rightPart}>
               <div className={styles.prop}>
-                <div className={styles.leftPart}>
-                  <div className={styles.leftChildSecondNested}>
-                    Second Nested Left
-                  </div>
+                <div className={styles.leftPartSecondNested}>
+                  Second Nested Left
                 </div>
                 <div className={styles.rightPart}>
                   <div className={styles.rightChild}>
@@ -71,9 +100,7 @@ const Grid = () => (
       </div>
       <div className={styles.prop}>
         <div className={styles.leftPart}>
-          <div className={styles.leftChild}>
-            Left
-          </div>
+          Left
         </div>
         <div className={styles.rightPart}>
           <div className={styles.rightChild}>

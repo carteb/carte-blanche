@@ -44,22 +44,17 @@
   width: 38%;
   text-align: left;
   float: left;
-}
-
-.leftChild {
-  box-sizing: border-box;
-  width: 100%;
   background: #bde2d7;
   margin-bottom: 10px;
 }
 
-.leftChildNested {
-  composes: leftChild;
+.leftPartNested {
+  composes: leftPart;
   padding-left: 20px;
 }
 
-.leftChildSecondNested {
-  composes: leftChild;
+.leftPartSecondNested {
+  composes: leftPart;
   padding-left: 40px;
 }
 
