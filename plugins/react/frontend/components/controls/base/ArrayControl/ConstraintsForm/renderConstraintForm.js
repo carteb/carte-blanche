@@ -21,7 +21,7 @@ const renderConstraintForm = (
   const ConstraintsForm = control.type.ConstraintsForm;
   if (!ConstraintsForm) return null;
 
-  const relevantParsedMetadata = parsedMetadata.value
+  const relevantParsedMetadata = parsedMetadata && parsedMetadata.value
     ? parsedMetadata.value
     : undefined;
 
