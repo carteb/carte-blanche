@@ -48,10 +48,10 @@ module.exports.pitch = function pitch(request) {
 
   // '!!' strips all previous loaders.
   // This generates an entry point for each of our components based on the template
-  // in entryTemplate.js and the date computed in entry-loader.js
+  // in entryTemplate.hbs and the date computed in entry-loader.js
   const requestURI = encodeURI(request).replace(/!/g, '%21');
   const entryLoader = require.resolve('./entry-loader.js');
-  const entryPoint = `!!${entryLoader}?request=${requestURI}!${require.resolve('./entryTemplate.js')}`; // eslint-disable-line max-len
+  const entryPoint = `!!${entryLoader}?request=${requestURI}!${require.resolve('./entryTemplate.hbs')}`; // eslint-disable-line max-len
   // See Notes.md in the root folder for more information about these plugins
   childCompiler.apply(new NodeTemplatePlugin(outputOptions));
   childCompiler.apply(new LibraryTemplatePlugin(null, 'window'));
