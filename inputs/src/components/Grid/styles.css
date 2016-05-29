@@ -36,19 +36,21 @@
   box-sizing: border-box;
   width: 100%;
   position: relative;
-  margin-top: 30px;
+  overflow: auto;
 }
 
 .leftPart {
   box-sizing: border-box;
-  width: 100%;
+  width: 38%;
   text-align: left;
+  float: left;
 }
 
 .leftChild {
   box-sizing: border-box;
-  width: 38%;
+  width: 100%;
   background: #bde2d7;
+  margin-bottom: 10px;
 }
 
 .leftChildNested {
@@ -64,7 +66,7 @@
 .rightPart {
   box-sizing: border-box;
   width: 100%;
-  position: absolute;
+  position: relative;
   right: 0px;
   text-align: right;
   top: 0px;
