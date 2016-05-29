@@ -1,0 +1,49 @@
+{
+  "name": "atrium-react-plugin-beta",
+  "version": "0.0.0",
+  "description": "",
+  "homepage": "https://github.com/pure-ui/styleguide",
+  "bugs": {
+    "url": "https://github.com/pure-ui/styleguide/issues"
+  },
+  "contributors": [
+    "Nik Graf <nik@nikgraf.com> (https://medium.com/@nikgraf)",
+    "Max Stoiber <contact@mxstbr.com> (http://mxstbr.com)",
+    "Jan Nicklas <j.nicklas@me.com> (https://twitter.com/jantimon)"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pure-ui/styleguide"
+  },
+  "license": "MIT",
+  "main": "dist/plugin.js",
+  "keywords": [
+    "editor",
+    "wysiwyg",
+    "draft",
+    "react",
+    "ux",
+    "components",
+    "widget",
+    "react-component"
+  ],
+  "peerDependencies": {
+    "atrium-webpack-plugin-beta": "^0.0.0"
+  },
+  "scripts": {
+    "clean": "rimraf dist/*",
+    "build": "npm run clean && npm run build:js && npm run build:css",
+    "build:js": "WEBPACK_CONFIG=$(pwd)/webpack.css.babel.js BABEL_DISABLE_CACHE=1 BABEL_ENV=production NODE_ENV=production babel --ignore node_modules,__test__ --out-dir='dist' .",
+    "build:css": "node ./concatCssFiles $(pwd) && rimraf lib-css",
+    "prepublish": "npm run build"
+  },
+  "devDependencies": {
+    "autoprefixer": "^6.3.6",
+    "babel-cli": "^6.9.0",
+    "babel-plugin-webpack-loaders": "^0.5.0",
+    "css-loader": "^0.23.1",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "postcss-loader": "^0.9.1",
+    "rimraf": "^2.5.2"
+  }
+}
