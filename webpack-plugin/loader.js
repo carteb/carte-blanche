@@ -14,7 +14,7 @@ import MultiEntryPlugin from 'webpack/lib/MultiEntryPlugin';
 import LimitChunkCountPlugin from 'webpack/lib/optimize/LimitChunkCountPlugin';
 import path from 'path';
 
-module.exports = function styleguideLoader(source) {
+module.exports = function loader(source) {
   this.cacheable();
   return source;
 };
@@ -45,12 +45,13 @@ module.exports.pitch = function pitch(request) {
     outputOptions
   );
 
-  // '!!' strips all previous loaders, so this makes sure all our components are loaded with
-  // the loader in component-loader.js and are piped through the entry.js file
-  // TODO How exactly does this work
+  // '!!' strips all previous loaders.
+  // This generates an entry point for each of our components based on the template
+  // in entryTemplate.js and the date computed in entry-loader.js
   const requestURI = encodeURI(request).replace(/!/g, '%21');
-  const componentLoader = require.resolve('./component-loader.js');
-  const entryPoint = `!!${componentLoader}?request=${requestURI}!${require.resolve('./entry.js')}`;
+  const entryLoader = require.resolve('./entry-loader.js');
+  const entryPoint = `!!${entryLoader}?request=${requestURI}!${require.resolve('./entryTemplate.js')}`; // eslint-disable-line max-len
+  // TODO How exactly does the child compilation work?
   childCompiler.apply(new NodeTemplatePlugin(outputOptions));
   childCompiler.apply(new LibraryTemplatePlugin(null, 'window'));
   childCompiler.apply(new NodeTargetPlugin());
