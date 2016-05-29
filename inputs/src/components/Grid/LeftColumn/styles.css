@@ -1,0 +1,15 @@
+.root {
+  box-sizing: border-box;
+  width: 38%;
+  text-align: left;
+  float: left;
+  /* background is useful for css debugging */
+  /*background-color: #bde2d7;*/
+}
+
+.line {
+  float: left;
+  width: 10px;
+  border-left: 1px solid grey;
+  margin-left: 10px;
+}
