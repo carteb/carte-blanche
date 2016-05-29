@@ -6,6 +6,8 @@ import React from 'react';
 import Navigation from '../Navigation';
 import MenuButton from '../MenuButton';
 
+import KeyCodes from '../../../utils/keycodes';
+
 import styles from './styles.css';
 
 class App extends React.Component {
@@ -13,6 +15,20 @@ class App extends React.Component {
   state = {
     drawerVisible: true,
   }
+
+  componentDidMount() {
+    window.addEventListener('keydown', this.handleKeyPress, false);
+  }
+
+  handleKeyPress = (evt) => {
+    // Use either which or keyCode, depending on browser support
+    const keyCode = evt.which || evt.keyCode;
+    if (keyCode === KeyCodes.ESC) {
+      console.log('KEYPRESS CLIENT');
+      // If the ESC key was pressed, toggle the menu
+      this.toggleMenu();
+    }
+  };
 
   toggleMenu = () => {
     this.setState({

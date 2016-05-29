@@ -72,9 +72,14 @@ class PlaygroundList extends Component {
     this.connectToSocket();
   }
 
+  componentDidMount() {
+    window.addEventListener('keydown', this.handleKeyPress, true);
+  }
+
   componentWillUnmount() {
     // Disconnet from the socker server before we unmount
     this.disconnectFromSocket();
+    window.removeEventListener('keydown', this.handleKeyPress);
   }
 
   // Get random values
@@ -90,6 +95,23 @@ class PlaygroundList extends Component {
     const propsString = propsToVariation(props);
     // Add the name to the data we save
     return addDataToVariation(propsString, { name });
+  };
+
+  handleKeyPress = (evt) => {
+    // Use either which or keyCode, depending on browser support
+    const keyCode = evt.which || evt.keyCode;
+    if (keyCode === KeyCodes.ESC) {
+      // If the ESC key was pressed, close the modal
+      if (this.state.customMetadataEditMode) {
+        console.log('KEYPRESS PLUGIN');
+        evt.stopPropagation();
+        this.stopCustomMetadataEditMode();
+      } else if (this.state.variationEditMode) {
+        console.log('KEYPRESS PLUGIN');
+        evt.stopPropagation();
+        this.stopVariationEditMode();
+      }
+    }
   };
 
   // Fetch the metadata of the current component
@@ -311,18 +333,6 @@ class PlaygroundList extends Component {
     this.debouncedPersistVariation(variationPath, props);
   };
 
-  // Keyboard Controls
-  handleKeyPress = (evt) => {
-    if (evt.keyCode === KeyCodes.ESC) {
-      // If the ESC key was pressed, close the modal
-      if (this.state.customMetadataEditMode) {
-        this.stopCustomMetadataEditMode();
-      } else if (this.state.variationEditMode) {
-        this.stopVariationEditMode();
-      }
-    }
-  }
-
   randomiseEverything = (path) => {
     this.persistVariation(path, this.getRandomValues());
   };
@@ -389,7 +399,7 @@ class PlaygroundList extends Component {
     const userStylingNodes = getStylingNodes();
 
     return (
-      <div className={styles.wrapper} onKeyDown={this.handleKeyPress}>
+      <div className={styles.wrapper}>
         <h2 className={styles.title}>
           {getComponentNameFromPath(this.props.componentPath)}
           <EditButton
