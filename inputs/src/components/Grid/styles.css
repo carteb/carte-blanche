@@ -2,11 +2,10 @@
   display: flex;
   box-sizing: border-box;
   position: relative;
-  height: 600px;
-  border: 1px solid red;
+  height: 300px;
 }
 
-.leftPane {
+.leftBackgroundColumn {
   box-sizing: border-box;
   width: 38%;
   background: #F4F7F9;
@@ -16,7 +15,7 @@
   z-index: 0;
 }
 
-.rightPane {
+.rightBackgroundColumn {
   box-sizing: border-box;
   width: 62%;
   height: 100%;
@@ -26,56 +25,8 @@
   z-index: 0;
 }
 
-.form {
+.content {
   box-sizing: border-box;
   z-index: 1;
   width: 100%;
-}
-
-.prop {
-  box-sizing: border-box;
-  width: 100%;
-  position: relative;
-  overflow: auto;
-}
-
-.leftPart {
-  box-sizing: border-box;
-  width: 38%;
-  text-align: left;
-  float: left;
-  /*background: url(http://odyniec.net/articles/turning-lists-into-trees/vline.png) repeat-y;*/
-  background-color: #bde2d7;
-}
-
-.leftPartNested {
-  composes: leftPart;
-}
-
-.leftPartSecondNested {
-  composes: leftPartNested;
-}
-
-.rightPart {
-  box-sizing: border-box;
-  width: 100%;
-  position: relative;
-  right: 0px;
-  text-align: right;
-  top: 0px;
-}
-
-.rightChild {
-  box-sizing: border-box;
-  width: 62%;
-  background: #d2d2f5;
-  position: absolute;
-  right: 0;
-}
-
-.line {
-  float: left;
-  width: 10px;
-  border-left: 1px solid red;
-  margin-left: 10px;
 }

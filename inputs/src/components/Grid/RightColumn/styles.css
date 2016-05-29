@@ -1,0 +1,17 @@
+.root {
+  box-sizing: border-box;
+  width: 100%;
+  position: relative;
+  right: 0px;
+  text-align: right;
+  top: 0px;
+}
+
+.child {
+  box-sizing: border-box;
+  width: 62%;
+  /* background is useful for css debugging */
+  /*background: #d2d2f5;*/
+  position: absolute;
+  right: 0;
+}

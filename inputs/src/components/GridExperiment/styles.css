@@ -1,0 +1,80 @@
+.root {
+  display: flex;
+  box-sizing: border-box;
+  position: relative;
+  height: 600px;
+  border: 1px solid red;
+}
+
+.leftPane {
+  box-sizing: border-box;
+  width: 38%;
+  background: #F4F7F9;
+  height: 100%;
+  position: absolute;
+  border-right: 1px solid #EDEDED;
+  z-index: 0;
+}
+
+.rightPane {
+  box-sizing: border-box;
+  width: 62%;
+  height: 100%;
+  background: #F9F9F9;
+  position: absolute;
+  left: 38%;
+  z-index: 0;
+}
+
+.form {
+  box-sizing: border-box;
+  z-index: 1;
+  width: 100%;
+}
+
+.prop {
+  box-sizing: border-box;
+  width: 100%;
+  position: relative;
+  overflow: auto;
+}
+
+.leftPart {
+  box-sizing: border-box;
+  width: 38%;
+  text-align: left;
+  float: left;
+  background-color: #bde2d7;
+}
+
+.leftPartNested {
+  composes: leftPart;
+}
+
+.leftPartSecondNested {
+  composes: leftPartNested;
+}
+
+.rightPart {
+  box-sizing: border-box;
+  width: 100%;
+  position: relative;
+  right: 0px;
+  text-align: right;
+  top: 0px;
+}
+
+.rightChild {
+  box-sizing: border-box;
+  width: 62%;
+  background: #d2d2f5;
+  position: absolute;
+  right: 0;
+}
+
+.line {
+  float: left;
+  width: 10px;
+  border-left: 1px solid red;
+  margin-left: 10px;
+}
