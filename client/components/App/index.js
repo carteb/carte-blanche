@@ -7,6 +7,7 @@ import Navigation from '../Navigation';
 import MenuButton from '../MenuButton';
 
 import KeyCodes from '../../../utils/keycodes';
+import throttle from 'lodash/throttle';
 
 import styles from './styles.css';
 
@@ -17,7 +18,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    window.addEventListener('keydown', this.handleKeyPress, false);
+    window.addEventListener('keydown', throttle(this.handleKeyPress, 250), false);
   }
 
   handleKeyPress = (evt) => {
