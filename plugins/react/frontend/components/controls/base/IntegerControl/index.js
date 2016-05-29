@@ -16,7 +16,7 @@ import isUndefined from 'lodash/isUndefined';
 import isNull from 'lodash/isNull';
 
 const IntegerControl = (props) => {
-  const { label, value, onUpdate, isNested, secondaryLabel } = props;
+  const { label, value, onUpdate, secondaryLabel } = props;
   const onChange = (data) => {
     const val = data.value;
     const parsedValue = isUndefined(val) || isNull(val) ? val : parseInt(val, 10);

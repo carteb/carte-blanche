@@ -8,7 +8,7 @@ import Label from '../../../form/Label';
 import randomValue from './randomValue';
 
 const NameControl = (props) => {
-  const { label, value, onUpdate, isNested, secondaryLabel } = props;
+  const { label, value, onUpdate, secondaryLabel } = props;
   return (
     <Row>
       <LeftColumn>

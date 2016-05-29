@@ -7,7 +7,7 @@ import AtriumInput from '../../../form/AtriumInput';
 import Label from '../../../form/Label';
 
 const AvatarControl = (props) => {
-  const { label, value, onUpdate, isNested, secondaryLabel } = props;
+  const { label, value, onUpdate, secondaryLabel } = props;
   return (
     <Row>
       <LeftColumn>
