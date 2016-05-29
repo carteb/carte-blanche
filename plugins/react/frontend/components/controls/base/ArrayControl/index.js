@@ -5,6 +5,7 @@ import first from 'lodash/first';
 import randomValue from './randomValue';
 import Label from '../../../common/Label';
 import getControl from '../../../../utils/getControl';
+import ConstraintsForm from './ConstraintsForm';
 import objectControlStyles from '../ObjectControl/styles.css';
 
 const ArrayControl = (props) => {
@@ -69,5 +70,10 @@ const ArrayControl = (props) => {
 };
 
 ArrayControl.randomValue = randomValue;
+/**
+ * The form to manage the types of the array's children.
+ */
+ArrayControl.ConstraintsForm = ConstraintsForm;
+
 
 export default ArrayControl;
