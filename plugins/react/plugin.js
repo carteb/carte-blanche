@@ -75,9 +75,9 @@ ReactPlugin.prototype.apply = function apply(compiler) {
     // The source styleguide plugin
     compilation.plugin(
       'styleguide-plugin-processing',
-      (renderStyleguide) => {
-        renderStyleguide({
-          name: 'playground',
+      (renderToClient) => {
+        renderToClient({
+          name: 'react',
           frontendData: { options },
           frontendPlugin: `${require.resolve('./frontend/index.js')}`,
         });
