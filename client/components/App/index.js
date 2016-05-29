@@ -18,15 +18,78 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    window.addEventListener('keydown', throttle(this.handleKeyPress, 250), false);
+    this.throttledToggleMenu = throttle(this.toggleMenu, 250);
+    window.addEventListener('keydown', this.handleKeyPress, false);
   }
+
+  /**
+   * Get next component path
+   *
+   * @return {String} The path to the next component
+   */
+  getNextComponentPath = () => {
+    let nextComponentPath = '';
+    let isNextComponent = false;
+    // Map over all components
+    Object.keys(window.STYLEGUIDE_PLUGIN_CLIENT_API.scripts)
+      .some((componentPath) => {
+        // If this is the next component, short circuit the some loop by returning
+        // true and set path to the current one
+        if (isNextComponent) {
+          nextComponentPath = componentPath;
+          return true;
+        }
+        // If this is the current component, short circuit the loop at the next
+        // interation
+        if (this.props.location.pathname.indexOf(componentPath) > -1) {
+          isNextComponent = true;
+        }
+        return false;
+      });
+    return nextComponentPath;
+  };
+
+  /**
+   * Get previous component path
+   *
+   * @return {String} The previous component path
+   */
+  getPreviousComponentPath = () => {
+    let previousComponentPath = '';
+    // Map over all components
+    Object.keys(window.STYLEGUIDE_PLUGIN_CLIENT_API.scripts)
+      .some((componentPath) => {
+        // If this is the current component, short curcuit the some loop
+        if (this.props.location.pathname.indexOf(componentPath) > -1) {
+          return true;
+        }
+        // If the current component has not been found yet, save the current
+        // component path. If the next component is the current one, this'll get
+        // returned.
+        previousComponentPath = componentPath;
+        return false;
+      });
+    return previousComponentPath;
+  };
 
   handleKeyPress = (evt) => {
     // Use either which or keyCode, depending on browser support
     const keyCode = evt.which || evt.keyCode;
     if (keyCode === KeyCodes.ESC) {
       // If the ESC key was pressed, toggle the menu
-      this.toggleMenu();
+      this.throttledToggleMenu();
+    } else if (keyCode === KeyCodes.DownArrow && !!evt.metaKey && !!evt.shiftKey) {
+      // If CMD+SHIFT+DOWN ARROW was pressed, go to the next component
+      const nextComponentPath = this.getNextComponentPath();
+      if (nextComponentPath !== '') {
+        window.hashHistory.push(nextComponentPath);
+      }
+    } else if (keyCode === KeyCodes.UpArrow && !!evt.metaKey && !!evt.shiftKey) {
+      // If CMD+SHIFT+UP ARROW was pressed, go to the previous component
+      const previousComponentPath = this.getPreviousComponentPath();
+      if (previousComponentPath !== '') {
+        window.hashHistory.push(previousComponentPath);
+      }
     }
   };
 
