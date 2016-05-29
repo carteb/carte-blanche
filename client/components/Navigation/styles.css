@@ -142,3 +142,31 @@
   border-left: 0.15rem solid rgb(167, 198, 255);
   border-top-color: transparent;
 }
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to bottom, #282830 0%,#26262e 100%);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+  height: 1.5em;
+}
+
+.footerItem {
+  width: 50%;
+  border: none;
+  background-color: transparent;
+  height: 100%;
+  font-size: 1em;
+  color: rgba(255, 255, 255, 0.5);
+  padding: 0;
+  cursor: pointer;
+  padding: 0;
+  border-right: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+.footerItem:hover {
+  color: rgba(255, 255, 255, 0.75);
+}

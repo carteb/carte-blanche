@@ -152,6 +152,11 @@ class Navigation extends React.Component {
         <div className={styles.list}>
           {this.renderComponents()}
         </div>
+        <div className={styles.footer}>
+          {/* &#8984; &#8679; / &#8963; &#8679; */}
+          <button className={styles.footerItem}>&#8984;</button>
+          <button className={styles.footerItem}>i</button>
+        </div>
       </div>
     );
   }
