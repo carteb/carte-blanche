@@ -1,11 +1,9 @@
 .root {
   box-sizing: border-box;
   width: 38%;
-  text-align: left;
-  float: left;
-  height: 50px;
   /* background is useful for css debugging */
   /*background-color: #bde2d7;*/
+  float: left;
 }
 
 .line {
