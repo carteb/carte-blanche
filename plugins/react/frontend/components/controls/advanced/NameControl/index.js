@@ -4,7 +4,7 @@ import Row from '../../../form/Grid/Row';
 import LeftColumn from '../../../form/Grid/LeftColumn';
 import RightColumn from '../../../form/Grid/RightColumn';
 import AtriumInput from '../../../form/AtriumInput';
-
+import Label from '../../../form/Label';
 import randomValue from './randomValue';
 
 const NameControl = (props) => {
@@ -12,7 +12,10 @@ const NameControl = (props) => {
   return (
     <Row>
       <LeftColumn>
-        {label} {secondaryLabel}
+        <Label
+          type={secondaryLabel}
+          propKey={label}
+        />
       </LeftColumn>
       <RightColumn>
         <div style={{ padding: '0 0.5em' }}>

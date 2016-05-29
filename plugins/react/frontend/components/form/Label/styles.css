@@ -1,0 +1,15 @@
+.root {
+  margin-left: 1rem;
+}
+
+.type {
+  font-size: 0.6rem;
+  margin-bottom: 0.4rem;
+  color: #888;
+}
+
+.propKey {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
