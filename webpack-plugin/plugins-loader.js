@@ -57,7 +57,6 @@ module.exports = function pluginsLoader(source) {
     .then((plugins) => { // eslint-disable-line arrow-body-style
       // Get the component data from each plugin
       return plugins
-        .filter((plugin) => plugin.frontendData !== undefined)
         .map((plugin) => {
           // Execute the default export of the plugin frontend module
           const frontendCode = `function() {
