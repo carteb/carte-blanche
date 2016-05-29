@@ -69,7 +69,7 @@ const Grid = () => (
           </div>
         </div>
       </div>
-      {/*<div className={styles.prop}>
+      <div className={styles.prop}>
         <div className={styles.leftPart}>
           <div className={styles.leftChild}>
             Left
@@ -80,7 +80,7 @@ const Grid = () => (
             Right
           </div>
         </div>
-      </div>*/}
+      </div>
     </div>
   </div>
 );
