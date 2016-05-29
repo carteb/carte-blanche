@@ -25,7 +25,6 @@ class App extends React.Component {
     // Use either which or keyCode, depending on browser support
     const keyCode = evt.which || evt.keyCode;
     if (keyCode === KeyCodes.ESC) {
-      console.log('KEYPRESS CLIENT');
       // If the ESC key was pressed, toggle the menu
       this.toggleMenu();
     }

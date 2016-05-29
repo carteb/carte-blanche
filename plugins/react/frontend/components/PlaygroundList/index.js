@@ -103,11 +103,9 @@ class PlaygroundList extends Component {
     if (keyCode === KeyCodes.ESC) {
       // If the ESC key was pressed, close the modal
       if (this.state.customMetadataEditMode) {
-        console.log('KEYPRESS PLUGIN');
         evt.stopPropagation();
         this.stopCustomMetadataEditMode();
       } else if (this.state.variationEditMode) {
-        console.log('KEYPRESS PLUGIN');
         evt.stopPropagation();
         this.stopVariationEditMode();
       }
