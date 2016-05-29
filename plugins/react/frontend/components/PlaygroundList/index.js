@@ -19,9 +19,9 @@ import variationsToProps from '../../utils/variationsToProps';
 import codeToCustomMetadata from '../../utils/codeToCustomMetadata';
 import customMetadataToCode from '../../utils/customMetadataToCode';
 import addDataToVariation from '../../utils/addDataToVariation';
-import KeyCodes from '../../utils/keycodes';
 // Shared Utilities between ReactPlugin and Client
 import getVariationPathFromComponentPath from '../../../../../utils/getVariationPathFromComponentPath'; // eslint-disable-line max-len
+import KeyCodes from '../../../../../utils/keycodes';
 import getComponentNameFromPath from '../../../../../utils/getComponentNameFromPath';
 import getStylingNodes from '../../../../../utils/getStylingNodes';
 
