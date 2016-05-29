@@ -26,7 +26,7 @@ const ArrayControl = (props) => {
   };
 
   // override propTypeData. make sure required is set to true
-  const requiredPropTypeData = Object.assign({}, propTypeData, { required: true });
+  const requiredPropTypeData = { ...propTypeData, required: true };
   const addItem = () => ({ value: [...value || [], first(ArrayControl.randomValue(requiredPropTypeData))] }); // eslint-disable-line max-len
   const removeItem = () => ({ value: size > 0 ? [...value.slice(0, size - 1)] : [] });
 
