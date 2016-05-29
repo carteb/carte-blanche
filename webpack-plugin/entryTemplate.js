@@ -1,6 +1,6 @@
 'use strict'; // eslint-disable-line strict
 
-// Add out component to window.__STYLEGUIDE_PLUGIN_COMPONENTS_DO_NOT_TOUCH__
+// Add our component to window.STYLEGUIDE_PLUGIN_CLIENT_API
 // so the styleguide client can pick them up
 window.STYLEGUIDE_PLUGIN_CLIENT_API.loadComplete('%%path%%', {
   name: '%%name%%',

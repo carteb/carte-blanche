@@ -15,6 +15,7 @@ import isArray from 'lodash/isArray';
 let id = -1;
 /**
  * Instantiates the plugin
+ *
  * @param {Object} options           The options
  * @param {String} options.include   A list of glob patterns that matches the components
  * @param {String} options.dest      The destination the styleguide should be emitted at
@@ -41,19 +42,20 @@ function StyleguidePlugin(options) {
 }
 
 /**
- * Gets the cache of a compiler
+ * Gets the cache of a plugin instance from the webpack compiler
  */
 StyleguidePlugin.prototype.getCache = function getCache(compiler) {
-  // Attach a cache to the compile if not present
+  // Attach a cache to the compilation if not yet present
   if (!compiler.styleguideCache) {
     compiler.styleguideCache = {}; // eslint-disable-line no-param-reassign
   }
 
-  // Create a cache for this instance
+  // Create a cache for this plugin instance if none exists yet
   if (!compiler.styleguideCache[this.id]) {
     compiler.styleguideCache[this.id] = {}; // eslint-disable-line no-param-reassign
   }
 
+  // Return the cache for this plugin instance
   return compiler.styleguideCache[this.id];
 };
 
@@ -70,27 +72,27 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
 
   // Create the cache for this instace of the compiler
   const cache = this.getCache(compiler);
+  // Create the loader request that each component will go through
   const loaderRequest = `${require.resolve('./loader.js')}?${this.id}`;
 
   compiler.plugin('normal-module-factory', (nmf) => {
-    nmf.plugin('after-resolve', (data, callback) => {
-      // Once the loader is already in loaders bail out and don't inject it again
+    nmf.plugin('after-resolve', (data, callback) => { // eslint-disable-line consistent-return
+      // Once the loader is already prefixed don't prefix it again
       if (data.loaders.indexOf(loaderRequest) >= 0) {
         return callback(null, data);
       }
 
-      // Load all files hat are matched by the directory glob specified in
-      // options.include with the loader in ./loader.js
-      // (minimatch checks if a path matches a glob pattern)
+      // Check if the current file matches the directory glob specified in
+      // options.include. (minimatch checks if a path matches a glob pattern)
       const matched = some(this.options.include, (pattern) => (
         minimatch(path.relative(compiler.context, data.userRequest), pattern)
       ));
+      // If the file matches, load it with the loader in ./loader.js
       if (matched) {
         data.loaders.unshift(loaderRequest);
       }
 
       callback(null, data);
-      return undefined;
     });
   });
 

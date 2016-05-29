@@ -17,7 +17,7 @@ client
 examples        # The Example Apps
 └── dev         # Example used for Plugin Development
 plugin          # The Plugin itself
-├── component-loader.js
+├── entry-loader.js
 ├── entry.js
 ├── loader.js
 └── styleguide-plugin.js

@@ -1,4 +1,11 @@
+/**
+ * Every component is run through this loader, and the plugins and data specified by
+ * plugin developers are properly generated and emitted
+ *
+ * @param  {String} source The raw, unchanged source code of the component
+ */
 module.exports = function pluginsLoader(source) {
+  // Flag this loader as cacheable to webpack
   this.cacheable();
 
   const pluginPromises = [];
@@ -24,7 +31,7 @@ module.exports = function pluginsLoader(source) {
     }));
   }
 
-   // Make the data an object so plugins can append info to it
+   // Pass the source code of the component to the plugins
   const data = { source };
 
   // Trigger events for styleguide child plugins
