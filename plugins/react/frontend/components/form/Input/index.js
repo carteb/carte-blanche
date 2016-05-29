@@ -27,6 +27,7 @@ class Input extends Component { // eslint-disable-line react/prefer-stateless-fu
 Input.propTypes = {
   onChange: PropTypes.func.isRequired,
   value: PropTypes.any,
+  type: PropTypes.oneOf(['text', 'number']),
   groupType: PropTypes.oneOf(['left', 'none']),
 };
 

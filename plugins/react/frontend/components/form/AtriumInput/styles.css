@@ -54,7 +54,7 @@
 }
 
 .settingsContent {
-  padding: 1em 4em;
+  padding: 1em 1em;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
