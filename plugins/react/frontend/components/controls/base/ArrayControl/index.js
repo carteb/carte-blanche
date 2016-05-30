@@ -65,7 +65,7 @@ class ArrayControl extends React.Component {
           />
         </LeftColumn>
         <RightColumn>
-          <div style={{ padding: '0 0.5em', textAlign: 'right' }}>
+          <div style={{ padding: '0 0.5rem', textAlign: 'right' }}>
             {hasSettings && <Dropdown
               active={this.state.settingsActive}
             >

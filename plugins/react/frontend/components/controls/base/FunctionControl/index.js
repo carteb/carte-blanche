@@ -1,19 +1,32 @@
 /**
- * DummyControl
- *
- * Renders an information field mentioning that this property can't be generated.
+ * FunctionControl
  */
 
 import React from 'react';
+import Row from '../../../form/Grid/Row';
+import LeftColumn from '../../../form/Grid/LeftColumn';
+import RightColumn from '../../../form/Grid/RightColumn';
+import Label from '../../../form/Label';
+import styles from './styles.css';
 
-const FunctionControl = ({ label, secondaryLabel }) => (
-  <div>
-    {label} - {secondaryLabel} - function
-  </div>
+const FunctionControl = ({ label, secondaryLabel, nestedLevel }) => (
+  <Row>
+    <LeftColumn nestedLevel={nestedLevel}>
+      <Label
+        type={secondaryLabel}
+        propKey={label}
+      />
+    </LeftColumn>
+    <RightColumn>
+      <div className={styles.info}>
+        {'function() { console.log(\'Run\') }'}
+      </div>
+    </RightColumn>
+  </Row>
 );
 
 FunctionControl.randomValue = () => () => {
-  console.log('executed') // eslint-disable-line
+  console.log('Run') // eslint-disable-line
 };
 
 export default FunctionControl;

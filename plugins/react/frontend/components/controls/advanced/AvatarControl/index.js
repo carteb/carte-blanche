@@ -17,7 +17,7 @@ const AvatarControl = (props) => {
         />
       </LeftColumn>
       <RightColumn>
-        <div style={{ padding: '0 0.5em' }}>
+        <div style={{ padding: '0 0.5rem' }}>
           <AtriumInput
             value={value}
             fallbackValue=""
