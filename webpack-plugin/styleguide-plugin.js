@@ -7,8 +7,9 @@
 
 import fs from 'fs';
 import path from 'path';
-import isArray from 'lodash/isArray';
 import ExtraEntryWebpackPlugin from 'extra-entry-webpack-plugin';
+
+import validateOptions from './validateOptions';
 
 let id = -1;
 /**
@@ -22,18 +23,9 @@ let id = -1;
 function StyleguidePlugin(options) {
   this.id = (++id);
   this.options = options || {};
-
-  // Assert that the include option was specified
-  if (!this.options.componentRoot) {
-    throw new Error(
-      'You need to specify where your components are in the "componentRoot" option!\n\n'
-    );
-  }
-
-  // Assert that the plugins option is an array if specified
-  if (this.options.plugins && !isArray(this.options.plugins)) {
-    throw new Error('The "plugins" option needs to be an array!\n\n');
-  }
+  // Validate that the options passed in are well formatted
+  // Please note that this throws errors and halts execution if not!
+  validateOptions(this.options);
 }
 
 /**
@@ -64,20 +56,71 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
     outputName: userBundleFileName,
   }));
 
-  const styleguideAssets = {
-    'index.html': fs.readFileSync(path.resolve(__dirname, './assets/client.html')),
-    'client-bundle.js': fs.readFileSync(path.resolve(__dirname, './assets/client-bundle.js')),
-    'client-bundle.css': fs.readFileSync(path.resolve(__dirname, './assets/main.css')),
+  // Default the paths of the client files to our own client, set output filenames
+  const clientFiles = {
+    script: {
+      inputPath: './assets/client-bundle.js',
+      outputFilename: 'client-bundle.js',
+      outputFile: null,
+    },
+    styles: {
+      inputPath: './assets/main.css',
+      outputFilename: 'client-bundle.css',
+      outputFile: null,
+    },
+    markup: {
+      inputPath: './assets/client.html',
+      outputFilename: 'index.html',
+      outputFile: null,
+    },
   };
+
+  // If we're using our default client, use the path of the plugin to find
+  // the client files
+  let basepath = __dirname;
+  if (this.options.client) {
+    // Set the basepath to the current working directory when users pass in
+    // different files they don't have to make the path absolute in their config
+    basepath = process.cwd();
+    // Iterate over the paths to the files, setting them either to the option
+    // the user passed or to false if none was specified. That way, if the user
+    // specifies anything, our client files are completely overriden!
+    Object.keys(clientFiles).forEach((key) => {
+      clientFiles[key].inputPath = this.options.client[key] || false;
+    });
+  }
+
+  // Get the files that make up the client
+  Object.keys(clientFiles)
+    .filter((key) => clientFiles[key].inputPath !== false)
+    .forEach((key) => {
+      const absolutePathToFile = path.resolve(basepath, clientFiles[key].inputPath);
+      // If fs.readFileSync throws, we assume the file doesn't exist and tell that
+      // to the user
+      try {
+        clientFiles[key].outputFile = fs.readFileSync(absolutePathToFile);
+      } catch (err) {
+        throw new Error(
+          `There is no file at "${absolutePathToFile}", fix your "client.${key}" option!\n\n`
+        );
+      }
+    });
 
   compiler.plugin('emit', (compilation, callback) => {
     // Emit styleguide assets
-    Object.keys(styleguideAssets).forEach((filename) => {
-      compilation.assets[path.join(dest, filename)] = { // eslint-disable-line no-param-reassign
-        source: () => styleguideAssets[filename],
-        size: () => styleguideAssets[filename].length,
-      };
-    });
+    Object.keys(clientFiles)
+      // Filter out all the assets that don't access
+      .filter((fileType) => clientFiles[fileType].outputFile !== null)
+      .forEach((fileType) => {
+        // Combine the output filename from the dest option and the filename
+        const absoluteOutputFilename = path.join(dest, clientFiles[fileType].outputFilename);
+        // Emit the file to webpack
+        compilation.assets[absoluteOutputFilename] = { // eslint-disable-line no-param-reassign
+          source: () => clientFiles[fileType].outputFile,
+          // Webpack needs the size for… something
+          size: () => clientFiles[fileType].outputFile.length,
+        };
+      });
     callback();
   });
 
