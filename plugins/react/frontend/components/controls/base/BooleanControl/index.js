@@ -5,33 +5,38 @@
  */
 
 import React from 'react';
-import Select from '../../../common/Select';
 import randomValue from './randomValue';
+import Row from '../../../form/Grid/Row';
+import LeftColumn from '../../../form/Grid/LeftColumn';
+import RightColumn from '../../../form/Grid/RightColumn';
+import AtriumInput from '../../../form/AtriumInput';
+import Label from '../../../form/Label';
+import BooleanInput from '../../../form/BooleanInput';
 
 const BooleanControl = (props) => {
   const { label, value, onUpdate, secondaryLabel } = props;
   return (
-    <Select
-      label={label}
-      secondaryLabel={secondaryLabel}
-      onChange={(event) => {
-        // Need to eval, because we're getting 'true' and 'false' (strings)
-        // instead of true and false (booleans) here
-        const newValue = eval(event.target.value); // eslint-disable-line no-eval
-        return onUpdate({ value: newValue });
-      }}
-      value={value}
-      options={[
-        {
-          value: true,
-          label: 'true',
-        }, {
-          value: false,
-          label: 'false',
-        },
-      ]}
-      onRandomClick={() => onUpdate({ value: BooleanControl.randomValue(props) })}
-    />
+    <Row>
+      <LeftColumn>
+        <Label
+          type={secondaryLabel}
+          propKey={label}
+        />
+      </LeftColumn>
+      <RightColumn>
+        <div style={{ padding: '0 0.5em' }}>
+          <AtriumInput
+            value={value}
+            fallbackValue=""
+            onChange={onUpdate}
+            hasRandomButton
+            hasSettings
+            inputComponent={BooleanInput}
+            onRandomButtonClick={() => onUpdate({ value: BooleanControl.randomValue(props) })}
+          />
+        </div>
+      </RightColumn>
+    </Row>
   );
 };
 
