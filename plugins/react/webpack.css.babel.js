@@ -13,6 +13,7 @@ module.exports = {
     loaders: [
       {
         test: /\.css$/,
+        // eslint-disable-next-line max-len
         loader: ExtractTextPlugin.extract('style-loader', 'css-loader?modules&importLoaders=1&localIdentName=atriumReactPlugin__[local]__[hash:base64:5]!postcss-loader'),
       },
     ],
