@@ -30,7 +30,15 @@ class FlowObjectControl extends React.Component {
   }
 
   render() {
-    const { label, propTypeData, value, onUpdate, nestedLevel, secondaryLabel } = this.props;
+    const {
+      label,
+      secondaryLabel,
+      propTypeData,
+      value,
+      onUpdate,
+      nestedLevel,
+      required,
+    } = this.props;
 
     const hasSettings = true;
 
@@ -58,11 +66,12 @@ class FlowObjectControl extends React.Component {
             >
               <BaseSettings onChange={onUpdate} />
             </Dropdown>}
-            <SettingsButton
+            {!required && <SettingsButton
               groupType="left"
               onClick={this.onToggleSettings}
-            />
+            />}
             <RandomButton
+              groupType={required ? 'none' : 'right'}
               onClick={() => onUpdate({ value: FlowObjectControl.randomValue(propTypeData) })}
             />
           </div>

@@ -37,6 +37,7 @@ class FlowArrayControl extends React.Component {
       propTypeData,
       nestedLevel,
       secondaryLabel,
+      required,
     } = this.props;
 
     const hasSettings = true;
@@ -71,12 +72,12 @@ class FlowArrayControl extends React.Component {
             >
               <BaseSettings onChange={onUpdate} />
             </Dropdown>}
-            <SettingsButton
-              groupType={'left'}
+            {!required && <SettingsButton
+              groupType="left"
               onClick={this.onToggleSettings}
-            />
+            />}
             <Button
-              groupType="center"
+              groupType={required ? 'left' : 'center'}
               onClick={() => onUpdate(removeItem())}
               disabled={size <= 0}
             >

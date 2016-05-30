@@ -32,7 +32,15 @@ class ObjectControl extends React.Component {
   }
 
   render() {
-    const { label, secondaryLabel, propTypeData, value, onUpdate, nestedLevel } = this.props;
+    const {
+      label,
+      secondaryLabel,
+      propTypeData,
+      value,
+      onUpdate,
+      nestedLevel,
+      required,
+    } = this.props;
 
     const hasSettings = true;
 
@@ -63,11 +71,12 @@ class ObjectControl extends React.Component {
             >
               <BaseSettings onChange={onUpdate} />
             </Dropdown>}
-            <SettingsButton
+            {!required && <SettingsButton
               groupType="left"
               onClick={this.onToggleSettings}
-            />
+            />}
             <RandomButton
+              groupType={required ? 'none' : 'right'}
               onClick={() => onUpdate({ value: ObjectControl.randomValue(propTypeData) })}
             />
           </div>

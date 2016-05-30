@@ -3,8 +3,8 @@ import React from 'react';
 import Button from '../Button';
 import styles from './styles.css';
 
-const RandomButton = (props) => (
-  <Button {...props} groupType="right">
+const RandomButton = ({ groupType = 'right', ...otherProps }) => (
+  <Button {...otherProps} groupType={groupType}>
     <svg
       className={styles.svg}
       width="16px"

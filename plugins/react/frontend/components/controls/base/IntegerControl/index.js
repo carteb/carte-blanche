@@ -16,7 +16,7 @@ import isUndefined from 'lodash/isUndefined';
 import isNull from 'lodash/isNull';
 
 const IntegerControl = (props) => {
-  const { label, value, onUpdate, secondaryLabel, nestedLevel } = props;
+  const { label, value, onUpdate, secondaryLabel, nestedLevel, required } = props;
   const onChange = (data) => {
     const val = data.value;
     const parsedValue = isUndefined(val) || isNull(val) ? val : parseInt(val, 10);
@@ -37,7 +37,7 @@ const IntegerControl = (props) => {
             fallbackValue={0}
             onChange={onChange}
             hasRandomButton
-            hasSettings
+            hasSettings={!required}
             type="number"
             onRandomButtonClick={() => onUpdate({ value: IntegerControl.randomValue(props) })}
           />

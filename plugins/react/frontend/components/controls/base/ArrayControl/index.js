@@ -33,10 +33,11 @@ class ArrayControl extends React.Component {
     const {
       label,
       secondaryLabel,
-      onUpdate,
-      value,
       propTypeData,
+      value,
+      onUpdate,
       nestedLevel,
+      required,
     } = this.props;
 
     const hasSettings = true;
@@ -71,12 +72,12 @@ class ArrayControl extends React.Component {
             >
               <BaseSettings onChange={onUpdate} />
             </Dropdown>}
-            <SettingsButton
-              groupType={'left'}
+            {!required && <SettingsButton
+              groupType="left"
               onClick={this.onToggleSettings}
-            />
+            />}
             <Button
-              groupType="center"
+              groupType={required ? 'left' : 'center'}
               onClick={() => onUpdate(removeItem())}
               disabled={size <= 0}
             >
