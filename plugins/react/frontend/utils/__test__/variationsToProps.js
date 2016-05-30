@@ -364,7 +364,7 @@ describe('variationsToProps', () => {
 };`,
       };
       const parsedVariations = variationsToProps(variations);
-      expect(parsedVariations.variationA.err).to.exist();
+      expect(parsedVariations.variationA.err).to.exist; // eslint-disable-line no-unused-expressions
       expect(parsedVariations.variationA.err)
         .to.equal('ReferenceError: undefinedVariable is not defined');
     });
@@ -392,7 +392,7 @@ describe('variationsToProps', () => {
         },
       };
       const parsedVariations = variationsToProps(variations);
-      expect(parsedVariations.variationA.err).to.exist();
+      expect(parsedVariations.variationA.err).to.exist; // eslint-disable-line no-unused-expressions
       expect(parsedVariations.variationA.err)
         .to.equal('ReferenceError: undefinedVariable is not defined');
       expect(parsedVariations.variationB).to.deep.equal(expectedVariationB);
