@@ -39,6 +39,14 @@ function ReactPlugin(options) {
     );
   }
 }
+
+/**
+ * Kill a Node.js process
+ */
+function killProcess(proc) {
+  proc.kill('SIGINT');
+}
+
 /**
  * Initializes the plugin, called after the main StyleguidePlugin function above
  */
@@ -55,10 +63,20 @@ ReactPlugin.prototype.apply = function apply(compiler) {
   const variationBasePath = path.join(projectBasePath, options.variationFolderName);
   options.variationBasePath = variationBasePath;
 
-  fork(path.resolve(__dirname, './server/run.js'), [
+  const server = fork(path.resolve(__dirname, './server/run.js'), [
     projectBasePath, // process.argv[2]
     JSON.stringify(options), // process.argv[3]
   ]);
+
+  // Prevent the process from exiting immediately
+  process.stdin.resume();
+
+  // When the plugin exits for any reason, kill the forked Node.js process
+  // with the server. (exit = process.exit(), SIGINT = CTRL+C, uncaughtException =
+  // error in the code)
+  process.on('exit', killProcess.bind(null, server));
+  process.on('SIGINT', killProcess.bind(null, server));
+  process.on('uncaughtException', killProcess.bind(null, server));
 
   compiler.plugin('compilation', (compilation) => {
     // Expose the react parse result to all other styleguide plugins
