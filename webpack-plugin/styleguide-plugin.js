@@ -8,6 +8,8 @@
 import fs from 'fs';
 import path from 'path';
 import isArray from 'lodash/isArray';
+import isString from 'lodash/isString';
+import isPlainObject from 'lodash/isPlainObject';
 import ExtraEntryWebpackPlugin from 'extra-entry-webpack-plugin';
 
 let id = -1;
@@ -28,6 +30,40 @@ function StyleguidePlugin(options) {
     throw new Error(
       'You need to specify where your components are in the "componentRoot" option!\n\n'
     );
+  }
+
+  // Assert that the client option is properly formatted
+  if (this.options.client) {
+    // Format the client option if only a string was passed in, assuming it is the
+    // path to the markup file that was passed
+    if (isString(this.options.client)) {
+      this.options.client = {
+        markup: this.options.client,
+      };
+    // If the client option is neither a string nor an object, something is wrong
+    } else if (!isPlainObject(this.options.client)) {
+      throw new Error(
+        'The "client" option needs to be an object!\n\n'
+      );
+    }
+
+    // The users need to replace the markup of the client if they replace anything
+    if (!this.options.client.markup) {
+      throw new Error(
+        'The "client.markup" option needs to be specified if you want to ' +
+        'render a custom client!\n\n'
+      );
+    }
+    // If the client script, styles or markup property is not a string, something is wrong
+    if (!isString(this.options.client.markup)) {
+      throw new Error('The "client.markup" option needs to be a path to a file as a string!\n\n');
+    }
+    if (this.options.client.styles && !isString(this.options.client.script)) {
+      throw new Error('The "client.script" option needs to be a path to a file as a string!\n\n');
+    }
+    if (this.options.client.styles && !isString(this.options.client.styles)) {
+      throw new Error('The "client.styles" option needs to be a path to a file as a string!\n\n');
+    }
   }
 
   // Assert that the plugins option is an array if specified
@@ -64,11 +100,49 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
     outputName: userBundleFileName,
   }));
 
-  const styleguideAssets = {
-    'index.html': fs.readFileSync(path.resolve(__dirname, './assets/client.html')),
-    'client-bundle.js': fs.readFileSync(path.resolve(__dirname, './assets/client-bundle.js')),
-    'client-bundle.css': fs.readFileSync(path.resolve(__dirname, './assets/main.css')),
+  // Default the paths of the client files to our own client
+  const clientFilePaths = {
+    script: './assets/client-bundle.js',
+    styles: './assets/main.css',
+    markup: './assets/client.html',
   };
+  // Map the output filenames
+  const outputFilename = {
+    script: 'client-bundle.js',
+    styles: 'client-bundle.css',
+    markup: 'index.html',
+  };
+
+  // If we're using our default client, use the path of the plugin to find
+  // the client files
+  let basepath = __dirname;
+  if (this.options.client) {
+    // Set the basepath to the current working directory when users pass in
+    // different files they don't have to make the path absolute in their config
+    basepath = process.cwd();
+    // Iterate over the paths to the files, setting them either to the option
+    // the user passed or to false if none was specified. That way, if the user
+    // specifies anything, our client files are completely overriden!
+    Object.keys(clientFilePaths).forEach((key) => {
+      clientFilePaths[key] = this.options.client[key] || false;
+    });
+  }
+  const styleguideAssets = {};
+  // Get the files that make up the client
+  Object.keys(clientFilePaths)
+    .filter((key) => clientFilePaths[key] !== false)
+    .forEach((key) => {
+      const absolutePathToFile = path.resolve(basepath, clientFilePaths[key]);
+      // If fs.readFileSync throws, we assume the file doesn't exist and tell that
+      // to the user
+      try {
+        styleguideAssets[outputFilename[key]] = fs.readFileSync(absolutePathToFile);
+      } catch (err) {
+        throw new Error(
+          `There is no file at "${absolutePathToFile}", fix your "client.${key}" option!\n\n`
+        );
+      }
+    });
 
   compiler.plugin('emit', (compilation, callback) => {
     // Emit styleguide assets
