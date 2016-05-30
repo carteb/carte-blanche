@@ -9,7 +9,7 @@
   height: 2.4em;
   margin-bottom: 0;
   overflow: hidden;
-  padding: 0 1em;
+  padding: 0 0.5em;
   text-align: center;
   touch-action: manipulation;
   vertical-align: middle;
@@ -20,6 +20,8 @@
   background-repeat: repeat-x;
   border: 1px solid #ccc;
   color: #777;
+
+  min-width: 30px;
 }
 
 .root:hover {
