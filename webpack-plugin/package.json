@@ -6,7 +6,7 @@
   "scripts": {
     "prebuild": "rimraf ./dist/*",
     "build": "BABEL_DISABLE_CACHE=1 BABEL_ENV=production NODE_ENV=production babel --ignore='node_modules' --out-dir='dist' . && npm run copy",
-    "copy": "ncp ./main.css ./dist/main.css & ncp ./entryTemplate.hbs ./dist/entryTemplate.hbs",
+    "copy": "ncp ./assets ./dist/assets",
     "prepublish": "npm run build"
   },
   "homepage": "https://github.com/pure-ui/styleguide",
