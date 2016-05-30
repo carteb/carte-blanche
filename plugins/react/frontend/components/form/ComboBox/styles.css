@@ -1,0 +1,23 @@
+.root {
+  display: flex;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.menu {
+  top: 2.2rem;
+  display: block;
+  list-style-type: none;
+  background: #FFF;
+  padding: 6px 0;
+  margin: 0;
+  position: absolute;
+  width: 100%;
+  z-index: 10000;
+  box-sizing: border-box;
+  border-radius: 2;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  border-top: 1px solid #f2f2f2;
+  /* Improve scrolling for mobile Safari */
+  -webkit-overflow-scrolling: touch;
+}

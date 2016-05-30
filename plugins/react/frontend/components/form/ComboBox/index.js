@@ -2,62 +2,34 @@
 
 import React, { Component, PropTypes } from 'react';
 import { injectStyles, removeAllStyles } from './inject-style';
-import unionClassNames from './union-class-names';
 import style from './styles';
 import ComboBoxItem from './ComboBoxItem';
+import Input from '../Input';
 import filter from 'lodash/filter';
 import isEmpty from 'lodash/isEmpty';
 import map from 'lodash/map';
 import uniqueId from 'lodash/uniqueId';
+import styles from './styles.css';
 
 /**
  * Update hover style for the specified styleId.
  *
- * @param styleId {string} - a unique id that exists as class attribute in the DOM
  * @param caretStyleId {string} - unique is assigned as class to caret span
  * @param props {object} - the components props optionally containing hoverStyle
  */
-function updatePseudoClassStyle(styleId, caretStyleId, props) {
-  const hoverStyle = {
-    ...style.hoverStyle,
-    ...props.hoverStyle,
-  };
-  const focusStyle = {
-    ...style.focusStyle,
-    ...props.focusStyle,
-  };
-  const disabledHoverStyle = {
-    ...style.disabledHoverStyle,
-    ...props.disabledHoverStyle,
-  };
+function updatePseudoClassStyle(caretStyleId) {
   const caretFocusStyle = {
     ...style.caretFocusStyle,
   };
 
-  const styles = [
-    {
-      id: styleId,
-      style: hoverStyle,
-      pseudoClass: 'hover',
-    },
-    {
-      id: styleId,
-      style: disabledHoverStyle,
-      pseudoClass: 'hover',
-      disabled: true,
-    },
-    {
-      id: styleId,
-      style: focusStyle,
-      pseudoClass: 'focus',
-    },
+  const legacyStyles = [
     {
       id: caretStyleId,
       style: caretFocusStyle,
       pseudoClass: 'focus',
     },
   ];
-  injectStyles(styles);
+  injectStyles(legacyStyles);
 }
 
 /**
@@ -78,7 +50,7 @@ export default class ComboBox extends Component {
 
   static propTypes = {
     options: PropTypes.array,
-    value: PropTypes.string,
+    value: PropTypes.any,
     placeholder: PropTypes.string,
     disabled: PropTypes.bool,
     onChange: PropTypes.func,
@@ -99,14 +71,12 @@ export default class ComboBox extends Component {
     caretToCloseStyle: PropTypes.object,
     disabledCaretToOpenStyle: PropTypes.object,
     maxOptions: PropTypes.number,
-    displayCaret: PropTypes.bool,
     filterFunction: PropTypes.func,
     'aria-label': PropTypes.string,
   };
 
   static defaultProps = {
     disabled: false,
-    displayCaret: false,
     'aria-label': 'ComboBox',
     filterFunction,
     tabIndex: 0,
@@ -159,9 +129,8 @@ export default class ComboBox extends Component {
    */
   componentWillMount() {
     const id = uniqueId();
-    this.styleId = `style-id${id}`;
     this.caretStyleId = `caretStyle-id${id}`;
-    updatePseudoClassStyle(this.styleId, this.caretStyleId, this.props);
+    updatePseudoClassStyle(this.caretStyleId, this.props);
   }
 
   componentWillReceiveProps(props) {
@@ -174,7 +143,7 @@ export default class ComboBox extends Component {
    * Remove a component's associated styles whenever it gets removed from the DOM.
    */
   componentWillUnmount() {
-    removeAllStyles([this.styleId, this.caretStyleId]);
+    removeAllStyles([this.caretStyleId]);
   }
 
   /**
@@ -196,10 +165,10 @@ export default class ComboBox extends Component {
   /**
    * Set focused state when element is focused.
    */
-  onChange = (event) => {
+  onChange = ({ value }) => {
     this.setState({
-      filteredOptions: ComboBox.filterOptions(event.target.value, this.props),
-      inputValue: event.target.value,
+      filteredOptions: ComboBox.filterOptions(value, this.props),
+      inputValue: value,
     });
   };
 
@@ -388,7 +357,6 @@ export default class ComboBox extends Component {
     };
 
     const placeHolder = this.props.placeholder;
-    const inputClassName = unionClassNames(this.props.className, this.styleId);
     const tabIndex = this.props.tabIndex ? this.props.tabIndex : '0';
 
     if (this.props.disabled) {
@@ -401,25 +369,23 @@ export default class ComboBox extends Component {
 
     // todo: Currently there are no different hover styles for caret, like select they are probably not really needed.
     let caretStyle;
-    if (this.props.displayCaret) {
-      if (this.props.disabled) {
-        caretStyle = {
-          ...style.caretToOpenStyle,
-          ...this.props.caretToOpenStyle,
-          ...style.disabledCaretToOpenStyle,
-          ...this.props.disabledCaretToOpenStyle,
-        };
-      } else if (this.state.isOpen) {
-        caretStyle = {
-          ...style.caretToCloseStyle,
-          ...this.props.caretToCloseStyle,
-        };
-      } else {
-        caretStyle = {
-          ...style.caretToOpenStyle,
-          ...this.props.caretToOpenStyle,
-        };
-      }
+    if (this.props.disabled) {
+      caretStyle = {
+        ...style.caretToOpenStyle,
+        ...this.props.caretToOpenStyle,
+        ...style.disabledCaretToOpenStyle,
+        ...this.props.disabledCaretToOpenStyle,
+      };
+    } else if (this.state.isOpen) {
+      caretStyle = {
+        ...style.caretToCloseStyle,
+        ...this.props.caretToCloseStyle,
+      };
+    } else {
+      caretStyle = {
+        ...style.caretToOpenStyle,
+        ...this.props.caretToOpenStyle,
+      };
     }
 
     const computedMenuStyle = (this.state.isOpen && !this.props.disabled && this.state.filteredOptions && this.state.filteredOptions.length > 0) ? menuStyle : { display: 'none' };
@@ -431,14 +397,13 @@ export default class ComboBox extends Component {
         style={wrapperStyle}
         aria-label={this.props['aria-label']}
         aria-disabled={this.props.disabled}
+        className={styles.root}
       >
-        <input
+        <Input
           disabled={this.props.disabled}
           aria-disabled={this.props.disabled}
           value={this.state.inputValue}
           placeholder={placeHolder}
-          style={inputStyle}
-          className={inputClassName}
           onChange={this.onChange}
           tabIndex={tabIndex}
           onBlur={this.onBlur}
@@ -454,6 +419,7 @@ export default class ComboBox extends Component {
         />
 
         <ul
+          className={styles.menu}
           style={computedMenuStyle}
           role="listbox"
           aria-expanded={this.state.isOpen}
