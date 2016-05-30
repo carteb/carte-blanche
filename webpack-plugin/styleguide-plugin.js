@@ -100,17 +100,20 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
     outputName: userBundleFileName,
   }));
 
-  // Default the paths of the client files to our own client
-  const clientFilePaths = {
-    script: './assets/client-bundle.js',
-    styles: './assets/main.css',
-    markup: './assets/client.html',
-  };
-  // Map the output filenames
-  const outputFilename = {
-    script: 'client-bundle.js',
-    styles: 'client-bundle.css',
-    markup: 'index.html',
+  // Default the paths of the client files to our own client, set output filenames
+  const clientFiles = {
+    script: {
+      input: './assets/client-bundle.js',
+      output: 'client-bundle.js',
+    },
+    styles: {
+      input: './assets/main.css',
+      output: 'client-bundle.css',
+    },
+    markup: {
+      input: './assets/client.html',
+      output: 'index.html',
+    },
   };
 
   // If we're using our default client, use the path of the plugin to find
@@ -123,20 +126,20 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
     // Iterate over the paths to the files, setting them either to the option
     // the user passed or to false if none was specified. That way, if the user
     // specifies anything, our client files are completely overriden!
-    Object.keys(clientFilePaths).forEach((key) => {
-      clientFilePaths[key] = this.options.client[key] || false;
+    Object.keys(clientFiles).forEach((key) => {
+      clientFiles[key].input = this.options.client[key] || false;
     });
   }
   const styleguideAssets = {};
   // Get the files that make up the client
-  Object.keys(clientFilePaths)
-    .filter((key) => clientFilePaths[key] !== false)
+  Object.keys(clientFiles)
+    .filter((key) => clientFiles[key].input !== false)
     .forEach((key) => {
-      const absolutePathToFile = path.resolve(basepath, clientFilePaths[key]);
+      const absolutePathToFile = path.resolve(basepath, clientFiles[key].input);
       // If fs.readFileSync throws, we assume the file doesn't exist and tell that
       // to the user
       try {
-        styleguideAssets[outputFilename[key]] = fs.readFileSync(absolutePathToFile);
+        styleguideAssets[clientFiles[key].output] = fs.readFileSync(absolutePathToFile);
       } catch (err) {
         throw new Error(
           `There is no file at "${absolutePathToFile}", fix your "client.${key}" option!\n\n`
@@ -146,10 +149,12 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
 
   compiler.plugin('emit', (compilation, callback) => {
     // Emit styleguide assets
-    Object.keys(styleguideAssets).forEach((filename) => {
-      compilation.assets[path.join(dest, filename)] = { // eslint-disable-line no-param-reassign
-        source: () => styleguideAssets[filename],
-        size: () => styleguideAssets[filename].length,
+    Object.keys(styleguideAssets).forEach((relativeOutputFilename) => {
+      // Combine the output filename from the dest option and the filename
+      const absoluteOutputFilename = path.join(dest, relativeOutputFilename);
+      compilation.assets[absoluteOutputFilename] = { // eslint-disable-line no-param-reassign
+        source: () => styleguideAssets[relativeOutputFilename],
+        size: () => styleguideAssets[relativeOutputFilename].length,
       };
     });
     callback();
