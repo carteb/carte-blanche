@@ -20,7 +20,7 @@ window.$INITIALIZE_COMPONENT_GUI = function initializeComponentGui(components) {
     <Route
       key={componentPath}
       path={componentPath}
-      component={() => <Plugins path={componentPath} componentData={component} />}
+      component={() => <Plugins componentPath={componentPath} componentData={component} />}
     />
   ));
 
