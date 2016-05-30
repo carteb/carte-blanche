@@ -3,14 +3,20 @@ import cloneDeep from 'lodash/cloneDeep';
 import range from 'lodash/range';
 import first from 'lodash/first';
 import randomValue from './randomValue';
-import Label from '../../../common/Label';
 import getControl from '../../../../utils/getControl';
 import ConstraintsForm from './ConstraintsForm';
-import objectControlStyles from '../ObjectControl/styles.css';
+import Row from '../../../form/Grid/Row';
+import LeftColumn from '../../../form/Grid/LeftColumn';
+import RightColumn from '../../../form/Grid/RightColumn';
+import Label from '../../../form/Label';
+import Button from '../../../form/Button';
+import RandomButton from '../../../form/RandomButton';
+import SettingsButton from '../../../form/SettingsButton';
 
 const ArrayControl = (props) => {
   const {
     label,
+    secondaryLabel,
     onUpdate,
     value,
     propTypeData,
@@ -34,38 +40,53 @@ const ArrayControl = (props) => {
   const control = getControl(propTypeData.value);
 
   return (
-    <div className={objectControlStyles.wrapper}>
-      <Label
-        text={label}
-        onRandomClick={() => onUpdate({ value: ArrayControl.randomValue(propTypeData) })}
-      />
-      {(size !== 0) && (
-        <div
-          className={
-            (isNested) ?
-            objectControlStyles.nestedControls :
-            objectControlStyles.wrapper
-          }
-          style={{
-            paddingLeft: '1rem',
-          }}
-        >
-          {rangeArray && rangeArray.map((index) => {
-            const newProps = {
-              key: index,
-              value: value[index],
-              onUpdate: (data) => onUpdateEntry(data.value, index),
-              isNested: true,
-            };
-            return cloneElement(control, newProps);
-          })}
+    <Row>
+      <LeftColumn>
+        <Label
+          type={secondaryLabel}
+          propKey={label}
+        />
+      </LeftColumn>
+      <RightColumn>
+        <div style={{ padding: '0 0.5em', textAlign: 'right' }}>
+          <SettingsButton
+            groupType={'left'}
+            onClick={() => onUpdate({ value: ArrayControl.randomValue(propTypeData) })}
+          />
+          <Button
+            groupType="center"
+            onClick={() => onUpdate(removeItem())}
+            disabled={size > 0}
+          >
+            -
+          </Button>
+          <Button
+            onClick={() => onUpdate(addItem())}
+            groupType="center"
+          >
+            +
+          </Button>
+          <RandomButton
+            onClick={() => onUpdate({ value: ArrayControl.randomValue(propTypeData) })}
+          />
         </div>
-      )}
-      <div>
-        <button onClick={() => onUpdate(addItem())}>+</button>
-        {size > 0 && <button onClick={() => onUpdate(removeItem())}>-</button>}
-      </div>
-    </div>
+      </RightColumn>
+      <Row>
+        {rangeArray && rangeArray.map((index) => {
+          const newProps = {
+            key: index,
+            value: value[index],
+            onUpdate: (data) => onUpdateEntry(data.value, index),
+            isNested: true,
+          };
+          return (
+            <div style={{ marginBottom: '1rem' }}>
+              {cloneElement(control, newProps)}
+            </div>
+          );
+        })}
+      </Row>
+    </Row>
   );
 };
 
