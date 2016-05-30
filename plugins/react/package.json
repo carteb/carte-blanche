@@ -52,7 +52,7 @@
     "clean": "rimraf dist/*",
     "build": "npm run clean && npm run build:js && npm run build:css",
     "build:js": "WEBPACK_CONFIG=$(pwd)/webpack.css.babel.js BABEL_DISABLE_CACHE=1 BABEL_ENV=production NODE_ENV=production babel --ignore node_modules,__test__ --out-dir='dist' .",
-    "build:css": "node ./concatCssFiles $(pwd) && rimraf lib-css",
+    "build:css": "node ./concatCSSFiles $(pwd) && rimraf lib-css",
     "prepublish": "npm run build"
   },
   "devDependencies": {
