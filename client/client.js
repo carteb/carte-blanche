@@ -16,19 +16,17 @@ import map from 'lodash/map';
 window.$INITIALIZE_COMPONENT_GUI = function initializeComponentGui(components) {
   // Generate a view per user component that renders the frontend part of the
   // plugins for each component
-  const routes = map(components, (component, componentPath) => {
-    return (
-      <Route
-        key={componentPath}
-        path={componentPath}
-        component={() => <Plugins path={componentPath} componentData={component} />}
-      />
-    );
-  });
+  const routes = map(components, (component, componentPath) => (
+    <Route
+      key={componentPath}
+      path={componentPath}
+      component={() => <Plugins path={componentPath} componentData={component} />}
+    />
+  ));
 
   ReactDOM.render(
     <Router history={hashHistory}>
-      <Route path="/" component={() => <App components={components} />}>
+      <Route path="/" component={(props) => <App {...props} components={components} />}>
         {routes}
       </Route>
     </Router>,

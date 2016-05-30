@@ -92,8 +92,10 @@ class Navigation extends React.Component {
   };
 
   renderSubNavigation = (componentPath) => {
+    // TODO FIXME
+    return null;
     if (this.props.activeComponentPath === componentPath) {
-      if (has(window.STYLEGUIDE_PLUGIN_CLIENT_API.cache, componentPath)) {
+      if (has(this.props.components, componentPath)) {
         const plugins = getPlugins(componentPath);
         return map(plugins, (plugin, pluginKey) => (
           <div key={pluginKey}>
@@ -125,7 +127,7 @@ class Navigation extends React.Component {
 
   renderComponents = () => (
     // Iterate through all components and generate a list
-    Object.keys(window.STYLEGUIDE_PLUGIN_CLIENT_API.scripts)
+    Object.keys(this.props.components)
       .map((componentPath) => {
         // Clean the component name
         const componentName = getComponentNameFromPath(componentPath);
@@ -158,7 +160,6 @@ class Navigation extends React.Component {
     const footerClassname = (
       shortcutHelpVisible || informationVisible
     ) ? styles.footerExpanded : styles.footer;
-    console.log(this.props.components);
     return (
       <div className={styles.drawer}>
         <IndexLink
@@ -175,7 +176,7 @@ class Navigation extends React.Component {
           onChange={this.setFilter}
         />
         <div className={styles.list}>
-          {/*{this.renderComponents()}*/}
+          {this.renderComponents()}
         </div>
         <div className={footerClassname}>
           {/* &#8984; &#8679; / &#8963; &#8679; */}
