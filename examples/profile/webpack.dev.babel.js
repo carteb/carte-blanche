@@ -1,7 +1,7 @@
 import path from 'path';
 import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import StyleguidePlugin from '../../webpack-plugin/styleguide-plugin';
+// import StyleguidePlugin from '../../webpack-plugin/styleguide-plugin';
 import autoprefixer from 'autoprefixer';
 
 export default {
@@ -17,7 +17,7 @@ export default {
     path.join(__dirname, './src/index.js'),
   ],
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
+    // new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
@@ -28,9 +28,9 @@ export default {
       inject: true,
       template: path.join(__dirname, './src/index.html'),
     }),
-    new StyleguidePlugin({
-      componentRoot: 'src/components',
-    }),
+    // new StyleguidePlugin({
+    //   componentRoot: 'src/components',
+    // }),
   ],
   module: {
     loaders: [
@@ -54,19 +54,21 @@ export default {
     ],
   },
   postcss: [autoprefixer({ browsers: ['last 2 versions'] })],
-  // It suppress error shown in console, so it has to be set to false.
-  quiet: false,
-  // It suppress everything except error, so it has to be set to false as well
-  // to see success build.
-  noInfo: false,
-  stats: {
-    // Config for minimal console.log mess.
-    assets: false,
-    colors: true,
-    version: false,
-    hash: false,
-    timings: false,
-    chunks: false,
-    chunkModules: false,
+  devServer: {
+    // It suppress error shown in console, so it has to be set to false.
+    quiet: false,
+    // It suppress everything except error, so it has to be set to false as well
+    // to see success build.
+    noInfo: false,
+    stats: {
+      // Config for minimal console.log mess.
+      assets: false,
+      colors: true,
+      version: false,
+      hash: false,
+      timings: false,
+      chunks: false,
+      chunkModules: false,
+    },
   },
 };

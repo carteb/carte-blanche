@@ -24,22 +24,4 @@ describe('<BooleanControl />', () => {
   it('should render secondary label prop', () => {
     expect(wrapper.text()).to.contain(secondaryLabel);
   });
-
-  it('should call onUpdate() when clicking on random', () => {
-    const clickBtn = wrapper.find('svg').first();
-    clickBtn.simulate('click');
-    sinon.assert.calledWith(onUpdate, sinon.match.hasOwn('value'));
-    onUpdate.reset();
-  });
-
-  it('should set the correct value', () => {
-    expect(wrapper.find('select').first().props().value).to.equal(true);
-  });
-
-  it('should call onUpdate() when changing selection', () => {
-    const select = wrapper.find('select').last();
-    select.simulate('change', { target: { value: false } });
-    sinon.assert.calledWith(onUpdate, { value: false });
-    onUpdate.reset();
-  });
 });

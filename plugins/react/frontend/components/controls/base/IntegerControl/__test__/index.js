@@ -13,7 +13,7 @@ let wrapper;
 
 describe('<IntegerControl />', () => {
   beforeEach(() => {
-    props = { label, onUpdate, value, isNested: false, secondaryLabel };
+    props = { label, onUpdate, value, nestedLevel: 0, secondaryLabel };
     wrapper = mount(<IntegerControl {...props} />);
   });
 

@@ -11,7 +11,7 @@ const renderControls = (
   metadataWithControls,
   globalComponentProps,
   setGlobalComponentProps,
-  isNested = false,
+  nestedLevel = 0,
 ) => {
   const updatePropertyValues = (path, value) => {
     const values = set(globalComponentProps, path, value);
@@ -24,7 +24,7 @@ const renderControls = (
       secondaryLabel: prop.controlType ? `${prop.controlType} (${prop.name})` : prop.name,
       value: get(globalComponentProps, keyPath),
       onUpdate: ({ value }) => updatePropertyValues(keyPath, value),
-      isNested,
+      nestedLevel,
     };
     return cloneElement(prop.control, props);
   });

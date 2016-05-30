@@ -51,6 +51,7 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
   }
 
   // Compile the client api
+  const userBundleFileName = path.join(dest, 'user-bundle.js');
   compiler.apply(new ExtraEntryWebpackPlugin({
     // Load the dynamic resolve loader with a placeholder file
     entry: `!!${require.resolve('./dynamic-resolve.js')}?${
@@ -60,7 +61,7 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
         context: compiler.context,
       })}!${require.resolve('./dynamic-resolve.js')}`,
     entryName: `Atrium [${this.id}]`,
-    outputName: path.join(dest, 'user-bundle.js'),
+    outputName: userBundleFileName,
   }));
 
   const styleguideAssets = {
@@ -79,15 +80,31 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
     });
     callback();
   });
+
+  // Don't add the styleguide chunk to html files
+  compiler.plugin('compilation', (compilation) =>
+    compilation.plugin('html-webpack-plugin-alter-chunks', (chunks) =>
+      chunks.filter((chunk) => chunk.files.indexOf(userBundleFileName) === -1)
+  ));
 };
 
 /**
  * Register the default plugins
  */
 StyleguidePlugin.prototype.registerDefaultPlugins = function registerDefaultPlugins(compiler) {
-  const ReactPlugin = require('atrium-react-plugin-beta'); // eslint-disable-line global-require
-  const reactPlugin = new ReactPlugin();
-  reactPlugin.apply(compiler);
+  let ReactPlugin = require('../plugins/react/plugin').default; // eslint-disable-line global-require, max-len
+  try {
+    const reactPlugin = new ReactPlugin();
+    reactPlugin.apply(compiler);
+  } catch (err) {
+    try {
+      ReactPlugin = require('atrium-react-plugin-beta').default; // eslint-disable-line global-require, import/no-unresolved, max-len
+      const reactPlugin = new ReactPlugin();
+      reactPlugin.apply(compiler);
+    } catch (ex) {
+      console.log('ERROR Installing default Styleguide plugins failed.', ex); // eslint-disable-line no-console,max-len
+    }
+  }
 };
 
 /**

@@ -7,23 +7,17 @@ import inputStyles from '../Input/styles.css';
 function Select(props) {
   return (
     <div
-      className={
-        (props.isNested) ?
-        inputStyles['wrapper--nested'] :
-        inputStyles.wrapper
-      }
+      className={inputStyles.wrapper}
     >
       {(props.secondaryLabel) && (
         <Label
           text={props.secondaryLabel}
-          isNested={props.isNested}
           onRandomClick={props.onRandomClick}
           secondary
         />
       )}
       <Label
         text={props.label}
-        isNested={props.isNested}
         onRandomClick={props.onRandomClick}
       />
       {/* TODO HANDLE UNDEFINED AND NULL */}

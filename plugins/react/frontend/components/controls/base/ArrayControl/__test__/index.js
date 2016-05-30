@@ -16,24 +16,18 @@ const propTypeData = {
     name: 'number',
   },
 };
-const isNested = false;
+const nestedLevel = 0;
 let props;
 let wrapper;
 
 describe('<ArrayControl />', () => {
   beforeEach(() => {
-    props = { label, onUpdate, value, propTypeData, isNested };
+    props = { label, onUpdate, value, propTypeData, nestedLevel };
     wrapper = mount(<ArrayControl {...props} />);
   });
 
   it('should render label prop', () => {
     expect(wrapper.text()).to.contain(label);
-  });
-
-  it('should call onUpdate()', () => {
-    const clickBtn = wrapper.find('svg').first();
-    clickBtn.simulate('click');
-    sinon.assert.calledWith(onUpdate, sinon.match.hasOwn('value'));
   });
 
   it('should render all values', () => {

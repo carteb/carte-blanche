@@ -11,7 +11,7 @@ import normalizeProps from './normalizeProps';
 import randomValue from './randomValue';
 import styles from '../ObjectControl/styles.css';
 
-const FlowObjectControl = ({ label, propTypeData, value, onUpdate, isNested }) => {
+const FlowObjectControl = ({ label, propTypeData, value, onUpdate, nestedLevel }) => {
   const updatePropertyValues = (values) => {
     onUpdate({ value: values });
   };
@@ -19,9 +19,9 @@ const FlowObjectControl = ({ label, propTypeData, value, onUpdate, isNested }) =
   const normalizedPropsWithControls = normalizeProps(propTypeData.signature.properties);
 
   let controlWrapperClassName = styles.nestedControls;
-  if (!label && isNested) {
+  if (!label && nestedLevel > 0) {
     controlWrapperClassName = styles['nestedDeeperThanOneLevel--without-label'];
-  } else if (isNested) {
+  } else if (nestedLevel > 0) {
     controlWrapperClassName = styles.nestedDeeperThanOneLevel;
   }
 
@@ -31,7 +31,7 @@ const FlowObjectControl = ({ label, propTypeData, value, onUpdate, isNested }) =
       {(label) && (
         <Label
           text={label}
-          isNested={isNested}
+          nestedLevel={nestedLevel + 1}
           onRandomClick={() => onUpdate({
             value: FlowObjectControl.randomValue(propTypeData),
           })}

@@ -1,14 +1,19 @@
 .root {
   box-sizing: border-box;
   width: 38%;
+  padding-left: 1rem;
   /* background is useful for css debugging */
   /*background-color: #bde2d7;*/
   float: left;
 }
 
 .line {
+  box-sizing: border-box;
   float: left;
   width: 10px;
   border-left: 1px solid grey;
-  margin-left: 10px;
+  margin-left: 0.3rem;
+
+  /* hack to make sure it spans the to the full height */
+  min-height: 52px;
 }

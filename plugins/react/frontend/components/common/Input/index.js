@@ -6,17 +6,11 @@ import objectControlStyles from '../../controls/base/ObjectControl/styles.css';
 
 function Input(props) {
   let wrapperClassname = objectControlStyles.wrapper;
-  if (!props.label && props.isNested) {
-    wrapperClassname = styles['wrapper--nested--without-label'];
-  } else if (!props.label) {
-    wrapperClassname = styles['wrapper--without-label'];
-  }
   return (
     <div className={wrapperClassname}>
       {(props.secondaryLabel) && (
         <Label
           text={props.secondaryLabel}
-          isNested={props.isNested}
           onRandomClick={props.onRandomClick}
           secondary
         />
@@ -24,7 +18,6 @@ function Input(props) {
       {(props.label) && (
         <Label
           text={props.label}
-          isNested={props.isNested}
           onRandomClick={props.onRandomClick}
         />
       )}
