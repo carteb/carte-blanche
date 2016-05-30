@@ -22,7 +22,6 @@ import addDataToVariation from '../../utils/addDataToVariation';
 // Shared Utilities between ReactPlugin and Client
 import {
   getComponentNameFromPath,
-  getStylingNodes,
   keycodes as KeyCodes,
   getVariationPathFromComponentPath,
 } from 'atrium-utils-beta';
@@ -396,7 +395,7 @@ class PlaygroundList extends Component {
 
     // Get all the styling of the components. These tags are injected by style-loader
     // and we can grab all of them and inject them into each iframe of the variations
-    const userStylingNodes = getStylingNodes();
+    const userStylingNodes = document.querySelectorAll('style');
 
     return (
       <div className={styles.wrapper}>
