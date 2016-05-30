@@ -46,7 +46,8 @@
     "whatwg-fetch": "^1.0.0"
   },
   "peerDependencies": {
-    "atrium-webpack-plugin-beta": "^0.0.0"
+    "atrium-webpack-plugin-beta": "^0.0.0",
+    "webpack": ">=1 <3"
   },
   "scripts": {
     "clean": "rimraf dist/*",
