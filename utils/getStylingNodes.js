@@ -1,5 +1,3 @@
-/* eslint-disable no-var, vars-on-top */
-
 var filter = require('lodash/filter');
 
 var NUMBER_OF_STYLE_TAGS_BY_INTERFACE = 0;

@@ -1,5 +1,5 @@
-import getVariationPathFromComponentPath from '../getVariationPathFromComponentPath';
-import { expect } from 'chai';
+var getVariationPathFromComponentPath = require('../getVariationPathFromComponentPath');
+var expect = require('chai').expect;
 
 describe('getVariationPathFromComponentPath', () => {
   describe('should strip path endings', () => {

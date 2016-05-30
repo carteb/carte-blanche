@@ -1,5 +1,3 @@
-/* eslint-disable no-var, vars-on-top */
-
 var getVariationPathFromComponentPath = require('./getVariationPathFromComponentPath');
 
 // Regexes

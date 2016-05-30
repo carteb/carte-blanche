@@ -1,0 +1,36 @@
+{
+  "name": "atrium-utils-beta",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint .",
+    "pretest": "npm run lint",
+    "test": "mocha __test__/*.js",
+    "prepublish": "npm run test"
+  },
+  "homepage": "https://github.com/pure-ui/styleguide",
+  "bugs": {
+    "url": "https://github.com/pure-ui/styleguide/issues"
+  },
+  "contributors": [
+    "Nik Graf <nik@nikgraf.com> (https://medium.com/@nikgraf)",
+    "Max Stoiber <contact@mxstbr.com> (http://mxstbr.com)",
+    "Jan Nicklas <j.nicklas@me.com> (https://twitter.com/jantimon)"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pure-ui/styleguide"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "lodash": "^4.13.1"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "eslint": "^2.11.0",
+    "eslint-config-airbnb-base": "^3.0.1",
+    "eslint-plugin-import": "^1.8.1",
+    "mocha": "^2.5.3"
+  }
+}
