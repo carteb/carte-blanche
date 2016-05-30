@@ -92,8 +92,11 @@ class Navigation extends React.Component {
   };
 
   renderSubNavigation = (componentPath) => {
+    // TODO FIXME
+    return null;
+    /* eslint-disable no-unreachable */
     if (this.props.activeComponentPath === componentPath) {
-      if (has(window.STYLEGUIDE_PLUGIN_CLIENT_API.cache, componentPath)) {
+      if (has(this.props.components, componentPath)) {
         const plugins = getPlugins(componentPath);
         return map(plugins, (plugin, pluginKey) => (
           <div key={pluginKey}>
@@ -121,11 +124,12 @@ class Navigation extends React.Component {
     }
 
     return null;
+    /* eslint-enable no-unreachable */
   };
 
   renderComponents = () => (
     // Iterate through all components and generate a list
-    Object.keys(window.STYLEGUIDE_PLUGIN_CLIENT_API.scripts)
+    Object.keys(this.props.components)
       .map((componentPath) => {
         // Clean the component name
         const componentName = getComponentNameFromPath(componentPath);

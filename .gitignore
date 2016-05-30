@@ -5,7 +5,9 @@ npm-debug.log
 npm-debug.log.*
 dist
 stats.json
-webpack-plugin/client-bundle.js
-webpack-plugin/main.css
+webpack-plugin/assets/client-bundle.js
+webpack-plugin/assets/main.css
+webpack-plugin/dist
+client/user-bundle.js
 
 examples/**/variations/

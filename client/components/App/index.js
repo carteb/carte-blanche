@@ -116,6 +116,7 @@ class App extends React.Component {
       <div className={styles.main}>
         <Navigation
           activeComponentPath={activeComponentPath}
+          components={this.props.components}
           location={this.props.location}
         />
         <div className={(!this.state.drawerVisible) ? styles.preview : styles.previewOpen}>

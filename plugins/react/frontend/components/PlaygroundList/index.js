@@ -20,10 +20,11 @@ import codeToCustomMetadata from '../../utils/codeToCustomMetadata';
 import customMetadataToCode from '../../utils/customMetadataToCode';
 import addDataToVariation from '../../utils/addDataToVariation';
 // Shared Utilities between ReactPlugin and Client
-import getVariationPathFromComponentPath from '../../../../../utils/getVariationPathFromComponentPath'; // eslint-disable-line max-len
-import KeyCodes from '../../../../../utils/keycodes';
-import getComponentNameFromPath from '../../../../../utils/getComponentNameFromPath';
-import getStylingNodes from '../../../../../utils/getStylingNodes';
+import {
+  getComponentNameFromPath,
+  keycodes as KeyCodes,
+  getVariationPathFromComponentPath,
+} from 'atrium-utils-beta';
 
 // Components
 import Playground from '../common/Playground';
@@ -394,7 +395,7 @@ class PlaygroundList extends Component {
 
     // Get all the styling of the components. These tags are injected by style-loader
     // and we can grab all of them and inject them into each iframe of the variations
-    const userStylingNodes = getStylingNodes();
+    const userStylingNodes = document.querySelectorAll('style');
 
     return (
       <div className={styles.wrapper}>

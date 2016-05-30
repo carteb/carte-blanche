@@ -1,5 +1,5 @@
-import getComponentNameFromPath from '../getComponentNameFromPath';
-import { expect } from 'chai';
+var getComponentNameFromPath = require('../getComponentNameFromPath');
+var expect = require('chai').expect;
 
 describe('getComponentNameFromPath', () => {
   describe('should strip prefixed paths', () => {
