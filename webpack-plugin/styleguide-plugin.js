@@ -7,10 +7,9 @@
 
 import fs from 'fs';
 import path from 'path';
-import isArray from 'lodash/isArray';
-import isString from 'lodash/isString';
-import isPlainObject from 'lodash/isPlainObject';
 import ExtraEntryWebpackPlugin from 'extra-entry-webpack-plugin';
+
+import validateOptions from './validateOptions';
 
 let id = -1;
 /**
@@ -24,52 +23,9 @@ let id = -1;
 function StyleguidePlugin(options) {
   this.id = (++id);
   this.options = options || {};
-
-  // Assert that the include option was specified
-  if (!this.options.componentRoot) {
-    throw new Error(
-      'You need to specify where your components are in the "componentRoot" option!\n\n'
-    );
-  }
-
-  // Assert that the client option is properly formatted
-  if (this.options.client) {
-    // Format the client option if only a string was passed in, assuming it is the
-    // path to the markup file that was passed
-    if (isString(this.options.client)) {
-      this.options.client = {
-        markup: this.options.client,
-      };
-    // If the client option is neither a string nor an object, something is wrong
-    } else if (!isPlainObject(this.options.client)) {
-      throw new Error(
-        'The "client" option needs to be an object!\n\n'
-      );
-    }
-
-    // The users need to replace the markup of the client if they replace anything
-    if (!this.options.client.markup) {
-      throw new Error(
-        'The "client.markup" option needs to be specified if you want to ' +
-        'render a custom client!\n\n'
-      );
-    }
-    // If the client script, styles or markup property is not a string, something is wrong
-    if (!isString(this.options.client.markup)) {
-      throw new Error('The "client.markup" option needs to be a path to a file as a string!\n\n');
-    }
-    if (this.options.client.styles && !isString(this.options.client.script)) {
-      throw new Error('The "client.script" option needs to be a path to a file as a string!\n\n');
-    }
-    if (this.options.client.styles && !isString(this.options.client.styles)) {
-      throw new Error('The "client.styles" option needs to be a path to a file as a string!\n\n');
-    }
-  }
-
-  // Assert that the plugins option is an array if specified
-  if (this.options.plugins && !isArray(this.options.plugins)) {
-    throw new Error('The "plugins" option needs to be an array!\n\n');
-  }
+  // Validate that the options passed in are well formatted
+  // Please note that this throws errors and halts execution if not!
+  validateOptions(this.options);
 }
 
 /**
@@ -103,16 +59,19 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
   // Default the paths of the client files to our own client, set output filenames
   const clientFiles = {
     script: {
-      input: './assets/client-bundle.js',
-      output: 'client-bundle.js',
+      inputPath: './assets/client-bundle.js',
+      outputFilename: 'client-bundle.js',
+      outputFile: null,
     },
     styles: {
-      input: './assets/main.css',
-      output: 'client-bundle.css',
+      inputPath: './assets/main.css',
+      outputFilename: 'client-bundle.css',
+      outputFile: null,
     },
     markup: {
-      input: './assets/client.html',
-      output: 'index.html',
+      inputPath: './assets/client.html',
+      outputFilename: 'index.html',
+      outputFile: null,
     },
   };
 
@@ -127,19 +86,19 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
     // the user passed or to false if none was specified. That way, if the user
     // specifies anything, our client files are completely overriden!
     Object.keys(clientFiles).forEach((key) => {
-      clientFiles[key].input = this.options.client[key] || false;
+      clientFiles[key].inputPath = this.options.client[key] || false;
     });
   }
-  const styleguideAssets = {};
+
   // Get the files that make up the client
   Object.keys(clientFiles)
-    .filter((key) => clientFiles[key].input !== false)
+    .filter((key) => clientFiles[key].inputPath !== false)
     .forEach((key) => {
-      const absolutePathToFile = path.resolve(basepath, clientFiles[key].input);
+      const absolutePathToFile = path.resolve(basepath, clientFiles[key].inputPath);
       // If fs.readFileSync throws, we assume the file doesn't exist and tell that
       // to the user
       try {
-        styleguideAssets[clientFiles[key].output] = fs.readFileSync(absolutePathToFile);
+        clientFiles[key].outputFile = fs.readFileSync(absolutePathToFile);
       } catch (err) {
         throw new Error(
           `There is no file at "${absolutePathToFile}", fix your "client.${key}" option!\n\n`
@@ -149,14 +108,19 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
 
   compiler.plugin('emit', (compilation, callback) => {
     // Emit styleguide assets
-    Object.keys(styleguideAssets).forEach((relativeOutputFilename) => {
-      // Combine the output filename from the dest option and the filename
-      const absoluteOutputFilename = path.join(dest, relativeOutputFilename);
-      compilation.assets[absoluteOutputFilename] = { // eslint-disable-line no-param-reassign
-        source: () => styleguideAssets[relativeOutputFilename],
-        size: () => styleguideAssets[relativeOutputFilename].length,
-      };
-    });
+    Object.keys(clientFiles)
+      // Filter out all the assets that don't access
+      .filter((fileType) => clientFiles[fileType].outputFile !== null)
+      .forEach((fileType) => {
+        // Combine the output filename from the dest option and the filename
+        const absoluteOutputFilename = path.join(dest, clientFiles[fileType].outputFilename);
+        // Emit the file to webpack
+        compilation.assets[absoluteOutputFilename] = { // eslint-disable-line no-param-reassign
+          source: () => clientFiles[fileType].outputFile,
+          // Webpack needs the size for… something
+          size: () => clientFiles[fileType].outputFile.length,
+        };
+      });
     callback();
   });
 
