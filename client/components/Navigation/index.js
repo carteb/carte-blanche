@@ -94,6 +94,7 @@ class Navigation extends React.Component {
   renderSubNavigation = (componentPath) => {
     // TODO FIXME
     return null;
+    /* eslint-disable no-unreachable */
     if (this.props.activeComponentPath === componentPath) {
       if (has(this.props.components, componentPath)) {
         const plugins = getPlugins(componentPath);
@@ -123,6 +124,7 @@ class Navigation extends React.Component {
     }
 
     return null;
+    /* eslint-enable no-unreachable */
   };
 
   renderComponents = () => (
