@@ -2,6 +2,7 @@ const controlTypes = [
   'bool',
   'string',
   'number',
+  'integer',
   'enum',
   'node',
   'avatar',
