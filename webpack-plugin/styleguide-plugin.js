@@ -71,12 +71,6 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
   };
 
   compiler.plugin('emit', (compilation, callback) => {
-    // TODO Remove
-    const styleguideAssets = {
-      'index.html': fs.readFileSync(path.resolve(__dirname, './assets/client.html')),
-      'client-bundle.js': fs.readFileSync(path.resolve(__dirname, './assets/client-bundle.js')),
-      'client-bundle.css': fs.readFileSync(path.resolve(__dirname, './assets/main.css')),
-    };
     // Emit styleguide assets
     Object.keys(styleguideAssets).forEach((filename) => {
       compilation.assets[path.join(dest, filename)] = { // eslint-disable-line no-param-reassign
