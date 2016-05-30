@@ -73,18 +73,6 @@ describe('<PropForm />', () => {
     expect(wrapper.containsMatchingElement(<StringControl />)).to.equal(true);
   });
 
-  it('should call onRandomClick when clicking on RandomButton', () => {
-    // we need to add a static class on the button
-    // this will break by the slightest component restructuring
-    const randomBtn = wrapper
-      .find('div')
-      .children()
-      .children()
-      .at(1);
-    randomBtn.simulate('click');
-    sinon.assert.calledOnce(onRandomClick);
-  });
-
   it('should call onVariationChange when clicking on control', () => {
     wrapper = mount(<PropForm
       variationPath="abc"

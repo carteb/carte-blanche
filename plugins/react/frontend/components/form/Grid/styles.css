@@ -2,7 +2,8 @@
   display: flex;
   box-sizing: border-box;
   position: relative;
-  height: 300px;
+  height: 100%;
+  padding-bottom: 20em;
 }
 
 .leftBackgroundColumn {
