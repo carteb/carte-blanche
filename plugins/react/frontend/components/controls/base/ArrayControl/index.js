@@ -36,7 +36,7 @@ class ArrayControl extends React.Component {
       onUpdate,
       value,
       propTypeData,
-      isNested,
+      nestedLevel,
     } = this.props;
 
     const hasSettings = true;
@@ -58,7 +58,7 @@ class ArrayControl extends React.Component {
 
     return (
       <Row>
-        <LeftColumn>
+        <LeftColumn nestedLevel={nestedLevel}>
           <Label
             type={secondaryLabel}
             propKey={label}
@@ -99,7 +99,7 @@ class ArrayControl extends React.Component {
               key: index,
               value: value[index],
               onUpdate: (data) => onUpdateEntry(data.value, index),
-              isNested: true,
+              nestedLevel: nestedLevel + 1,
             };
             return cloneElement(control, newProps);
           })}

@@ -14,10 +14,10 @@ import Label from '../../../form/Label';
 import BooleanInput from '../../../form/BooleanInput';
 
 const BooleanControl = (props) => {
-  const { label, value, onUpdate, secondaryLabel } = props;
+  const { label, value, onUpdate, secondaryLabel, nestedLevel } = props;
   return (
     <Row>
-      <LeftColumn>
+      <LeftColumn nestedLevel={nestedLevel}>
         <Label
           type={secondaryLabel}
           propKey={label}

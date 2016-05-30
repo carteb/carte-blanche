@@ -13,7 +13,7 @@ let wrapper;
 
 describe('<StringControl />', () => {
   beforeEach(() => {
-    props = { label, onUpdate, value, isNested: false, secondaryLabel };
+    props = { label, onUpdate, value, nestedLevel: 0, secondaryLabel };
     wrapper = mount(<StringControl {...props} />);
   });
 

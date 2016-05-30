@@ -40,7 +40,7 @@ let wrapper;
 
 describe('<ObjectControl />', () => {
   beforeEach(() => {
-    props = { label, onUpdate, value, propTypeData, isNested: false };
+    props = { label, onUpdate, value, propTypeData, nestedLevel: 0 };
     wrapper = mount(<ObjectControl {...props} />);
   });
 

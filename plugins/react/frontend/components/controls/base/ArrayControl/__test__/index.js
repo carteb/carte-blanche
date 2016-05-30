@@ -16,13 +16,13 @@ const propTypeData = {
     name: 'number',
   },
 };
-const isNested = false;
+const nestedLevel = 0;
 let props;
 let wrapper;
 
 describe('<ArrayControl />', () => {
   beforeEach(() => {
-    props = { label, onUpdate, value, propTypeData, isNested };
+    props = { label, onUpdate, value, propTypeData, nestedLevel };
     wrapper = mount(<ArrayControl {...props} />);
   });
 

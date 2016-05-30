@@ -32,7 +32,7 @@ class ObjectControl extends React.Component {
   }
 
   render() {
-    const { label, secondaryLabel, propTypeData, value, onUpdate, isNested } = this.props;
+    const { label, secondaryLabel, propTypeData, value, onUpdate, nestedLevel } = this.props;
 
     const hasSettings = true;
 
@@ -47,7 +47,7 @@ class ObjectControl extends React.Component {
 
     return (
       <Row>
-        <LeftColumn>
+        <LeftColumn nestedLevel={nestedLevel}>
           {/* inside arrays there is no label for the object */}
           {(label) && (
             <Label
@@ -73,7 +73,12 @@ class ObjectControl extends React.Component {
           </div>
         </RightColumn>
         <Row>
-          {renderControls(normalizedPropsWithControls, value, updatePropertyValues, true)}
+          {renderControls(
+            normalizedPropsWithControls,
+            value,
+            updatePropertyValues,
+            nestedLevel + 1
+          )}
         </Row>
       </Row>
     );
