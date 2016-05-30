@@ -28,7 +28,7 @@
     "react-component"
   ],
   "dependencies": {
-    "atrium-utils-beta": "^0.0.0"
+    "atrium-utils-beta": "^0.0.1"
   },
   "peerDependencies": {
     "atrium-webpack-plugin-beta": "^0.0.0"
