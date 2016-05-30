@@ -1,7 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import AtriumInput from './components/AtriumInput';
+import AtriumInput from '../../plugins/react/frontend/components/form/AtriumInput';
+import Grid from '../../plugins/react/frontend/components/form/Grid';
+import Row from '../../plugins/react/frontend/components/form/Grid/Row';
+import LeftColumn from '../../plugins/react/frontend/components/form/Grid/LeftColumn';
+import RightColumn from '../../plugins/react/frontend/components/form/Grid/RightColumn';
+// import GridExperiment from './components/GridExperiment';
 import styles from './styles.css';
 
 class App extends React.Component {
@@ -40,6 +45,56 @@ class App extends React.Component {
   render() {
     return (
       <div className={styles.root}>
+        {/* <GridExperiment /> */}
+        <Grid>
+          <Row>
+            <LeftColumn>left</LeftColumn>
+            <RightColumn>
+              <AtriumInput
+                value={this.state.fourthValue}
+                fallbackValue=""
+                onChange={this.onChangeFourthValue}
+                hasRandomButton
+                hasSettings
+              />
+            </RightColumn>
+          </Row>
+          <Row>
+            <LeftColumn>left</LeftColumn>
+            <RightColumn>right</RightColumn>
+            <Row>
+              <LeftColumn nestedLevel={1}>nested left</LeftColumn>
+              <RightColumn>nested right</RightColumn>
+            </Row>
+          </Row>
+          <Row>
+            <LeftColumn>left</LeftColumn>
+            <RightColumn>right</RightColumn>
+            <Row>
+              <LeftColumn nestedLevel={1}>nested left</LeftColumn>
+              <RightColumn>nested right</RightColumn>
+              <Row>
+                <LeftColumn nestedLevel={2}>nested left 2</LeftColumn>
+                <RightColumn>
+                  <AtriumInput
+                    value={this.state.thirdValue}
+                    fallbackValue=""
+                    onChange={this.onChangeThirdValue}
+                    hasRandomButton
+                  />
+                </RightColumn>
+              </Row>
+              <Row>
+                <LeftColumn nestedLevel={2}>nested left 2</LeftColumn>
+                <RightColumn>nested right 2</RightColumn>
+              </Row>
+            </Row>
+          </Row>
+          <Row>
+            <LeftColumn>left</LeftColumn>
+            <RightColumn>right</RightColumn>
+          </Row>
+        </Grid>
         <AtriumInput
           value={this.state.firstValue}
           fallbackValue=""
@@ -49,19 +104,6 @@ class App extends React.Component {
           value={this.state.secondValue}
           fallbackValue=""
           onChange={this.onChangeSecondValue}
-          hasSettings
-        />
-        <AtriumInput
-          value={this.state.thirdValue}
-          fallbackValue=""
-          onChange={this.onChangeThirdValue}
-          hasRandomButton
-        />
-        <AtriumInput
-          value={this.state.fourthValue}
-          fallbackValue=""
-          onChange={this.onChangeFourthValue}
-          hasRandomButton
           hasSettings
         />
       </div>

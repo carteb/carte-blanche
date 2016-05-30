@@ -6,7 +6,7 @@ const xt = ExtractTextPlugin.extract.bind(ExtractTextPlugin);
 export default {
   devtool: 'eval',
   output: {
-    path: path.join(__dirname, '../webpack-plugin'),
+    path: path.join(__dirname, '../webpack-plugin/assets/'),
     filename: 'client-bundle.js',
     publicPath: '/',
   },

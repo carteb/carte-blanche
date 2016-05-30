@@ -67,17 +67,15 @@ ReactPlugin.prototype.apply = function apply(compiler) {
       (data) => {
         // eslint-disable-next-line no-param-reassign
         data.reactDocs = reactDocs.parse(data.source, styleguideResolver);
-        // eslint-disable-next-line no-param-reassign
-        data.variationBasePath = variationBasePath;
       }
     );
 
     // The source styleguide plugin
     compilation.plugin(
       'styleguide-plugin-processing',
-      (renderStyleguide) => {
-        renderStyleguide({
-          name: 'playground',
+      (renderToClient) => {
+        renderToClient({
+          name: 'react',
           frontendData: { options },
           frontendPlugin: `${require.resolve('./frontend/index.js')}`,
         });

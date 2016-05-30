@@ -13,23 +13,23 @@ import Plugins from './components/Plugins';
 import App from './components/App';
 import map from 'lodash/map';
 
-const styleguideClientApi = window.STYLEGUIDE_PLUGIN_CLIENT_API;
+window.$INITIALIZE_COMPONENT_GUI = function initializeComponentGui(components) {
+  // Generate a view per user component that renders the frontend part of the
+  // plugins for each component
+  const routes = map(components, (component, componentPath) => (
+    <Route
+      key={componentPath}
+      path={componentPath}
+      component={() => <Plugins componentPath={componentPath} componentData={component} />}
+    />
+  ));
 
-// Generate a view per user component that renders the frontend part of the
-// plugins for each component
-const routes = map(styleguideClientApi.scripts, (value, componentPath) => (
-  <Route
-    key={componentPath}
-    path={componentPath}
-    component={() => <Plugins path={componentPath} />}
-  />
-));
-
-ReactDOM.render(
-  <Router history={hashHistory}>
-    <Route path="/" component={App}>
-      {routes}
-    </Route>
-  </Router>,
-  document.getElementById('styleguide-root')
-);
+  ReactDOM.render(
+    <Router history={hashHistory}>
+      <Route path="/" component={(props) => <App {...props} components={components} />}>
+        {routes}
+      </Route>
+    </Router>,
+    document.getElementById('styleguide-root')
+  );
+};
