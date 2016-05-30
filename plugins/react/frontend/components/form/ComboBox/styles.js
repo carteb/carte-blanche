@@ -6,7 +6,7 @@ const comboBoxStyle = {
     // Avoid this warning: was passed a numeric string value for CSS property `content` (value: ` `)
     content: '-',
     position: 'absolute',
-    top: 15,
+    top: 11,
     right: 8,
     cursor: 'pointer',
     borderTop: '6px solid #666',
@@ -20,7 +20,7 @@ const comboBoxStyle = {
     // Avoid this warning: was passed a numeric string value for CSS property `content` (value: ` `)
     content: '-',
     position: 'absolute',
-    top: 15,
+    top: 11,
     right: 8,
     cursor: 'pointer',
     borderBottom: '6px solid #666',
