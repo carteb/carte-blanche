@@ -25,7 +25,8 @@
   "license": "MIT",
   "dependencies": {
     "loader-utils": "^0.2.15",
-    "lodash": "^4.13.1"
+    "lodash": "^4.13.1",
+    "extra-entry-webpack-plugin": "0.0.2"
   },
   "devDependencies": {
     "babel-cli": "^6.9.0",

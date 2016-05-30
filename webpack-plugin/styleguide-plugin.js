@@ -92,9 +92,19 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
  * Register the default plugins
  */
 StyleguidePlugin.prototype.registerDefaultPlugins = function registerDefaultPlugins(compiler) {
-  const ReactPlugin = require('atrium-react-plugin-beta'); // eslint-disable-line global-require, import/no-unresolved, max-len
-  const reactPlugin = new ReactPlugin();
-  reactPlugin.apply(compiler);
+  let ReactPlugin = require('../plugins/react/plugin').default; // eslint-disable-line global-require, max-len
+  try {
+    const reactPlugin = new ReactPlugin();
+    reactPlugin.apply(compiler);
+  } catch (err) {
+    try {
+      ReactPlugin = require('atrium-react-plugin-beta').default; // eslint-disable-line global-require, import/no-unresolved, max-len
+      const reactPlugin = new ReactPlugin();
+      reactPlugin.apply(compiler);
+    } catch (ex) {
+      console.log('ERROR Installing default Styleguide plugins failed.', ex); // eslint-disable-line no-console,max-len
+    }
+  }
 };
 
 /**
