@@ -5,6 +5,7 @@
  */
 
 import React from 'react';
+import map from 'lodash/map';
 import randomValue from './randomValue';
 import Row from '../../../form/Grid/Row';
 import LeftColumn from '../../../form/Grid/LeftColumn';
@@ -23,6 +24,11 @@ const EnumControl = (props) => {
     nestedLevel,
     required,
   } = props;
+
+  const options = map(propTypeData.value, (entry) => (
+    { ...entry, value: eval(entry.value) }  // eslint-disable-line no-eval
+  ));
+
   return (
     <Row>
       <LeftColumn nestedLevel={nestedLevel}>
@@ -38,7 +44,7 @@ const EnumControl = (props) => {
             fallbackValue={propTypeData.value[0]}
             onChange={onUpdate}
             inputComponent={ComboBox}
-            options={propTypeData.value}
+            options={options}
             hasRandomButton
             hasSettings={!required}
             onRandomButtonClick={() => onUpdate({ value: EnumControl.randomValue(props) })}
