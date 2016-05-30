@@ -17,8 +17,7 @@ type Props = {
   age?: number,
   description?: string,
   fur?: Fur,
-  requiredFur: Fur,
-  teeth: Array<number>,
+  teeth?: Array<number>,
   teethOfTeeth?: Array<Array<number>>,
   toe?: number | string,
 }
