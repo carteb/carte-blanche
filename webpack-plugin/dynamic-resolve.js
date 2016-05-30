@@ -24,18 +24,23 @@ module.exports = function dynamicResolve() {
   });
 
   return `
+    // Activate hot module replacement
+    module.hot && module.hot.accept();
     // Dynamic webpack loading for every loader
     var resources = {
       ${loaders.map((loader) => `"${loader}":${loaderMapping[loader]}`)},
     };
+    window.$INITIALIZE_COMPONENT_GUI._ressources = resources;
+    // The dynamic component files:
+    var componentFiles = resources['${loaders[0]}'].keys();
     // Gather all loader information for every loader
     var components = {};
-    resources['${loaders[0]}'].keys().forEach(function(componentFile) {
+    componentFiles.forEach(function(componentFile) {
       var relativePath = componentFile.replace(/\.\\//, '${relativeComponentRoot}/');
       components[relativePath] = {};
       Object.keys(resources).forEach(function(loader) {
         components[relativePath]['get' + loader.substr(0, 1).toUpperCase() + loader.substr(1)] = function() {
-          return resources[loader](componentFile);
+          return window.$INITIALIZE_COMPONENT_GUI._ressources[loader](componentFile);
         };
       });
     });

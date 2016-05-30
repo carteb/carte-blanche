@@ -54,12 +54,16 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
   const userBundleFileName = path.join(dest, 'user-bundle.js');
   compiler.apply(new ExtraEntryWebpackPlugin({
     // Load the dynamic resolve loader with a placeholder file
-    entry: `!!${require.resolve('./dynamic-resolve.js')}?${
+    entry: [
+      'webpack-dev-server/client?http://localhost:8080',
+      'webpack/hot/only-dev-server',
+      `!!${require.resolve('./dynamic-resolve.js')}?${
       JSON.stringify({
         filter: filter.toString(),
         componentRoot: this.options.componentRoot,
         context: compiler.context,
-      })}!${require.resolve('./dynamic-resolve.js')}`,
+      })}!${require.resolve('./dynamic-resolve.js')}`
+    ],
     entryName: `Atrium [${this.id}]`,
     outputName: userBundleFileName,
   }));
