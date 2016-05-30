@@ -1,7 +1,7 @@
 /* eslint-disable */
 
 var path = require('path');
-var getVariationPathFromComponentPath = require('../../../../utils/getVariationPathFromComponentPath');
+var atriumUtilsBeta = require('atrium-utils-beta');
 
 /**
  * Get the absolute variation path from the variation base path and a component path
@@ -14,7 +14,7 @@ var getVariationPathFromComponentPath = require('../../../../utils/getVariationP
 var getAbsoluteVariationPath = (variationsBasePath, relativeComponentPath) => {
   return path.join(
     variationsBasePath,
-    getVariationPathFromComponentPath(relativeComponentPath)
+    atriumUtilsBeta.getVariationPathFromComponentPath(relativeComponentPath)
   );
 };
 
