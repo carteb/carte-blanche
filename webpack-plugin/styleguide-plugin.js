@@ -52,6 +52,7 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
   }
 
   // Compile the client api
+  const userBundleFileName = path.join(dest, 'user-bundle.js');
   compiler.apply(new ExtraEntryWebpackPlugin({
     // Load the dynamic resolve loader with a placeholder file
     entry: `!!${require.resolve('./dynamic-resolve.js')}?${
@@ -61,7 +62,7 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
         context: compiler.context,
       })}!${require.resolve('./dynamic-resolve.js')}`,
     entryName: `Atrium [${this.id}]`,
-    outputName: path.join(dest, 'user-bundle.js'),
+    outputName: userBundleFileName,
   }));
 
   const styleguideAssets = {
@@ -80,6 +81,12 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
     });
     callback();
   });
+
+  // Don't add the styleguide chunk to html files
+  compiler.plugin('compilation', (compilation) =>
+    compilation.plugin('html-webpack-plugin-alter-chunks', (chunks) =>
+      chunks.filter((chunk) => chunk.files.indexOf(userBundleFileName) === -1)
+  ));
 };
 
 /**
