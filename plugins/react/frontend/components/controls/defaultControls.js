@@ -4,7 +4,7 @@
 
 // Basic Control Components
 import BooleanControl from './base/BooleanControl';
-import IntegerControl from './base/IntegerControl';
+import NumberControl from './base/NumberControl';
 import ArrayControl from './base/ArrayControl';
 import StringControl from './base/StringControl';
 import EnumControl from './base/EnumControl';
@@ -18,6 +18,7 @@ import FunctionControl from './base/FunctionControl';
 // Advanced Control Components
 import AvatarControl from './advanced/AvatarControl';
 import NameControl from './advanced/NameControl';
+import IntegerControl from './advanced/IntegerControl';
 
 const defaultControls = {
   // Basic
@@ -30,7 +31,7 @@ const defaultControls = {
     nested: false,
   },
   number: {
-    control: IntegerControl,
+    control: NumberControl,
     nested: false,
   },
   string: {
@@ -77,6 +78,10 @@ const defaultControls = {
   },
   name: {
     control: NameControl,
+    nested: false,
+  },
+  integer: {
+    control: IntegerControl,
     nested: false,
   },
 };
