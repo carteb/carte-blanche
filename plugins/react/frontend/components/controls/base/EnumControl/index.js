@@ -5,12 +5,14 @@
  */
 
 import React from 'react';
-import Select from '../../../common/Select';
+import map from 'lodash/map';
 import randomValue from './randomValue';
 import Row from '../../../form/Grid/Row';
 import LeftColumn from '../../../form/Grid/LeftColumn';
 import RightColumn from '../../../form/Grid/RightColumn';
 import Label from '../../../form/Label';
+import AtriumInput from '../../../form/AtriumInput';
+import ComboBox from '../../../form/ComboBox';
 
 const EnumControl = (props) => {
   const {
@@ -20,7 +22,13 @@ const EnumControl = (props) => {
     propTypeData,
     onUpdate,
     nestedLevel,
+    required,
   } = props;
+
+  const options = map(propTypeData.value, (entry) => (
+    { ...entry, value: eval(entry.value) }  // eslint-disable-line no-eval
+  ));
+
   return (
     <Row>
       <LeftColumn nestedLevel={nestedLevel}>
@@ -31,14 +39,15 @@ const EnumControl = (props) => {
       </LeftColumn>
       <RightColumn>
         <div style={{ padding: '0 0.5rem' }}>
-          <Select
+          <AtriumInput
             value={value}
-            onChange={(event) => {
-              const newValue = event.target.value;
-              return onUpdate({ value: newValue });
-            }}
-            options={propTypeData.value}
-            onRandomClick={() => onUpdate({ value: EnumControl.randomValue(propTypeData) })}
+            fallbackValue={propTypeData.value[0]}
+            onChange={onUpdate}
+            inputComponent={ComboBox}
+            options={options}
+            hasRandomButton
+            hasSettings={!required}
+            onRandomButtonClick={() => onUpdate({ value: EnumControl.randomValue(props) })}
           />
         </div>
       </RightColumn>

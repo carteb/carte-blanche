@@ -8,6 +8,7 @@ import LeftColumn from '../../plugins/react/frontend/components/form/Grid/LeftCo
 import RightColumn from '../../plugins/react/frontend/components/form/Grid/RightColumn';
 import Button from '../../plugins/react/frontend/components/form/Button';
 import BooleanInput from '../../plugins/react/frontend/components/form/BooleanInput';
+import ComboBox from '../../plugins/react/frontend/components/form/ComboBox';
 // import GridExperiment from './components/GridExperiment';
 import styles from './styles.css';
 
@@ -19,6 +20,7 @@ class App extends React.Component {
     thirdValue: 'another String',
     fourthValue: undefined,
     firstBoolean: false,
+    firstCheckboxValue: 3,
   }
 
   onChangeFirstValue = ({ value }) => {
@@ -48,6 +50,12 @@ class App extends React.Component {
   onChangeFirstBoolean = ({ value }) => {
     this.setState({
       firstBoolean: value,
+    });
+  };
+
+  onChangeFirstCheckboxValue = ({ value }) => {
+    this.setState({
+      firstCheckboxValue: value,
     });
   };
 
@@ -104,6 +112,19 @@ class App extends React.Component {
             <RightColumn>right</RightColumn>
           </Row>
         </Grid>
+
+        <ComboBox
+          value={this.state.firstCheckboxValue}
+          onChange={this.onChangeFirstCheckboxValue}
+          options={[
+            {
+              value: 2,
+            },
+            {
+              value: 3,
+            },
+          ]}
+        />
         <AtriumInput
           value={this.state.firstValue}
           fallbackValue=""
