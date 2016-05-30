@@ -14,7 +14,7 @@ import Label from '../../../form/Label';
 import BooleanInput from '../../../form/BooleanInput';
 
 const BooleanControl = (props) => {
-  const { label, value, onUpdate, secondaryLabel, nestedLevel } = props;
+  const { label, value, onUpdate, secondaryLabel, nestedLevel, required } = props;
   return (
     <Row>
       <LeftColumn nestedLevel={nestedLevel}>
@@ -30,7 +30,7 @@ const BooleanControl = (props) => {
             fallbackValue
             onChange={onUpdate}
             hasRandomButton
-            hasSettings
+            hasSettings={!required}
             inputComponent={BooleanInput}
             onRandomButtonClick={() => onUpdate({ value: BooleanControl.randomValue(props) })}
           />

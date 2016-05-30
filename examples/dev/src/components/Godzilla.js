@@ -34,8 +34,8 @@ const Godzilla = (props) => {
 };
 
 Godzilla.propTypes = {
-  isDangerous: PropTypes.bool,
-  age: PropTypes.number,
+  isDangerous: PropTypes.bool.isRequired,
+  age: PropTypes.number.isRequired,
   description: PropTypes.string,
   fur: React.PropTypes.shape({
     color: React.PropTypes.string,
@@ -43,8 +43,8 @@ Godzilla.propTypes = {
     hairs: React.PropTypes.shape({
       length: React.PropTypes.number,
     }),
-  }),
-  teeth: React.PropTypes.arrayOf(React.PropTypes.number),
+  }).isRequired,
+  teeth: React.PropTypes.arrayOf(React.PropTypes.number).isRequired,
   nestedArray: React.PropTypes.arrayOf(
     React.PropTypes.shape({
       color: React.PropTypes.string,

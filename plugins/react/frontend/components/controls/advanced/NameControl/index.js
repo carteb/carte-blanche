@@ -8,7 +8,7 @@ import Label from '../../../form/Label';
 import randomValue from './randomValue';
 
 const NameControl = (props) => {
-  const { label, value, onUpdate, secondaryLabel, nestedLevel } = props;
+  const { label, value, onUpdate, secondaryLabel, nestedLevel, required } = props;
   return (
     <Row>
       <LeftColumn nestedLevel={nestedLevel}>
@@ -24,7 +24,7 @@ const NameControl = (props) => {
             fallbackValue=""
             onChange={onUpdate}
             hasRandomButton
-            hasSettings
+            hasSettings={!required}
             onRandomButtonClick={() => onUpdate({ value: NameControl.randomValue(props) })}
           />
         </div>

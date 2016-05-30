@@ -7,7 +7,7 @@ import AtriumInput from '../../../form/AtriumInput';
 import Label from '../../../form/Label';
 
 const AvatarControl = (props) => {
-  const { label, value, onUpdate, secondaryLabel, nestedLevel } = props;
+  const { label, value, onUpdate, secondaryLabel, nestedLevel, required } = props;
   return (
     <Row>
       <LeftColumn nestedLevel={nestedLevel}>
@@ -23,7 +23,7 @@ const AvatarControl = (props) => {
             fallbackValue=""
             onChange={onUpdate}
             hasRandomButton
-            hasSettings
+            hasSettings={!required}
             onRandomButtonClick={() => onUpdate({ value: AvatarControl.randomValue(props) })}
           />
         </div>
