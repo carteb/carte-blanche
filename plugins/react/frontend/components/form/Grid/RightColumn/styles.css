@@ -4,4 +4,7 @@
   /* background is useful for css debugging */
   /*background: #d2d2f5;*/
   float: right;
+  padding-top: 0.75rem;
+  /* hack to make sure the right side is always higher than the left */
+  min-height: 52px;
 }
