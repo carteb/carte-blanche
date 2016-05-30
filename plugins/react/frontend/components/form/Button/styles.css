@@ -28,6 +28,11 @@
   color: #777;
 }
 
+.root:disabled {
+  background-image: linear-gradient(to bottom, #F6F6F6 0%, #F6F6F6 100%);
+  color: #bbb;
+}
+
 .root:focus {
   border-color: rgba(19, 133, 229, 0.5);
   /*box-shadow: 0 0 0 3px rgba(19, 133, 229, 0.1);*/

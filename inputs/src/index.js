@@ -121,6 +121,12 @@ class App extends React.Component {
           true
         </Button>
 
+        <Button
+          disabled
+        >
+          Follow Me
+        </Button>
+
         <BooleanInput
           value
           onChange={({ value }) => { console.log(value); }}

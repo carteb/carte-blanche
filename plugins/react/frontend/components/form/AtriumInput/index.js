@@ -2,10 +2,10 @@ import React, { Component, PropTypes } from 'react';
 
 import InputGroup from '../InputGroup';
 import Input from '../Input';
-import Button from '../Button';
 import SettingsButton from '../SettingsButton';
 import RandomButton from '../RandomButton';
 import Dropdown from '../Dropdown';
+import BaseSettings from '../BaseSettings';
 import isUndefined from 'lodash/isUndefined';
 import isNull from 'lodash/isNull';
 import styles from './styles.css';
@@ -40,16 +40,8 @@ class AtriumInput extends Component {
     }
   }
 
-  onInputChange = ({ value }) => {
+  onChange = ({ value }) => {
     this.props.onChange({ value });
-  }
-
-  onChangeToUndefined = () => {
-    this.props.onChange({ value: undefined });
-  }
-
-  onChangeToNull = () => {
-    this.props.onChange({ value: null });
   }
 
   onChangeToFallback = () => {
@@ -77,13 +69,13 @@ class AtriumInput extends Component {
     const inputValue = isUndefined(value) || isNull(value) ? fallbackValue : value;
     const InputComponent = inputComponent;
     return (
-      <InputGroup>
+      <InputGroup className={styles.root}>
         <div className={styles.inputWrapper}>
           <InputComponent
             {...otherProps}
             groupType={inputGroupType}
             value={inputValue}
-            onChange={this.onInputChange}
+            onChange={this.onChange}
             component={this.props.inputComponent}
             ref={(ref) => { this.input = ref; }}
           />
@@ -107,14 +99,7 @@ class AtriumInput extends Component {
         {hasSettings && <Dropdown
           active={this.state.settingsActive}
         >
-          <div className={styles.settingsContent}>
-            <Button onClick={this.onChangeToUndefined}>
-              Set to <span className={styles.highlighted}>undefined</span>
-            </Button>
-            <Button onClick={this.onChangeToNull}>
-              Set to <span className={styles.highlighted}>null</span>
-            </Button>
-          </div>
+          <BaseSettings onChange={this.onChange} />
         </Dropdown>}
         {hasRandomButton && <RandomButton onClick={onRandomButtonClick} />}
       </InputGroup>

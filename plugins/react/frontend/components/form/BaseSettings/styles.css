@@ -1,0 +1,15 @@
+.settingsContent {
+  padding: 1em 1em;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.settingsContent button {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.highlighted {
+  color: #aaa;
+}
