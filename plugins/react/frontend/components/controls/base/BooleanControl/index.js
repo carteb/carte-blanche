@@ -27,7 +27,7 @@ const BooleanControl = (props) => {
         <div style={{ padding: '0 0.5em' }}>
           <AtriumInput
             value={value}
-            fallbackValue=""
+            fallbackValue
             onChange={onUpdate}
             hasRandomButton
             hasSettings
