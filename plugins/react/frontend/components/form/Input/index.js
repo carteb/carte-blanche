@@ -4,6 +4,10 @@ import styles from './styles.css';
 
 class Input extends Component { // eslint-disable-line react/prefer-stateless-function
 
+  onChange = (event) => {
+    this.props.onChange({ value: event.target.value });
+  }
+
   focus() {
     this.input.focus();
   }
@@ -19,6 +23,7 @@ class Input extends Component { // eslint-disable-line react/prefer-stateless-fu
         {...otherProps}
         className={className}
         ref={(ref) => { this.input = ref; }}
+        onChange={this.onChange}
       />
     );
   }

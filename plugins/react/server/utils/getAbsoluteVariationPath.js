@@ -1,7 +1,7 @@
 /* eslint-disable */
 
 var path = require('path');
-var atriumUtilsBeta = require('atrium-utils-beta');
+var atriumUtilsBeta = require('atrium-utils-beta'); // eslint-disable-line
 
 /**
  * Get the absolute variation path from the variation base path and a component path

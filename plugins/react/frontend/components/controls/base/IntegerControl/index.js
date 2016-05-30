@@ -16,7 +16,7 @@ import isUndefined from 'lodash/isUndefined';
 import isNull from 'lodash/isNull';
 
 const IntegerControl = (props) => {
-  const { label, value, onUpdate, secondaryLabel } = props;
+  const { label, value, onUpdate, secondaryLabel, nestedLevel } = props;
   const onChange = (data) => {
     const val = data.value;
     const parsedValue = isUndefined(val) || isNull(val) ? val : parseInt(val, 10);
@@ -24,7 +24,7 @@ const IntegerControl = (props) => {
   };
   return (
     <Row>
-      <LeftColumn>
+      <LeftColumn nestedLevel={nestedLevel}>
         <Label
           type={secondaryLabel}
           propKey={label}

@@ -13,7 +13,7 @@ const FlowArrayControl = (props) => {
     onUpdate,
     value,
     propTypeData,
-    isNested,
+    nestedLevel,
   } = props;
 
   const size = props.value === null || typeof props.value === 'undefined' ? 0 : props.value.length;
@@ -37,7 +37,7 @@ const FlowArrayControl = (props) => {
       {(size !== 0) && (
         <div
           className={
-            (isNested) ?
+            (nestedLevel > 0) ?
             objectControlStyles.nestedControls :
             objectControlStyles.wrapper
           }
@@ -50,7 +50,7 @@ const FlowArrayControl = (props) => {
               key: index,
               value: value[index],
               onUpdate: (data) => onUpdateEntry(data.value, index),
-              isNested: true,
+              nestedLevel: nestedLevel + 1,
             };
             return cloneElement(control, newProps);
           })}

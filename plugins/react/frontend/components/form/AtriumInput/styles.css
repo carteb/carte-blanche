@@ -1,3 +1,7 @@
+.root {
+  margin-bottom: 0.75rem;
+}
+
 .inputWrapper {
   flex-grow: 1;
   flex-shrink: 1;
@@ -51,20 +55,4 @@
 
 .isNull {
   composes: isUndefined;
-}
-
-.settingsContent {
-  padding: 1em 1em;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-}
-
-.settingsContent button {
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
-}
-
-.highlighted {
-  color: #aaa;
 }

@@ -40,18 +40,11 @@ let wrapper;
 
 describe('<ObjectControl />', () => {
   beforeEach(() => {
-    props = { label, onUpdate, value, propTypeData, isNested: false };
+    props = { label, onUpdate, value, propTypeData, nestedLevel: 0 };
     wrapper = mount(<ObjectControl {...props} />);
   });
 
   it('should render label prop', () => {
     expect(wrapper.text()).to.contain(label);
-  });
-
-  it('should call onUpdate() when clicking on random', () => {
-    const clickBtn = wrapper.find('svg').first();
-    clickBtn.simulate('click');
-    sinon.assert.calledOnce(onUpdate);
-    onUpdate.reset();
   });
 });
