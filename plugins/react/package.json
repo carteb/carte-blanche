@@ -28,7 +28,17 @@
     "react-component"
   ],
   "dependencies": {
-    "atrium-utils-beta": "^0.0.1"
+    "atrium-utils-beta": "^0.0.1",
+    "faker": "^3.1.0",
+    "lodash": "^4.13.1",
+    "react": "^15.1.0",
+    "react-addons-create-fragment": "^15.1.0",
+    "react-dom": "^15.1.0",
+    "react-frame-component": "^0.6.1",
+    "socket.io-client": "^1.4.6",
+    "speakingurl": "^9.0.0",
+    "velocity-react": "^1.1.5",
+    "whatwg-fetch": "^1.0.0"
   },
   "peerDependencies": {
     "atrium-webpack-plugin-beta": "^0.0.0"
@@ -44,9 +54,12 @@
     "autoprefixer": "^6.3.6",
     "babel-cli": "^6.9.0",
     "babel-plugin-webpack-loaders": "^0.5.0",
+    "chai": "^3.5.0",
     "css-loader": "^0.23.1",
+    "enzyme": "^2.3.0",
     "extract-text-webpack-plugin": "^1.0.1",
     "postcss-loader": "^0.9.1",
-    "rimraf": "^2.5.2"
+    "rimraf": "^2.5.2",
+    "sinon": "^1.17.4"
   }
 }
