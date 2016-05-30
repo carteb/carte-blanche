@@ -29,8 +29,13 @@
   ],
   "dependencies": {
     "atrium-utils-beta": "^0.0.1",
+    "body-parser": "^1.15.1",
+    "chokidar": "^1.5.1",
+    "cors": "^2.7.1",
+    "express": "^4.13.4",
     "faker": "^3.1.0",
     "lodash": "^4.13.1",
+    "mkdirp": "^0.5.1",
     "react": "^15.1.0",
     "react-addons-create-fragment": "^15.1.0",
     "react-dom": "^15.1.0",
@@ -60,6 +65,7 @@
     "extract-text-webpack-plugin": "^1.0.1",
     "postcss-loader": "^0.9.1",
     "rimraf": "^2.5.2",
-    "sinon": "^1.17.4"
+    "sinon": "^1.17.4",
+    "supertest": "^1.2.0"
   }
 }
