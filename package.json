@@ -31,6 +31,7 @@
     "node": "5.5.0"
   },
   "scripts": {
+    "postinstall": "(cd plugins/react && npm install && cd webpack-plugin && npm install)",
     "start": "npm run example:dev",
     "preserver": "npm run client:build",
     "server": "webpack-dev-server --hot",
