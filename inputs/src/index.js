@@ -129,7 +129,7 @@ class App extends React.Component {
 
         <BooleanInput
           value
-          onChange={({ value }) => { console.log(value); }}
+          onChange={this.onChangeFirstBoolean}
         />
         <AtriumInput
           value={this.state.firstBoolean}

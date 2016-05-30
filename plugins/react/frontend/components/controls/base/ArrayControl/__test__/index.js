@@ -30,12 +30,6 @@ describe('<ArrayControl />', () => {
     expect(wrapper.text()).to.contain(label);
   });
 
-  it('should call onUpdate()', () => {
-    const clickBtn = wrapper.find('svg').first();
-    clickBtn.simulate('click');
-    sinon.assert.calledWith(onUpdate, sinon.match.hasOwn('value'));
-  });
-
   it('should render all values', () => {
     expect(wrapper.find('input[type=\'number\']').length).to.equal(5);
   });

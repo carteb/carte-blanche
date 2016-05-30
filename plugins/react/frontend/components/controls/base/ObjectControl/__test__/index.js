@@ -47,11 +47,4 @@ describe('<ObjectControl />', () => {
   it('should render label prop', () => {
     expect(wrapper.text()).to.contain(label);
   });
-
-  it('should call onUpdate() when clicking on random', () => {
-    const clickBtn = wrapper.find('svg').first();
-    clickBtn.simulate('click');
-    sinon.assert.calledOnce(onUpdate);
-    onUpdate.reset();
-  });
 });
