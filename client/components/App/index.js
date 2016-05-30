@@ -114,7 +114,7 @@ class App extends React.Component {
     const activeComponentPath = this.props.location.pathname.replace(/^\//, '');
     return (
       <div className={styles.main}>
-         <Navigation
+        <Navigation
           activeComponentPath={activeComponentPath}
           components={this.props.components}
           location={this.props.location}

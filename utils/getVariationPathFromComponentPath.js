@@ -1,5 +1,3 @@
-/* eslint-disable no-var, vars-on-top */
-
 // Regexes
 
 // TODO make file-ending dynamic

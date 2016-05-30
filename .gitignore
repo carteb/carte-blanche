@@ -7,5 +7,7 @@ dist
 stats.json
 webpack-plugin/assets/client-bundle.js
 webpack-plugin/assets/main.css
+webpack-plugin/dist
+client/user-bundle.js
 
 examples/**/variations/

@@ -48,18 +48,6 @@ describe('<ObjectControl />', () => {
     expect(wrapper.text()).to.contain(label);
   });
 
-  it('should render initial values', () => {
-    expect(wrapper.find('#foo').props().value).to.equal(value.foo);
-    expect(wrapper.find('#bar').props().value).to.equal(value.bar);
-  });
-
-  it('should call onUpdate() when changing value', () => {
-    const input = wrapper.find('#foo');
-    input.simulate('change', { target: { value: 'Some new string value' } });
-    sinon.assert.calledWith(onUpdate, { value: { foo: 'Some new string value', bar: 100 } });
-    onUpdate.reset();
-  });
-
   it('should call onUpdate() when clicking on random', () => {
     const clickBtn = wrapper.find('svg').first();
     clickBtn.simulate('click');

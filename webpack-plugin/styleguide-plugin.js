@@ -7,7 +7,6 @@
 
 import fs from 'fs';
 import path from 'path';
-import ReactPlugin from '../plugins/react/plugin';
 import isArray from 'lodash/isArray';
 import ExtraEntryWebpackPlugin from 'extra-entry-webpack-plugin';
 
@@ -93,6 +92,7 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
  * Register the default plugins
  */
 StyleguidePlugin.prototype.registerDefaultPlugins = function registerDefaultPlugins(compiler) {
+  const ReactPlugin = require('atrium-react-plugin-beta'); // eslint-disable-line global-require
   const reactPlugin = new ReactPlugin();
   reactPlugin.apply(compiler);
 };

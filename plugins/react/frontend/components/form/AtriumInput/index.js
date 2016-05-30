@@ -16,10 +16,15 @@ class AtriumInput extends Component {
 
   static propTypes = {
     onChange: PropTypes.func.isRequired,
+    onRandomButtonClick: PropTypes.func,
     value: PropTypes.any,
     fallbackValue: PropTypes.any.isRequired,
     hasRandomButton: PropTypes.bool,
     hasSettings: PropTypes.bool,
+  };
+
+  static defaultProps = {
+    inputComponent: Input,
   };
 
   state = {
@@ -61,21 +66,25 @@ class AtriumInput extends Component {
     const {
       hasSettings,
       hasRandomButton,
+      onRandomButtonClick,
       value,
       fallbackValue,
+      inputComponent,
       ...otherProps,
     } = this.props;
     const settingsGroupType = hasSettings && hasRandomButton ? 'center' : 'right';
     const inputGroupType = hasSettings || hasRandomButton ? 'left' : 'none';
     const inputValue = isUndefined(value) || isNull(value) ? fallbackValue : value;
+    const InputComponent = inputComponent;
     return (
       <InputGroup>
         <div className={styles.inputWrapper}>
-          <Input
+          <InputComponent
             {...otherProps}
             groupType={inputGroupType}
             value={inputValue}
             onChange={this.onInputChange}
+            component={this.props.inputComponent}
             ref={(ref) => { this.input = ref; }}
           />
           {isUndefined(value) && <button
@@ -107,7 +116,7 @@ class AtriumInput extends Component {
             </Button>
           </div>
         </Dropdown>}
-        {hasRandomButton && <RandomButton />}
+        {hasRandomButton && <RandomButton onClick={onRandomButtonClick} />}
       </InputGroup>
     );
   }

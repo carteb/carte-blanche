@@ -1,0 +1,13 @@
+.root {
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
