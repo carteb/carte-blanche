@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import AtriumInput from './components/AtriumInput';
-import Grid from './components/Grid';
-import Row from './components/Grid/Row';
-import LeftColumn from './components/Grid/LeftColumn';
-import RightColumn from './components/Grid/RightColumn';
+import AtriumInput from '../../plugins/react/frontend/components/form/AtriumInput';
+import Grid from '../../plugins/react/frontend/components/form/Grid';
+import Row from '../../plugins/react/frontend/components/form/Grid/Row';
+import LeftColumn from '../../plugins/react/frontend/components/form/Grid/LeftColumn';
+import RightColumn from '../../plugins/react/frontend/components/form/Grid/RightColumn';
 // import GridExperiment from './components/GridExperiment';
 import styles from './styles.css';
 
