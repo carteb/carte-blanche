@@ -33,7 +33,7 @@
   "scripts": {
     "start": "npm run example:dev",
     "preserver": "npm run client:build",
-    "server": "webpack-dev-server",
+    "server": "webpack-dev-server --hot",
     "example:dev": "npm run server -- --context examples/dev/ --config examples/dev/webpack.dev.babel.js",
     "example:dev:iron": "iron-node node_modules/webpack-dev-server/bin/webpack-dev-server.js --context examples/dev/ --config examples/dev/webpack.dev.babel.js",
     "example:dest": "npm run server -- --context examples/dest/ --config examples/dest/webpack.dev.babel.js",
@@ -60,6 +60,7 @@
     "chokidar": "^1.5.1",
     "connect-history-api-fallback": "^1.2.0",
     "cors": "^2.7.1",
+    "extra-entry-webpack-plugin": "0.0.2",
     "faker": "^3.1.0",
     "lodash": "^4.13.1",
     "mkdirp": "^0.5.1",
