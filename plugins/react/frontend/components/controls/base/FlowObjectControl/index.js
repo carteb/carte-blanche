@@ -6,43 +6,79 @@
 
 import renderControls from '../../../../utils/renderControls';
 import React from 'react';
-import Label from '../../../common/Label';
 import normalizeProps from './normalizeProps';
 import randomValue from './randomValue';
-import styles from '../ObjectControl/styles.css';
+import Row from '../../../form/Grid/Row';
+import LeftColumn from '../../../form/Grid/LeftColumn';
+import RightColumn from '../../../form/Grid/RightColumn';
+import Label from '../../../form/Label';
+import RandomButton from '../../../form/RandomButton';
+import SettingsButton from '../../../form/SettingsButton';
+import BaseSettings from '../../../form/BaseSettings';
+import Dropdown from '../../../form/Dropdown';
 
-const FlowObjectControl = ({ label, propTypeData, value, onUpdate, nestedLevel }) => {
-  const updatePropertyValues = (values) => {
-    onUpdate({ value: values });
-  };
+class FlowObjectControl extends React.Component {
 
-  const normalizedPropsWithControls = normalizeProps(propTypeData.signature.properties);
-
-  let controlWrapperClassName = styles.nestedControls;
-  if (!label && nestedLevel > 0) {
-    controlWrapperClassName = styles['nestedDeeperThanOneLevel--without-label'];
-  } else if (nestedLevel > 0) {
-    controlWrapperClassName = styles.nestedDeeperThanOneLevel;
+  state = {
+    settingsActive: false,
   }
 
-  return (
-    <div className={styles.wrapper}>
-      {/* inside arrays there is no label for the object */}
-      {(label) && (
-        <Label
-          text={label}
-          nestedLevel={nestedLevel + 1}
-          onRandomClick={() => onUpdate({
-            value: FlowObjectControl.randomValue(propTypeData),
-          })}
-        />
-      )}
-      <div className={controlWrapperClassName}>
-        {renderControls(normalizedPropsWithControls, value, updatePropertyValues, true)}
-      </div>
-    </div>
-  );
-};
+  onToggleSettings = () => {
+    this.setState({
+      settingsActive: !this.state.settingsActive,
+    });
+  }
+
+  render() {
+    const { label, propTypeData, value, onUpdate, nestedLevel, secondaryLabel } = this.props;
+
+    const hasSettings = true;
+
+    const updatePropertyValues = (values) => {
+      onUpdate({ value: values });
+    };
+
+    const normalizedPropsWithControls = normalizeProps(propTypeData.signature.properties);
+
+    return (
+      <Row>
+        <LeftColumn nestedLevel={nestedLevel}>
+          {/* inside arrays there is no label for the object */}
+          {(label) && (
+            <Label
+              type={secondaryLabel}
+              propKey={label}
+            />
+          )}
+        </LeftColumn>
+        <RightColumn>
+          <div style={{ padding: '0 0.5rem', textAlign: 'right' }}>
+            {hasSettings && <Dropdown
+              active={this.state.settingsActive}
+            >
+              <BaseSettings onChange={onUpdate} />
+            </Dropdown>}
+            <SettingsButton
+              groupType="left"
+              onClick={this.onToggleSettings}
+            />
+            <RandomButton
+              onClick={() => onUpdate({ value: FlowObjectControl.randomValue(propTypeData) })}
+            />
+          </div>
+        </RightColumn>
+        <Row>
+          {renderControls(
+            normalizedPropsWithControls,
+            value,
+            updatePropertyValues,
+            nestedLevel + 1
+          )}
+        </Row>
+      </Row>
+    );
+  }
+}
 
 FlowObjectControl.randomValue = randomValue;
 
