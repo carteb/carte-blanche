@@ -31,10 +31,10 @@ module.exports = function dynamicResolve() {
     // Gather all loader information for every loader
     var components = {};
     resources['${loaders[0]}'].keys().forEach(function(componentFile) {
-      componentFile = componentFile.replace(/\.\\//, '${relativeComponentRoot}/');
-      components[componentFile] = {};
+      var relativePath = componentFile.replace(/\.\\//, '${relativeComponentRoot}/');
+      components[relativePath] = {};
       Object.keys(resources).forEach(function(loader) {
-        components[componentFile]['get' + loader.substr(0, 1).toUpperCase() + loader.substr(1)] = function() {
+        components[relativePath]['get' + loader.substr(0, 1).toUpperCase() + loader.substr(1)] = function() {
           return resources[loader](componentFile);
         };
       });
