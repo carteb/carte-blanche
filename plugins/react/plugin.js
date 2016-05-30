@@ -45,6 +45,7 @@ function ReactPlugin(options) {
  */
 function killProcess(proc) {
   proc.kill('SIGINT');
+  process.exit();
 }
 
 /**
