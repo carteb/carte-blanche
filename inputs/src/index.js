@@ -6,6 +6,8 @@ import Grid from '../../plugins/react/frontend/components/form/Grid';
 import Row from '../../plugins/react/frontend/components/form/Grid/Row';
 import LeftColumn from '../../plugins/react/frontend/components/form/Grid/LeftColumn';
 import RightColumn from '../../plugins/react/frontend/components/form/Grid/RightColumn';
+import Button from '../../plugins/react/frontend/components/form/Button';
+import BooleanInput from '../../plugins/react/frontend/components/form/BooleanInput';
 // import GridExperiment from './components/GridExperiment';
 import styles from './styles.css';
 
@@ -16,6 +18,7 @@ class App extends React.Component {
     secondValue: 'another String',
     thirdValue: 'another String',
     fourthValue: undefined,
+    firstBoolean: false,
   }
 
   onChangeFirstValue = ({ value }) => {
@@ -39,6 +42,12 @@ class App extends React.Component {
   onChangeFourthValue = ({ value }) => {
     this.setState({
       fourthValue: value,
+    });
+  };
+
+  onChangeFirstBoolean = ({ value }) => {
+    this.setState({
+      firstBoolean: value,
     });
   };
 
@@ -105,6 +114,23 @@ class App extends React.Component {
           fallbackValue=""
           onChange={this.onChangeSecondValue}
           hasSettings
+        />
+        <Button
+          pressed
+        >
+          true
+        </Button>
+
+        <BooleanInput
+          value
+          onChange={({ value }) => { console.log(value); }}
+        />
+        <AtriumInput
+          value={this.state.firstBoolean}
+          fallbackValue
+          onChange={this.onChangeFirstBoolean}
+          hasSettings
+          inputComponent={BooleanInput}
         />
       </div>
     );

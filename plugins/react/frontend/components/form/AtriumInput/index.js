@@ -40,8 +40,8 @@ class AtriumInput extends Component {
     }
   }
 
-  onInputChange = (event) => {
-    this.props.onChange({ value: event.target.value });
+  onInputChange = ({ value }) => {
+    this.props.onChange({ value });
   }
 
   onChangeToUndefined = () => {
