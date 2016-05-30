@@ -36,7 +36,7 @@ describe('server', () => {
         .expect(200)
         .end((err, res) => {
           expect(res.status).to.equal(200);
-          expect(res.body.error).to.be.false; // eslint-disable-line no-unused-expressions
+          expect(res.body.error).to.be.undefined; // eslint-disable-line no-unused-expressions
           expect(res.body.data).to.have.keys(['firstVariation', 'secondVariation']);
 
           let firstVariation;
@@ -88,7 +88,7 @@ describe('server', () => {
         .expect(200)
         .end((err, res) => {
           expect(res.status).to.equal(200);
-          expect(res.body.error).to.be.false; // eslint-disable-line no-unused-expressions
+          expect(res.body.error).to.be.undefined; // eslint-disable-line no-unused-expressions
           expect(res.body.data).to.have.keys(['testVariation']);
 
           let testVariation;
@@ -288,7 +288,7 @@ describe('server', () => {
         .expect(200)
         .end((err, res) => {
           expect(res.status).to.equal(200);
-          expect(res.body.error).to.be.false; // eslint-disable-line no-unused-expressions
+          expect(res.body.error).to.be.undefined; // eslint-disable-line no-unused-expressions
 
           let metadata;
           eval(`metadata = ${res.body.data}`); // eslint-disable-line no-eval
