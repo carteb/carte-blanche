@@ -16,7 +16,8 @@ export default {
     path.join(__dirname, './src/index.js'),
   ],
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
+    // new webpack.HotModuleReplacementPlugin(),
+
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
