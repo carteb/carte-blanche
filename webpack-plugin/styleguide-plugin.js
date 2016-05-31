@@ -105,28 +105,39 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
   compiler.plugin('emit', (compilation, callback) => {
     const assets = [];
     compilation.applyPlugins('styleguide-plugin-assets-processing', assets);
-    readMultipleFiles(assets, (err, contents) => {
-      if (err) {
-        throw err;
-      }
-      clientAssets['index.html'] = `
-      <!DOCTYPE html>
-      <html>
-        <head>
-          <meta charset="UTF-8">
-          <title>Styleguide</title>
-          <link rel="stylesheet" type="text/css" href="client-bundle.css" />
-        </head>
-        <body>
-          <div id='styleguide-root'>Root</div>
-          <style>
-            ${contents.join('\n')}
-          </style>
-          <script src="client-bundle.js"></script>
-          <script src="user-bundle.js"></script>
-        </body>
-      </html>
-      `;
+    if (assets.length > 0) {
+      readMultipleFiles(assets, (err, contents) => {
+        if (err) {
+          throw err;
+        }
+        clientAssets['index.html'] = `
+        <!DOCTYPE html>
+        <html>
+          <head>
+            <meta charset="UTF-8">
+            <title>Styleguide</title>
+            <link rel="stylesheet" type="text/css" href="client-bundle.css" />
+          </head>
+          <body>
+            <div id='styleguide-root'>Root</div>
+            <style>
+              ${contents.join('\n')}
+            </style>
+            <script src="client-bundle.js"></script>
+            <script src="user-bundle.js"></script>
+          </body>
+        </html>
+        `;
+        // Emit styleguide assets
+        Object.keys(clientAssets).forEach((filename) => {
+          compilation.assets[path.join(dest, filename)] = { // eslint-disable-line no-param-reassign
+            source: () => clientAssets[filename],
+            size: () => clientAssets[filename].length,
+          };
+        });
+        callback();
+      });
+    } else {
       // Emit styleguide assets
       Object.keys(clientAssets).forEach((filename) => {
         compilation.assets[path.join(dest, filename)] = { // eslint-disable-line no-param-reassign
@@ -135,7 +146,7 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
         };
       });
       callback();
-    });
+    }
   });
 
   // Don't add the styleguide chunk to html files
