@@ -1,16 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import AtriumInput from '../../plugins/react/frontend/components/form/AtriumInput';
-import Grid from '../../plugins/react/frontend/components/form/Grid';
-import Row from '../../plugins/react/frontend/components/form/Grid/Row';
-import LeftColumn from '../../plugins/react/frontend/components/form/Grid/LeftColumn';
-import RightColumn from '../../plugins/react/frontend/components/form/Grid/RightColumn';
-import Button from '../../plugins/react/frontend/components/form/Button';
-import BooleanInput from '../../plugins/react/frontend/components/form/BooleanInput';
-import ComboBox from '../../plugins/react/frontend/components/form/ComboBox';
+import AtriumInput from '../../frontend/components/form/AtriumInput';
+import Grid from '../../frontend/components/form/Grid';
+import Row from '../../frontend/components/form/Grid/Row';
+import LeftColumn from '../../frontend/components/form/Grid/LeftColumn';
+import RightColumn from '../../frontend/components/form/Grid/RightColumn';
+import Button from '../../frontend/components/form/Button';
+import BooleanInput from '../../frontend/components/form/BooleanInput';
+import ComboBox from '../../frontend/components/form/ComboBox';
 // import GridExperiment from './components/GridExperiment';
-import IFrame from '../../plugins/react/frontend/components/common/IFrame';
+import IFrame from '../../frontend/components/common/IFrame';
 import styles from './styles.css';
 
 class App extends React.Component {
