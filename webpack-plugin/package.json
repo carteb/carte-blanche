@@ -24,9 +24,11 @@
   },
   "license": "MIT",
   "dependencies": {
+    "chai": "^3.5.0",
+    "extra-entry-webpack-plugin": "0.0.2",
     "loader-utils": "^0.2.15",
     "lodash": "^4.13.1",
-    "extra-entry-webpack-plugin": "0.0.2"
+    "mocha": "^2.5.3"
   },
   "devDependencies": {
     "babel-cli": "^6.9.0",
