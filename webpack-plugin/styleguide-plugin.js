@@ -52,6 +52,10 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
 
   // Compile the client api
   const userBundleFileName = path.join(dest, 'user-bundle.js');
+  // Note that if we didn't disable the comma dangle option,
+  // and added a trailing comma after the template literal,
+  // everything'd break. Don't ask me why. - @mxstbr
+  /* eslint-disable comma-dangle */
   compiler.apply(new ExtraEntryWebpackPlugin({
     // Load the dynamic resolve loader with a placeholder file
     entry: [
@@ -62,11 +66,12 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
         filter: filter.toString(),
         componentRoot: this.options.componentRoot,
         context: compiler.context,
-      })}!${require.resolve('./dynamic-resolve.js')}`,
+      })}!${require.resolve('./dynamic-resolve.js')}`
     ],
     entryName: `Atrium [${this.id}]`,
     outputName: userBundleFileName,
   }));
+  /* eslint-enable comma-dangle */
 
   const styleguideAssets = {
     'index.html': fs.readFileSync(path.resolve(__dirname, './assets/client.html')),
