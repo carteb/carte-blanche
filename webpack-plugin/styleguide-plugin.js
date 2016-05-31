@@ -7,9 +7,9 @@
 
 import fs from 'fs';
 import path from 'path';
-import isArray from 'lodash/isArray';
 import includes from 'lodash/includes';
 import ExtraEntryWebpackPlugin from 'extra-entry-webpack-plugin';
+import readMultipleFiles from 'read-multiple-files';
 
 let id = -1;
 /**
@@ -32,9 +32,34 @@ function StyleguidePlugin(options) {
   }
 
   // Assert that the plugins option is an array if specified
-  if (this.options.plugins && !isArray(this.options.plugins)) {
+  if (this.options.plugins && !Array.isArray(this.options.plugins)) {
     throw new Error('The "plugins" option needs to be an array!\n\n');
   }
+
+  // Assert that the files option is an array if specified
+  if (this.options.files && !Array.isArray(this.options.files)) {
+    throw new Error('The "files" option needs to be an array!\n\n');
+  }
+}
+
+/**
+ * Emit some assets to a compilation
+ *
+ * @param  {Object}   compilation The compilation we want to emit the assets from
+ * @param  {Object}   assets      The assets we want to emit, keyed by filename
+ * @param  {String}   [dest]      Optionally, emit the assets to a subfolder
+ * @param  {Function} callback
+ */
+function emitAssets(compilation, assets, dest, callback) {
+  const cb = callback || dest;
+  // Emit styleguide assets
+  Object.keys(assets).forEach((filename) => {
+    compilation.assets[path.join(dest, filename)] = { // eslint-disable-line no-param-reassign
+      source: () => assets[filename],
+      size: () => assets[filename].length,
+    };
+  });
+  cb();
 }
 
 /**
@@ -82,22 +107,79 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
     outputName: userBundleFileName,
   }));
 
-  // Compile the assets used for the client
-  const styleguideAssets = {
-    'index.html': fs.readFileSync(path.resolve(__dirname, './assets/client.html')),
+  // The client assets, default the HTML to only include the client bundles and the
+  // user bundle
+  const clientAssets = {
+    'index.html': `
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <meta charset="UTF-8">
+        <title>Styleguide</title>
+        <link rel="stylesheet" type="text/css" href="client-bundle.css" />
+      </head>
+      <body>
+        <div id='styleguide-root'>Root</div>
+        <script src="client-bundle.js"></script>
+        <script src="user-bundle.js"></script>
+      </body>
+    </html>
+    `,
     'client-bundle.js': fs.readFileSync(path.resolve(__dirname, './assets/client-bundle.js')),
     'client-bundle.css': fs.readFileSync(path.resolve(__dirname, './assets/main.css')),
   };
 
   compiler.plugin('emit', (compilation, callback) => {
-    // Emit styleguide assets
-    Object.keys(styleguideAssets).forEach((filename) => {
-      compilation.assets[path.join(dest, filename)] = { // eslint-disable-line no-param-reassign
-        source: () => styleguideAssets[filename],
-        size: () => styleguideAssets[filename].length,
-      };
-    });
-    callback();
+    // If some custom files were passed by the user, default to them
+    const assets = this.options.files || [];
+    // Allow plugin developers to add assets to the client
+    compilation.applyPlugins('styleguide-plugin-assets-processing', assets);
+    // If any custom assets were passed in, read the files from the filesystem
+    if (assets.length > 0) {
+      readMultipleFiles(assets, (err, contents) => {
+        if (err) {
+          throw err;
+        }
+        const scripts = [];
+        const styles = [];
+        // Depending on the asset type that was passed add them to a script
+        // or style tag
+        assets.forEach((assetFilename, index) => {
+          switch (assetFilename.substr(-3)) {
+            case '.js': scripts.push(contents[index]); break;
+            case 'css': styles.push(contents[index]); break;
+            default: break;
+          }
+        });
+        // Put together the HTML file based on the assets we got
+        clientAssets['index.html'] = `
+        <!DOCTYPE html>
+        <html>
+          <head>
+            <meta charset="UTF-8">
+            <title>Styleguide</title>
+            <style>
+              ${styles.join('\n')}
+            </style>
+            <link rel="stylesheet" type="text/css" href="client-bundle.css" />
+          </head>
+          <body>
+            <div id='styleguide-root'>Root</div>
+            <script>
+              ${scripts.join('\n')}
+            </script>
+            <script src="client-bundle.js"></script>
+            <script src="user-bundle.js"></script>
+          </body>
+        </html>
+        `;
+        emitAssets(compilation, clientAssets, dest, callback);
+      });
+    } else {
+      // If not custom assets were passed in by neither the user nor any plugins
+      // emit the defaults straight away
+      emitAssets(compilation, clientAssets, dest, callback);
+    }
   });
 
   // Don't add the styleguide chunk to html files
@@ -111,13 +193,13 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
  * Register the default plugins
  */
 StyleguidePlugin.prototype.registerDefaultPlugins = function registerDefaultPlugins(compiler) {
-  let ReactPlugin = require('../plugins/react/plugin').default; // eslint-disable-line global-require, max-len
+  let ReactPlugin = require('../plugins/react/dist/plugin'); // eslint-disable-line global-require, max-len
   try {
     const reactPlugin = new ReactPlugin();
     reactPlugin.apply(compiler);
   } catch (err) {
     try {
-      ReactPlugin = require('atrium-react-plugin-beta').default; // eslint-disable-line global-require, import/no-unresolved, max-len
+      ReactPlugin = require('atrium-react-plugin-beta'); // eslint-disable-line global-require, import/no-unresolved, max-len
       const reactPlugin = new ReactPlugin();
       reactPlugin.apply(compiler);
     } catch (ex) {

@@ -174,7 +174,8 @@ class Navigation extends React.Component {
         </IndexLink>
         <input
           className={styles.filterInput}
-          placeholder="Filter"
+          type="search"
+          placeholder="Type to filter components"
           onChange={this.setFilter}
         />
         <div className={styles.list}>

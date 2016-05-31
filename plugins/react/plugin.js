@@ -70,7 +70,7 @@ ReactPlugin.prototype.apply = function apply(compiler) {
   const variationBasePath = path.join(projectBasePath, options.variationFolderName);
   options.variationBasePath = variationBasePath;
 
-  const server = fork(path.resolve(__dirname, './server/run.js'), [
+  const server = fork(path.join(__dirname, './server/run.js'), [
     projectBasePath, // process.argv[2]
     JSON.stringify(options), // process.argv[3]
   ]);
@@ -102,11 +102,11 @@ ReactPlugin.prototype.apply = function apply(compiler) {
         renderToClient({
           name: 'react', // TODO this is used in the iframe - pass it through
           frontendData: { options },
-          frontendPlugin: `${require.resolve('./frontend/index.js')}`,
+          frontendPlugin: `${require.resolve('./frontend/index.js')}`, // eslint-disable-line global-require,max-len
         });
       }
     );
   });
 };
 
-export default ReactPlugin;
+module.exports = ReactPlugin;
