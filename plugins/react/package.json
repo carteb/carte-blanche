@@ -51,6 +51,7 @@
   },
   "scripts": {
     "build": "webpack --config webpack.prod.babel.js",
+    "postbuild": "ncp ./plugin.js ./dist/plugin.js && ncp ./resolver.js ./dist/resolver.js && ncp server dist/server",
     "prepublish": "npm run build"
   },
   "devDependencies": {

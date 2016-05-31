@@ -95,10 +95,6 @@ ReactPlugin.prototype.apply = function apply(compiler) {
       }
     );
 
-    compilation.plugin('styleguide-plugin-assets-processing', (assets) => {
-      assets.push(path.join(__dirname, './plugin.css'));
-    });
-
     // The source styleguide plugin
     compilation.plugin(
       'styleguide-plugin-processing',
@@ -106,7 +102,7 @@ ReactPlugin.prototype.apply = function apply(compiler) {
         renderToClient({
           name: 'react',
           frontendData: { options },
-          frontendPlugin: `${require('./frontend/index.js')}`, // eslint-disable-line global-require,max-len
+          frontendPlugin: `${require.resolve('./frontend/index.js')}`, // eslint-disable-line global-require,max-len
         });
       }
     );

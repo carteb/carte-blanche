@@ -4,32 +4,7 @@ var autoprefixer = require('autoprefixer');
 
 const MATCH_ALL_NON_RELATIVE_IMPORTS = /^\w.*$/i;
 
-module.exports = [{
-  output: {
-    filename: '[name].js',
-    library: 'atrium-react-plugin-beta',
-    libraryTarget: 'commonjs2',
-    path: path.join(__dirname, 'dist'), // where to place webpack files
-  },
-  entry: {
-    plugin: './plugin.js',
-    'server/run': './server/run.js',
-  },
-  module: {
-    loaders: [{
-      test: /\.js$/,
-      loader: 'babel',
-    }],
-  },
-  externals: [MATCH_ALL_NON_RELATIVE_IMPORTS, {
-    './frontend/index.js': 'commonjs ./frontend/index.js',
-  }],
-  target: 'node',
-  node: {
-    __dirname: false,
-    __filename: false,
-  },
-}, {
+module.exports = {
   output: {
     filename: '[name].js',
     library: 'atrium-react-plugin-beta',
@@ -55,4 +30,4 @@ module.exports = [{
   externals: [MATCH_ALL_NON_RELATIVE_IMPORTS],
   target: 'web',
   postcss: [autoprefixer({ browsers: ['> 1%'] })],
-}];
+};
