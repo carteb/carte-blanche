@@ -65,9 +65,13 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
       })}!${require.resolve('./assets/placeholder.js')}`,
   ];
   // Find out if we need to include the webpack-dev-server client
-  if (includes(userEntries, 'webpack-dev-server/client') &&
-      devServerOptions.hot) {
-    extraEntries.unshift('webpack/hot/only-dev-server');
+  // TODO Test automatically if the user has any variant (middlware, devserver,...) of HMR enabled
+  if (this.options.hot !== false && (this.options.hot === true ||
+      (includes(userEntries, 'webpack-dev-server/client') && devServerOptions.hot)
+    )) {
+    if (includes(userEntries, 'webpack/hot/only-dev-server')) {
+      extraEntries.unshift('webpack/hot/only-dev-server');
+    }
     extraEntries.unshift(`webpack-dev-server/client?http://${devServerOptions.host}:${devServerOptions.port}`);
   }
   // Apply the ExtraEntry plugin with our entries above, a unique entryName
