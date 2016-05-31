@@ -66,7 +66,6 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
   ];
   // Find out if we need to include the webpack-dev-server client
   if (includes(userEntries, 'webpack-dev-server/client') &&
-      includes(userEntries, 'webpack/hot/only-dev-server') ||
       devServerOptions.hot) {
     extraEntries.unshift('webpack/hot/only-dev-server');
     extraEntries.unshift(`webpack-dev-server/client?http://${devServerOptions.host}:${devServerOptions.port}`);
