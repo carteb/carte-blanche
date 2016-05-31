@@ -8,6 +8,7 @@
 import fs from 'fs';
 import path from 'path';
 import isArray from 'lodash/isArray';
+import includes from 'lodash/includes';
 import ExtraEntryWebpackPlugin from 'extra-entry-webpack-plugin';
 
 let id = -1;
@@ -50,29 +51,35 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
     this.registerDefaultPlugins(compiler);
   }
 
-  // Compile the client api
+  // Compile the client
   const userBundleFileName = path.join(dest, 'user-bundle.js');
-  // Note that if we didn't disable the comma dangle option,
-  // and added a trailing comma after the template literal,
-  // everything'd break. Don't ask me why. - @mxstbr
-  /* eslint-disable comma-dangle */
-  compiler.apply(new ExtraEntryWebpackPlugin({
-    // Load the dynamic resolve loader with a placeholder file
-    entry: [
-      'webpack-dev-server/client?http://localhost:8080',
-      'webpack/hot/only-dev-server',
-      `!!${require.resolve('./dynamic-resolve.js')}?${
+  const userEntries = compiler.options.entry;
+  const devServerOptions = compiler.options.devServer;
+  // Load the dynamic resolve loader with a placeholder file
+  const extraEntries = [
+    `!!${require.resolve('./dynamic-resolve.js')}?${
       JSON.stringify({
         filter: filter.toString(),
         componentRoot: this.options.componentRoot,
         context: compiler.context,
-      })}!${require.resolve('./dynamic-resolve.js')}`
-    ],
+      })}!${require.resolve('./assets/placeholder.js')}`,
+  ];
+  // Find out if we need to include the webpack-dev-server client
+  if (includes(userEntries, 'webpack-dev-server/client') &&
+      includes(userEntries, 'webpack/hot/only-dev-server') ||
+      devServerOptions.hot) {
+    extraEntries.unshift('webpack/hot/only-dev-server');
+    extraEntries.unshift(`webpack-dev-server/client?http://${devServerOptions.host}:${devServerOptions.port}`);
+  }
+  // Apply the ExtraEntry plugin with our entries above, a unique entryName
+  // and ouput everything to userBundleFileName
+  compiler.apply(new ExtraEntryWebpackPlugin({
+    entry: extraEntries,
     entryName: `Atrium [${this.id}]`,
     outputName: userBundleFileName,
   }));
-  /* eslint-enable comma-dangle */
 
+  // Compile the assets used for the client
   const styleguideAssets = {
     'index.html': fs.readFileSync(path.resolve(__dirname, './assets/client.html')),
     'client-bundle.js': fs.readFileSync(path.resolve(__dirname, './assets/client-bundle.js')),
