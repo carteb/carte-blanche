@@ -1,6 +1,6 @@
 import React from 'react';
 import toNumber from 'lodash/toNumber';
-import Input from '../../../../common/Input';
+import Input from '../../../../form/Input';
 import Row from '../../../../form/Grid/Row';
 import LeftColumn from '../../../../form/Grid/LeftColumn';
 import RightColumn from '../../../../form/Grid/RightColumn';
@@ -17,10 +17,10 @@ export default ({ constraints = {}, onUpdate }) => {
   } = constraints;
 
   const updateMin = (evt) => {
-    onUpdate({ min: toNumber(evt.target.value) });
+    onUpdate({ min: toNumber(evt.value) });
   };
   const updateMax = (evt) => {
-    onUpdate({ max: toNumber(evt.target.value) });
+    onUpdate({ max: toNumber(evt.value) });
   };
 
   return (
@@ -30,7 +30,6 @@ export default ({ constraints = {}, onUpdate }) => {
         <RightColumn>
           <Input
             type="number"
-            label=""
             onChange={updateMin}
             value={min}
           />
@@ -42,7 +41,6 @@ export default ({ constraints = {}, onUpdate }) => {
         <RightColumn>
           <Input
             type="number"
-            label=""
             onChange={updateMax}
             value={max}
           />
