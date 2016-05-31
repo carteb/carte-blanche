@@ -35,8 +35,8 @@ $ npm run example:dev       # Complex PropTypes, almost no styling. Perfect for 
 $ npm run example:profile   # Simple, visually nice example
 $ npm run example:dest      # Has the dest option enabled at /examples/
 $ npm run example:radium    # Styles the example app with Radium
-$ npm run example:jss       #           --"--             JSS
-$ npm run example:aphrodite #           --"--             Aphrodite
+$ npm run example:jss       #           --“--             JSS
+$ npm run example:aphrodite #           --“--             Aphrodite
 ```
 
 To build the client, run `$ npm run client:build`.
@@ -53,7 +53,7 @@ $ npm run example:<examplename>:iron
 
 ### Plugins
 
-There's one very important plugin in this repo, which is the ReactPlugin. It's in the `plugins/react/` folder, and has it's own build process. Run one of the examples from above, and in another terminal instance round
+One important plugin lives in this repo, the ReactPlugin. It's in the `plugins/react/` folder, and has it's entire own build process. Run one of the examples from above, and in another terminal instance round
 
 ```sh
 $ npm run plugins:react:dev
@@ -69,7 +69,7 @@ $ npm run plugins:react:build
 
 ### Utils
 
-We have some shared utils, which we use in both the client and some plugins in the `utils/` folder. They are published separately, and have their own building, testing and linting process. Develop them using TDD (test driven development) by running `npm run test -- --watch` in the `utils/` folder.
+We have some shared utils, which we use in both the client and some plugins in the `utils/` folder. We publish them separately, and they have their own building, testing and linting process. Develop them using TDD (test driven development) by running `npm run test -- --watch` in the `utils/` folder.
 
 ## Structure
 

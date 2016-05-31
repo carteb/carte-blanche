@@ -8,7 +8,6 @@
 import fs from 'fs';
 import path from 'path';
 import includes from 'lodash/includes';
-import isString from 'lodash/isString';
 import ExtraEntryWebpackPlugin from 'extra-entry-webpack-plugin';
 import readMultipleFiles from 'read-multiple-files';
 
