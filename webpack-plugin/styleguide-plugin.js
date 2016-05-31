@@ -44,16 +44,6 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
   const dest = this.options.dest || 'styleguide';
   const filter = this.options.filter || /([A-Z][a-zA-Z]*\/index|[A-Z][a-zA-Z]*)\.(jsx?|es6)$/;
 
-  /**
-   * API for plugins to add CSS files to the client
-   *
-   * @param {String} filePath
-   */
-  const CSSFiles = [];
-  compiler.addCSSFileToClient = function addCSSFileToClient(filePath) { // eslint-disable-line no-param-reassign,max-len
-    CSSFiles.push(filePath);
-  };
-
   // Register either the plugins or the default plugins
   if (this.options.plugins && this.options.plugins.length > 0) {
     this.registerPlugins(compiler);
@@ -113,7 +103,9 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
   };
 
   compiler.plugin('emit', (compilation, callback) => {
-    readMultipleFiles(CSSFiles, (err, contents) => {
+    const assets = [];
+    compilation.applyPlugins('styleguide-plugin-assets-processing', assets);
+    readMultipleFiles(assets, (err, contents) => {
       if (err) {
         throw err;
       }

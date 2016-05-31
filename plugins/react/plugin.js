@@ -85,8 +85,6 @@ ReactPlugin.prototype.apply = function apply(compiler) {
   process.on('SIGINT', killProcess.bind(null, server));
   process.on('uncaughtException', killProcess.bind(null, server));
 
-  compiler.addCSSFileToClient(require.resolve('./frontendStyles.css'));
-
   compiler.plugin('compilation', (compilation) => {
     // Expose the react parse result to all other styleguide plugins
     compilation.plugin(
@@ -96,6 +94,10 @@ ReactPlugin.prototype.apply = function apply(compiler) {
         data.reactDocs = reactDocs.parse(data.source, styleguideResolver);
       }
     );
+
+    compilation.plugin('styleguide-plugin-assets-processing', (assets) => {
+      assets.push(path.join(__dirname, './plugin.css'));
+    });
 
     // The source styleguide plugin
     compilation.plugin(
