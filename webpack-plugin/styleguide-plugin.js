@@ -173,12 +173,12 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
           </body>
         </html>
         `;
-        emitAssets(compilation, assets, dest, callback);
+        emitAssets(compilation, clientAssets, dest, callback);
       });
     } else {
       // If not custom assets were passed in by neither the user nor any plugins
       // emit the defaults straight away
-      emitAssets(compilation, assets, dest, callback);
+      emitAssets(compilation, clientAssets, dest, callback);
     }
   });
 
