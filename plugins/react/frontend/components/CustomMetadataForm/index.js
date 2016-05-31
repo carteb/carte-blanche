@@ -37,7 +37,7 @@ const CustomMetadataForm = (props) => {
             const newCustomMetadata = { ...props.customMetadata };
             // overwrite they current propKey which also removes constraints
             set(newCustomMetadata, ['props', propKey], {});
-            newCustomMetadata.props[propKey].controlType = event.target.value;
+            newCustomMetadata.props[propKey].controlType = event.value;
             props.updateCustomMetadata(newCustomMetadata);
           };
 

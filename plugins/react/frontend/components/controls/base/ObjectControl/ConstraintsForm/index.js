@@ -54,7 +54,7 @@ const ConstraintsForm = (props) => {
             // set an empty object for the wanted key to
             // which also removes inner constraints in case they exist
             set(newCustomMetadata, [propKey], {});
-            newCustomMetadata[propKey].controlType = event.target.value;
+            newCustomMetadata[propKey].controlType = event.value;
             // give back the props list
             props.onUpdate({ props: newCustomMetadata });
           };

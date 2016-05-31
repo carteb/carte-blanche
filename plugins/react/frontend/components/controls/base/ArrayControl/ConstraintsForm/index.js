@@ -36,7 +36,7 @@ import ComboBox from '../../../../form/ComboBox';
  */
 const ConstraintsForm = ({ constraints, parsedMetadata, onUpdate }) => {
   const onChange = (event) => {
-    const controlType = event.target.value;
+    const controlType = event.value;
     // check if the control type has constraints
     // if the type doesn't have constraints neglect the existing constraints.
     const control = getControl({ name: controlType });
