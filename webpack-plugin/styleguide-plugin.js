@@ -9,6 +9,7 @@ import fs from 'fs';
 import path from 'path';
 import isArray from 'lodash/isArray';
 import ExtraEntryWebpackPlugin from 'extra-entry-webpack-plugin';
+// import pathToHTML from './utils/pathToHTML';
 
 let id = -1;
 /**
@@ -34,6 +35,12 @@ function StyleguidePlugin(options) {
   if (this.options.plugins && !isArray(this.options.plugins)) {
     throw new Error('The "plugins" option needs to be an array!\n\n');
   }
+
+  // Assert that the files option is an array if specified
+  if (this.options.files && !Array.isArray(this.options.files)) {
+    throw new Error('The "files" option needs to be an array!\n\n');
+  }
+  this.options.files = this.options.files || [];
 }
 
 /**
