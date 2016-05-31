@@ -10,6 +10,7 @@ import Button from '../../plugins/react/frontend/components/form/Button';
 import BooleanInput from '../../plugins/react/frontend/components/form/BooleanInput';
 import ComboBox from '../../plugins/react/frontend/components/form/ComboBox';
 // import GridExperiment from './components/GridExperiment';
+import IFrame from '../../plugins/react/frontend/components/common/IFrame';
 import styles from './styles.css';
 
 class App extends React.Component {
@@ -112,6 +113,8 @@ class App extends React.Component {
             <RightColumn>right</RightColumn>
           </Row>
         </Grid>
+
+        <IFrame />
 
         <ComboBox
           value={this.state.firstCheckboxValue}

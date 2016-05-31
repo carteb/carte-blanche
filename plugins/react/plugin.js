@@ -100,7 +100,7 @@ ReactPlugin.prototype.apply = function apply(compiler) {
       'styleguide-plugin-processing',
       (renderToClient) => {
         renderToClient({
-          name: 'react',
+          name: 'react', // TODO this is used in the iframe - pass it through
           frontendData: { options },
           frontendPlugin: `${require.resolve('./frontend/index.js')}`,
         });
