@@ -8,8 +8,8 @@ import { hashHistory, IndexLink } from 'react-router';
 import map from 'lodash/map';
 import has from 'lodash/has';
 import throttle from 'lodash/throttle';
-import find from 'lodash/find';
-import flatten from 'lodash/flatten';
+// import find from 'lodash/find';
+// import flatten from 'lodash/flatten';
 
 import smoothscroll from './smoothscroll';
 import offsetTopFromPage from './offsetTopFromPage';
@@ -60,21 +60,21 @@ class Navigation extends React.Component {
   };
 
   setQueryParamForActiveItemId = () => {
-    const plugins = getPlugins(this.props.activeComponentPath);
-    const ids = flatten(map(plugins, (plugin) => map(plugin, (link) => link.id)));
-
-    const activeId = find(ids, (id) => {
-      const element = document.getElementById(id);
-      return window.scrollY <= offsetTopFromPage(element);
-    });
-    const activeItemId = this.props.location.query.id;
-    if (activeId !== activeItemId || activeItemId === undefined) {
-      hashHistory.replace({
-        pathname: this.props.location.pathname,
-        query: { id: activeId },
-        state: { preventScroll: true },
-      });
-    }
+    // const plugins = getPlugins(this.props.activeComponentPath);
+    // const ids = flatten(map(plugins, (plugin) => map(plugin, (link) => link.id)));
+    //
+    // const activeId = find(ids, (id) => {
+    //   const element = document.getElementById(id);
+    //   return window.scrollY <= offsetTopFromPage(element);
+    // });
+    // const activeItemId = this.props.location.query.id;
+    // if (activeId !== activeItemId || activeItemId === undefined) {
+    //   hashHistory.replace({
+    //     pathname: this.props.location.pathname,
+    //     query: { id: activeId },
+    //     state: { preventScroll: true },
+    //   });
+    // }
   };
 
   toggleShortcutHelp = () => {

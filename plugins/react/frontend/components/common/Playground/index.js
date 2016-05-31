@@ -6,11 +6,12 @@
 
 import React, { PropTypes } from 'react';
 import { VelocityComponent } from 'velocity-react';
-import Frame from 'react-frame-component';
-import map from 'lodash/map';
+// import Frame from 'react-frame-component';
+// import map from 'lodash/map';
 
 import reactDOM from 'react-dom';
 
+import IFrame from '../IFrame';
 import EditButton from '../EditButton';
 import DeleteButton from '../DeleteButton';
 import Card from '../Card';
@@ -49,7 +50,7 @@ class Playground extends React.Component {
 
       // This seems to be the most accurate methode to calculate the real iframe height
       if (frame && card) {
-        const frameHeight = frame.contentDocument.querySelector('#root > div').scrollHeight;
+        const frameHeight = frame.contentDocument.querySelector('#root').scrollHeight;
         card.style.height = `${frameHeight}px`;
       }
     }
@@ -81,8 +82,6 @@ class Playground extends React.Component {
   };
 
   render() {
-    const Component = this.props.component;
-
     // Delay the fade in and the fade out for 500ms
     // Don't delay the fade in at all if we're directly hovering over the buttons
     let delay;
@@ -151,32 +150,10 @@ ${this.props.err}
               </code>
             </div>
           ) : (
-            <Frame
-              initialContent={`
-                <!DOCTYPE html>
-                <html style="height: 100%; width: 100%; margin: 0; padding: 0;">
-                  <head>
-                    ${map(this.props.stylingNodes, (styleNode) => styleNode.outerHTML).join('')}
-                  </head>
-                  <body style="height: 100%; width: 100%; margin: 0; padding: 0;">
-                    <div
-                      id="root"
-                      style="
-                        height: 100%;
-                        width: 100%;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                      "
-                    ></div>
-                  </body>
-                </html>
-              `}
-              mountTarget="#root"
-              className={styles.componentFrame}
-            >
-              <Component {...this.props.variationProps} />
-            </Frame>
+            <IFrame
+              variationProps={this.props.variationProps}
+              componentPath={this.props.componentPath}
+            />
           )}
         </Card>
       </div>

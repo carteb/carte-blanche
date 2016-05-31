@@ -189,18 +189,19 @@ class PlaygroundList extends Component {
           loadingVariations: false,
         });
 
-        const links = map(variationPropsList, (variation, key) => (
-          {
-            title: variation.name,
-            id: key,
-          }
-        ));
+        // TODO update the navigation
+        // const links = map(variationPropsList, (variation, key) => (
+        //   {
+        //     title: variation.name,
+        //     id: key,
+        //   }
+        // ));
 
-        window.STYLEGUIDE_PLUGIN_CLIENT_API.updateNavigation(
-          this.props.componentPath,
-          'playground-plugin',
-          links
-        );
+        // window.STYLEGUIDE_PLUGIN_CLIENT_API.updateNavigation(
+        //   this.props.componentPath,
+        //   'playground-plugin',
+        //   links
+        // );
       })
       .catch((ex) => {
         // TODO proper error handling
@@ -435,6 +436,7 @@ class PlaygroundList extends Component {
               />
               <Playground
                 component={component}
+                componentPath={this.props.componentPath}
                 fullHeight
                 variationProps={selectedVariation.props}
                 variationPath={this.state.selectedVariationId}
@@ -457,6 +459,7 @@ class PlaygroundList extends Component {
             <Playground
               key={variationPath}
               component={component}
+              componentPath={this.props.componentPath}
               title={variation.name}
               variationProps={variation.props}
               variationPath={variationPath}
