@@ -7,9 +7,10 @@
 
 import fs from 'fs';
 import path from 'path';
-import isArray from 'lodash/isArray';
+import includes from 'lodash/includes';
 import ExtraEntryWebpackPlugin from 'extra-entry-webpack-plugin';
-// import pathToHTML from './utils/pathToHTML';
+import pathToHTML from './utils/pathToHTML';
+import readMultipleFiles from 'read-multiple-files';
 
 let id = -1;
 /**
@@ -32,7 +33,7 @@ function StyleguidePlugin(options) {
   }
 
   // Assert that the plugins option is an array if specified
-  if (this.options.plugins && !isArray(this.options.plugins)) {
+  if (this.options.plugins && !Array.isArray(this.options.plugins)) {
     throw new Error('The "plugins" option needs to be an array!\n\n');
   }
 
@@ -57,35 +58,102 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
     this.registerDefaultPlugins(compiler);
   }
 
-  // Compile the client api
+  // Compile the client
   const userBundleFileName = path.join(dest, 'user-bundle.js');
-  compiler.apply(new ExtraEntryWebpackPlugin({
-    // Load the dynamic resolve loader with a placeholder file
-    entry: `!!${require.resolve('./dynamic-resolve.js')}?${
+  const userEntries = compiler.options.entry;
+  const devServerOptions = compiler.options.devServer;
+  // Load the dynamic resolve loader with a placeholder file
+  const extraEntries = [
+    `!!${require.resolve('./dynamic-resolve.js')}?${
       JSON.stringify({
         filter: filter.toString(),
         componentRoot: this.options.componentRoot,
         context: compiler.context,
-      })}!${require.resolve('./dynamic-resolve.js')}`,
+      })}!${require.resolve('./assets/placeholder.js')}`,
+  ];
+  // Find out if we need to include the webpack-dev-server client
+  // TODO Test automatically if the user has any variant (middlware, devserver,...) of HMR enabled
+  if (this.options.hot !== false && (this.options.hot === true ||
+      (includes(userEntries, 'webpack-dev-server/client') && devServerOptions.hot)
+    )) {
+    if (includes(userEntries, 'webpack/hot/only-dev-server')) {
+      extraEntries.unshift('webpack/hot/only-dev-server');
+    }
+    extraEntries.unshift(`webpack-dev-server/client?http://${devServerOptions.host}:${devServerOptions.port}`);
+  }
+  // Apply the ExtraEntry plugin with our entries above, a unique entryName
+  // and ouput everything to userBundleFileName
+  compiler.apply(new ExtraEntryWebpackPlugin({
+    entry: extraEntries,
     entryName: `Atrium [${this.id}]`,
     outputName: userBundleFileName,
   }));
 
-  const styleguideAssets = {
-    'index.html': fs.readFileSync(path.resolve(__dirname, './assets/client.html')),
+  const clientAssets = {
+    'index.html': `
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <meta charset="UTF-8">
+        <title>Styleguide</title>
+        <link rel="stylesheet" type="text/css" href="client-bundle.css" />
+      </head>
+      <body>
+        <div id='styleguide-root'>Root</div>
+        <script src="client-bundle.js"></script>
+        <script src="user-bundle.js"></script>
+      </body>
+    </html>
+    `,
     'client-bundle.js': fs.readFileSync(path.resolve(__dirname, './assets/client-bundle.js')),
     'client-bundle.css': fs.readFileSync(path.resolve(__dirname, './assets/main.css')),
   };
 
   compiler.plugin('emit', (compilation, callback) => {
-    // Emit styleguide assets
-    Object.keys(styleguideAssets).forEach((filename) => {
-      compilation.assets[path.join(dest, filename)] = { // eslint-disable-line no-param-reassign
-        source: () => styleguideAssets[filename],
-        size: () => styleguideAssets[filename].length,
-      };
-    });
-    callback();
+    const assets = [];
+    compilation.applyPlugins('styleguide-plugin-assets-processing', assets);
+    if (assets.length > 0) {
+      readMultipleFiles(assets, (err, contents) => {
+        if (err) {
+          throw err;
+        }
+        clientAssets['index.html'] = `
+        <!DOCTYPE html>
+        <html>
+          <head>
+            <meta charset="UTF-8">
+            <title>Styleguide</title>
+            <link rel="stylesheet" type="text/css" href="client-bundle.css" />
+          </head>
+          <body>
+            <div id='styleguide-root'>Root</div>
+            <style>
+              ${contents.join('\n')}
+            </style>
+            <script src="client-bundle.js"></script>
+            <script src="user-bundle.js"></script>
+          </body>
+        </html>
+        `;
+        // Emit styleguide assets
+        Object.keys(clientAssets).forEach((filename) => {
+          compilation.assets[path.join(dest, filename)] = { // eslint-disable-line no-param-reassign
+            source: () => clientAssets[filename],
+            size: () => clientAssets[filename].length,
+          };
+        });
+        callback();
+      });
+    } else {
+      // Emit styleguide assets
+      Object.keys(clientAssets).forEach((filename) => {
+        compilation.assets[path.join(dest, filename)] = { // eslint-disable-line no-param-reassign
+          source: () => clientAssets[filename],
+          size: () => clientAssets[filename].length,
+        };
+      });
+      callback();
+    }
   });
 
   // Don't add the styleguide chunk to html files
@@ -99,13 +167,13 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
  * Register the default plugins
  */
 StyleguidePlugin.prototype.registerDefaultPlugins = function registerDefaultPlugins(compiler) {
-  let ReactPlugin = require('../plugins/react/plugin').default; // eslint-disable-line global-require, max-len
+  let ReactPlugin = require('../plugins/react/dist/plugin'); // eslint-disable-line global-require, max-len
   try {
     const reactPlugin = new ReactPlugin();
     reactPlugin.apply(compiler);
   } catch (err) {
     try {
-      ReactPlugin = require('atrium-react-plugin-beta').default; // eslint-disable-line global-require, import/no-unresolved, max-len
+      ReactPlugin = require('atrium-react-plugin-beta'); // eslint-disable-line global-require, import/no-unresolved, max-len
       const reactPlugin = new ReactPlugin();
       reactPlugin.apply(compiler);
     } catch (ex) {

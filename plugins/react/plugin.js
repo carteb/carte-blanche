@@ -43,9 +43,15 @@ function ReactPlugin(options) {
 /**
  * Kill a Node.js process
  */
-function killProcess(proc) {
+function killProcess(proc, err) {
   proc.kill('SIGINT');
-  process.exit();
+  if (err) {
+    console.log('Uncaught Exception...');
+    console.log(err.stack);
+    process.exit(1);
+  } else {
+    process.exit();
+  }
 }
 
 /**
@@ -64,7 +70,7 @@ ReactPlugin.prototype.apply = function apply(compiler) {
   const variationBasePath = path.join(projectBasePath, options.variationFolderName);
   options.variationBasePath = variationBasePath;
 
-  const server = fork(path.resolve(__dirname, './server/run.js'), [
+  const server = fork(path.join(__dirname, './server/run.js'), [
     projectBasePath, // process.argv[2]
     JSON.stringify(options), // process.argv[3]
   ]);
@@ -96,11 +102,11 @@ ReactPlugin.prototype.apply = function apply(compiler) {
         renderToClient({
           name: 'react',
           frontendData: { options },
-          frontendPlugin: `${require.resolve('./frontend/index.js')}`,
+          frontendPlugin: `${require.resolve('./frontend/index.js')}`, // eslint-disable-line global-require,max-len
         });
       }
     );
   });
 };
 
-export default ReactPlugin;
+module.exports = ReactPlugin;

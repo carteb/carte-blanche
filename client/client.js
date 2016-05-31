@@ -13,7 +13,13 @@ import Plugins from './components/Plugins';
 import App from './components/App';
 import map from 'lodash/map';
 
+let rootElement;
 window.$INITIALIZE_COMPONENT_GUI = function initializeComponentGui(components) {
+  if (rootElement) {
+    rootElement.forceUpdate();
+    return;
+  }
+
   // Generate a view per user component that renders the frontend part of the
   // plugins for each component
   const routes = map(components, (component, componentPath) => (
@@ -24,12 +30,17 @@ window.$INITIALIZE_COMPONENT_GUI = function initializeComponentGui(components) {
     />
   ));
 
-  ReactDOM.render(
-    <Router history={hashHistory}>
-      <Route path="/" component={(props) => <App {...props} components={components} />}>
-        {routes}
-      </Route>
-    </Router>,
+  const appRoute = (<Route
+    path="/"
+    component={(props) => (<App {...props} components={components} />)}
+  >
+    {routes}
+  </Route>);
+
+  rootElement = ReactDOM.render(
+    (<Router history={hashHistory}>
+        {appRoute}
+    </Router>),
     document.getElementById('styleguide-root')
   );
 };
