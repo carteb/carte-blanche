@@ -62,9 +62,11 @@
     "css-loader": "^0.23.1",
     "enzyme": "^2.3.0",
     "extract-text-webpack-plugin": "^1.0.1",
+    "ncp": "^2.0.0",
     "postcss-loader": "^0.9.1",
     "rimraf": "^2.5.2",
     "sinon": "^1.17.4",
-    "supertest": "^1.2.0"
+    "supertest": "^1.2.0",
+    "webpack": "^1.13.1"
   }
 }
