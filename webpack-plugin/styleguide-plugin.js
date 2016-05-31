@@ -9,7 +9,6 @@ import fs from 'fs';
 import path from 'path';
 import includes from 'lodash/includes';
 import ExtraEntryWebpackPlugin from 'extra-entry-webpack-plugin';
-import pathToHTML from './utils/pathToHTML';
 import readMultipleFiles from 'read-multiple-files';
 
 let id = -1;
@@ -110,26 +109,43 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
   };
 
   compiler.plugin('emit', (compilation, callback) => {
-    const assets = [];
+    const assets = this.options.files || [];
     compilation.applyPlugins('styleguide-plugin-assets-processing', assets);
     if (assets.length > 0) {
       readMultipleFiles(assets, (err, contents) => {
         if (err) {
           throw err;
         }
+        const scripts = [];
+        const styles = [];
+        assets.forEach((assetFilename, index) => {
+          switch (assetFilename.substr(-3)) {
+            case '.js':
+              scripts.push(contents[index]);
+              break;
+            case 'css':
+              styles.push(contents[index]);
+              break;
+            default:
+              break;
+          }
+        });
         clientAssets['index.html'] = `
         <!DOCTYPE html>
         <html>
           <head>
             <meta charset="UTF-8">
             <title>Styleguide</title>
+            <style>
+              ${styles.join('\n')}
+            </style>
             <link rel="stylesheet" type="text/css" href="client-bundle.css" />
           </head>
           <body>
             <div id='styleguide-root'>Root</div>
-            <style>
-              ${contents.join('\n')}
-            </style>
+            <script>
+              ${scripts.join('\n')}
+            </script>
             <script src="client-bundle.js"></script>
             <script src="user-bundle.js"></script>
           </body>
