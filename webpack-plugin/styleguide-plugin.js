@@ -7,6 +7,7 @@
 
 import fs from 'fs';
 import path from 'path';
+import includes from 'lodash/includes';
 import ExtraEntryWebpackPlugin from 'extra-entry-webpack-plugin';
 import readMultipleFiles from 'read-multiple-files';
 
@@ -59,16 +60,34 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
   } else {
     this.registerDefaultPlugins(compiler);
   }
-  // Compile the client api
+
+  // Compile the client
   const userBundleFileName = path.join(dest, 'user-bundle.js');
-  compiler.apply(new ExtraEntryWebpackPlugin({
-    // Load the dynamic resolve loader with a placeholder file
-    entry: `!!${require.resolve('./dynamic-resolve.js')}?${
+  const userEntries = compiler.options.entry;
+  const devServerOptions = compiler.options.devServer;
+  // Load the dynamic resolve loader with a placeholder file
+  const extraEntries = [
+    `!!${require.resolve('./dynamic-resolve.js')}?${
       JSON.stringify({
         filter: filter.toString(),
         componentRoot: this.options.componentRoot,
         context: compiler.context,
-      })}!${require.resolve('./dynamic-resolve.js')}`,
+      })}!${require.resolve('./assets/placeholder.js')}`,
+  ];
+  // Find out if we need to include the webpack-dev-server client
+  // TODO Test automatically if the user has any variant (middlware, devserver,...) of HMR enabled
+  if (this.options.hot !== false && (this.options.hot === true ||
+      (includes(userEntries, 'webpack-dev-server/client') && devServerOptions.hot)
+    )) {
+    if (includes(userEntries, 'webpack/hot/only-dev-server')) {
+      extraEntries.unshift('webpack/hot/only-dev-server');
+    }
+    extraEntries.unshift(`webpack-dev-server/client?http://${devServerOptions.host}:${devServerOptions.port}`);
+  }
+  // Apply the ExtraEntry plugin with our entries above, a unique entryName
+  // and ouput everything to userBundleFileName
+  compiler.apply(new ExtraEntryWebpackPlugin({
+    entry: extraEntries,
     entryName: `Atrium [${this.id}]`,
     outputName: userBundleFileName,
   }));

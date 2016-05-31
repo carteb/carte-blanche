@@ -1,16 +1,18 @@
 import React from 'react';
-import Select from '../../../../common/Select';
+import Row from '../../../../form/Grid/Row';
+import LeftColumn from '../../../../form/Grid/LeftColumn';
+import RightColumn from '../../../../form/Grid/RightColumn';
+import ComboBox from '../../../../form/ComboBox';
 
 const TYPE_OPTIONS = [
   {
     value: 'both',
-    label: 'Both',
-  }, {
+  },
+  {
     value: 'firstOnly',
-    label: 'First name only',
-  }, {
+  },
+  {
     value: 'lastOnly',
-    label: 'Last name only',
   },
 ];
 
@@ -20,21 +22,23 @@ const defaultConstraints = {
 
 export default ({ constraints = {}, onUpdate }) => {
   const {
-    type = defaultConstraints.type,
+    type = defaultConstraints.type.value,
   } = constraints;
 
   const updateType = (evt) => {
-    onUpdate({ type: evt.target.value });
+    onUpdate({ type: evt.value });
   };
 
   return (
-    <div>
-      <Select
-        label="Type"
-        options={TYPE_OPTIONS}
-        onChange={updateType}
-        value={type}
-      />
-    </div>
+    <Row>
+      <LeftColumn nestedLevel={1}>Name Type</LeftColumn>
+      <RightColumn>
+        <ComboBox
+          value={type}
+          onChange={updateType}
+          options={TYPE_OPTIONS}
+        />
+      </RightColumn>
+    </Row>
   );
 };
