@@ -109,4 +109,4 @@ ReactPlugin.prototype.apply = function apply(compiler) {
   });
 };
 
-export default ReactPlugin;
+module.exports = ReactPlugin;

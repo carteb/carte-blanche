@@ -1,23 +1,17 @@
-const reactDocs = require('react-docgen').utils;
+/* eslint-disable no-var */
 
-const {
-  isReactComponentClass,
-  isStatelessComponent,
-  normalizeClassDefiniton,
-} = reactDocs;
+var reactDocs = require('react-docgen').utils;
 
-const normalizeClassDefinition = normalizeClassDefiniton;
-
-export default function findReactComponent(ast, recast) {
-  let definition;
+module.exports = function findReactComponent(ast, recast) {
+  var definition;
 
   function findComponent(path) {
-    if (isReactComponentClass(path)) {
-      normalizeClassDefinition(path);
+    if (reactDocs.isReactComponentClass(path)) {
+      reactDocs.normalizeClassDefinition(path);
       definition = path;
     }
 
-    if (isStatelessComponent(path)) {
+    if (reactDocs.isStatelessComponent(path)) {
       definition = path;
     }
 
@@ -33,4 +27,4 @@ export default function findReactComponent(ast, recast) {
   });
 
   return definition;
-}
+};
