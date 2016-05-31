@@ -8,6 +8,7 @@
 import fs from 'fs';
 import path from 'path';
 import includes from 'lodash/includes';
+import isString from 'lodash/isString';
 import ExtraEntryWebpackPlugin from 'extra-entry-webpack-plugin';
 import readMultipleFiles from 'read-multiple-files';
 
@@ -40,7 +41,26 @@ function StyleguidePlugin(options) {
   if (this.options.files && !Array.isArray(this.options.files)) {
     throw new Error('The "files" option needs to be an array!\n\n');
   }
-  this.options.files = this.options.files || [];
+}
+
+/**
+ * Emit some assets to a compilation
+ *
+ * @param  {Object}   compilation The compilation we want to emit the assets from
+ * @param  {Object}   assets      The assets we want to emit, keyed by filename
+ * @param  {String}   [dest]      Optionally, emit the assets to a subfolder
+ * @param  {Function} callback
+ */
+function emitAssets(compilation, assets, dest, callback) {
+  const cb = callback || dest;
+  // Emit styleguide assets
+  Object.keys(assets).forEach((filename) => {
+    compilation.assets[path.join(dest, filename)] = { // eslint-disable-line no-param-reassign
+      source: () => assets[filename],
+      size: () => assets[filename].length,
+    };
+  });
+  cb();
 }
 
 /**
@@ -88,6 +108,8 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
     outputName: userBundleFileName,
   }));
 
+  // The client assets, default the HTML to only include the client bundles and the
+  // user bundle
   const clientAssets = {
     'index.html': `
     <!DOCTYPE html>
@@ -109,8 +131,11 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
   };
 
   compiler.plugin('emit', (compilation, callback) => {
+    // If some custom files were passed by the user, default to them
     const assets = this.options.files || [];
+    // Allow plugin developers to add assets to the client
     compilation.applyPlugins('styleguide-plugin-assets-processing', assets);
+    // If any custom assets were passed in, read the files from the filesystem
     if (assets.length > 0) {
       readMultipleFiles(assets, (err, contents) => {
         if (err) {
@@ -118,18 +143,16 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
         }
         const scripts = [];
         const styles = [];
+        // Depending on the asset type that was passed add them to a script
+        // or style tag
         assets.forEach((assetFilename, index) => {
           switch (assetFilename.substr(-3)) {
-            case '.js':
-              scripts.push(contents[index]);
-              break;
-            case 'css':
-              styles.push(contents[index]);
-              break;
-            default:
-              break;
+            case '.js': scripts.push(contents[index]); break;
+            case 'css': styles.push(contents[index]); break;
+            default: break;
           }
         });
+        // Put together the HTML file based on the assets we got
         clientAssets['index.html'] = `
         <!DOCTYPE html>
         <html>
@@ -151,24 +174,12 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
           </body>
         </html>
         `;
-        // Emit styleguide assets
-        Object.keys(clientAssets).forEach((filename) => {
-          compilation.assets[path.join(dest, filename)] = { // eslint-disable-line no-param-reassign
-            source: () => clientAssets[filename],
-            size: () => clientAssets[filename].length,
-          };
-        });
-        callback();
+        emitAssets(compilation, assets, dest, callback);
       });
     } else {
-      // Emit styleguide assets
-      Object.keys(clientAssets).forEach((filename) => {
-        compilation.assets[path.join(dest, filename)] = { // eslint-disable-line no-param-reassign
-          source: () => clientAssets[filename],
-          size: () => clientAssets[filename].length,
-        };
-      });
-      callback();
+      // If not custom assets were passed in by neither the user nor any plugins
+      // emit the defaults straight away
+      emitAssets(compilation, assets, dest, callback);
     }
   });
 
