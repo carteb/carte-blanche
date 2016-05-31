@@ -79,6 +79,8 @@ ReactPlugin.prototype.apply = function apply(compiler) {
   process.on('SIGINT', killProcess.bind(null, server));
   process.on('uncaughtException', killProcess.bind(null, server));
 
+  compiler.addCSSFileToClient(require.resolve('./frontendStyles.css'));
+
   compiler.plugin('compilation', (compilation) => {
     // Expose the react parse result to all other styleguide plugins
     compilation.plugin(

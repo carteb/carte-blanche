@@ -72,6 +72,7 @@
     "react-frame-component": "^0.6.1",
     "react-jss": "^2.0.6",
     "react-router": "2.4.1",
+    "read-multiple-files": "^1.1.1",
     "socket.io": "^1.4.6",
     "speakingurl": "^9.0.0",
     "velocity-react": "^1.1.5",

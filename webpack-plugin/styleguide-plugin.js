@@ -7,8 +7,8 @@
 
 import fs from 'fs';
 import path from 'path';
-import isArray from 'lodash/isArray';
 import ExtraEntryWebpackPlugin from 'extra-entry-webpack-plugin';
+import readMultipleFiles from 'read-multiple-files';
 
 let id = -1;
 /**
@@ -31,7 +31,7 @@ function StyleguidePlugin(options) {
   }
 
   // Assert that the plugins option is an array if specified
-  if (this.options.plugins && !isArray(this.options.plugins)) {
+  if (this.options.plugins && !Array.isArray(this.options.plugins)) {
     throw new Error('The "plugins" option needs to be an array!\n\n');
   }
 }
@@ -43,13 +43,22 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
   const dest = this.options.dest || 'styleguide';
   const filter = this.options.filter || /([A-Z][a-zA-Z]*\/index|[A-Z][a-zA-Z]*)\.(jsx?|es6)$/;
 
+  /**
+   * API for plugins to add CSS files to the client
+   *
+   * @param {String} filePath
+   */
+  const CSSFiles = [];
+  compiler.addCSSFileToClient = function addCSSFileToClient(filePath) { // eslint-disable-line no-param-reassign,max-len
+    CSSFiles.push(filePath);
+  };
+
   // Register either the plugins or the default plugins
   if (this.options.plugins && this.options.plugins.length > 0) {
     this.registerPlugins(compiler);
   } else {
     this.registerDefaultPlugins(compiler);
   }
-
   // Compile the client api
   const userBundleFileName = path.join(dest, 'user-bundle.js');
   compiler.apply(new ExtraEntryWebpackPlugin({
@@ -64,21 +73,58 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
     outputName: userBundleFileName,
   }));
 
-  const styleguideAssets = {
-    'index.html': fs.readFileSync(path.resolve(__dirname, './assets/client.html')),
+  const clientAssets = {
+    'index.html': `
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <meta charset="UTF-8">
+        <title>Styleguide</title>
+        <link rel="stylesheet" type="text/css" href="client-bundle.css" />
+      </head>
+      <body>
+        <div id='styleguide-root'>Root</div>
+        <script src="client-bundle.js"></script>
+        <script src="user-bundle.js"></script>
+      </body>
+    </html>
+    `,
     'client-bundle.js': fs.readFileSync(path.resolve(__dirname, './assets/client-bundle.js')),
     'client-bundle.css': fs.readFileSync(path.resolve(__dirname, './assets/main.css')),
   };
 
   compiler.plugin('emit', (compilation, callback) => {
-    // Emit styleguide assets
-    Object.keys(styleguideAssets).forEach((filename) => {
-      compilation.assets[path.join(dest, filename)] = { // eslint-disable-line no-param-reassign
-        source: () => styleguideAssets[filename],
-        size: () => styleguideAssets[filename].length,
-      };
+    readMultipleFiles(CSSFiles, (err, contents) => {
+      if (err) {
+        throw err;
+      }
+      clientAssets['index.html'] = `
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <meta charset="UTF-8">
+          <title>Styleguide</title>
+          <link rel="stylesheet" type="text/css" href="client-bundle.css" />
+        </head>
+        <body>
+          <div id='styleguide-root'>Root</div>
+          <style>
+            ${contents.join('\n')}
+          </style>
+          <script src="client-bundle.js"></script>
+          <script src="user-bundle.js"></script>
+        </body>
+      </html>
+      `;
+      // Emit styleguide assets
+      Object.keys(clientAssets).forEach((filename) => {
+        compilation.assets[path.join(dest, filename)] = { // eslint-disable-line no-param-reassign
+          source: () => clientAssets[filename],
+          size: () => clientAssets[filename].length,
+        };
+      });
+      callback();
     });
-    callback();
   });
 
   // Don't add the styleguide chunk to html files
