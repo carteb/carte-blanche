@@ -1,9 +1,11 @@
 import React from 'react';
-import Select from '../../../../common/Select';
 import controlTypes from '../../../../CustomMetadataForm/controlTypes';
 import getControl from '../../../../../utils/getControl';
 import renderConstraintForm from './renderConstraintForm';
-import styles from './styles.css';
+import Row from '../../../../form/Grid/Row';
+import LeftColumn from '../../../../form/Grid/LeftColumn';
+import RightColumn from '../../../../form/Grid/RightColumn';
+import ComboBox from '../../../../form/ComboBox';
 
 /**
  *
@@ -47,15 +49,15 @@ const ConstraintsForm = ({ constraints, parsedMetadata, onUpdate }) => {
   };
 
   const renderControl = ({ controlType, constraint }) => (
-    <div>
-      <div className={styles.propLabel}>
-      </div>
-      <Select
-        label={controlType}
-        value={controlType}
-        onChange={onChange}
-        options={controlTypes.map((type) => ({ value: type }))}
-      />
+    <Row>
+      <LeftColumn nestedLevel={1}>{controlType}</LeftColumn>
+      <RightColumn>
+        <ComboBox
+          value={controlType}
+          onChange={onChange}
+          options={controlTypes.map((type) => ({ value: type }))}
+        />
+      </RightColumn>
       {renderConstraintForm(
         controlType,
         onUpdate,
@@ -63,13 +65,13 @@ const ConstraintsForm = ({ constraints, parsedMetadata, onUpdate }) => {
         parsedMetadata
       )}
       {constraint && renderControl(constraint)}
-    </div>
+    </Row>
   );
 
   return (
-    <div className={styles.wrapper}>
+    <Row>
       {renderControl(constraints)}
-    </div>
+    </Row>
   );
 };
 

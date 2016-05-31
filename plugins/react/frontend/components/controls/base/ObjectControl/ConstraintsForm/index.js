@@ -1,12 +1,15 @@
 import React from 'react';
 import styles from './styles.css';
-import Select from '../../../../common/Select';
 import set from 'lodash/set';
 import has from 'lodash/has';
 import controlTypes from '../../../../CustomMetadataForm/controlTypes';
 import renderConstraintForm from './renderConstraintForm';
 import getPropKeys from './getPropKeys';
 import getControlType from './getControlType';
+import Row from '../../../../form/Grid/Row';
+import LeftColumn from '../../../../form/Grid/LeftColumn';
+import RightColumn from '../../../../form/Grid/RightColumn';
+import ComboBox from '../../../../form/ComboBox';
 
 /*
  * Rendering the selection & constraintform for nested objects
@@ -57,16 +60,15 @@ const ConstraintsForm = (props) => {
           };
 
           return (
-            <div key={propKey}>
-              <div className={styles.propLabel}>
-                {propKey}
-              </div>
-              <Select
-                label={propType}
-                value={controlType}
-                onChange={onChange}
-                options={controlTypes.map((type) => ({ value: type }))}
-              />
+            <Row>
+              <LeftColumn>{propKey} ({propType})</LeftColumn>
+              <RightColumn>
+                <ComboBox
+                  value={controlType}
+                  onChange={onChange}
+                  options={controlTypes.map((type) => ({ value: type }))}
+                />
+              </RightColumn>
               {renderConstraintForm(
                 propKey,
                 controlType,
@@ -74,7 +76,7 @@ const ConstraintsForm = (props) => {
                 props.constraints,
                 props.parsedMetadata
               )}
-            </div>
+            </Row>
           );
         })
       }

@@ -1,19 +1,23 @@
 import React from 'react';
 import styles from './styles.css';
-import Select from '../common/Select';
 import controlTypes from './controlTypes';
 import set from 'lodash/set';
 import has from 'lodash/has';
 import getPropKeys from './getPropKeys';
 import getControlType from './getControlType';
 import renderConstraintForm from './renderConstraintForm';
+import Row from '../form/Grid/Row';
+import Grid from '../form/Grid';
+import LeftColumn from '../form/Grid/LeftColumn';
+import RightColumn from '../form/Grid/RightColumn';
+import ComboBox from '../form/ComboBox';
 
 const CustomMetadataForm = (props) => {
   // retriev all propKeys from the parsed & custom metadata
   const propKeys = getPropKeys(props.customMetadata, props.parsedMetadata);
 
   return (
-    <div className={styles.wrapper}>
+    <Grid>
       <h2 className={styles.title}>Edit Metadata</h2>
       {
         propKeys.map((propKey) => {
@@ -38,16 +42,15 @@ const CustomMetadataForm = (props) => {
           };
 
           return (
-            <div key={propKey}>
-              <div className={styles.propLabel}>
-                {propKey}
-              </div>
-              <Select
-                label={propType}
-                value={controlType}
-                onChange={onChange}
-                options={controlTypes.map((type) => ({ value: type }))}
-              />
+            <Row>
+              <LeftColumn>{propKey} ({propType})</LeftColumn>
+              <RightColumn>
+                <ComboBox
+                  value={controlType}
+                  onChange={onChange}
+                  options={controlTypes.map((type) => ({ value: type }))}
+                />
+              </RightColumn>
               {renderConstraintForm(
                 propKey,
                 controlType,
@@ -55,11 +58,11 @@ const CustomMetadataForm = (props) => {
                 props.customMetadata,
                 props.parsedMetadata
               )}
-            </div>
+            </Row>
           );
         })
       }
-    </div>
+    </Grid>
   );
 };
 
