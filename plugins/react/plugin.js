@@ -43,9 +43,15 @@ function ReactPlugin(options) {
 /**
  * Kill a Node.js process
  */
-function killProcess(proc) {
+function killProcess(proc, err) {
   proc.kill('SIGINT');
-  process.exit();
+  if (err) {
+    console.log('Uncaught Exception...');
+    console.log(err.stack);
+    process.exit(1);
+  } else {
+    process.exit();
+  }
 }
 
 /**
