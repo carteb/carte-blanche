@@ -62,7 +62,7 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
         filter: filter.toString(),
         componentRoot: this.options.componentRoot,
         context: compiler.context,
-      })}!${require.resolve('./dynamic-resolve.js')}`
+      })}!${require.resolve('./dynamic-resolve.js')}`,
     ],
     entryName: `Atrium [${this.id}]`,
     outputName: userBundleFileName,
