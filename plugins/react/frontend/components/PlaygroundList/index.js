@@ -9,7 +9,7 @@ import mapValues from 'lodash/mapValues';
 import debounce from 'lodash/debounce';
 import io from 'socket.io-client';
 import getSlug from 'speakingurl';
-import 'whatwg-fetch';
+import axios from 'axios';
 
 // Utilities
 import getControl from '../../utils/getControl';
@@ -115,9 +115,9 @@ class PlaygroundList extends Component {
 
   // Fetch the metadata of the current component
   fetchMetadata = () => {
-    fetch(`http://${this.props.hostname}:${this.props.port}/components/${this.props.componentPath}`)
-      .then((response) => response.json())
-      .then((json) => {
+    axios(`http://${this.props.hostname}:${this.props.port}/components/${this.props.componentPath}`)
+      .then((response) => {
+        const json = response.data;
         const customMetadata = codeToCustomMetadata(json.data);
         if (customMetadata.err) {
           this.setState({
@@ -179,9 +179,9 @@ class PlaygroundList extends Component {
 
   // Fetch all variations for the current component
   fetchVariations = () => {
-    fetch(`http://${this.props.hostname}:${this.props.port}/variations/${this.props.componentPath}`)
-      .then((response) => response.json())
-      .then((json) => {
+    axios(`http://${this.props.hostname}:${this.props.port}/variations/${this.props.componentPath}`)
+      .then((response) => {
+        const json = response.data;
         const variationPropsList = variationsToProps(json.data);
 
         this.setState({
@@ -223,13 +223,13 @@ class PlaygroundList extends Component {
       props: this.getRandomValues(),
       name,
     });
-    fetch(`http://${this.props.hostname}:${this.props.port}/variations/${this.props.componentPath}`, {
+    axios(`http://${this.props.hostname}:${this.props.port}/variations/${this.props.componentPath}`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
+      data: JSON.stringify({
         variation: `${slug}`,
         code: data,
       }),
@@ -244,7 +244,7 @@ class PlaygroundList extends Component {
   };
 
   deleteVariation = (variationPath) => {
-    fetch(`http://${this.props.hostname}:${this.props.port}/variations/${this.props.componentPath}?variation=${variationPath}`, {
+    axios(`http://${this.props.hostname}:${this.props.port}/variations/${this.props.componentPath}?variation=${variationPath}`, {
       method: 'DELETE',
       headers: {
         Accept: 'application/json',
@@ -268,13 +268,13 @@ class PlaygroundList extends Component {
       props,
       name: this.state.variationPropsList[variationPath].name,
     });
-    fetch(`http://${this.props.hostname}:${this.props.port}/variations/${this.props.componentPath}`, {
+    axios(`http://${this.props.hostname}:${this.props.port}/variations/${this.props.componentPath}`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
+      data: JSON.stringify({
         variation: variationPath,
         code: data,
       }),
@@ -300,13 +300,13 @@ class PlaygroundList extends Component {
   };
 
   persistCustomMetadata = (customMetadata) => {
-    fetch(`http://${this.props.hostname}:${this.props.port}/components/${this.props.componentPath}`, {
+    axios(`http://${this.props.hostname}:${this.props.port}/components/${this.props.componentPath}`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
+      data: JSON.stringify({
         code: customMetadataToCode(customMetadata),
       }),
     })
