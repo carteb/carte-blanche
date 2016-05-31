@@ -4,6 +4,7 @@
 
 Generally, the view is structured like this:
 
+```
 +---------------------------------------------------+
 |          +-------------------------------------+  |
 |          |                                     |  |
@@ -31,6 +32,7 @@ Generally, the view is structured like this:
 |          |                                     |  |
 |          +-------------------------------------+  |
 +---------------------------------------------------+
+```
 
 The `PlaygroundList` component handles all the data fetching and sending, and rendering of the main components. The `utils/` folder contains a variety of utility functions, which are explained in the files themselves and in the [`utils/` README](./utils/README.md)!
 
