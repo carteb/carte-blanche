@@ -50,7 +50,7 @@ class Playground extends React.Component {
 
       // This seems to be the most accurate methode to calculate the real iframe height
       if (frame && card) {
-        const frameHeight = frame.contentDocument.querySelector('#root').scrollHeight;
+        const frameHeight = frame.contentDocument.querySelector('#root').offsetHeight;
         card.style.height = `${frameHeight}px`;
       }
     }
