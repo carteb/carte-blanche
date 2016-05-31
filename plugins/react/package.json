@@ -29,6 +29,7 @@
   ],
   "dependencies": {
     "atrium-utils-beta": "^0.0.1",
+    "axios": "^0.11.1",
     "body-parser": "^1.15.1",
     "chokidar": "^1.5.1",
     "cors": "^2.7.1",
@@ -42,8 +43,7 @@
     "react-frame-component": "^0.6.1",
     "socket.io-client": "^1.4.6",
     "speakingurl": "^9.0.0",
-    "velocity-react": "^1.1.5",
-    "whatwg-fetch": "^1.0.0"
+    "velocity-react": "^1.1.5"
   },
   "peerDependencies": {
     "atrium-webpack-plugin-beta": "^0.0.0",
