@@ -46,8 +46,8 @@ function ReactPlugin(options) {
 function killProcess(proc, err) {
   proc.kill('SIGINT');
   if (err) {
-    console.log('Uncaught Exception...');
-    console.log(err.stack);
+    console.log('Uncaught Exception...'); // eslint-disable-line no-console
+    console.log(err.stack); // eslint-disable-line no-console
     process.exit(1);
   } else {
     process.exit();
