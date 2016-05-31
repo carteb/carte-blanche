@@ -11,6 +11,8 @@ import includes from 'lodash/includes';
 import ExtraEntryWebpackPlugin from 'extra-entry-webpack-plugin';
 import readMultipleFiles from 'read-multiple-files';
 
+import emitAssets from './src/utils/emitAssets';
+
 let id = -1;
 /**
  * Instantiates the plugin
@@ -40,26 +42,6 @@ function StyleguidePlugin(options) {
   if (this.options.files && !Array.isArray(this.options.files)) {
     throw new Error('The "files" option needs to be an array!\n\n');
   }
-}
-
-/**
- * Emit some assets to a compilation
- *
- * @param  {Object}   compilation The compilation we want to emit the assets from
- * @param  {Object}   assets      The assets we want to emit, keyed by filename
- * @param  {String}   [dest]      Optionally, emit the assets to a subfolder
- * @param  {Function} callback
- */
-function emitAssets(compilation, assets, dest, callback) {
-  const cb = callback || dest;
-  // Emit styleguide assets
-  Object.keys(assets).forEach((filename) => {
-    compilation.assets[path.join(dest, filename)] = { // eslint-disable-line no-param-reassign
-      source: () => assets[filename],
-      size: () => assets[filename].length,
-    };
-  });
-  cb();
 }
 
 /**
