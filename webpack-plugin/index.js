@@ -1,5 +1,5 @@
 /**
- * styleguide-plugin.js
+ * Styleguide Webpack Plugin
  *
  * The plugin is instantiated and the emitted styleguide.html file is
  * generated here.
@@ -82,12 +82,12 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
   const devServerOptions = compiler.options.devServer;
   // Load the dynamic resolve loader with a placeholder file
   const extraEntries = [
-    `!!${require.resolve('./dynamic-resolve.js')}?${
+    `!!${require.resolve('./src/dynamic-resolve.js')}?${
       JSON.stringify({
         filter: filter.toString(),
         componentRoot: this.options.componentRoot,
         context: compiler.context,
-      })}!${require.resolve('./assets/placeholder.js')}`,
+      })}!${require.resolve('./src/assets/placeholder.js')}`,
   ];
   // Find out if we need to include the webpack-dev-server client
   // TODO Test automatically if the user has any variant (middlware, devserver,...) of HMR enabled
@@ -125,8 +125,8 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
       </body>
     </html>
     `,
-    'client-bundle.js': fs.readFileSync(path.resolve(__dirname, './assets/client-bundle.js')),
-    'client-bundle.css': fs.readFileSync(path.resolve(__dirname, './assets/main.css')),
+    'client-bundle.js': fs.readFileSync(path.resolve(__dirname, './src/assets/client-bundle.js')),
+    'client-bundle.css': fs.readFileSync(path.resolve(__dirname, './src/assets/main.css')),
   };
 
   compiler.plugin('emit', (compilation, callback) => {

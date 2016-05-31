@@ -2,11 +2,11 @@
   "name": "atrium-webpack-plugin-beta",
   "version": "0.0.0",
   "description": "",
-  "main": "dist/styleguide-plugin.js",
+  "main": "dist/index.js",
   "scripts": {
     "prebuild": "rimraf ./dist/*",
-    "build": "BABEL_DISABLE_CACHE=1 BABEL_ENV=production NODE_ENV=production babel --ignore='node_modules' --out-dir='dist' . && npm run copy",
-    "copy": "ncp ./assets ./dist/assets",
+    "build": "BABEL_DISABLE_CACHE=1 BABEL_ENV=production NODE_ENV=production babel --ignore='node_modules' --out-dir='dist' src && npm run copy",
+    "copy": "ncp ./src/assets ./dist/assets",
     "prepublish": "npm run build"
   },
   "homepage": "https://github.com/pure-ui/styleguide",
