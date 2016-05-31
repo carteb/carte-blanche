@@ -86,8 +86,9 @@ class App extends React.Component {
   handleKeyPress = (evt) => {
     // Use either which or keyCode, depending on browser support
     const keyCode = evt.which || evt.keyCode;
-    if (keyCode === KeyCodes.ESC) {
+    if (keyCode === KeyCodes.ESC && evt.target.tagName !== 'INPUT') {
       // If the ESC key was pressed, toggle the menu
+      // But ignore it when the input field is focused
       this.throttledToggleMenu();
     } else if (keyCode === KeyCodes.DownArrow && modifiersPressed(evt)) {
       // If CMD+SHIFT+DOWN ARROW was pressed, go to the next component
