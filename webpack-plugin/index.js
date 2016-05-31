@@ -25,4 +25,4 @@ function StyleguidePlugin(options) {
 // This method is the meat of our plugin, it does most of the work
 StyleguidePlugin.prototype.apply = apply;
 
-export default StyleguidePlugin;
+module.exports = StyleguidePlugin;
