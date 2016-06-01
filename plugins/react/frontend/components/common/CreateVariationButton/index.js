@@ -85,6 +85,7 @@ class CreateVariationButton extends Component {
                 type="text"
                 value={this.state.inputValue}
                 onChange={this.changeInput}
+                placeholder={"Add variation"}
               />
             </form>
           </VelocityComponent>
