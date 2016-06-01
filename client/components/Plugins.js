@@ -17,7 +17,7 @@ const Plugins = (props) => {
     ))
     .map(plugin => (
       <div key={plugin.name}>
-        {plugin.frontendPlugin(Component, props.componentPath)}
+        {plugin.frontendPlugin(Component, props.componentPath, props.navigationStore)}
       </div>
     ));
   return (
