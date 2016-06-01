@@ -54,6 +54,12 @@ class CarteBlancheInput extends Component {
     });
   }
 
+  onCloseSettings = () => {
+    this.setState({
+      settingsActive: false,
+    });
+  };
+
   render() {
     const {
       hasSettings,
@@ -98,6 +104,7 @@ class CarteBlancheInput extends Component {
         />}
         {hasSettings && <Dropdown
           active={this.state.settingsActive}
+          onClose={this.onCloseSettings}
         >
           <BaseSettings onChange={this.onChange} />
         </Dropdown>}
