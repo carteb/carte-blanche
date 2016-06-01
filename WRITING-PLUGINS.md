@@ -62,7 +62,7 @@ export default ReacularPlugin;
 
 The `apply` method gets called by Webpack automatically and passes a reference to the [Webpack compiler instance](https://webpack.github.io/docs/plugins.html#the-compiler-instance). With `compiler.plugin()` we can hook into steps within the build process. (see the [general Webpack documentation about writing plugins](https://github.com/webpack/docs/wiki/How-to-write-a-plugin))
 
-To make writing plugins easier, we've added two special lifecycle hooks in the compilation called `carte-blanche-plugin-before-processing` and `carte-blanche-plugin-processing`. To access them, attach a callback to the `compilation` step:
+To make writing plugins easier, we've added two special lifecycle hooks in the compilation called `carte-blanche-plugin-before-processing`, `carte-blanche-plugin-assets-processing` and `carte-blanche-plugin-processing`. To access them, attach a callback to the `compilation` step:
 
 ```JS
 ReacularPlugin.prototype.apply = function apply(compiler) {
@@ -78,6 +78,7 @@ You can now attach callbacks to our special hooks with `compilation.plugin()`, w
 ReacularPlugin.prototype.apply = function apply(compiler) {
   compiler.plugin('compilation', (compilation) => {
     compiler.plugin('carte-blanche-plugin-before-processing', function(pluginData) { /* … */ });
+    compiler.plugin('carte-blanche-plugin-asset-processing', function(pluginData) { /* … */ });
     compiler.plugin('carte-blanche-plugin-processing', function(renderToClient) { /* … */ });
   });
 };
@@ -92,6 +93,19 @@ compiler.plugin('carte-blanche-plugin-before-processing', function(pluginData) {
   pluginData.metaInformation = staticAnalysis(pluginData.source);
 });
 ```
+
+### `carte-blanche-plugin-assets-processing`
+
+In the `carte-blanche-plugin-assets-processing` hook we pass you an array of absolute paths to assets. This allows you to inject custom scripts and styling into the head of the client.
+
+```JS
+compiler.plugin('carte-blanche-plugin-assets-processing', function(assets) {
+  assets.push(path.join(__dirname, './myCustomScript.js'));
+  assets.push(path.join(__dirname, './myCustomStyles.css'));
+});
+```
+
+> Note that `.css` and `.js` files are allowed to be added to the asset pipeline.
 
 ### `carte-blanche-plugin-processing`
 
