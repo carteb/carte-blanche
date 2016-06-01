@@ -1,8 +1,6 @@
-/* @flow */
-
 import React, { Component } from 'react';
 import { map } from 'lodash';
-import UserPreview from '../UserPreview'
+import UserPreview from '../UserPreview';
 
 /* eslint-disable max-len */
 
@@ -21,7 +19,6 @@ class AddUser extends Component { // eslint-disable-line react/prefer-stateless-
   constructor(props) {
     super(props);
     this.state = { ...INITIAL_STATE };
-    console.log(this.state);
   }
 
   onSubmit = (evt) => {
@@ -34,13 +31,13 @@ class AddUser extends Component { // eslint-disable-line react/prefer-stateless-
   render() {
     const createInput = (name) => (<input id={name} value={this.state[name]} key={name} onChange={e => this.setState({ [name]: e.target.value })} />);
     return (
-			<div>
-	      <form onSubmit={this.onSubmit}>
-	        {map(this.state, (val, name) => createInput(name))}
-	        <button type="submit">Add</button>
-	      </form>
-				<UserPreview {...this.state} />
-			</div>
+      <div>
+        <form onSubmit={this.onSubmit}>
+          {map(this.state, (val, name) => createInput(name))}
+          <button type="submit">Add</button>
+        </form>
+        <UserPreview {...this.state} />
+      </div>
     );
   }
 }

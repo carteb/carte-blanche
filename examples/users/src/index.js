@@ -15,7 +15,7 @@ render(
     <Router history={browserHistory}>
       <Route path="/" component={App} />
       <Route path="/users" component={UsersPage} />
-			<Route path="/user/:id" component={UserDetailPage} />
+      <Route path="/user/:id" component={UserDetailPage} />
     </Router>
   </Provider>,
   document.getElementById('root')

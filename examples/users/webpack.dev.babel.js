@@ -55,7 +55,7 @@ export default {
   },
   postcss: [autoprefixer({ browsers: ['last 2 versions'] })],
   devServer: {
-		historyApiFallback: true,
+    historyApiFallback: true,
     // It suppress error shown in console, so it has to be set to false.
     quiet: false,
     // It suppress everything except error, so it has to be set to false as well
