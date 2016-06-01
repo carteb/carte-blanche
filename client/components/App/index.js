@@ -128,7 +128,10 @@ class App extends React.Component {
           {(this.props.children) ? (
             this.props.children
           ) : (
-            <h2>Home</h2>
+            <div className={styles.home}>
+              <h2>Home</h2>
+              <p>Get started by selecting a component on the left 🙌</p>
+            </div>
           )}
         </div>
       </div>
