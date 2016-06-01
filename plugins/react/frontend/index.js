@@ -21,6 +21,7 @@ export default function playground(
     <PlaygroundList
       hostname={options.hostname}
       port={options.port}
+      userFiles={frontendData.files}
       componentPath={componentPath}
       component={Component}
       navigationStore={navigationStore}

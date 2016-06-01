@@ -156,6 +156,7 @@ class Playground extends React.Component {
             ) : (
               <IFrame
                 variationProps={this.props.variationProps}
+                userFiles={this.props.userFiles}
                 componentPath={this.props.componentPath}
               />
             )}
