@@ -47,7 +47,7 @@ const EnumControl = (props) => {
             options={options}
             hasRandomButton
             hasSettings={!required}
-            onRandomButtonClick={() => onUpdate({ value: EnumControl.randomValue(props) })}
+            onRandomButtonClick={() => onUpdate({ value: EnumControl.randomValue(propTypeData) })}
           />
         </div>
       </RightColumn>
