@@ -100,7 +100,9 @@ ReactPlugin.prototype.apply = function apply(compiler) {
       'styleguide-plugin-processing',
       (renderToClient) => {
         renderToClient({
-          name: 'react', // TODO this is used in the iframe - pass it through
+          // TODO the name is used in the iframe & playground list
+          // best to pass it in there instead of hardcoding it
+          name: 'react',
           frontendData: { options },
           frontendPlugin: `${require.resolve('./frontend/index.js')}`, // eslint-disable-line global-require,max-len
         });

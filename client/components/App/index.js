@@ -112,12 +112,10 @@ class App extends React.Component {
   };
 
   render() {
-    const activeComponentPath = this.props.location.pathname.replace(/^\//, '');
     return (
       <div className={styles.main}>
         <Navigation
-          activeComponentPath={activeComponentPath}
-          components={this.props.components}
+          navigationStore={this.props.navigationStore}
           location={this.props.location}
         />
         <div className={(!this.state.drawerVisible) ? styles.preview : styles.previewOpen}>

@@ -14,6 +14,7 @@ import App from './components/App';
 import FourOhFour from './components/FourOhFour';
 import map from 'lodash/map';
 import find from 'lodash/find';
+import createNavigationStore from './navigationStore';
 
 if (window.frameElement) {
   // in iframe
@@ -38,19 +39,27 @@ if (window.frameElement) {
       return;
     }
 
+    const navigationStore = createNavigationStore(components);
+
     // Generate a view per user component that renders the frontend part of the
     // plugins for each component
     const routes = map(components, (component, componentPath) => (
       <Route
         key={componentPath}
         path={componentPath}
-        component={() => <Plugins componentPath={componentPath} componentData={component} />}
+        component={() => (
+          <Plugins
+            componentPath={componentPath}
+            componentData={component}
+            navigationStore={navigationStore}
+          />
+        )}
       />
     ));
 
     const appRoute = (<Route
       path="/"
-      component={(props) => (<App {...props} components={components} />)}
+      component={(props) => (<App {...props} navigationStore={navigationStore} />)}
     >
       {routes}
     </Route>);
