@@ -57,11 +57,11 @@ if (window.frameElement) {
 
     rootElement = ReactDOM.render(
       (<Router history={hashHistory}>
-          {appRoute}
-         <Route
+        {appRoute}
+        <Route
           path="*"
           component={(props) => (<FourOhFour {...props} components={components} />)}
-         />
+        />
       </Router>),
       document.getElementById('styleguide-root')
     );
