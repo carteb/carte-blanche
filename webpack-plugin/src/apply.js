@@ -53,7 +53,7 @@ function apply(compiler) {
   // and ouput everything to userBundleFileName
   compiler.apply(new ExtraEntryWebpackPlugin({
     entry: extraEntries,
-    entryName: `Atrium [${this.id}]`,
+    entryName: `CarteBlanche [${this.id}]`,
     outputName: userBundleFileName,
   }));
 
@@ -65,11 +65,11 @@ function apply(compiler) {
     <html>
       <head>
         <meta charset="UTF-8">
-        <title>Styleguide</title>
+        <title>CarteBlanche</title>
         <link rel="stylesheet" type="text/css" href="client-bundle.css" />
       </head>
       <body>
-        <div id='styleguide-root'></div>
+        <div id='carte-blanche-root'></div>
         <script src="client-bundle.js"></script>
         <script src="user-bundle.js"></script>
       </body>
@@ -83,7 +83,7 @@ function apply(compiler) {
     // If some custom files were passed by the user, default to them
     const assets = this.options.files || [];
     // Allow plugin developers to add assets to the client
-    compilation.applyPlugins('styleguide-plugin-assets-processing', assets);
+    compilation.applyPlugins('carte-blanche-plugin-assets-processing', assets);
     // If any custom assets were passed in, read the files from the filesystem
     if (assets.length > 0) {
       readMultipleFiles(assets, (err, contents) => {
@@ -107,14 +107,14 @@ function apply(compiler) {
         <html>
           <head>
             <meta charset="UTF-8">
-            <title>Styleguide</title>
+            <title>CarteBlanche</title>
             <style>
               ${styles.join('\n')}
             </style>
             <link rel="stylesheet" type="text/css" href="client-bundle.css" />
           </head>
           <body>
-            <div id='styleguide-root'></div>
+            <div id='carte-blanche-root'></div>
             <script>
               ${scripts.join('\n')}
             </script>
@@ -132,7 +132,7 @@ function apply(compiler) {
     }
   });
 
-  // Don't add the styleguide chunk to html files
+  // Don't add the carte-blanche chunk to html files
   compiler.plugin('compilation', (compilation) =>
     compilation.plugin('html-webpack-plugin-alter-chunks', (chunks) =>
       chunks.filter((chunk) => chunk.files.indexOf(userBundleFileName) === -1)

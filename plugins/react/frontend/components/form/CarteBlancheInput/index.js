@@ -12,7 +12,7 @@ import styles from './styles.css';
 
 const isNullOrUndefined = (value) => isUndefined(value) || isNull(value);
 
-class AtriumInput extends Component {
+class CarteBlancheInput extends Component {
 
   static propTypes = {
     onChange: PropTypes.func.isRequired,
@@ -107,4 +107,4 @@ class AtriumInput extends Component {
   }
 }
 
-export default AtriumInput;
+export default CarteBlancheInput;

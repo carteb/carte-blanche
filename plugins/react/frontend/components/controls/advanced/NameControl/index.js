@@ -3,7 +3,7 @@ import ConstraintsForm from './ConstraintsForm';
 import Row from '../../../form/Grid/Row';
 import LeftColumn from '../../../form/Grid/LeftColumn';
 import RightColumn from '../../../form/Grid/RightColumn';
-import AtriumInput from '../../../form/AtriumInput';
+import CarteBlancheInput from '../../../form/CarteBlancheInput';
 import Label from '../../../form/Label';
 import randomValue from './randomValue';
 
@@ -19,7 +19,7 @@ const NameControl = (props) => {
       </LeftColumn>
       <RightColumn>
         <div style={{ padding: '0 0.5rem' }}>
-          <AtriumInput
+          <CarteBlancheInput
             value={value}
             fallbackValue=""
             onChange={onUpdate}

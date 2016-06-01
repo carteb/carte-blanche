@@ -1,7 +1,7 @@
 import path from 'path';
 import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import StyleguidePlugin from '../../../webpack-plugin/index';
+import CarteBlanche from '../../../webpack-plugin/index';
 
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
@@ -22,7 +22,7 @@ module.exports = {
       inject: true,
       template: path.join(__dirname, './index.html'),
     }),
-    new StyleguidePlugin({
+    new CarteBlanche({
       componentRoot: 'components',
       hot: false,
       // files: [path.join(__dirname, './node_modules/todomvc-app-css/index.css')],

@@ -1,7 +1,7 @@
 /* eslint-disable */
 
 var path = require('path');
-var atriumUtilsBeta = require('atrium-utils-beta'); // eslint-disable-line
+var carteBlancheUtilsBeta = require('carte-blanche-utils'); // eslint-disable-line
 
 /**
  * Get the absolute variation path from the variation base path and a component path
@@ -14,7 +14,7 @@ var atriumUtilsBeta = require('atrium-utils-beta'); // eslint-disable-line
 var getAbsoluteVariationPath = (variationsBasePath, relativeComponentPath) => {
   return path.join(
     variationsBasePath,
-    atriumUtilsBeta.getVariationPathFromComponentPath(relativeComponentPath)
+    carteBlancheUtilsBeta.getVariationPathFromComponentPath(relativeComponentPath)
   );
 };
 

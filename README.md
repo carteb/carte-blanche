@@ -1,11 +1,11 @@
-# Styleguide
+# CarteBlanche
 
 ### NOTE: This is a highly experimental project. Please help us by not sharing it yet :)
 
 ## Setup
 
 ```
-$ git clone https://github.com/pure-ui/styleguide
+$ git clone https://github.com/pure-ui/carte-blanche
 $ npm install
 ```
 
@@ -24,7 +24,7 @@ $ npm run example:<examplename>
 $ npm run example:dev
 ```
 
-You can then visit `http://localhost:8080` to see the app and `http://localhost:8080/styleguide` to see the styleguide!
+You can then visit `http://localhost:8080` to see the app and `http://localhost:8080/carte-blanche` to see the carte-blanche!
 
 > Note: `$ npm start` aliases to `$ npm run example:dev`
 
@@ -75,12 +75,13 @@ We have some shared utils, which we use in both the client and some plugins in t
 
 ```
 client
-└── client.js   # The client users see at /styleguide.html
-examples        # The Example Apps
-└── dev         # Example used for Plugin Development
-plugin          # The Plugin itself
-├── entry-loader.js
-├── entry.js
-├── loader.js
-└── styleguide-plugin.js
+└── client.js   # The client users see at /carte-blanche
+examples        # The Example Apps used for development and demos
+plugins         # Some plugins we wrote ourselves
+├── react       # The ReactPlugin
+└── source      # SourcePlugin (shows the source code of the component)
+utils           # Some shared utilities (`carte-blanche-utils`)
+webpack-plugin  # The main webpack plugin
+├── src         # The source code
+└── index.js    # The main entry file
 ```

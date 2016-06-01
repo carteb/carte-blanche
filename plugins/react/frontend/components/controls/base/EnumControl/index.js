@@ -11,7 +11,7 @@ import Row from '../../../form/Grid/Row';
 import LeftColumn from '../../../form/Grid/LeftColumn';
 import RightColumn from '../../../form/Grid/RightColumn';
 import Label from '../../../form/Label';
-import AtriumInput from '../../../form/AtriumInput';
+import CarteBlancheInput from '../../../form/CarteBlancheInput';
 import ComboBox from '../../../form/ComboBox';
 
 const EnumControl = (props) => {
@@ -39,7 +39,7 @@ const EnumControl = (props) => {
       </LeftColumn>
       <RightColumn>
         <div style={{ padding: '0 0.5rem' }}>
-          <AtriumInput
+          <CarteBlancheInput
             value={value}
             fallbackValue={propTypeData.value[0]}
             onChange={onUpdate}
