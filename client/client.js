@@ -11,6 +11,7 @@ import {
 } from 'react-router';
 import Plugins from './components/Plugins';
 import App from './components/App';
+import FourOhFour from './components/FourOhFour';
 import map from 'lodash/map';
 import find from 'lodash/find';
 
@@ -57,6 +58,10 @@ if (window.frameElement) {
     rootElement = ReactDOM.render(
       (<Router history={hashHistory}>
           {appRoute}
+         <Route
+          path="*"
+          component={(props) => (<FourOhFour {...props} components={components} />)}
+         />
       </Router>),
       document.getElementById('styleguide-root')
     );
