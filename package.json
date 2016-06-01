@@ -51,7 +51,7 @@
     "build": "npm run client:build",
     "lint": "npm run lint:eslint && npm run lint:flow",
     "lint:eslint": "eslint ./ --ignore-path .gitignore",
-    "lint:eslint:fix": "eslint --fix ./",
+    "lint:eslint:fix": "eslint --fix ./ --ignore-path .gitignore",
     "lint:flow": "flow status",
     "test": "node_modules/.bin/mocha --opts mocha.opts",
     "test:watch": "npm test -- --watch",

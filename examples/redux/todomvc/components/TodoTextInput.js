@@ -1,40 +1,43 @@
-import React, { Component, PropTypes } from 'react'
-import classnames from 'classnames'
+/* eslint-disable react/jsx-no-bind */
+
+import React, { Component, PropTypes } from 'react';
+import classnames from 'classnames';
 
 class TodoTextInput extends Component {
   constructor(props, context) {
-    super(props, context)
+    super(props, context);
     this.state = {
-      text: this.props.text || ''
-    }
+      text: this.props.text || '',
+    };
   }
 
   handleSubmit(e) {
-    const text = e.target.value.trim()
+    const text = e.target.value.trim();
     if (e.which === 13) {
-      this.props.onSave(text)
+      this.props.onSave(text);
       if (this.props.newTodo) {
-        this.setState({ text: '' })
+        this.setState({ text: '' });
       }
     }
   }
 
   handleChange(e) {
-    this.setState({ text: e.target.value })
+    this.setState({ text: e.target.value });
   }
 
   handleBlur(e) {
     if (!this.props.newTodo) {
-      this.props.onSave(e.target.value)
+      this.props.onSave(e.target.value);
     }
   }
 
   render() {
     return (
-      <input className={
+      <input
+        className={
         classnames({
           edit: this.props.editing,
-          'new-todo': this.props.newTodo
+          'new-todo': this.props.newTodo,
         })}
         type="text"
         placeholder={this.props.placeholder}
@@ -42,8 +45,9 @@ class TodoTextInput extends Component {
         value={this.state.text}
         onBlur={this.handleBlur.bind(this)}
         onChange={this.handleChange.bind(this)}
-        onKeyDown={this.handleSubmit.bind(this)} />
-    )
+        onKeyDown={this.handleSubmit.bind(this)}
+      />
+    );
   }
 }
 
@@ -52,7 +56,7 @@ TodoTextInput.propTypes = {
   text: PropTypes.string,
   placeholder: PropTypes.string,
   editing: PropTypes.bool,
-  newTodo: PropTypes.bool
-}
+  newTodo: PropTypes.bool,
+};
 
-export default TodoTextInput
+export default TodoTextInput;

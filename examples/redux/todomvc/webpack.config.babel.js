@@ -25,6 +25,7 @@ module.exports = {
     new StyleguidePlugin({
       componentRoot: 'components',
       hot: false,
+      // files: [path.join(__dirname, './node_modules/todomvc-app-css/index.css')],
     }),
   ],
   module: {
