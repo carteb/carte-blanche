@@ -1,5 +1,5 @@
 {
-  "name": "carte-blanche-webpack-plugin",
+  "name": "carte-blanche",
   "version": "0.0.0",
   "description": "",
   "main": "dist/index.js",
