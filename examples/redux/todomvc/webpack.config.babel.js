@@ -1,7 +1,7 @@
 import path from 'path';
 import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import StyleguidePlugin from '../../../webpack-plugin/styleguide-plugin';
+import StyleguidePlugin from '../../../webpack-plugin/index';
 
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
