@@ -2,6 +2,12 @@
   background-color: #f4f7f9;
   height: 100%;
   width: 100%;
+  opacity: 1;
+  transition: opacity 1200ms ease-in-out;
+}
+
+.emptyWrapper {
+  opacity: 0;
 }
 
 .title {

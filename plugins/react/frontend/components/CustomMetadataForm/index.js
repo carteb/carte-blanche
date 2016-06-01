@@ -42,7 +42,7 @@ const CustomMetadataForm = (props) => {
           };
 
           return (
-            <Row>
+            <Row key={propKey}>
               <LeftColumn>{propKey} ({propType})</LeftColumn>
               <RightColumn>
                 <ComboBox
