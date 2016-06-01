@@ -53,7 +53,7 @@ The main method of your plugin is `apply`:
 // plugin.js
 function ReacularPlugin(options) { /* … */ }
 
-ReactPlugin.prototype.apply = function apply(compiler) {
+ReacularPlugin.prototype.apply = function apply(compiler) {
   /* … */
 };
 
@@ -65,7 +65,7 @@ The `apply` method gets called by Webpack automatically and passes a reference t
 To make writing plugins easier, we've added two special lifecycle hooks in the compilation called `carte-blanche-plugin-before-processing` and `carte-blanche-plugin-processing`. To access them, attach a callback to the `compilation` step:
 
 ```JS
-ReactPlugin.prototype.apply = function apply(compiler) {
+ReacularPlugin.prototype.apply = function apply(compiler) {
   compiler.plugin('compilation', function(compilation) {
     /* … */
   });
@@ -75,7 +75,7 @@ ReactPlugin.prototype.apply = function apply(compiler) {
 You can now attach callbacks to our special hooks with `compilation.plugin()`, which get called for every single one of your components:
 
 ```JS
-ReactPlugin.prototype.apply = function apply(compiler) {
+ReacularPlugin.prototype.apply = function apply(compiler) {
   compiler.plugin('compilation', (compilation) => {
     compiler.plugin('carte-blanche-plugin-before-processing', function(pluginData) { /* … */ });
     compiler.plugin('carte-blanche-plugin-processing', function(renderToClient) { /* … */ });
@@ -163,4 +163,4 @@ module.exports = function playground(frontendData, pluginData, Component, compon
 
 The best place to learn more from is the [Webpack documentation](https://github.com/webpack/docs/wiki/How-to-write-a-plugin). Since a CarteBlanche plugin is nothing more than a slightly extended Webpack plugin with some rendering sprinkled on top, you can use all the power you have from webpack to make your plugin the best ever!
 
-A good idea might also be to check out other plugins, ranging from the small-and-digestible to the complex! (e.g. [ReactPlugin](./plugins/react))
+A good idea might also be to check out other plugins, ranging from the small-and-digestible to the complex! (e.g. [ReacularPlugin](./plugins/react))
