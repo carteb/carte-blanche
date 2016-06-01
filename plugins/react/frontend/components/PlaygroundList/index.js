@@ -374,7 +374,7 @@ class PlaygroundList extends Component {
 
   render() {
     if (this.state.loadingMetadata && this.state.loadingVariations) {
-      return <div>Loading …</div>;
+      return <div className={styles.loading}>Loading …</div>;
     }
 
     if (this.state.metadataError) {
