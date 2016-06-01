@@ -189,19 +189,13 @@ class PlaygroundList extends Component {
           loadingVariations: false,
         });
 
-        // TODO update the navigation
-        // const links = map(variationPropsList, (variation, key) => (
-        //   {
-        //     title: variation.name,
-        //     id: key,
-        //   }
-        // ));
-
-        // window.STYLEGUIDE_PLUGIN_CLIENT_API.updateNavigation(
-        //   this.props.componentPath,
-        //   'playground-plugin',
-        //   links
-        // );
+        const links = map(variationPropsList, (variation, key) => (
+          {
+            name: variation.name,
+            link: key,
+          }
+        ));
+        this.props.navigationStore.setPluginLinks(this.props.componentPath, 'react', links);
       })
       .catch((ex) => {
         // TODO proper error handling

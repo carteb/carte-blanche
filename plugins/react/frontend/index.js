@@ -8,7 +8,7 @@ export default function playground(
   pluginData,
   Component,
   componentPath,
-  // navigationStore,
+  navigationStore,
 ) {
   const options = frontendData.options;
 
@@ -23,6 +23,7 @@ export default function playground(
       port={options.port}
       componentPath={componentPath}
       component={Component}
+      navigationStore={navigationStore}
       variationBasePath={options.variationBasePath}
       meta={normalizeMetaInfo(pluginData.reactDocs)}
     />

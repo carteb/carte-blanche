@@ -17,7 +17,7 @@ const createNavigationStore = (components) => {
     }
   }
   */
-  const state = mapValues(components, () => ({ plugins: [] }));
+  const state = mapValues(components, () => ({ plugins: {} }));
   const callbacks = [];
 
   const setPluginLinks = (path, plugin, links) => {

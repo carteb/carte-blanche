@@ -8,9 +8,8 @@ import { hashHistory, IndexLink } from 'react-router';
 import map from 'lodash/map';
 import has from 'lodash/has';
 import throttle from 'lodash/throttle';
-// import find from 'lodash/find';
-// import flatten from 'lodash/flatten';
-
+import find from 'lodash/find';
+import flatten from 'lodash/flatten';
 import smoothscroll from './smoothscroll';
 import offsetTopFromPage from './offsetTopFromPage';
 import getComponentNameFromPath from '../../../utils/getComponentNameFromPath';
@@ -18,8 +17,6 @@ import getComponentNameFromPath from '../../../utils/getComponentNameFromPath';
 import styles from './styles.css';
 
 window.hashHistory = hashHistory;
-
-const getPlugins = (path) => window.STYLEGUIDE_PLUGIN_CLIENT_API.cache[path].navigation;
 
 class Navigation extends React.Component {
 
@@ -31,11 +28,7 @@ class Navigation extends React.Component {
 
   componentDidMount() {
     // making sure the component is re-rendered when the component data is loaded
-    document.documentElement.addEventListener(
-      'styleguide-plugin-update-navigation',
-      () => this.forceUpdate(),
-      false
-    );
+    this.props.navigationStore.subscribe(() => this.forceUpdate());
 
     window.addEventListener('scroll', throttle(this.setQueryParamForActiveItemId, 50), false);
     hashHistory.listen((location) => {
@@ -60,24 +53,32 @@ class Navigation extends React.Component {
   };
 
   setQueryParamForActiveItemId = () => {
-    // const plugins = getPlugins(this.getActiveComponentPath());
-    // const ids = flatten(map(plugins, (plugin) => map(plugin, (link) => link.id)));
-    //
-    // const activeId = find(ids, (id) => {
-    //   const element = document.getElementById(id);
-    //   return window.scrollY <= offsetTopFromPage(element);
-    // });
-    // const activeItemId = this.props.location.query.id;
-    // if (activeId !== activeItemId || activeItemId === undefined) {
-    //   hashHistory.replace({
-    //     pathname: this.props.location.pathname,
-    //     query: { id: activeId },
-    //     state: { preventScroll: true },
-    //   });
-    // }
+    const plugins = this.getPlugins(this.getActiveComponentPath());
+    const ids = flatten(map(plugins, (plugin) => map(plugin, (link) => link.link)));
+    const activeId = find(ids, (id) => {
+      const element = document.getElementById(id);
+      return window.scrollY <= offsetTopFromPage(element);
+    });
+    const activeItemId = this.props.location.query.id;
+    if (activeId !== activeItemId || activeItemId === undefined) {
+      hashHistory.replace({
+        pathname: this.props.location.pathname,
+        query: { id: activeId },
+        state: { preventScroll: true },
+      });
+    }
   };
 
   getActiveComponentPath = () => this.props.location.pathname.replace(/^\//, '');
+
+  getPlugins = (componentPath) => {
+    const navigationState = this.props.navigationStore.getState();
+    if (has(navigationState, componentPath)) {
+      return navigationState[componentPath].plugins;
+    }
+
+    return {};
+  }
 
   toggleShortcutHelp = () => {
     this.setState({
@@ -95,35 +96,29 @@ class Navigation extends React.Component {
 
   renderSubNavigation = (componentPath) => {
     if (this.getActiveComponentPath() === componentPath) {
-      if (has(this.props.components, componentPath)) {
-        const plugins = getPlugins(componentPath);
-        return map(plugins, (plugin, pluginKey) => (
-          <div key={pluginKey}>
-            {
-              map(plugin, (link) => (
-                <div
-                  className={styles.subListItemWrapper}
-                  key={link.id}
+      return map(this.getPlugins(componentPath), (plugin, pluginKey) => (
+        <div key={pluginKey}>
+          {
+            map(plugin, (link) => (
+              <div
+                className={styles.subListItemWrapper}
+                key={link.link}
+              >
+                <IndexLink
+                  to={`/${componentPath}?id=${link.link}`}
+                  className={styles.subListItem}
+                  activeClassName={styles.subListItemActive}
                 >
-                  <IndexLink
-                    to={`/${componentPath}?id=${link.id}`}
-                    className={styles.subListItem}
-                    activeClassName={styles.subListItemActive}
-                  >
-                    {link.title}
-                  </IndexLink>
-                </div>
-              ))
-            }
-          </div>
-        ));
-      }
-
-      return null;
+                  {link.name}
+                </IndexLink>
+              </div>
+            ))
+          }
+        </div>
+      ));
     }
 
     return null;
-    /* eslint-enable no-unreachable */
   };
 
   renderComponents = () => (
