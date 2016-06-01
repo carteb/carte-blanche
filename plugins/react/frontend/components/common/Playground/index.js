@@ -175,7 +175,6 @@ Playground.propTypes = {
   fullHeight: PropTypes.bool,
   variationPath: PropTypes.string,
   title: PropTypes.string,
-  stylingNodes: PropTypes.array,
   variationBasePath: PropTypes.string,
 };
 

@@ -394,10 +394,6 @@ class PlaygroundList extends Component {
     // Find the selected variation
     const selectedVariation = this.state.variationPropsList[this.state.selectedVariationId];
 
-    // Get all the styling of the components. These tags are injected by style-loader
-    // and we can grab all of them and inject them into each iframe of the variations
-    const userStylingNodes = document.querySelectorAll('style');
-
     return (
       <div className={styles.wrapper}>
         <h2 className={styles.title}>
@@ -440,7 +436,6 @@ class PlaygroundList extends Component {
                 fullHeight
                 variationProps={selectedVariation.props}
                 variationPath={this.state.selectedVariationId}
-                stylingNodes={userStylingNodes}
               />
             </div>
           )}
@@ -465,7 +460,6 @@ class PlaygroundList extends Component {
               variationPath={variationPath}
               onDeleteButtonClick={this.deleteVariation}
               onEditButtonClick={this.startVariationEditMode}
-              stylingNodes={userStylingNodes}
             />
           )
         ))}
