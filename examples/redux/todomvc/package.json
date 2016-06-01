@@ -18,6 +18,7 @@
   "homepage": "http://redux.js.org",
   "dependencies": {
     "babel-polyfill": "^6.3.14",
+    "carte-blanche-react-plugin": "^0.0.0",
     "classnames": "^2.1.2",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",

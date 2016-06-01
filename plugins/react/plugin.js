@@ -4,6 +4,8 @@ const reactDocs = require('react-docgen');
 const isString = require('lodash/isString');
 const isNaN = require('lodash/isNaN');
 const defaults = require('lodash/defaults');
+// const readMultipleFiles = require('read-multiple-files');
+
 const carteBlancheResolver = require('./resolver.js').default;
 
 function ReactPlugin(options) {
@@ -38,6 +40,15 @@ function ReactPlugin(options) {
       'The "variationFolderName" option of the ReactPlugin must be a string!\n\n'
     );
   }
+
+  // The file option must be an Array or a String
+  if (this.options.files
+    && !isString(this.options.files)
+    && (!Array.isArray(this.options.files))) {
+    throw new Error(
+      'The "files" option of the ReactPlugin must be an array!\n\n'
+    );
+  }
 }
 
 /**
@@ -61,6 +72,7 @@ ReactPlugin.prototype.apply = function apply(compiler) {
   // Default options
   const options = defaults({}, this.options, {
     hostname: 'localhost',
+    files: [],
     // The default port is not really used by a popular service:
     // https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers
     port: 8082,
@@ -99,6 +111,34 @@ ReactPlugin.prototype.apply = function apply(compiler) {
     compilation.plugin(
       'carte-blanche-plugin-processing',
       (renderToClient) => {
+        // const assets = this.options.files;
+        // if (assets.length > 0) {
+        //   renderToClient({
+        //     // TODO the name is used in the iframe & playground list
+        //     // best to pass it in there instead of hardcoding it
+        //     name: 'react',
+        //     frontendData: new Promise((resolve, reject) => {
+        //       readMultipleFiles(assets, (err, contents) => {
+        //         if (err) {
+        //           reject(err);
+        //         }
+        //         const scripts = [];
+        //         const styles = [];
+        //         // Depending on the asset type that was passed add them to a script
+        //         // or style tag
+        //         assets.forEach((assetFilename, index) => {
+        //           switch (assetFilename.substr(-3)) {
+        //             case '.js': scripts.push(contents[index]); break;
+        //             case 'css': styles.push(contents[index]); break;
+        //             default: break;
+        //           }
+        //         });
+        //         resolve({ options, files: { scripts, styles } });
+        //       });
+        //     }),
+        //     frontendPlugin: `${require.resolve('./frontend/index.js')}`,
+        //   });
+        // } else {s
         renderToClient({
           // TODO the name is used in the iframe & playground list
           // best to pass it in there instead of hardcoding it
@@ -106,6 +146,7 @@ ReactPlugin.prototype.apply = function apply(compiler) {
           frontendData: { options },
           frontendPlugin: `${require.resolve('./frontend/index.js')}`, // eslint-disable-line global-require,max-len
         });
+        // }
       }
     );
   });
