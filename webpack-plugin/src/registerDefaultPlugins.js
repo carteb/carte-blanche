@@ -9,11 +9,11 @@ function registerDefaultPlugins(compiler) {
     reactPlugin.apply(compiler);
   } catch (err) {
     try {
-      ReactPlugin = require('atrium-react-plugin-beta'); // eslint-disable-line global-require, import/no-unresolved, max-len
+      ReactPlugin = require('carte-blanche-react-plugin'); // eslint-disable-line global-require, import/no-unresolved, max-len
       const reactPlugin = new ReactPlugin();
       reactPlugin.apply(compiler);
     } catch (ex) {
-      console.log('ERROR Installing default Styleguide plugins failed.', ex); // eslint-disable-line no-console,max-len
+      console.log('ERROR Installing default CarteBlanche plugins failed.', ex); // eslint-disable-line no-console,max-len
     }
   }
 }

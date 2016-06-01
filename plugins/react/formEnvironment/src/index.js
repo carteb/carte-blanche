@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import AtriumInput from '../../frontend/components/form/AtriumInput';
+import CarteBlancheInput from '../../frontend/components/form/CarteBlancheInput';
 import Grid from '../../frontend/components/form/Grid';
 import Row from '../../frontend/components/form/Grid/Row';
 import LeftColumn from '../../frontend/components/form/Grid/LeftColumn';
@@ -68,7 +68,7 @@ class App extends React.Component {
           <Row>
             <LeftColumn>left</LeftColumn>
             <RightColumn>
-              <AtriumInput
+              <CarteBlancheInput
                 value={this.state.fourthValue}
                 fallbackValue=""
                 onChange={this.onChangeFourthValue}
@@ -94,7 +94,7 @@ class App extends React.Component {
               <Row>
                 <LeftColumn nestedLevel={2}>nested left 2</LeftColumn>
                 <RightColumn>
-                  <AtriumInput
+                  <CarteBlancheInput
                     value={this.state.thirdValue}
                     fallbackValue=""
                     onChange={this.onChangeThirdValue}
@@ -128,12 +128,12 @@ class App extends React.Component {
             },
           ]}
         />
-        <AtriumInput
+        <CarteBlancheInput
           value={this.state.firstValue}
           fallbackValue=""
           onChange={this.onChangeFirstValue}
         />
-        <AtriumInput
+        <CarteBlancheInput
           value={this.state.secondValue}
           fallbackValue=""
           onChange={this.onChangeSecondValue}
@@ -155,7 +155,7 @@ class App extends React.Component {
           value
           onChange={this.onChangeFirstBoolean}
         />
-        <AtriumInput
+        <CarteBlancheInput
           value={this.state.firstBoolean}
           fallbackValue
           onChange={this.onChangeFirstBoolean}

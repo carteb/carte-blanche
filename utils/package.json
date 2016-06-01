@@ -1,5 +1,5 @@
 {
-  "name": "atrium-utils-beta",
+  "name": "carte-blanche-utils",
   "version": "0.0.1",
   "description": "",
   "main": "index.js",
@@ -9,9 +9,9 @@
     "test": "mocha __test__/*.js",
     "prepublish": "npm run test"
   },
-  "homepage": "https://github.com/pure-ui/styleguide",
+  "homepage": "https://github.com/pure-ui/carte-blanche",
   "bugs": {
-    "url": "https://github.com/pure-ui/styleguide/issues"
+    "url": "https://github.com/pure-ui/carte-blanche/issues"
   },
   "contributors": [
     "Nik Graf <nik@nikgraf.com> (https://medium.com/@nikgraf)",
@@ -20,7 +20,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/pure-ui/styleguide"
+    "url": "https://github.com/pure-ui/carte-blanche"
   },
   "license": "MIT",
   "dependencies": {

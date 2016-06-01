@@ -4,13 +4,13 @@ function ReactDocsPlugin(options) {
   this.options = options || {};
 }
 /**
- * Initializes the plugin, called after the main StyleguidePlugin function above
+ * Initializes the plugin, called after the main CarteBlanche function above
  */
 ReactDocsPlugin.prototype.apply = function apply(compiler) {
   compiler.plugin('compilation', (compilation) => {
-    // Expose the react parse result to all other styleguide plugins
+    // Expose the react parse result to all other carte-blanche plugins
     compilation.plugin(
-      'styleguide-plugin-before-processing',
+      'carte-blanche-plugin-before-processing',
       (data) => {
         data.reactDocs = reactDocs.parse(data.source); // eslint-disable-line no-param-reassign
       }

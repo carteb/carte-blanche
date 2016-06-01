@@ -1,7 +1,7 @@
 import path from 'path';
 import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import StyleguidePlugin from '../../../webpack-plugin/index';
+import CarteBlanche from '../../../webpack-plugin/index';
 import autoprefixer from 'autoprefixer';
 
 export default {
@@ -28,7 +28,7 @@ export default {
       inject: true,
       template: path.join(__dirname, './src/index.html'),
     }),
-    new StyleguidePlugin({
+    new CarteBlanche({
       include: [
         // match components like Button/index.js
         'src/components/**/[A-Z][a-zA-Z]*/index.js',

@@ -1,11 +1,11 @@
 {
-  "name": "styleguide",
+  "name": "carte-blanche",
   "version": "0.0.1",
   "description": "",
   "keywords": "",
-  "homepage": "https://github.com/pure-ui/styleguide",
+  "homepage": "https://github.com/pure-ui/carte-blanche",
   "bugs": {
-    "url": "https://github.com/pure-ui/styleguide/issues"
+    "url": "https://github.com/pure-ui/carte-blanche/issues"
   },
   "license": "MIT",
   "private": true,
@@ -25,7 +25,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/pure-ui/styleguide"
+    "url": "https://github.com/pure-ui/carte-blanche"
   },
   "engines": {
     "node": "5.5.0"
@@ -59,7 +59,7 @@
     "test:coverage": "istanbul cover --config istanbul.yml _mocha -- --opts mocha.opts"
   },
   "dependencies": {
-    "atrium-utils-beta": "^0.0.1",
+    "carte-blanche-utils": "^0.0.1",
     "body-parser": "^1.15.1",
     "chokidar": "^1.5.1",
     "connect-history-api-fallback": "^1.2.0",

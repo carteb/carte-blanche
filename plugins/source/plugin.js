@@ -2,14 +2,14 @@ function SourcePlugin(options) {
   this.options = options || {};
 }
 /**
- * Initializes the plugin, called after the main StyleguidePlugin function above
+ * Initializes the plugin, called after the main CarteBlanche function above
  */
 SourcePlugin.prototype.apply = function apply(compiler) {
   const options = this.options;
   compiler.plugin('compilation', (compilation) => {
-    // The source styleguide plugin
-    compilation.plugin('styleguide-plugin-processing', (renderStyleguide) => {
-      renderStyleguide({
+    // The source carte-blanche plugin
+    compilation.plugin('carte-blanche-plugin-processing', (renderCarteBlanche) => {
+      renderCarteBlanche({
         name: 'source',
         frontendData: { options },
         frontendPlugin: `${require.resolve('./component.js')}`,

@@ -10,7 +10,7 @@ import randomValue from './randomValue';
 import Row from '../../../form/Grid/Row';
 import LeftColumn from '../../../form/Grid/LeftColumn';
 import RightColumn from '../../../form/Grid/RightColumn';
-import AtriumInput from '../../../form/AtriumInput';
+import CarteBlancheInput from '../../../form/CarteBlancheInput';
 import Label from '../../../form/Label';
 import isUndefined from 'lodash/isUndefined';
 import isNull from 'lodash/isNull';
@@ -32,7 +32,7 @@ const IntegerControl = (props) => {
       </LeftColumn>
       <RightColumn>
         <div style={{ padding: '0 0.5rem' }}>
-          <AtriumInput
+          <CarteBlancheInput
             value={value}
             fallbackValue={0}
             onChange={onChange}

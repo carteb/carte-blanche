@@ -1,7 +1,7 @@
 /**
- * Styleguide Webpack Plugin
+ * CarteBlanche Webpack Plugin
  *
- * The plugin is instantiated and the emitted styleguide.html file is
+ * The plugin is instantiated and the emitted carte-blanche.html file is
  * generated here.
  */
 
@@ -14,7 +14,7 @@ import validateOptions from './src/validateOptions';
  * @param {Object} options           The options
  */
 let id = -1;
-function StyleguidePlugin(options) {
+function CarteBlanche(options) {
   // Allow for multiple instances of the plugin
   this.id = (++id);
   // Default and validate the options
@@ -23,6 +23,6 @@ function StyleguidePlugin(options) {
 }
 
 // This method is the meat of our plugin, it does most of the work
-StyleguidePlugin.prototype.apply = apply;
+CarteBlanche.prototype.apply = apply;
 
-module.exports = StyleguidePlugin;
+module.exports = CarteBlanche;

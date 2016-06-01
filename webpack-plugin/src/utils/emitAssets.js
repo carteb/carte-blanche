@@ -13,7 +13,7 @@ import isString from 'lodash/isString';
 function emitAssets(compilation, assets, subFolder, callback) {
   const cb = callback || subFolder;
   const rootPath = isString(subFolder) && subFolder || '';
-  // Emit styleguide assets
+  // Emit carte-blanche assets
   Object.keys(assets).forEach((filename) => {
     compilation.assets[path.join(rootPath, filename)] = { // eslint-disable-line no-param-reassign
       source: () => assets[filename],

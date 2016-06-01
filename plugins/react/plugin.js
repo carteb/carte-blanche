@@ -4,7 +4,7 @@ const reactDocs = require('react-docgen');
 const isString = require('lodash/isString');
 const isNaN = require('lodash/isNaN');
 const defaults = require('lodash/defaults');
-const styleguideResolver = require('./resolver.js').default;
+const carteBlancheResolver = require('./resolver.js').default;
 
 function ReactPlugin(options) {
   // Make sure the plugin was instantiated as a constructor, i.e. new ReactPlugin()
@@ -55,7 +55,7 @@ function killProcess(proc, err) {
 }
 
 /**
- * Initializes the plugin, called after the main StyleguidePlugin function above
+ * Initializes the plugin, called after the main CarteBlanche function above
  */
 ReactPlugin.prototype.apply = function apply(compiler) {
   // Default options
@@ -86,18 +86,18 @@ ReactPlugin.prototype.apply = function apply(compiler) {
   process.on('uncaughtException', killProcess.bind(null, server));
 
   compiler.plugin('compilation', (compilation) => {
-    // Expose the react parse result to all other styleguide plugins
+    // Expose the react parse result to all other carte-blanche plugins
     compilation.plugin(
-      'styleguide-plugin-before-processing',
+      'carte-blanche-plugin-before-processing',
       (data) => {
         // eslint-disable-next-line no-param-reassign
-        data.reactDocs = reactDocs.parse(data.source, styleguideResolver);
+        data.reactDocs = reactDocs.parse(data.source, carteBlancheResolver);
       }
     );
 
-    // The source styleguide plugin
+    // The source carte-blanche plugin
     compilation.plugin(
-      'styleguide-plugin-processing',
+      'carte-blanche-plugin-processing',
       (renderToClient) => {
         renderToClient({
           // TODO the name is used in the iframe & playground list

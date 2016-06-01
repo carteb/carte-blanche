@@ -11,7 +11,7 @@ module.exports = function pluginsLoader(source) {
   const pluginPromises = [];
   /**
    * Define an api which can be called by the plugins in the
-   * styleguide-plugin-processing step
+   * carte-blanche-plugin-processing step
    */
   function renderToClient(pluginOptions) {
     // Make the plugin name mandatory
@@ -34,15 +34,15 @@ module.exports = function pluginsLoader(source) {
    // Pass the source code of the component to the plugins
   const pluginData = { source };
 
-  // Trigger events for styleguide child plugins
+  // Trigger events for carte-blanche child plugins
   this._compilation.applyPlugins( // eslint-disable-line no-underscore-dangle
-    'styleguide-plugin-before-processing',
+    'carte-blanche-plugin-before-processing',
     pluginData,
     this
   );
 
   this._compilation.applyPlugins( // eslint-disable-line no-underscore-dangle
-    'styleguide-plugin-processing',
+    'carte-blanche-plugin-processing',
     renderToClient,
     pluginData,
     this
