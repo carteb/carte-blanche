@@ -5,8 +5,10 @@ npm-debug.log
 npm-debug.log.*
 dist
 stats.json
-webpack-plugin/assets/client-bundle.js
-webpack-plugin/assets/main.css
+webpack-plugin/src/assets/client-bundle.js
+webpack-plugin/src/client-bundle.js
+webpack-plugin/src/assets/main.css
+webpack-plugin/src/main.css
 webpack-plugin/dist
 client/user-bundle.js
 

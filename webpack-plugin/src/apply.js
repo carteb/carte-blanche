@@ -1,8 +1,8 @@
 /**
- * styleguide-plugin.js
+ * apply.js
  *
- * The plugin is instantiated and the emitted styleguide.html file is
- * generated here.
+ * This is the meat of our webpack plugin, it's what does all the component
+ * finding and compiling
  */
 
 import fs from 'fs';
@@ -11,69 +11,19 @@ import includes from 'lodash/includes';
 import ExtraEntryWebpackPlugin from 'extra-entry-webpack-plugin';
 import readMultipleFiles from 'read-multiple-files';
 
-let id = -1;
-/**
- * Instantiates the plugin
- *
- * @param {Object} options           The options
- * @param {String} options.include   A list of glob patterns that matches the components
- * @param {String} options.dest      The destination the styleguide should be emitted at
- * @param {Array}  options.plugins   The plugins to use for the project
- */
-function StyleguidePlugin(options) {
-  this.id = (++id);
-  this.options = options || {};
+import emitAssets from './utils/emitAssets';
+import registerPlugins from './registerPlugins';
+import registerDefaultPlugins from './registerDefaultPlugins';
 
-  // Assert that the include option was specified
-  if (!this.options.componentRoot) {
-    throw new Error(
-      'You need to specify where your components are in the "componentRoot" option!\n\n'
-    );
-  }
-
-  // Assert that the plugins option is an array if specified
-  if (this.options.plugins && !Array.isArray(this.options.plugins)) {
-    throw new Error('The "plugins" option needs to be an array!\n\n');
-  }
-
-  // Assert that the files option is an array if specified
-  if (this.options.files && !Array.isArray(this.options.files)) {
-    throw new Error('The "files" option needs to be an array!\n\n');
-  }
-}
-
-/**
- * Emit some assets to a compilation
- *
- * @param  {Object}   compilation The compilation we want to emit the assets from
- * @param  {Object}   assets      The assets we want to emit, keyed by filename
- * @param  {String}   [dest]      Optionally, emit the assets to a subfolder
- * @param  {Function} callback
- */
-function emitAssets(compilation, assets, dest, callback) {
-  const cb = callback || dest;
-  // Emit styleguide assets
-  Object.keys(assets).forEach((filename) => {
-    compilation.assets[path.join(dest, filename)] = { // eslint-disable-line no-param-reassign
-      source: () => assets[filename],
-      size: () => assets[filename].length,
-    };
-  });
-  cb();
-}
-
-/**
- * Initializes the plugin, called after the main StyleguidePlugin function above
- */
-StyleguidePlugin.prototype.apply = function apply(compiler) {
-  const dest = this.options.dest || 'styleguide';
-  const filter = this.options.filter || /([A-Z][a-zA-Z]*\/index|[A-Z][a-zA-Z]*)\.(jsx?|es6)$/;
+function apply(compiler) {
+  const dest = this.options.dest;
+  const filter = this.options.filter;
 
   // Register either the plugins or the default plugins
   if (this.options.plugins && this.options.plugins.length > 0) {
-    this.registerPlugins(compiler);
+    registerPlugins(compiler, this.options.plugins);
   } else {
-    this.registerDefaultPlugins(compiler);
+    registerDefaultPlugins(compiler);
   }
 
   // Compile the client
@@ -187,35 +137,6 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
     compilation.plugin('html-webpack-plugin-alter-chunks', (chunks) =>
       chunks.filter((chunk) => chunk.files.indexOf(userBundleFileName) === -1)
   ));
-};
+}
 
-/**
- * Register the default plugins
- */
-StyleguidePlugin.prototype.registerDefaultPlugins = function registerDefaultPlugins(compiler) {
-  let ReactPlugin = require('../plugins/react/dist/plugin'); // eslint-disable-line global-require, max-len
-  try {
-    const reactPlugin = new ReactPlugin();
-    reactPlugin.apply(compiler);
-  } catch (err) {
-    try {
-      ReactPlugin = require('atrium-react-plugin-beta'); // eslint-disable-line global-require, import/no-unresolved, max-len
-      const reactPlugin = new ReactPlugin();
-      reactPlugin.apply(compiler);
-    } catch (ex) {
-      console.log('ERROR Installing default Styleguide plugins failed.', ex); // eslint-disable-line no-console,max-len
-    }
-  }
-};
-
-/**
- * Register the custom, user defined plugins
- */
-StyleguidePlugin.prototype.registerPlugins = function registerPlugins(compiler) {
-  const plugins = this.options.plugins;
-  for (let i = 0; i < plugins.length; i++) {
-    plugins[i].apply(compiler);
-  }
-};
-
-export default StyleguidePlugin;
+export default apply;

@@ -2,7 +2,7 @@ import path from 'path';
 import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
-import StyleguidePlugin from '../../webpack-plugin/styleguide-plugin';
+import StyleguidePlugin from '../../webpack-plugin/index';
 import autoprefixer from 'autoprefixer';
 
 export default {

@@ -18,7 +18,7 @@
   "files": [
     "plugin"
   ],
-  "main": "plugin/styleguide-plugin.js",
+  "main": "plugin/index.js",
   "directories": {
     "lib": "plugin",
     "example": "examples"
