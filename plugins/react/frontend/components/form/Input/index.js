@@ -8,20 +8,24 @@ class Input extends Component { // eslint-disable-line react/prefer-stateless-fu
     this.props.onChange({ value: event.target.value });
   }
 
+  blur() {
+    this.input.blur();
+  }
+
   focus() {
     this.input.focus();
   }
 
   render() {
-    const { groupType = 'none', ...otherProps } = this.props;
-    let className = styles.root;
+    const { groupType = 'none', className, ...otherProps } = this.props;
+    let newClassName = `${styles.root} ${className}`;
     if (groupType === 'left') {
-      className = `${className} ${styles.groupLeft}`;
+      newClassName = `${newClassName} ${styles.groupLeft}`;
     }
     return (
       <input
         {...otherProps}
-        className={className}
+        className={newClassName}
         ref={(ref) => { this.input = ref; }}
         onChange={this.onChange}
       />
