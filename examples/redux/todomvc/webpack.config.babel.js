@@ -2,6 +2,7 @@ import path from 'path';
 import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CarteBlanche from '../../../webpack-plugin/index';
+import ReactPlugin from '../../../plugins/react/plugin';
 
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
@@ -25,6 +26,11 @@ module.exports = {
     new CarteBlanche({
       componentRoot: 'components',
       hot: false,
+      plugins: [
+        new ReactPlugin({
+          files: ['./node_modules/todomvc-app-css/index.css'],
+        }),
+      ],
       // files: [path.join(__dirname, './node_modules/todomvc-app-css/index.css')],
     }),
   ],
