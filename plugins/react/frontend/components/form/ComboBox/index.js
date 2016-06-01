@@ -51,7 +51,6 @@ export default class ComboBox extends Component {
   static propTypes = {
     options: PropTypes.array,
     value: PropTypes.any,
-    placeholder: PropTypes.string,
     disabled: PropTypes.bool,
     onChange: PropTypes.func,
     tabIndex: PropTypes.number,
@@ -113,8 +112,7 @@ export default class ComboBox extends Component {
     this.state = {
       isOpen: false,
       focusedOptionIndex: undefined,
-      inputValue: props.value,
-      filteredOptions: ComboBox.filterOptions(props.value, props),
+      filteredOptions: props.options,
     };
   }
 
@@ -131,12 +129,6 @@ export default class ComboBox extends Component {
     const id = uniqueId();
     this.caretStyleId = `caretStyle-id${id}`;
     updatePseudoClassStyle(this.caretStyleId, this.props);
-  }
-
-  componentWillReceiveProps(props) {
-    this.setState({
-      inputValue: props.value,
-    });
   }
 
   /**
@@ -296,7 +288,7 @@ export default class ComboBox extends Component {
    * Highlight previous option when arrowUp key is pressed.
    * Highlight last option if currently first option is focused.
    */
-  onArrowUpKeyDown() {
+  onArrowUpKeyDown = () => {
     if (this.state.filteredOptions.length > 0) {
       let index = this.state.filteredOptions.length - 1;
       if (this.state.focusedOptionIndex) {
@@ -312,7 +304,7 @@ export default class ComboBox extends Component {
   /**
    * Update value of Input box to the value of highlighted option.
    */
-  onEnterOrTabKeyDown() {
+  onEnterOrTabKeyDown = () => {
     if (this.state.focusedOptionIndex >= 0) {
       this.triggerChange(this.state.filteredOptions[this.state.focusedOptionIndex].value);
     }
@@ -321,16 +313,14 @@ export default class ComboBox extends Component {
   /**
    * Returns the value of the child with a certain index.
    */
-  getValueForIndex(index) {
-    return this.state.filteredOptions[index].value;
-  }
+  getValueForIndex = (index) => this.state.filteredOptions[index].value;
 
   /**
    * The function is called when user selects an option. Function will do following:
    * 1. Close the options
    * 2. Call onChange props function
    */
-  triggerChange(value) {
+  triggerChange = (value) => {
     this.setState({
       isOpen: false,
       focusedOptionIndex: undefined,
@@ -340,6 +330,7 @@ export default class ComboBox extends Component {
     if (this.props.onChange) {
       this.props.onChange(obj);
     }
+    this.input.blur();
   }
 
   render() {
@@ -356,7 +347,6 @@ export default class ComboBox extends Component {
       ...this.props.menuStyle,
     };
 
-    const placeHolder = this.props.placeholder;
     const tabIndex = this.props.tabIndex ? this.props.tabIndex : '0';
 
     if (this.props.disabled) {
@@ -403,13 +393,15 @@ export default class ComboBox extends Component {
           disabled={this.props.disabled}
           aria-disabled={this.props.disabled}
           value={this.state.inputValue}
-          placeholder={placeHolder}
+          placeholder={this.props.value}
           onChange={this.onChange}
           tabIndex={tabIndex}
           onBlur={this.onBlur}
           onFocus={this.onFocus}
           onKeyDown={this.onKeyDown}
           aria-autocomplete="list"
+          className={styles.input}
+          ref={(ref) => { this.input = ref; }}
         />
         <span
           style={caretStyle}
