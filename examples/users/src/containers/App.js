@@ -13,7 +13,7 @@ import * as UserActions from '../actions';
 class AppContainer extends Component { // eslint-disable-line
   render() {
     // const { users, actions } = this.props;
-    return <App {...this.props} />;
+    return (<App {...this.props} />);
   }
 }
 

@@ -1,13 +1,16 @@
 import React, { Component, PropTypes } from 'react';
+import { Link } from 'react-router'
+
+/* eslint-disable max-len  */
 
 class UserList extends Component { // eslint-disable-line react/prefer-stateless-function
-
   static propTypes = {
     users: PropTypes.arrayOf(
-      React.PropTypes.shape({
-        id: React.PropTypes.string.isRequired, // TODO change to number an figure out broken min
-        firstName: React.PropTypes.string,
-        lastName: React.PropTypes.string,
+      PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        firstName: PropTypes.string,
+        lastName: PropTypes.string,
+        imgurl: PropTypes.imgurl,
       }),
     ).isRequired,
   };
@@ -15,7 +18,11 @@ class UserList extends Component { // eslint-disable-line react/prefer-stateless
   render() {
     return (
       <ul>
-        {this.props.users.map((user) => <li key={user.id}>{user.firstName} {user.lastName}</li>)}
+        {this.props.users.map((user) => (
+					<li key={user.id}>
+						<Link to={`/user/${user.id}`}>{user.firstName} {user.lastName} {user.imgurl}</Link>
+					</li>
+				))}
       </ul>
     );
   }

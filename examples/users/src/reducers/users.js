@@ -12,6 +12,7 @@ export default function users(state = initialState, action) {
           id: state.reduce((maxId, todo) => Math.max(todo.id, maxId), -1) + 1,
           firstName: action.firstName,
           lastName: action.lastName,
+          imgurl: action.imgurl,
         },
         ...state,
       ];
