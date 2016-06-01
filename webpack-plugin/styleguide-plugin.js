@@ -119,7 +119,7 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
         <link rel="stylesheet" type="text/css" href="client-bundle.css" />
       </head>
       <body>
-        <div id='styleguide-root'>Root</div>
+        <div id='styleguide-root'></div>
         <script src="client-bundle.js"></script>
         <script src="user-bundle.js"></script>
       </body>
@@ -164,7 +164,7 @@ StyleguidePlugin.prototype.apply = function apply(compiler) {
             <link rel="stylesheet" type="text/css" href="client-bundle.css" />
           </head>
           <body>
-            <div id='styleguide-root'>Root</div>
+            <div id='styleguide-root'></div>
             <script>
               ${scripts.join('\n')}
             </script>
