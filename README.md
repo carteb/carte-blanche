@@ -75,12 +75,13 @@ We have some shared utils, which we use in both the client and some plugins in t
 
 ```
 client
-└── client.js   # The client users see at /carte-blanche.html
-examples        # The Example Apps
-└── dev         # Example used for Plugin Development
-plugin          # The Plugin itself
-├── entry-loader.js
-├── entry.js
-├── loader.js
-└── carte-blanche-plugin.js
+└── client.js   # The client users see at /carte-blanche
+examples        # The Example Apps used for development and demos
+plugins         # Some plugins we wrote ourselves
+├── react       # The ReactPlugin
+└── source      # SourcePlugin (shows the source code of the component)
+utils           # Some shared utilities (`carte-blanche-utils`)
+webpack-plugin  # The main webpack plugin
+├── src         # The source code
+└── index.js    # The main entry file
 ```
