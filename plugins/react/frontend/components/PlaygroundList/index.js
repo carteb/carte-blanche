@@ -199,7 +199,7 @@ class PlaygroundList extends Component {
       })
       .catch((ex) => {
         // TODO proper error handling
-        console.error(ex); // eslint-disable-line no-console
+        console.error(ex.stack); // eslint-disable-line no-console
       });
   };
 
@@ -234,7 +234,7 @@ class PlaygroundList extends Component {
         this.fetchVariations();
       }).catch((err) => {
         // TODO proper error handling
-        console.error('parsing failed', err); // eslint-disable-line no-console
+        console.error(err.stack); // eslint-disable-line no-console
       });
   };
 
@@ -254,7 +254,7 @@ class PlaygroundList extends Component {
     })
     .catch((err) => {
       // TODO PROPER ERROR HANDLING
-      console.trace(err); // eslint-disable-line no-console
+      console.error(err.stack); // eslint-disable-line no-console
     });
   };
 
@@ -279,7 +279,7 @@ class PlaygroundList extends Component {
     })
     .catch((err) => {
       // TODO PROPER ERROR HANDLING
-      console.trace(err); // eslint-disable-line no-console
+      console.error(err.stack); // eslint-disable-line no-console
     });
   };
 
@@ -307,7 +307,7 @@ class PlaygroundList extends Component {
     })
     .catch((err) => {
       // TODO PROPER ERROR HANDLING
-      console.trace(err); // eslint-disable-line no-console
+      console.error(err.stack); // eslint-disable-line no-console
     });
   };
 
