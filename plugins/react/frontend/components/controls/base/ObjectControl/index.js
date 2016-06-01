@@ -31,6 +31,12 @@ class ObjectControl extends React.Component {
     });
   }
 
+  onCloseSettings = () => {
+    this.setState({
+      settingsActive: false,
+    });
+  };
+
   render() {
     const {
       label,
@@ -68,6 +74,7 @@ class ObjectControl extends React.Component {
           <div style={{ padding: '0 0.5rem', textAlign: 'right' }}>
             {hasSettings && <Dropdown
               active={this.state.settingsActive}
+              onClose={this.onCloseSettings}
             >
               <BaseSettings onChange={onUpdate} />
             </Dropdown>}

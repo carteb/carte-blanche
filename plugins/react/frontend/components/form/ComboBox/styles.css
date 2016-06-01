@@ -21,3 +21,12 @@
   /* Improve scrolling for mobile Safari */
   -webkit-overflow-scrolling: touch;
 }
+
+.input::placeholder {
+  color: #555;
+  opacity: 1;
+}
+
+.input:focus::placeholder {
+  opacity: 0.54;
+}
