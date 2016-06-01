@@ -374,7 +374,7 @@ class PlaygroundList extends Component {
 
   render() {
     if (this.state.loadingMetadata && this.state.loadingVariations) {
-      return <div className={styles.loading}>Loading …</div>;
+      return <div className={styles.emptyWrapper} />;
     }
 
     if (this.state.metadataError) {
@@ -393,10 +393,6 @@ class PlaygroundList extends Component {
     const { component } = this.props;
     // Find the selected variation
     const selectedVariation = this.state.variationPropsList[this.state.selectedVariationId];
-
-    // Get all the styling of the components. These tags are injected by style-loader
-    // and we can grab all of them and inject them into each iframe of the variations
-    const userStylingNodes = document.querySelectorAll('style');
 
     return (
       <div className={styles.wrapper}>
@@ -440,7 +436,6 @@ class PlaygroundList extends Component {
                 fullHeight
                 variationProps={selectedVariation.props}
                 variationPath={this.state.selectedVariationId}
-                stylingNodes={userStylingNodes}
               />
             </div>
           )}
@@ -465,7 +460,6 @@ class PlaygroundList extends Component {
               variationPath={variationPath}
               onDeleteButtonClick={this.deleteVariation}
               onEditButtonClick={this.startVariationEditMode}
-              stylingNodes={userStylingNodes}
             />
           )
         ))}

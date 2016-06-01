@@ -1,6 +1,5 @@
 .wrapper {
   display: flex;
-  min-height: 25vh;
   align-items: center;
   justify-content: center;
   width: 100%;
@@ -20,8 +19,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 25vh;
   margin: 0 auto;
+}
+
+.resizeDiv {
+  height: 100%;
+  width: 100%;
+  min-height: 20vh;
+  transition: height 150ms ease-in-out; /* TODO replace with scaleX for perf? */
 }
 
 .errWrapper {

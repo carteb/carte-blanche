@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+
 /**
  * Playground
  *
@@ -46,12 +48,11 @@ class Playground extends React.Component {
 
     if (element) {
       const frame = element.querySelector('iframe');
-      const card = element.querySelector('[class^=card__]');
 
       // This seems to be the most accurate methode to calculate the real iframe height
-      if (frame && card) {
+      if (this.resizeDiv && frame) {
         const frameHeight = frame.contentDocument.querySelector('#root').offsetHeight;
-        card.style.height = `${frameHeight}px`;
+        this.resizeDiv.style.height = `${frameHeight}px`;
       }
     }
   };
@@ -109,52 +110,56 @@ class Playground extends React.Component {
           className={styles.card}
           onMouseEnter={this.showButtons}
         >
-
-          {/* Don't render anything if neither button actions are specified*/}
-          {(this.props.onEditButtonClick || this.props.onDeleteButtonClick) && (
-            <VelocityComponent
-              animation={{
-                opacity: this.state.buttonsVisible ? 1 : 0,
-              }}
-              duration={100}
-              delay={delay}
-              easing="ease-in-out"
-            >
-              <div
-                className={styles.buttonWrapper}
-                onMouseEnter={this.showButtonsDirectly}
-                onMouseLeave={this.activateDelay}
+          <div
+            className={styles.resizeDiv}
+            ref={(ref) => { this.resizeDiv = ref; }}
+          >
+            {/* Don't render anything if neither button actions are specified*/}
+            {(this.props.onEditButtonClick || this.props.onDeleteButtonClick) && (
+              <VelocityComponent
+                animation={{
+                  opacity: this.state.buttonsVisible ? 1 : 0,
+                }}
+                duration={100}
+                delay={delay}
+                easing="ease-in-out"
               >
-                {this.props.onEditButtonClick && (
-                  <EditButton
-                    className={styles.button}
-                    onClick={this.onEditButtonClick}
-                  />
-                )}
-                {this.props.onDeleteButtonClick && (
-                  <DeleteButton
-                    className={styles.button}
-                    onClick={this.onDeleteButtonClick}
-                  />
-                )}
+                <div
+                  className={styles.buttonWrapper}
+                  onMouseEnter={this.showButtonsDirectly}
+                  onMouseLeave={this.activateDelay}
+                >
+                  {this.props.onEditButtonClick && (
+                    <EditButton
+                      className={styles.button}
+                      onClick={this.onEditButtonClick}
+                    />
+                  )}
+                  {this.props.onDeleteButtonClick && (
+                    <DeleteButton
+                      className={styles.button}
+                      onClick={this.onDeleteButtonClick}
+                    />
+                  )}
+                </div>
+              </VelocityComponent>
+            )}
+            {/* Render error or the actual component */}
+            {(this.props.err) ? (
+              <div className={styles.errWrapper}>
+                <code className={styles.err}>
+                  {`
+  ${this.props.err}
+      at ${this.props.variationBasePath}/${this.props.componentPath}/${this.props.variationPath}.js`}
+                </code>
               </div>
-            </VelocityComponent>
-          )}
-          {/* Render error or the actual component */}
-          {(this.props.err) ? (
-            <div className={styles.errWrapper}>
-              <code className={styles.err}>
-                {`
-${this.props.err}
-    at ${this.props.variationBasePath}/${this.props.componentPath}/${this.props.variationPath}.js`}
-              </code>
-            </div>
-          ) : (
-            <IFrame
-              variationProps={this.props.variationProps}
-              componentPath={this.props.componentPath}
-            />
-          )}
+            ) : (
+              <IFrame
+                variationProps={this.props.variationProps}
+                componentPath={this.props.componentPath}
+              />
+            )}
+          </div>
         </Card>
       </div>
     );
@@ -170,7 +175,6 @@ Playground.propTypes = {
   fullHeight: PropTypes.bool,
   variationPath: PropTypes.string,
   title: PropTypes.string,
-  stylingNodes: PropTypes.array,
   variationBasePath: PropTypes.string,
 };
 
