@@ -9,7 +9,7 @@ const propsToVariation = (rawProps) => {
   const extractAndReplaceFunctions = (object) => {
     forEach(object, (value, key) => {
       if (isFunction(value)) {
-        const id = uniqueId('STYLEGUIDE_FUNCTION_');
+        const id = uniqueId('CARTE_BLANCHE_FUNCTION_');
         functionStore[id] = value.toString();
         object[key] = id; // eslint-disable-line no-param-reassign
       } else if (isObject(value)) {

@@ -5,7 +5,7 @@ This plugin gives you an isolated development space for your react components. I
 ## Usage
 
 ```JS
-new StyleguidePlugin({
+new CarteBlanche({
   includes: /* … */,
   plugins: [
     new ReactPlugin()

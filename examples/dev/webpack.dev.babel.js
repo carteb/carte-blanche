@@ -1,7 +1,7 @@
 import path from 'path';
 import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import StyleguidePlugin from '../../webpack-plugin/index';
+import CarteBlanche from '../../webpack-plugin/index';
 import autoprefixer from 'autoprefixer';
 
 import ReactPlugin from '../../plugins/react/dist/plugin';
@@ -30,7 +30,7 @@ export default {
       inject: true,
       template: path.join(__dirname, './src/index.html'),
     }),
-    new StyleguidePlugin({
+    new CarteBlanche({
       componentRoot: './src/components/',
       plugins: [
         new ReactPlugin(),

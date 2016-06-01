@@ -17,7 +17,7 @@ export default {
   plugins: [
     new webpack.NoErrorsPlugin(),
     new HtmlWebpackPlugin({
-      filename: 'styleguide/index.html',
+      filename: 'carte-blanche/index.html',
       template: '!!html!' + path.join(__dirname, './index.html'), // eslint-disable-line
     }),
     new webpack.DefinePlugin({

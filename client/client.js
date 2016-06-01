@@ -1,5 +1,5 @@
 /**
- * Main entry point for the Styleguide Client
+ * Main entry point for the CarteBlanche Client
  */
 
 import React from 'react';
@@ -72,7 +72,7 @@ if (window.frameElement) {
           component={(props) => (<FourOhFour {...props} components={components} />)}
         />
       </Router>),
-      document.getElementById('styleguide-root')
+      document.getElementById('carte-blanche-root')
     );
   };
 }

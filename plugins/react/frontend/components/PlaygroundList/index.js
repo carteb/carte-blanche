@@ -24,7 +24,7 @@ import {
   getComponentNameFromPath,
   keycodes as KeyCodes,
   getVariationPathFromComponentPath,
-} from 'atrium-utils-beta';
+} from 'carte-blanche-utils';
 
 // Components
 import Playground from '../common/Playground';

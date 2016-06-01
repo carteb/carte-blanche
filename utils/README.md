@@ -1,6 +1,6 @@
-# `atrium-utils-beta`
+# `carte-blanche-utils`
 
-Shared utils for Atrium, used in some plugins and the core client.
+Shared utils for CarteBlanche, used in some plugins and the core client.
 
 ## `getVariationPathFromComponentPath`
 

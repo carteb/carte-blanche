@@ -1,10 +1,10 @@
 {
-  "name": "atrium-react-plugin-beta",
+  "name": "carte-blanche-react-plugin",
   "version": "0.0.0",
   "description": "",
-  "homepage": "https://github.com/pure-ui/styleguide",
+  "homepage": "https://github.com/pure-ui/carte-blanche",
   "bugs": {
-    "url": "https://github.com/pure-ui/styleguide/issues"
+    "url": "https://github.com/pure-ui/carte-blanche/issues"
   },
   "contributors": [
     "Nik Graf <nik@nikgraf.com> (https://medium.com/@nikgraf)",
@@ -13,7 +13,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/pure-ui/styleguide"
+    "url": "https://github.com/pure-ui/carte-blanche"
   },
   "license": "MIT",
   "main": "dist/plugin.js",
@@ -28,7 +28,7 @@
     "react-component"
   ],
   "dependencies": {
-    "atrium-utils-beta": "^0.0.1",
+    "carte-blanche-utils": "^0.0.1",
     "axios": "^0.11.1",
     "body-parser": "^1.15.1",
     "chokidar": "^1.5.1",
@@ -46,7 +46,7 @@
     "velocity-react": "^1.1.5"
   },
   "peerDependencies": {
-    "atrium-webpack-plugin-beta": "^0.0.0",
+    "carte-blanche-webpack-plugin": "^0.0.0",
     "webpack": ">=1 <3"
   },
   "scripts": {

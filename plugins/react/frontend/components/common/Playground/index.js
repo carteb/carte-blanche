@@ -43,7 +43,7 @@ class Playground extends React.Component {
 
   resizeCard = () => {
     // FIXME: access frame and card through refs! currently not possible because of this issue:
-    // https://github.com/pure-ui/styleguide/issues/126
+    // https://github.com/pure-ui/carte-blanche/issues/126
     const element = reactDOM.findDOMNode(this);
 
     if (element) {
