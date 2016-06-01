@@ -3,7 +3,13 @@ import PlaygroundList from './components/PlaygroundList';
 import IFrameDataManager from './components/common/IFrameDataManager';
 import normalizeMetaInfo from './utils/normalizeMetaInfo';
 
-export default function playground(frontendData, pluginData, Component, componentPath) {
+export default function playground(
+  frontendData,
+  pluginData,
+  Component,
+  componentPath,
+  // navigationStore,
+) {
   const options = frontendData.options;
 
   if (window.frameElement) {

@@ -60,7 +60,7 @@ class Navigation extends React.Component {
   };
 
   setQueryParamForActiveItemId = () => {
-    // const plugins = getPlugins(this.props.activeComponentPath);
+    // const plugins = getPlugins(this.getActiveComponentPath());
     // const ids = flatten(map(plugins, (plugin) => map(plugin, (link) => link.id)));
     //
     // const activeId = find(ids, (id) => {
@@ -77,6 +77,8 @@ class Navigation extends React.Component {
     // }
   };
 
+  getActiveComponentPath = () => this.props.location.pathname.replace(/^\//, '');
+
   toggleShortcutHelp = () => {
     this.setState({
       shortcutHelpVisible: !this.state.shortcutHelpVisible,
@@ -92,10 +94,7 @@ class Navigation extends React.Component {
   };
 
   renderSubNavigation = (componentPath) => {
-    // TODO FIXME
-    return null;
-    /* eslint-disable no-unreachable */
-    if (this.props.activeComponentPath === componentPath) {
+    if (this.getActiveComponentPath() === componentPath) {
       if (has(this.props.components, componentPath)) {
         const plugins = getPlugins(componentPath);
         return map(plugins, (plugin, pluginKey) => (
@@ -129,7 +128,7 @@ class Navigation extends React.Component {
 
   renderComponents = () => (
     // Iterate through all components and generate a list
-    Object.keys(this.props.components)
+    Object.keys(this.props.navigationStore.getState())
       .map((componentPath) => {
         // Clean the component name
         const componentName = getComponentNameFromPath(componentPath);
