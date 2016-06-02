@@ -143,6 +143,7 @@ class PlaygroundList extends Component {
   };
 
   // Attach the correct controls to the component metadata
+  // TODO rename to generateMetadataWithControlsAndConstraints
   generateMetadataWithControls = (docgenMetadata, customMetadata) => {
     let metadataWithControls;
     if (docgenMetadata.props) {
@@ -153,6 +154,7 @@ class PlaygroundList extends Component {
         // Attach the control
         newProp.control = getControl(newProp, propMeta);
         newProp.controlType = propMeta && propMeta.controlType;
+        newProp.customMetaData = customMetadata.props[propKey];
         return newProp;
       });
     }
