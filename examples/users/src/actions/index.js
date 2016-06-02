@@ -9,3 +9,12 @@ export function addContact(firstName, lastName, avatarUrl, phone) {
     phone,
   };
 }
+
+export function addCall(timestamp, duration, receiverId) {
+  return {
+    type: types.ADD_CALL,
+    timestamp,
+    duration,
+    receiverId,
+  };
+}

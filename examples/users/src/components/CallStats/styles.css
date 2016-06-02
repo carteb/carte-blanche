@@ -1,0 +1,27 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300);
+
+.root {
+  font-family: 'Open Sans', sans-serif;
+  min-width: 320px;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.callList {
+	list-style: none;
+	margin: 1em 0;
+	padding: 0;
+}
+
+.call {
+  width: 100%;
+  padding: 1rem 0 0 0;
+  color: #505050;
+  border: 0 solid #fff;
+  border-bottom: 1px solid #eee;
+  background: none;
+  display: block;
+  box-sizing: border-box;
+  min-height: 0px;
+  font-size: 1rem;
+}
