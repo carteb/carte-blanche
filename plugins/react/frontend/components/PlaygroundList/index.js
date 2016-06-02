@@ -426,6 +426,7 @@ class PlaygroundList extends Component {
               />
               <Playground
                 userFiles={this.props.userFiles}
+                injectTags={this.props.injectTags}
                 component={component}
                 componentPath={this.props.componentPath}
                 fullHeight
@@ -440,6 +441,7 @@ class PlaygroundList extends Component {
           variation.err ? (
             <Playground
               userFiles={this.props.userFiles}
+              injectTags={this.props.injectTags}
               key={variationPath}
               variationPath={variationPath}
               componentPath={getVariationPathFromComponentPath(this.props.componentPath)}
@@ -449,6 +451,7 @@ class PlaygroundList extends Component {
           ) : (
             <Playground
               userFiles={this.props.userFiles}
+              injectTags={this.props.injectTags}
               key={variationPath}
               component={component}
               componentPath={this.props.componentPath}

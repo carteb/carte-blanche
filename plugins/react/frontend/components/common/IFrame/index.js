@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-const createHtml = (componentPath, userFiles) => (
+const createHtml = (componentPath, userFiles, injectTags) => (
   `<!DOCTYPE html>
   <html style="height: 100%; width: 100%; margin: 0; padding: 0;">
     <body style="height: 100%; width: 100%; margin: 0; padding: 0;">
@@ -19,6 +19,7 @@ const createHtml = (componentPath, userFiles) => (
         window.COMPONENT_PATH = '${componentPath}';
         window.COMPONENT_DATA = undefined;
       </script>
+      ${injectTags && injectTags.join('\n')}
       <style>
         ${userFiles && userFiles.styles.join('\n')}
       </style>
@@ -37,7 +38,7 @@ class IFrame extends React.Component {
   componentDidMount() {
     const doc = this.iframe.contentDocument;
     doc.open();
-    doc.write(createHtml(this.props.componentPath, this.props.userFiles));
+    doc.write(createHtml(this.props.componentPath, this.props.userFiles, this.props.injectTags));
     doc.close();
 
     this.iframe.contentWindow.INITIAL_COMPONENT_DATA = this.props.variationProps;

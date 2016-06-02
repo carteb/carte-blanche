@@ -4,6 +4,8 @@
 function validateOptions(options) {
   // Default options to our preferred value
   options.dest = options.dest || 'carte-blanche';
+  // Remove a prefixed slash from the dest option, i.e. /test/ -> test/
+  options.dest = options.dest.replace(/^\/|\\/gi, '');
   // HACK: Webpack can embed this regex verbatim and the .? makes it not insert a comment terminator
   options.filter = options.filter || /([A-Z][a-zA-Z]*.?\/index|[A-Z][a-zA-Z]*)\.(jsx?|es6|react\.jsx?)$/;
 
