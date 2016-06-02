@@ -113,6 +113,7 @@ export default class ComboBox extends Component {
       isOpen: false,
       focusedOptionIndex: undefined,
       filteredOptions: props.options,
+      inputValue: '',
     };
   }
 
