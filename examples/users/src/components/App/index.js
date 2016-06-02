@@ -38,7 +38,9 @@ class App extends Component { // eslint-disable-line react/prefer-stateless-func
             </svg>
             <span className={styles.logoTitle}>Contacts</span>
           </Link>
-          <img src={avatarUrl} height="25" width="25" role="presentation" />
+          <div className={styles.user}>
+            <img src={avatarUrl} height="25" width="25" role="presentation" />
+          </div>
         </div>
         <div>
           {this.props.children}

@@ -6,9 +6,11 @@
 
 .navigation {
   background: rgb(36, 60, 100);
+  display: flex;
 }
 
 .logo {
+  align-self: flex-start;
   color: #61DDB2;
   text-decoration: none;
 }
@@ -31,4 +33,9 @@
 .logoTitle {
   font-weight: 300;
   font-size: 1.5rem;
+}
+
+.user {
+  margin-left: auto;
+  margin-right: 1rem;
 }
