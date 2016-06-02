@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import ContactPreview from '../ContactPreview';
-import CallButton from '../CallButton';
 import styles from './styles.css';
 
 /* eslint-disable max-len  */
