@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import UserPreview from '../UserPreview';
+import styles from './styles.css';
 
 /* eslint-disable max-len  */
 
@@ -10,14 +11,14 @@ class UserList extends Component { // eslint-disable-line react/prefer-stateless
         id: PropTypes.string.isRequired,
         firstName: PropTypes.string,
         lastName: PropTypes.string,
-        avatarUrl: PropTypes.avatarUrl,
+        avatarUrl: PropTypes.string,
       }),
     ).isRequired,
   };
 
   render() {
     return (
-      <ul>
+      <ul className={styles.root}>
         {this.props.users.map((user) => (
           <li key={user.id}>
             <UserPreview user={user} />

@@ -1,0 +1,27 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300);
+
+.root {
+  box-sizing: border-box;
+  min-width: 300px;
+  max-width: 600px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1rem;
+}
+
+.fullName {
+  padding: 0.25rem 0;
+}
+
+.firstName {
+  font-weight: bold;
+}
+
+.image {
+  margin: 0.25rem 0.5rem 0.25rem 0;
+  height: 1.5rem;
+  width: 1.5rem;
+  border-radius: 0.75rem;
+  background: #eee;
+}

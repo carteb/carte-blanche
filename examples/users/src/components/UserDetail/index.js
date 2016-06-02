@@ -16,7 +16,7 @@ UserDetail.propTypes = {
     id: PropTypes.string.isRequired,
     firstName: PropTypes.string,
     lastName: PropTypes.string,
-    avatarUrl: PropTypes.avatarUrl,
+    avatarUrl: PropTypes.string,
   }).isRequired,
 };
 

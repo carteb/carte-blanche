@@ -1,20 +1,24 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
+import styles from './styles.css';
 
 function UserPreview({ user }) {
   return (
-    <Link to={`/user/${user.id}`}>
+    <Link to={`/user/${user.id}`} className={styles.root}>
       {
         user.avatarUrl ?
           <img
             src={user.avatarUrl}
-            height="50"
-            width="50"
             role="presentation"
+            className={styles.image}
+            alt={user.firstName && user.firstName.length > 0 ? user.firstName[0] : ''}
           /> :
           null
       }
-      <h5>{user.firstName} {user.lastName}</h5>
+      <div className={styles.fullName}>
+        <span className={styles.firstName}>{user.firstName}</span>
+        <span> {user.lastName}</span>
+      </div>
     </Link>
   );
 }
@@ -24,7 +28,7 @@ UserPreview.propTypes = {
     id: PropTypes.string.isRequired,
     firstName: PropTypes.string,
     lastName: PropTypes.string,
-    avatarUrl: PropTypes.avatarUrl,
+    avatarUrl: PropTypes.string,
   }).isRequired,
 };
 

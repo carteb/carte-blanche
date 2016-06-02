@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import AddUser from '../components/AddUser';
 import UserList from '../components/UserList';
+import sortBy from 'lodash/sortBy';
 
 import * as UserActions from '../actions';
 
@@ -24,7 +25,7 @@ UserListContainer.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    users: state.users,
+    users: sortBy(state.users, ['firstName', 'lastName']),
   };
 }
 
