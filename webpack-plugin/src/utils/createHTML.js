@@ -1,19 +1,29 @@
-const topTemplate = `
+/* eslint-disable max-len */
+import path from 'path';
+
+/**
+ * Create the base template, returning a top and a bottom part
+ *
+ * @param  {String} dest The URL carte-blanche should be at
+ * @return {Object}      The template split into two parts
+ */
+const createBaseTemplate = (dest) => ({
+  top: `
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8">
     <title>CarteBlanche</title>
-    <link rel="stylesheet" type="text/css" href="client-bundle.css" />
+    <link rel="stylesheet" type="text/css" href="${(dest) ? `/${path.join(dest, 'client-bundle.css')}` : 'client-bundle.css'}" />
   </head>
   <body>
-    <div id='carte-blanche-root'></div>\n`;
-
-const bottomTemplate = `
-    <script src="client-bundle.js"></script>
-    <script src="user-bundle.js"></script>
+    <div id='carte-blanche-root'></div>\n`,
+  bottom: `
+    <script src="${(dest) ? `/${path.join(dest, 'client-bundle.js')}` : 'client-bundle.js'}"></script>
+    <script src="${(dest) ? `/${path.join(dest, 'user-bundle.js')}` : 'user-bundle.js'}"></script>
   </body>
-</html>`;
+</html>`,
+});
 
 /**
  * Create HTML from a base template with injected styles and scripts
@@ -23,10 +33,11 @@ const bottomTemplate = `
  *
  * @return {String}        The finished HTML
  */
-const createHTML = (scripts, styles) => {
+const createHTML = (dest, scripts, styles) => {
+  const baseTemplate = createBaseTemplate(dest || '');
   // If there's no scripts or styles return the basetemplate
   if (!scripts && !styles) {
-    return `${topTemplate}\n${bottomTemplate}`;
+    return `${baseTemplate.top}\n${baseTemplate.bottom}`;
   }
 
   // Put together the injected content
@@ -37,7 +48,7 @@ const createHTML = (scripts, styles) => {
   if (styles) {
     injectedContent += `    <style>${styles.join('\n')}</style>\n`;
   }
-  return `${topTemplate}${injectedContent}${bottomTemplate}`;
+  return `${baseTemplate.top}${injectedContent}${baseTemplate.bottom}`;
 };
 
 export default createHTML;

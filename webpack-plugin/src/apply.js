@@ -61,7 +61,7 @@ function apply(compiler) {
   // The client assets, default the HTML to only include the client bundles and the
   // user bundle
   const clientAssets = {
-    'index.html': createHTML(),
+    'index.html': createHTML(dest),
     'client-bundle.js': fs.readFileSync(path.resolve(__dirname, './assets/client-bundle.js')),
     'client-bundle.css': fs.readFileSync(path.resolve(__dirname, './assets/main.css')),
   };
@@ -89,7 +89,7 @@ function apply(compiler) {
           }
         });
         // Put together the HTML file based on the assets we got
-        clientAssets['index.html'] = createHTML(scripts, styles);
+        clientAssets['index.html'] = createHTML(dest, scripts, styles);
         emitAssets(compilation, clientAssets, dest, callback);
       });
     } else {
