@@ -12,26 +12,27 @@
 }
 
 .avatar {
-  width: 4rem;
-  height: 4rem;
+  width: 6rem;
+  height: 6rem;
 }
 
 .avatarFallback {
-  width: 4rem;
-  height: 4rem;
+  width: 6rem;
+  height: 6rem;
   background: #ccc;
   text-align: center;
-  line-height: 4rem;
+  line-height: 6rem;
   vertical-align: middle;
-  border-radius: 2rem;
+  border-radius: 3rem;
   color: #fff;
-  font-size: 2rem;
+  font-size: 3rem;
 }
 
 .name {
-  line-height: 4rem;
+  line-height: 6rem;
   vertical-align: middle;
-  margin-left: 1rem;
+  margin-left: 2rem;
+  font-size: 1.5rem;
 }
 
 .phone {
