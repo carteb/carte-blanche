@@ -11,7 +11,6 @@ function ContactPreview({ contact }) {
             src={contact.avatarUrl}
             role="presentation"
             className={styles.image}
-            alt={contact.firstName && contact.firstName.length > 0 ? contact.firstName[0] : ''}
           /> :
           null
       }

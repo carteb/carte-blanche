@@ -1,0 +1,46 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300);
+
+.root {
+  min-width: 320px;
+  max-width: 640px;
+  font-family: 'Open Sans', sans-serif;
+}
+.top {
+  display: flex;
+  flex-direction: row;
+}
+
+.avatar {
+  width: 4rem;
+  height: 4rem;
+}
+
+.avatarFallback {
+  width: 4rem;
+  height: 4rem;
+  background: #ccc;
+  text-align: center;
+  line-height: 4rem;
+  vertical-align: middle;
+  border-radius: 2rem;
+  color: #fff;
+  font-size: 2rem;
+}
+
+.name {
+  line-height: 4rem;
+  vertical-align: middle;
+  margin-left: 1rem;
+}
+
+.phone {
+  margin-top: 2rem;
+}
+
+.number {
+  margin-top: 0.25rem;
+  box-sizing: border-box;
+  border-bottom: 1px solid #eee;
+  font-size: 1rem;
+  line-height: 2;
+}
