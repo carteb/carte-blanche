@@ -144,76 +144,15 @@ class PlaygroundList extends Component {
 
   // Attach the correct controls to the component metadata
   generateMetadataWithControls = (docgenMetadata, customMetadata) => {
-    /**
-     *
-     * will be moved into a service of its own.
-     *
-     * convert the customMetaData to propTypeData structure
-     *
-     * from:
-     *
-     * {
-   *    controlType: 'foo',
-   *    constraints: {
-   *      controlType: 'bar'
-   *    }
-   * }
-   *
-   *
-   * to:
-   *
-   * {
-   *    name: 'foo',
-   *    value: {
-   *      name: 'bar'
-   *    }
-   * }
-     *
-     * @param {Object} meta
-     * @returns {{name: *}}
-     */
-    const resolveCustomMetaData = meta => {
-      if (!meta || !meta.controlType) return undefined;
-
-      // not ideal. but make it work for now.
-      // check for enum or shape and control types
-      // min and max constraints are being neglected.
-      // should be adapted to handle number constraints etc.
-      if (meta.controlType === 'enum') {
-        return { name: 'enum', value: [
-          { value: 1, computed: false },
-          { value: 2, computed: false },
-          { value: 3, computed: false },
-        ] };
-      }
-
-      if (meta.controlType === 'shape') {
-        return { name: 'shape', value: {
-          one: { name: 'string', required: false },
-          two: { name: 'number', required: false },
-          three: { name: 'integer', required: false },
-        } };
-      }
-
-      return { name: meta.controlType, value: resolveCustomMetaData(meta.constraints) };
-    };
-
     let metadataWithControls;
-
     if (docgenMetadata.props) {
       metadataWithControls = mapValues(docgenMetadata.props, (prop, propKey) => {
+        const newProp = { ...prop };
         // Get the metadata for this property
         const propMeta = customMetadata && customMetadata.props && customMetadata.props[propKey];
-        // has custom meta data?
-        // override the propTypeData value
-        const metaDataStructure = propMeta ? resolveCustomMetaData(propMeta) : {};
-        const newProp = { ...prop, ...metaDataStructure };
-        newProp.propTypeData = prop;
         // Attach the control
         newProp.control = getControl(newProp, propMeta);
         newProp.controlType = propMeta && propMeta.controlType;
-        // Attach the original custom meta data
-        newProp.customMetaData = propMeta;
         return newProp;
       });
     }
