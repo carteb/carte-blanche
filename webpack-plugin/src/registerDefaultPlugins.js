@@ -3,13 +3,13 @@
  */
 
 function registerDefaultPlugins(compiler) {
-  let ReactPlugin = require('../../plugins/react/dist/plugin'); // eslint-disable-line global-require, max-len
   try {
+    const ReactPlugin = require('../../plugins/react/dist/plugin'); // eslint-disable-line global-require, max-len
     const reactPlugin = new ReactPlugin();
     reactPlugin.apply(compiler);
   } catch (err) {
     try {
-      ReactPlugin = require('carte-blanche-react-plugin'); // eslint-disable-line global-require, import/no-unresolved, max-len
+      const ReactPlugin = require('carte-blanche-react-plugin'); // eslint-disable-line global-require, import/no-unresolved, max-len
       const reactPlugin = new ReactPlugin();
       reactPlugin.apply(compiler);
     } catch (ex) {

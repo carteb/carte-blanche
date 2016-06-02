@@ -1,12 +1,12 @@
 {
   "name": "carte-blanche",
-  "version": "0.0.0",
+  "version": "0.0.4",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
     "prebuild": "rimraf ./dist/*",
-    "build": "BABEL_DISABLE_CACHE=1 BABEL_ENV=production NODE_ENV=production babel --ignore='node_modules' --out-dir='dist' src && npm run copy",
-    "copy": "ncp ./src/assets ./dist/assets",
+    "build": "BABEL_DISABLE_CACHE=1 BABEL_ENV=production NODE_ENV=production babel --ignore='node_modules' --out-dir='dist' . index.js && npm run copy",
+    "copy": "ncp ./src/assets ./dist/src/assets",
     "prepublish": "npm run build"
   },
   "homepage": "https://github.com/pure-ui/carte-blanche",
@@ -28,7 +28,8 @@
     "extra-entry-webpack-plugin": "0.0.2",
     "loader-utils": "^0.2.15",
     "lodash": "^4.13.1",
-    "mocha": "^2.5.3"
+    "mocha": "^2.5.3",
+    "read-multiple-files": "^1.1.1"
   },
   "devDependencies": {
     "babel-cli": "^6.9.0",
