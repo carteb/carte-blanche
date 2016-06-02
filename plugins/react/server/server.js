@@ -8,9 +8,7 @@ var mkdirp = require('mkdirp');
 var server;
 var jsonBodyParser = bodyParser.json();
 var getAbsoluteVariationPath = require('./utils/getAbsoluteVariationPath');
-if (process.env.CI !== true) {
-  var chokidar = require('chokidar');
-}
+var chokidar = require('chokidar');
 
 /**
  * Checks if a file at a certain path exists
@@ -37,38 +35,33 @@ var start = (projectBasePath, variationsBasePath, options) => {
 
   app.use(cors());
 
-  if (process.env.CI !== true) {
-    console.log('\n\n\n-------------------WATCH------------------------');
-    chokidar.watch(variationsBasePath + '/**/*.js', {ignored: /[\/\\]\./}).on('all', (event, path) => {
-      switch (event) {
-        case 'change':
-          var content = fs.readFileSync(path, { encoding: 'utf8' });
-          var componentName = path.split('/').reverse()[1];
+  chokidar.watch(variationsBasePath + '/**/*.js', {ignored: /[\/\\]\./}).on('all', (event, path) => {
+    switch (event) {
+      case 'change':
+        var content = fs.readFileSync(path, { encoding: 'utf8' });
+        var componentName = path.split('/').reverse()[1];
 
-          var eventName = path.match(/meta\.js/) ? 'componentMetadataChanged' : 'componentVariationChanged';
+        var eventName = path.match(/meta\.js/) ? 'componentMetadataChanged' : 'componentVariationChanged';
 
-          // TODO do we need this? Should we pass in the path to every event to
-          // avoid unnecessary fetches?
-          io.sockets.emit(eventName, { component: componentName, content: content });
-          break;
+        // TODO do we need this? Should we pass in the path to every event to
+        // avoid unnecessary fetches?
+        io.sockets.emit(eventName, { component: componentName, content: content });
+        break;
 
-        case 'add':
-          var eventName = 'componentVariationAdded';
-          io.sockets.emit(eventName, {});
-          break;
+      case 'add':
+        var eventName = 'componentVariationAdded';
+        io.sockets.emit(eventName, {});
+        break;
 
-        case 'unlink':
-          var eventName = 'componentVariationRemoved';
-          io.sockets.emit(eventName, {});
-          break;
+      case 'unlink':
+        var eventName = 'componentVariationRemoved';
+        io.sockets.emit(eventName, {});
+        break;
 
-        default:
-          break;
-      }
-    });
-  } else {
-    console.log('\n\n\n-------------------DO NOT WATCH------------------------\n\n\n');
-  }
+      default:
+        break;
+    }
+  });
 
   /**
    * GET Variations

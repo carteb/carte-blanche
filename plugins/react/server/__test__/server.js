@@ -11,7 +11,7 @@ const projectBasePath = __dirname;
 const variationsBasePath = path.join(__dirname, variationFolderName);
 const request = supertest.agent(`http://${hostname}:${port}`);
 
-describe('server', () => {
+describe.skip('server', () => {
   let server;
 
   beforeEach(() => {
