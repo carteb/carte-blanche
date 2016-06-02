@@ -41,12 +41,19 @@ function ReactPlugin(options) {
     );
   }
 
-  // The file option must be an Array or a String
+  // The files option must be an Array or a String
   if (this.options.files
     && !isString(this.options.files)
     && (!Array.isArray(this.options.files))) {
     throw new Error(
       'The "files" option of the ReactPlugin must be an array!\n\n'
+    );
+  }
+
+  // The injectTags option must be an Array or a String
+  if (this.options.injectTags && (!Array.isArray(this.options.injectTags))) {
+    throw new Error(
+      'The "injectTags" option of the ReactPlugin must be an array!\n\n'
     );
   }
 }
@@ -73,6 +80,7 @@ ReactPlugin.prototype.apply = function apply(compiler) {
   const options = defaults({}, this.options, {
     hostname: 'localhost',
     files: [],
+    injectTags: [],
     // The default port is not really used by a popular service:
     // https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers
     port: 8082,

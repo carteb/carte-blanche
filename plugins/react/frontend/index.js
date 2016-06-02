@@ -22,6 +22,7 @@ export default function playground(
       hostname={options.hostname}
       port={options.port}
       userFiles={frontendData.files}
+      injectTags={options.injectTags}
       componentPath={componentPath}
       component={Component}
       navigationStore={navigationStore}
