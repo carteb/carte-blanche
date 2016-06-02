@@ -14,6 +14,7 @@ import readMultipleFiles from 'read-multiple-files';
 import emitAssets from './utils/emitAssets';
 import registerPlugins from './registerPlugins';
 import registerDefaultPlugins from './registerDefaultPlugins';
+import createHTML from './utils/createHTML';
 
 function apply(compiler) {
   const dest = this.options.dest;
@@ -60,21 +61,7 @@ function apply(compiler) {
   // The client assets, default the HTML to only include the client bundles and the
   // user bundle
   const clientAssets = {
-    'index.html': `
-    <!DOCTYPE html>
-    <html>
-      <head>
-        <meta charset="UTF-8">
-        <title>CarteBlanche</title>
-        <link rel="stylesheet" type="text/css" href="client-bundle.css" />
-      </head>
-      <body>
-        <div id='carte-blanche-root'></div>
-        <script src="client-bundle.js"></script>
-        <script src="user-bundle.js"></script>
-      </body>
-    </html>
-    `,
+    'index.html': createHTML(),
     'client-bundle.js': fs.readFileSync(path.resolve(__dirname, './assets/client-bundle.js')),
     'client-bundle.css': fs.readFileSync(path.resolve(__dirname, './assets/main.css')),
   };
@@ -102,27 +89,7 @@ function apply(compiler) {
           }
         });
         // Put together the HTML file based on the assets we got
-        clientAssets['index.html'] = `
-        <!DOCTYPE html>
-        <html>
-          <head>
-            <meta charset="UTF-8">
-            <title>CarteBlanche</title>
-            <style>
-              ${styles.join('\n')}
-            </style>
-            <link rel="stylesheet" type="text/css" href="client-bundle.css" />
-          </head>
-          <body>
-            <div id='carte-blanche-root'></div>
-            <script>
-              ${scripts.join('\n')}
-            </script>
-            <script src="client-bundle.js"></script>
-            <script src="user-bundle.js"></script>
-          </body>
-        </html>
-        `;
+        clientAssets['index.html'] = createHTML(scripts, styles);
         emitAssets(compilation, clientAssets, dest, callback);
       });
     } else {
