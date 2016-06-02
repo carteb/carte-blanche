@@ -59,7 +59,9 @@ if (window.frameElement) {
 
     const appRoute = (<Route
       path="/"
-      component={(props) => (<App {...props} navigationStore={navigationStore} />)}
+      component={(props) => (
+        <App {...props} navigationStore={navigationStore} />
+      )}
     >
       {routes}
     </Route>);
@@ -69,7 +71,9 @@ if (window.frameElement) {
         {appRoute}
         <Route
           path="*"
-          component={(props) => (<FourOhFour {...props} components={components} />)}
+          component={(props) => (
+            <FourOhFour {...props} navigationStore={navigationStore} />
+          )}
         />
       </Router>),
       document.getElementById('carte-blanche-root')

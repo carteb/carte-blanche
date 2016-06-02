@@ -7,12 +7,10 @@ import Navigation from '../Navigation';
 import styles from '../App/styles.css';
 
 function FourOhFour(props) {
-  const activeComponentPath = props.location.pathname.replace(/^\//, '');
   return (
     <div className={styles.main}>
       <Navigation
-        activeComponentPath={activeComponentPath}
-        components={props.components}
+        navigationStore={props.navigationStore}
         location={props.location}
       />
       <div className={styles.previewOpen}>
@@ -24,7 +22,7 @@ function FourOhFour(props) {
             height: '100vh',
           }}
         >
-          404!
+          Ohhhh, no, 404! Did you change the path of your component?
         </div>
       </div>
     </div>
