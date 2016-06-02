@@ -1,5 +1,34 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300);
 
+.root {
+  font-family: 'Open Sans', sans-serif;
+}
+
 .navigation {
   background: rgb(36, 60, 100);
+}
+
+.logo {
+  color: #61DDB2;
+  text-decoration: none;
+}
+
+.logo:hover {
+  color: #f9f9f9;
+}
+
+.logo:active {
+  color: #ddd;
+}
+
+.logoSvg {
+  box-sizing: border-box;
+  width: 2rem;
+  height: 2.5rem;
+  padding: 0.25rem 0rem;
+}
+
+.logoTitle {
+  font-weight: 300;
+  font-size: 1.5rem;
 }
