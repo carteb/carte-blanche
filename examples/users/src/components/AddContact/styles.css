@@ -1,0 +1,72 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400;300);
+
+.root {
+  font-family: 'Open Sans', sans-serif;
+}
+
+.input {
+  margin: 0;
+
+  /* Reset the default borderRadius for Mobile Safari */
+  border-radius: 0;
+
+  /* Belle TextInput style */
+  overflow: hidden;
+  resize: none;
+  width: 100%;
+  padding: 1rem 0 0.5rem 0;
+  color: #505050;
+  border: 0 solid #fff;
+  border-bottom: 1px solid #eee;
+  background: none;
+  display: block;
+  box-sizing: border-box;
+  min-height: 0px;
+  font-size: 1rem;
+
+  /* animations */
+  transition: border-bottom 0.2s;
+  transition-timing-function: ease-out;
+}
+
+.input:hover {
+  border-bottom: 1px solid #ccc;
+}
+
+.input:focus {
+  border-bottom: 1px solid #ccc;
+  outline: 0;
+}
+
+.button {
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  height: 2.25rem;
+  color: #888;
+  border-radius: 1em;
+  line-height: 2.25rem;
+  cursor: pointer;
+  background-color: #f8f8f8;
+  font-size: 1rem;
+  padding: 0 1rem;
+  margin: 2rem 0 0 0;
+}
+
+.button:focus {
+  background-color: #f5f5f5;
+  outline: 0; /* reset for :focus */
+}
+
+.button:hover {
+  background-color: #f5f5f5;
+}
+
+.button:active {
+  border: 1px solid #ccc;
+  background-color: #eee;
+}
+
+.button:disabled {
+  background-color: #F5F5F5;
+  color: #ccc;
+}
