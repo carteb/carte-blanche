@@ -38,6 +38,7 @@ var start = (projectBasePath, variationsBasePath, options) => {
   app.use(cors());
 
   if (process.env.CI !== true) {
+    console.log('\n\n\n-------------------WATCH------------------------');
     chokidar.watch(variationsBasePath + '/**/*.js', {ignored: /[\/\\]\./}).on('all', (event, path) => {
       switch (event) {
         case 'change':
@@ -65,6 +66,8 @@ var start = (projectBasePath, variationsBasePath, options) => {
           break;
       }
     });
+  } else {
+    console.log('\n\n\n-------------------DO NOT WATCH------------------------\n\n\n');
   }
 
   /**
