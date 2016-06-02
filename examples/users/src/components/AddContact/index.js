@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import styles from './styles.css';
 
+import Button from '../Button';
+
 /* eslint-disable max-len */
 
 const initialState = {
@@ -53,12 +55,7 @@ class AddContact extends Component { // eslint-disable-line react/prefer-statele
             onChange={e => this.setState({ phone: [e.target.value] })}
             placeholder="Phone"
           />
-          <button
-            type="submit"
-            className={styles.button}
-          >
-            Add Contact
-          </button>
+          <Button text="Add Contact" />
         </form>
       </div>
     );

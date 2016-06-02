@@ -11,6 +11,7 @@ const controlTypes = [
   'avatar',
   'name',
   'func',
+  'phone',
 ];
 
 export default controlTypes;

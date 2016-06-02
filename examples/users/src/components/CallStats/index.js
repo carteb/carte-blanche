@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { VictoryScatter } from 'victory';
+import { VictoryScatter, VictoryChart, VictoryAxis } from 'victory';
 import CallButton from '../CallButton';
 import styles from './styles.css';
 
@@ -15,7 +15,7 @@ class ContactList extends Component { // eslint-disable-line react/prefer-statel
         timestamp: PropTypes.number,
         duration: PropTypes.number,
         receiverId: PropTypes.string,
-      }),
+      }).isRequired,
     ).isRequired,
   };
 
@@ -49,7 +49,37 @@ class ContactList extends Component { // eslint-disable-line react/prefer-statel
         </ul>
         <span className={styles.call}>Total calls: {calls.length}</span>
 
-        <VictoryScatter data={data} domain={{ x: xRange, y: [0, 24] }} />
+        <VictoryChart>
+          <VictoryAxis
+            label="Day"
+            tickFormat={(x) => {
+              const date = new Date(x);
+              return `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear().toString().substr(-2)}`;
+            }}
+            style={{
+              grid: { stroke: 'transparent' },
+              axis: { stroke: 'transparent' },
+              ticks: { stroke: 'transparent' },
+              tickLabels: { fontSize: 12, color: '#666' },
+              axisLabel: { fontSize: 10, color: '#999', padding: 20 },
+            }}
+          />
+          <VictoryAxis
+            dependentAxis
+            label="Hour"
+            style={{
+              grid: { stroke: 'transparent' },
+              axis: { stroke: 'transparent' },
+              ticks: { stroke: 'transparent' },
+              tickLabels: { fontSize: 12, color: '#666' },
+              axisLabel: { fontSize: 10, color: '#999' },
+            }}
+          />
+          <VictoryScatter
+            data={data}
+            domain={{ x: xRange, y: [0, 24] }}
+          />
+        </VictoryChart>
 
       </div>
     );
