@@ -38,6 +38,7 @@ function apply(compiler) {
         filter: filter.toString(),
         componentRoot: this.options.componentRoot,
         context: compiler.context,
+        dest: this.options.dest,
       })}!${require.resolve('./assets/placeholder.js')}`,
   ];
   // Find out if we need to include the webpack-dev-server client
