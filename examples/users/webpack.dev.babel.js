@@ -2,6 +2,7 @@ import path from 'path';
 import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CarteBlanche from '../../webpack-plugin/index';
+import ReactPlugin from '../../plugins/react/dist/plugin';
 import autoprefixer from 'autoprefixer';
 
 export default {
@@ -29,6 +30,13 @@ export default {
     }),
     new CarteBlanche({
       componentRoot: 'src/components',
+      plugins: [
+        new ReactPlugin({
+          injectTags: [
+            "<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>",
+          ],
+        }),
+      ],
     }),
   ],
   module: {
