@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
+import UserPreview from '../UserPreview';
 
 /* eslint-disable max-len  */
 
@@ -20,7 +20,7 @@ class UserList extends Component { // eslint-disable-line react/prefer-stateless
       <ul>
         {this.props.users.map((user) => (
           <li key={user.id}>
-            <Link to={`/user/${user.id}`}>{user.firstName} {user.lastName} {user.avatarUrl}</Link>
+            <UserPreview user={user} />
           </li>
         ))}
       </ul>

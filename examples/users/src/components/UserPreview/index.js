@@ -1,8 +1,9 @@
 import React, { PropTypes } from 'react';
+import { Link } from 'react-router';
 
 function UserPreview({ user }) {
   return (
-    <div className="user-preview">
+    <Link to={`/user/${user.id}`}>
       {
         user.avatarUrl ?
           <img
@@ -13,8 +14,8 @@ function UserPreview({ user }) {
           /> :
           null
       }
-      <h5>aaaa {user.firstName} {user.lastName}</h5>
-    </div>
+      <h5>{user.firstName} {user.lastName}</h5>
+    </Link>
   );
 }
 

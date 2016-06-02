@@ -10,7 +10,7 @@ class UserDetailContainer extends Component { // eslint-disable-line
       return <UserNotFound />;
     }
 
-    return (<UserDetail {...this.props.user} />);
+    return (<UserDetail user={this.props.user} />);
   }
 }
 
