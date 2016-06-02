@@ -8,7 +8,9 @@ var mkdirp = require('mkdirp');
 var server;
 var jsonBodyParser = bodyParser.json();
 var getAbsoluteVariationPath = require('./utils/getAbsoluteVariationPath');
-var chokidar = require('chokidar');
+if (process.env.CI !== true) {
+  var chokidar = require('chokidar');
+}
 
 /**
  * Checks if a file at a certain path exists
@@ -35,33 +37,35 @@ var start = (projectBasePath, variationsBasePath, options) => {
 
   app.use(cors());
 
-  chokidar.watch(variationsBasePath + '/**/*.js', {ignored: /[\/\\]\./}).on('all', (event, path) => {
-    switch (event) {
-      case 'change':
-        var content = fs.readFileSync(path, { encoding: 'utf8' });
-        var componentName = path.split('/').reverse()[1];
+  if (process.env.CI !== true) {
+    chokidar.watch(variationsBasePath + '/**/*.js', {ignored: /[\/\\]\./}).on('all', (event, path) => {
+      switch (event) {
+        case 'change':
+          var content = fs.readFileSync(path, { encoding: 'utf8' });
+          var componentName = path.split('/').reverse()[1];
 
-        var eventName = path.match(/meta\.js/) ? 'componentMetadataChanged' : 'componentVariationChanged';
+          var eventName = path.match(/meta\.js/) ? 'componentMetadataChanged' : 'componentVariationChanged';
 
-        // TODO do we need this? Should we pass in the path to every event to
-        // avoid unnecessary fetches?
-        io.sockets.emit(eventName, { component: componentName, content: content });
-        break;
+          // TODO do we need this? Should we pass in the path to every event to
+          // avoid unnecessary fetches?
+          io.sockets.emit(eventName, { component: componentName, content: content });
+          break;
 
-      case 'add':
-        var eventName = 'componentVariationAdded';
-        io.sockets.emit(eventName, {});
-        break;
+        case 'add':
+          var eventName = 'componentVariationAdded';
+          io.sockets.emit(eventName, {});
+          break;
 
-      case 'unlink':
-        var eventName = 'componentVariationRemoved';
-        io.sockets.emit(eventName, {});
-        break;
+        case 'unlink':
+          var eventName = 'componentVariationRemoved';
+          io.sockets.emit(eventName, {});
+          break;
 
-      default:
-        break;
-    }
-  });
+        default:
+          break;
+      }
+    });
+  }
 
   /**
    * GET Variations

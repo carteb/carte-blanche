@@ -394,7 +394,7 @@ describe('server', () => {
         .expect('Content-type', /json/)
         .expect(404)
         .end((err, res) => {
-          expect(res.status).to.equal(404);
+          expect(res && res.status).to.equal(404);
           done();
         });
     });
