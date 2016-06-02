@@ -6,10 +6,14 @@
  */
 
 import mapValues from 'lodash/mapValues';
+import has from 'lodash/has';
 
 const randomValues = (propTypesWithControlsAndMetaData) => (
   mapValues(propTypesWithControlsAndMetaData, (propType, key) => {
-    const constraints = propTypesWithControlsAndMetaData[key].customMetaData.constraints;
+    let constraints = {};
+    if (has(propTypesWithControlsAndMetaData, [key, 'customMetaData', 'constraints'])) {
+      constraints = propTypesWithControlsAndMetaData[key].customMetaData.constraints;
+    }
     return propType.control.type.randomValue({
       ...propType,
       constraints,

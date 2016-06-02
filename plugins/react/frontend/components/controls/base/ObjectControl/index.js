@@ -42,7 +42,7 @@ class ObjectControl extends React.Component {
       label,
       secondaryLabel,
       propTypeData,
-      customMetaData,
+      customMetaData = {},
       value,
       onUpdate,
       nestedLevel,
@@ -64,7 +64,12 @@ class ObjectControl extends React.Component {
     });
 
     const onRandomClick = () => {
-      onUpdate({ value: ObjectControl.randomValue(propTypeData, customMetaData) });
+      onUpdate({
+        value: ObjectControl.randomValue({
+          ...propTypeData,
+          constraints: customMetaData.constraints,
+        }),
+      });
     };
 
     return (

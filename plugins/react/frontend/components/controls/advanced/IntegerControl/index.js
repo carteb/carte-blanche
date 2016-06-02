@@ -23,7 +23,7 @@ const IntegerControl = (props) => {
     secondaryLabel,
     nestedLevel,
     required,
-    customMetaData,
+    customMetaData = {},
   } = props;
   const onChange = (data) => {
     const val = data.value;

@@ -15,7 +15,7 @@ const NameControl = (props) => {
     secondaryLabel,
     nestedLevel,
     required,
-    customMetaData,
+    customMetaData = {},
   } = props;
   return (
     <Row>
