@@ -63,6 +63,10 @@ class ObjectControl extends React.Component {
       return prop;
     });
 
+    const onRandomClick = () => {
+      onUpdate({ value: ObjectControl.randomValue(propTypeData, customMetaData) });
+    };
+
     return (
       <Row>
         <LeftColumn nestedLevel={nestedLevel}>
@@ -88,7 +92,7 @@ class ObjectControl extends React.Component {
             />}
             <RandomButton
               groupType={required ? 'none' : 'right'}
-              onClick={() => onUpdate({ value: ObjectControl.randomValue(propTypeData) })}
+              onClick={onRandomClick}
             />
           </div>
         </RightColumn>
