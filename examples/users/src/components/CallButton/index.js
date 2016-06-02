@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import styles from './styles.css';
 
+import Button from '../Button';
+
 /* eslint-disable max-len */
 
 const initialState = {
@@ -58,8 +60,8 @@ class CallButton extends Component { // eslint-disable-line react/prefer-statele
 
     return (
       <div className={styles.root}>
-        <button className={styles.button}>{buttonValue}</button>
-        {timestamp ? <button className={styles.button} onClick={this.onEndCall}>End Call</button> : null}
+        <Button text={buttonValue} />
+        {timestamp ? <Button text="End Call" onClick={this.onEndCall} /> : null}
       </div>
     );
   }

@@ -19,6 +19,7 @@ import FunctionControl from './base/FunctionControl';
 import AvatarControl from './advanced/AvatarControl';
 import NameControl from './advanced/NameControl';
 import IntegerControl from './advanced/IntegerControl';
+import PhoneControl from './advanced/PhoneControl';
 
 const defaultControls = {
   // Basic
@@ -82,6 +83,10 @@ const defaultControls = {
   },
   integer: {
     control: IntegerControl,
+    nested: false,
+  },
+  phone: {
+    control: PhoneControl,
     nested: false,
   },
 };
