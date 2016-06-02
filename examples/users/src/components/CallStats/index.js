@@ -21,8 +21,8 @@ class ContactList extends Component { // eslint-disable-line react/prefer-statel
   render() {
     const { receiverId, calls, onAddCall } = this.props
 
-    const data = calls.map(call => {
-      return {x: new Date(call.timestamp).getHours(), y: call.timestamp}
+    const data = calls.map((call, key) => {
+      return {y: new Date(call.timestamp).getHours(), x: call.timestamp}
     })
 
     const xRange = calls.reduce((range, call) => {
@@ -30,8 +30,6 @@ class ContactList extends Component { // eslint-disable-line react/prefer-statel
       const max = call.timestamp > range[1] ? call.timestamp : range[1]
       return [min, max]
     }, [Date.now(), Date.now()])
-
-    // domain={{x: xRange, y: [0, 24]}}
 
     return (
       <div>
@@ -43,7 +41,10 @@ class ContactList extends Component { // eslint-disable-line react/prefer-statel
           ))}
         </ul>
 
-        <VictoryScatter data={data} />
+        <VictoryScatter 
+          data={data} 
+          domain={{x: xRange, y: [0, 24]}}
+          />
       </div>
     );
   }
