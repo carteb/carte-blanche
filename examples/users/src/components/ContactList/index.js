@@ -18,14 +18,13 @@ class ContactList extends Component { // eslint-disable-line react/prefer-statel
   };
 
   render() {
-    const { contacts, onAddCall } = this.props;
+    const { contacts } = this.props;
 
     return (
       <ul className={styles.root}>
         {contacts.map((contact) => (
           <li key={contact.id}>
             <ContactPreview contact={contact} />
-            <CallButton receiverId={contact.id} onAddCall={onAddCall} />
           </li>
         ))}
       </ul>
