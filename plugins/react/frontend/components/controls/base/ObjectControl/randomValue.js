@@ -1,5 +1,6 @@
 import getControl from '../../../../utils/getControl';
 import mapValues from 'lodash/mapValues';
+import get from 'lodash/get';
 import randomValues from '../../../../utils/randomValues';
 import valueOrNullOrUndefined from '../../../../utils/valueOrNullOrUndefined';
 
@@ -7,7 +8,7 @@ export default (propTypeData, customMetaData) => {
   const canBeNull = !propTypeData.required;
   const canBeUndefined = !propTypeData.required;
   const normalizedPropsWithControls = mapValues(propTypeData.value, (prop, key) => {
-    const nestedCustomMetaData = customMetaData.constraints.props[key];
+    const nestedCustomMetaData = get(customMetaData, ['constraints', 'props', key], {});
     prop.control = getControl(prop, nestedCustomMetaData); // eslint-disable-line no-param-reassign
     prop.controlType = nestedCustomMetaData && nestedCustomMetaData.controlType; // eslint-disable-line no-param-reassign, max-len
     prop.customMetaData = nestedCustomMetaData; // eslint-disable-line no-param-reassign, max-len

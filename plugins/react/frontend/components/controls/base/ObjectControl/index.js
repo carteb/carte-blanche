@@ -8,6 +8,7 @@ import renderControls from '../../../../utils/renderControls';
 import getControl from '../../../../utils/getControl';
 import React from 'react';
 import mapValues from 'lodash/mapValues';
+import get from 'lodash/get';
 import randomValue from './randomValue';
 import ConstraintsForm from './ConstraintsForm';
 import Row from '../../../form/Grid/Row';
@@ -56,7 +57,7 @@ class ObjectControl extends React.Component {
     };
 
     const normalizedPropsWithControls = mapValues(propTypeData.value, (prop, key) => {
-      const nestedCustomMetaData = customMetaData.constraints.props[key];
+      const nestedCustomMetaData = get(customMetaData, ['constraints', 'props', key], {});
       prop.control = getControl(prop, nestedCustomMetaData); // eslint-disable-line no-param-reassign, max-len
       prop.controlType = nestedCustomMetaData && nestedCustomMetaData.controlType; // eslint-disable-line no-param-reassign, max-len
       prop.customMetaData = nestedCustomMetaData; // eslint-disable-line no-param-reassign, max-len
