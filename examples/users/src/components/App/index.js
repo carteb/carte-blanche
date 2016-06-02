@@ -1,21 +1,24 @@
 import React, { Component, PropTypes } from 'react';
-
-import AddUser from '../AddUser';
-import UserList from '../UserList';
+import { Link } from 'react-router';
 
 class App extends Component { // eslint-disable-line react/prefer-stateless-function
 
   static propTypes = {
-    // onAddUser: React.PropTypes.func.isRequired,
-    users: PropTypes.array.isRequired,
-    actions: PropTypes.object.isRequired,
+    currentUser: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      firstName: PropTypes.string,
+      lastName: PropTypes.string,
+      avatarUrl: PropTypes.avatarUrl,
+    }).isRequired,
   };
 
   render() {
+    const { avatarUrl } = this.props;
     return (
       <div>
-        <AddUser onAddUser={this.props.actions.addUser} />
-        <UserList users={this.props.users} />
+        <Link to={'/'}>Logo</Link>
+        <img src={avatarUrl} height="25" width="25" role="presentation" />
+        {this.props.children}
       </div>
     );
   }

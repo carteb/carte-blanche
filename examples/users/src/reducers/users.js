@@ -9,14 +9,13 @@ export default function users(state = initialState, action) {
     case ADD_USER:
       return [
         {
-          id: state.reduce((maxId, todo) => Math.max(todo.id, maxId), -1) + 1,
+          id: (state.reduce((maxId, todo) => Math.max(todo.id, maxId), -1) + 1).toString(),
           firstName: action.firstName,
           lastName: action.lastName,
-          imgurl: action.imgurl,
+          avatarUrl: action.avatarUrl,
         },
         ...state,
       ];
-
     default:
       return state;
   }

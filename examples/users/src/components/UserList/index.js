@@ -7,10 +7,10 @@ class UserList extends Component { // eslint-disable-line react/prefer-stateless
   static propTypes = {
     users: PropTypes.arrayOf(
       PropTypes.shape({
-        id: PropTypes.number.isRequired,
+        id: PropTypes.string.isRequired,
         firstName: PropTypes.string,
         lastName: PropTypes.string,
-        imgurl: PropTypes.imgurl,
+        avatarUrl: PropTypes.avatarUrl,
       }),
     ).isRequired,
   };
@@ -20,7 +20,7 @@ class UserList extends Component { // eslint-disable-line react/prefer-stateless
       <ul>
         {this.props.users.map((user) => (
           <li key={user.id}>
-            <Link to={`/user/${user.id}`}>{user.firstName} {user.lastName} {user.imgurl}</Link>
+            <Link to={`/user/${user.id}`}>{user.firstName} {user.lastName} {user.avatarUrl}</Link>
           </li>
         ))}
       </ul>

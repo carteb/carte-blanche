@@ -3,12 +3,7 @@ import { connect } from 'react-redux';
 import UserDetail from '../components/UserDetail';
 import UserNotFound from '../components/UserNotFound';
 
-// import Header from '../components/Header';
-// import MainSection from '../components/MainSection';
-// <Header addTodo={actions.addTodo} />
-// <MainSection todos={todos} actions={actions} />
-
-class UserDetailPage extends Component { // eslint-disable-line
+class UserDetailContainer extends Component { // eslint-disable-line
   render() {
     // const { users, actions } = this.props;
     if (this.props.user == null) {
@@ -19,7 +14,7 @@ class UserDetailPage extends Component { // eslint-disable-line
   }
 }
 
-UserDetailPage.propTypes = {
+UserDetailContainer.propTypes = {
   user: PropTypes.object,
 };
 
@@ -31,4 +26,4 @@ function mapStateToProps(state, props) {
 
 export default connect(
   mapStateToProps
-)(UserDetailPage);
+)(UserDetailContainer);

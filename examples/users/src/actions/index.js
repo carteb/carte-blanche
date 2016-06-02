@@ -8,11 +8,11 @@ type Action = {
   type: ActionTypes,
 };
 
-export function addUser(firstName: string, lastName: string, imgurl: string): Action {
+export function addUser(firstName: string, lastName: string, avatarUrl: string): Action {
   return {
     type: types.ADD_USER,
     firstName,
     lastName,
-    imgurl,
+    avatarUrl,
   };
 }

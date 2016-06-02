@@ -4,10 +4,10 @@ import UserPreview from '../UserPreview';
 
 /* eslint-disable max-len */
 
-const INITIAL_STATE = {
+const initialState = {
   firstName: '',
   lastName: '',
-  imgurl: '',
+  avatarUrl: '',
 };
 
 class AddUser extends Component { // eslint-disable-line react/prefer-stateless-function
@@ -16,16 +16,13 @@ class AddUser extends Component { // eslint-disable-line react/prefer-stateless-
     onAddUser: React.PropTypes.func.isRequired,
   };
 
-  constructor(props) {
-    super(props);
-    this.state = { ...INITIAL_STATE };
-  }
+  state = { ...initialState }
 
   onSubmit = (evt) => {
     evt.preventDefault();
-    const { firstName, lastName, imgurl } = this.state;
-    this.props.onAddUser(firstName, lastName, imgurl);
-    this.setState({ ...INITIAL_STATE });
+    const { firstName, lastName, avatarUrl } = this.state;
+    this.props.onAddUser(firstName, lastName, avatarUrl);
+    this.setState({ ...initialState });
   }
 
   render() {
