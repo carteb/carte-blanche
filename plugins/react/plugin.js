@@ -111,34 +111,6 @@ ReactPlugin.prototype.apply = function apply(compiler) {
     compilation.plugin(
       'carte-blanche-plugin-processing',
       (renderToClient) => {
-        // const assets = this.options.files;
-        // if (assets.length > 0) {
-        //   renderToClient({
-        //     // TODO the name is used in the iframe & playground list
-        //     // best to pass it in there instead of hardcoding it
-        //     name: 'react',
-        //     frontendData: new Promise((resolve, reject) => {
-        //       readMultipleFiles(assets, (err, contents) => {
-        //         if (err) {
-        //           reject(err);
-        //         }
-        //         const scripts = [];
-        //         const styles = [];
-        //         // Depending on the asset type that was passed add them to a script
-        //         // or style tag
-        //         assets.forEach((assetFilename, index) => {
-        //           switch (assetFilename.substr(-3)) {
-        //             case '.js': scripts.push(contents[index]); break;
-        //             case 'css': styles.push(contents[index]); break;
-        //             default: break;
-        //           }
-        //         });
-        //         resolve({ options, files: { scripts, styles } });
-        //       });
-        //     }),
-        //     frontendPlugin: `${require.resolve('./frontend/index.js')}`,
-        //   });
-        // } else {s
         renderToClient({
           // TODO the name is used in the iframe & playground list
           // best to pass it in there instead of hardcoding it
@@ -146,7 +118,6 @@ ReactPlugin.prototype.apply = function apply(compiler) {
           frontendData: { options },
           frontendPlugin: `${require.resolve('./frontend/index.js')}`, // eslint-disable-line global-require,max-len
         });
-        // }
       }
     );
   });
