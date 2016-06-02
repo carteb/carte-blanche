@@ -237,5 +237,7 @@ var stop = (callback) => {
   server.close(callback);
 }
 
-exports.start = start;
-exports.stop = stop;
+module.exports = {
+  start: start,
+  stop: stop,
+}

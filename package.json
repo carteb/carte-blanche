@@ -39,6 +39,7 @@
     "example:dest": "npm run server -- --context examples/dest/ --config examples/dest/webpack.dev.babel.js",
     "example:dest:iron": "iron-node node_modules/webpack-dev-server/bin/webpack-dev-server.js --context examples/dest/ --config examples/dest/webpack.dev.babel.js",
     "example:profile": "npm run server -- --context examples/profile/ --config examples/profile/webpack.dev.babel.js",
+    "example:users": "npm run server -- --context examples/users/ --config examples/users/webpack.dev.babel.js",
     "example:radium": "npm run server -- --context examples/styling/radium/ --config examples/styling/radium/webpack.dev.babel.js",
     "example:jss": "npm run server -- --context examples/styling/jss/ --config examples/styling/jss/webpack.dev.babel.js",
     "example:aphrodite": "npm run server -- --context examples/styling/aphrodite/ --config examples/styling/aphrodite/webpack.dev.babel.js",

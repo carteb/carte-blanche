@@ -1,0 +1,81 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300);
+
+.root {
+  font-family: 'Open Sans', sans-serif;
+}
+
+.navigationContainer {
+  background: rgb(36, 60, 100);
+}
+
+.navigation {
+  margin: 0 auto;
+  display: flex;
+  height: 4rem;
+  min-width: 320px;
+  max-width: 640px;
+}
+
+.logo {
+  align-self: flex-start;
+  color: #61DDB2;
+  text-decoration: none;
+  line-height: 4rem;
+}
+
+.logo:hover {
+  color: #f9f9f9;
+}
+
+.logo:active {
+  color: #ddd;
+}
+
+.logoSvg {
+  box-sizing: border-box;
+  width: 2rem;
+  height: 2rem;
+  line-height: 4rem;
+  position: relative;
+  top: 0.4rem;
+  margin: 0 0.5rem 0 0;
+}
+
+.logoTitle {
+  font-weight: 300;
+  font-size: 1.5rem;
+}
+
+.user {
+  margin-left: auto;
+  height: 4rem;
+  position: relative;
+  top: 0.75rem;
+}
+
+.userImage {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 1.25rem;
+  box-sizing: border-box;
+  border: 2px solid #61DDB2;
+}
+
+.footer {
+  font-size: 0.65rem;
+  color: #ccc;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.footerLink {
+  color: #ccc;
+}
+
+.footerLink:hover {
+  color: #ddd;
+}
+
+.footerLink:active {
+  color: #999;
+}
