@@ -7,10 +7,14 @@
 
 import mapValues from 'lodash/mapValues';
 
-const randomValues = (propTypes) => (
-  mapValues(propTypes, (propType) => (
-    propType.control.type.randomValue(propType)
-  ))
+const randomValues = (propTypesWithControlsAndMetaData) => (
+  mapValues(propTypesWithControlsAndMetaData, (propType, key) => {
+    const constraints = propTypesWithControlsAndMetaData[key].customMetaData.constraints;
+    return propType.control.type.randomValue({
+      ...propType,
+      constraints,
+    });
+  })
 );
 
 export default randomValues;

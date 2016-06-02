@@ -9,6 +9,8 @@ export default (propTypeData, customMetaData) => {
   const normalizedPropsWithControls = mapValues(propTypeData.value, (prop, key) => {
     const nestedCustomMetaData = customMetaData.constraints.props[key];
     prop.control = getControl(prop, nestedCustomMetaData); // eslint-disable-line no-param-reassign
+    prop.controlType = nestedCustomMetaData && nestedCustomMetaData.controlType; // eslint-disable-line no-param-reassign, max-len
+    prop.customMetaData = nestedCustomMetaData; // eslint-disable-line no-param-reassign, max-len
     return prop;
   });
   const value = randomValues(normalizedPropsWithControls);

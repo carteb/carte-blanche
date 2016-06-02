@@ -8,7 +8,15 @@ import Label from '../../../form/Label';
 import randomValue from './randomValue';
 
 const NameControl = (props) => {
-  const { label, value, onUpdate, secondaryLabel, nestedLevel, required } = props;
+  const {
+    label,
+    value,
+    onUpdate,
+    secondaryLabel,
+    nestedLevel,
+    required,
+    customMetaData,
+  } = props;
   return (
     <Row>
       <LeftColumn nestedLevel={nestedLevel}>
@@ -25,7 +33,12 @@ const NameControl = (props) => {
             onChange={onUpdate}
             hasRandomButton
             hasSettings={!required}
-            onRandomButtonClick={() => onUpdate({ value: NameControl.randomValue(props) })}
+            onRandomButtonClick={() => onUpdate({
+              value: NameControl.randomValue({
+                ...props,
+                constraints: customMetaData.constraints,
+              }),
+            })}
           />
         </div>
       </RightColumn>
