@@ -59,8 +59,8 @@
     "test:coverage": "istanbul cover --config istanbul.yml _mocha -- --opts mocha.opts"
   },
   "dependencies": {
-    "carte-blanche-utils": "^0.0.1",
     "body-parser": "^1.15.1",
+    "carte-blanche-utils": "^0.0.1",
     "chokidar": "^1.5.1",
     "connect-history-api-fallback": "^1.2.0",
     "cors": "^2.7.1",
@@ -79,6 +79,7 @@
     "socket.io": "^1.4.6",
     "speakingurl": "^9.0.0",
     "velocity-react": "^1.1.5",
+    "victory": "^0.6.1",
     "whatwg-fetch": "^1.0.0"
   },
   "devDependencies": {
