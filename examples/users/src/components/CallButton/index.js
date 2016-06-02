@@ -35,7 +35,7 @@ class CallButton extends Component { // eslint-disable-line react/prefer-statele
 
   onNewDuration = e => {
     this.setState({duration: e.target.value|0})
-    //clearInterval(this.interval)
+    clearInterval(this.interval)
   }
 
   render() {

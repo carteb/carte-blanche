@@ -29,22 +29,25 @@ class ContactList extends Component { // eslint-disable-line react/prefer-statel
       const min = call.timestamp < range[0] ? call.timestamp : range[0]
       const max = call.timestamp > range[1] ? call.timestamp : range[1]
       return [min, max]
-    }, [Date.now(), Date.now()])
+    }, [Date.now(), 0])
 
     return (
       <div>
         <CallButton onAddCall={onAddCall} receiverId={receiverId} />
         <span>Calls: {calls.length}</span>
         <ul>
-          {calls.map(call => (
-            <li key={call.id}>{call.timestamp} {call.duration}</li>
-          ))}
+          {calls.map(call => {
+            const time = new Date(call.timestamp)
+            return (
+              <li key={call.id}>
+                <span>{`${time.getDate()}/${time.getMonth()}/${time.getFullYear()} `}</span>
+                <span>{`${(call.duration/3600)|0}h ${((call.duration%3600)/60)|0}m`}</span>
+              </li>)
+          })}
         </ul>
 
-        <VictoryScatter 
-          data={data} 
-          domain={{x: xRange, y: [0, 24]}}
-          />
+        <VictoryScatter data={data} domain={{x: xRange, y: [0, 24]}} />
+
       </div>
     );
   }
