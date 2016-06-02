@@ -16,3 +16,12 @@ export function addContact(firstName: string, lastName: string, avatarUrl: strin
     avatarUrl,
   };
 }
+
+export function addCall(timestamp: number, duration: number, receiverId: number): Action {
+  return {
+    type: types.ADD_CALL,
+    timestamp,
+    duration,
+    receiverId
+  };
+}
