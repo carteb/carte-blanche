@@ -4,11 +4,12 @@ import get from 'lodash/get';
 import randomValues from '../../../../utils/randomValues';
 import valueOrNullOrUndefined from '../../../../utils/valueOrNullOrUndefined';
 
-export default (propTypeData, customMetaData) => {
+export default (propTypeData) => {
+  const { constraints = {} } = propTypeData;
   const canBeNull = !propTypeData.required;
   const canBeUndefined = !propTypeData.required;
   const normalizedPropsWithControls = mapValues(propTypeData.value, (prop, key) => {
-    const nestedCustomMetaData = get(customMetaData, ['constraints', 'props', key], {});
+    const nestedCustomMetaData = get(constraints, ['props', key], {});
     prop.control = getControl(prop, nestedCustomMetaData); // eslint-disable-line no-param-reassign
     prop.controlType = nestedCustomMetaData && nestedCustomMetaData.controlType; // eslint-disable-line no-param-reassign, max-len
     prop.customMetaData = nestedCustomMetaData; // eslint-disable-line no-param-reassign, max-len
