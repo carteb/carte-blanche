@@ -1,12 +1,12 @@
 import React, { Component, PropTypes } from 'react';
-import UserPreview from '../UserPreview';
+import ContactPreview from '../ContactPreview';
 import styles from './styles.css';
 
 /* eslint-disable max-len  */
 
-class UserList extends Component { // eslint-disable-line react/prefer-stateless-function
+class ContactList extends Component { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
-    users: PropTypes.arrayOf(
+    contacts: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.string.isRequired,
         firstName: PropTypes.string,
@@ -19,9 +19,9 @@ class UserList extends Component { // eslint-disable-line react/prefer-stateless
   render() {
     return (
       <ul className={styles.root}>
-        {this.props.users.map((user) => (
-          <li key={user.id}>
-            <UserPreview user={user} />
+        {this.props.contacts.map((contact) => (
+          <li key={contact.id}>
+            <ContactPreview contact={contact} />
           </li>
         ))}
       </ul>
@@ -29,4 +29,4 @@ class UserList extends Component { // eslint-disable-line react/prefer-stateless
   }
 }
 
-export default UserList;
+export default ContactList;

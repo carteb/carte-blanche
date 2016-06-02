@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { map } from 'lodash';
-import UserPreview from '../UserPreview';
+import ContactPreview from '../ContactPreview';
 
 /* eslint-disable max-len */
 
@@ -10,10 +10,10 @@ const initialState = {
   avatarUrl: '',
 };
 
-class AddUser extends Component { // eslint-disable-line react/prefer-stateless-function
+class AddContact extends Component { // eslint-disable-line react/prefer-stateless-function
 
   static propTypes = {
-    onAddUser: React.PropTypes.func.isRequired,
+    onAddContact: React.PropTypes.func.isRequired,
   };
 
   state = { ...initialState }
@@ -21,7 +21,7 @@ class AddUser extends Component { // eslint-disable-line react/prefer-stateless-
   onSubmit = (evt) => {
     evt.preventDefault();
     const { firstName, lastName, avatarUrl } = this.state;
-    this.props.onAddUser(firstName, lastName, avatarUrl);
+    this.props.onAddContact(firstName, lastName, avatarUrl);
     this.setState({ ...initialState });
   }
 
@@ -33,10 +33,10 @@ class AddUser extends Component { // eslint-disable-line react/prefer-stateless-
           {map(this.state, (val, name) => createInput(name))}
           <button type="submit">Add</button>
         </form>
-        <UserPreview user={{ ...this.state }} />
+        <ContactPreview contact={{ ...this.state }} />
       </div>
     );
   }
 }
 
-export default AddUser;
+export default AddContact;

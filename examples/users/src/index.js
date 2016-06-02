@@ -4,8 +4,8 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { Router, IndexRoute, Route, browserHistory } from 'react-router';
 import App from './containers/App';
-import UsersPage from './containers/UserList';
-import UserDetailPage from './containers/UserDetail';
+import ContactsPage from './containers/ContactList';
+import ContactDetailPage from './containers/ContactDetail';
 import configureStore from './store/configureStore';
 
 const store = configureStore();
@@ -14,8 +14,8 @@ render(
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={App}>
-        <IndexRoute component={UsersPage} />
-        <Route path="/user/:id" component={UserDetailPage} />
+        <IndexRoute component={ContactsPage} />
+        <Route path="/contact/:id" component={ContactDetailPage} />
       </Route>
     </Router>
   </Provider>,

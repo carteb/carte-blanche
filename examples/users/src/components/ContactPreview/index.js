@@ -2,29 +2,29 @@ import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import styles from './styles.css';
 
-function UserPreview({ user }) {
+function ContactPreview({ contact }) {
   return (
-    <Link to={`/user/${user.id}`} className={styles.root}>
+    <Link to={`/contact/${contact.id}`} className={styles.root}>
       {
-        user.avatarUrl ?
+        contact.avatarUrl ?
           <img
-            src={user.avatarUrl}
+            src={contact.avatarUrl}
             role="presentation"
             className={styles.image}
-            alt={user.firstName && user.firstName.length > 0 ? user.firstName[0] : ''}
+            alt={contact.firstName && contact.firstName.length > 0 ? contact.firstName[0] : ''}
           /> :
           null
       }
       <div className={styles.fullName}>
-        <span className={styles.firstName}>{user.firstName}</span>
-        <span> {user.lastName}</span>
+        <span className={styles.firstName}>{contact.firstName}</span>
+        <span> {contact.lastName}</span>
       </div>
     </Link>
   );
 }
 
-UserPreview.propTypes = {
-  user: PropTypes.shape({
+ContactPreview.propTypes = {
+  contact: PropTypes.shape({
     id: PropTypes.string.isRequired,
     firstName: PropTypes.string,
     lastName: PropTypes.string,
@@ -32,4 +32,4 @@ UserPreview.propTypes = {
   }).isRequired,
 };
 
-export default UserPreview;
+export default ContactPreview;
