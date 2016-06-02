@@ -5,8 +5,40 @@
   margin: 0 auto;
 }
 
+.buttonWrapper {
+  position: relative;
+  top: -5.25rem;
+  text-align: right;
+  margin-right: 3.5rem;
+}
+
+.button {
+  background-color: rgb(36, 60, 100) !important;
+  color: #fff !important;
+}
+
+.button:hover {
+  background-color: rgb(46, 70, 110) !important;
+  color: #fff !important;
+}
+
+.button:active {
+  background-color: rgb(26, 50, 90) !important;
+  color: #fff !important;
+}
+
 .form {
-  margin: 2rem auto;
+  margin: 0rem auto 2rem auto;
+  transform: scaleY(0);
+  transition: transform 250ms ease-in-out;
+  transform-origin: top;
+  height: 0;
+}
+
+.activeForm {
+  composes: form;
+  transform: scaleY(1);
+  height: 100%;
 }
 
 .input {

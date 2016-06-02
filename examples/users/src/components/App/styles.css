@@ -63,7 +63,10 @@
   font-size: 0.65rem;
   color: #ccc;
   text-align: center;
-  margin-top: 2rem;
+  position: fixed;
+  margin: 1em auto;
+  width: 100%;
+  bottom: 0;
 }
 
 .footerLink {

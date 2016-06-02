@@ -10,6 +10,7 @@ const initialState = {
   lastName: '',
   avatarUrl: '',
   phone: [],
+  formActive: false,
 };
 
 class AddContact extends Component { // eslint-disable-line react/prefer-stateless-function
@@ -30,7 +31,20 @@ class AddContact extends Component { // eslint-disable-line react/prefer-statele
   render() {
     return (
       <div className={styles.root}>
-        <form onSubmit={this.onSubmit} className={styles.form}>
+        <div className={styles.buttonWrapper}>
+          <Button
+            text="+"
+            type="button"
+            className={styles.button}
+            onClick={() => {
+              this.setState({ formActive: !this.state.formActive });
+            }}
+          />
+        </div>
+        <form
+          onSubmit={this.onSubmit}
+          className={this.state.formActive ? styles.activeForm : styles.form}
+        >
           <input
             value={this.state.firstName}
             className={styles.input}
