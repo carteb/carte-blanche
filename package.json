@@ -69,9 +69,7 @@
     "lodash": "^4.13.1",
     "mkdirp": "^0.5.1",
     "mocha": "^2.5.3",
-    "react": "^15.1.0",
     "react-addons-create-fragment": "^15.1.0",
-    "react-dom": "^15.1.0",
     "react-frame-component": "^0.6.1",
     "react-jss": "^2.0.6",
     "react-router": "2.4.1",
@@ -80,6 +78,10 @@
     "speakingurl": "^9.0.0",
     "velocity-react": "^1.1.5",
     "whatwg-fetch": "^1.0.0"
+  },
+  "peerDependencies": {
+    "react": "^15.1.0",
+    "react-dom": "^15.1.0"
   },
   "devDependencies": {
     "aphrodite": "^0.3.1",
