@@ -37,6 +37,7 @@
     "faker": "^3.1.0",
     "lodash": "^4.13.1",
     "mkdirp": "^0.5.1",
+    "path": "^0.12.7",
     "react": "^15.1.0",
     "react-addons-create-fragment": "^15.1.0",
     "react-docgen": "^2.8.2",
@@ -56,7 +57,7 @@
     "build": "npm run build:frontend && npm run build:backend",
     "build:frontend": "NODE_ENV=production webpack --config webpack.prod.babel.js",
     "build:backend": "BABEL_DISABLE_CACHE=1 BABEL_ENV=production babel --out-dir='dist' plugin.js resolver.js server/server.js server/run.js server/utils/getAbsoluteVariationPath.js",
-    "dev": "npm run build:frontend --watch",
+    "dev": "npm run build:frontend -- --watch",
     "prepublish": "npm run build"
   },
   "devDependencies": {

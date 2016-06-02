@@ -1,3 +1,5 @@
+import loaderUtils from 'loader-utils';
+
 /**
  * Every component is run through this loader, and the plugins and data specified by
  * plugin developers are properly generated and emitted
@@ -7,6 +9,7 @@
 module.exports = function pluginsLoader(source) {
   // Flag this loader as cacheable to webpack
   this.cacheable();
+  const query = loaderUtils.parseQuery(this.query);
 
   const pluginPromises = [];
   /**
@@ -32,7 +35,7 @@ module.exports = function pluginsLoader(source) {
   }
 
    // Pass the source code of the component to the plugins
-  const pluginData = { source };
+  const pluginData = { source, dest: query.dest };
 
   // Trigger events for carte-blanche child plugins
   this._compilation.applyPlugins( // eslint-disable-line no-underscore-dangle

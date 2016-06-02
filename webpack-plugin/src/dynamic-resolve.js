@@ -12,7 +12,7 @@ module.exports = function dynamicResolve() {
 
   const loaderMapping = {
     compiledComponent: '',
-    meta: `!!${require.resolve('./loaders/plugins-loader.js')}!`,
+    meta: `!!${require.resolve('./loaders/plugins-loader.js')}?dest="${query.dest}"!`,
     examples: `${require.resolve('./loaders/examples-loader.js')}!`,
   };
 
