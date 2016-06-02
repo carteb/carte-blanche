@@ -60,7 +60,7 @@ class ContactList extends Component { // eslint-disable-line react/prefer-statel
               grid: { stroke: 'transparent' },
               axis: { stroke: 'transparent' },
               ticks: { stroke: 'transparent' },
-              tickLabels: { fontSize: 12, color: '#666' },
+              tickLabels: { fontSize: 11, color: '#666' },
               axisLabel: { fontSize: 10, color: '#999', padding: 20 },
             }}
           />
@@ -71,7 +71,7 @@ class ContactList extends Component { // eslint-disable-line react/prefer-statel
               grid: { stroke: 'transparent' },
               axis: { stroke: 'transparent' },
               ticks: { stroke: 'transparent' },
-              tickLabels: { fontSize: 12, color: '#666' },
+              tickLabels: { fontSize: 11, color: '#666' },
               axisLabel: { fontSize: 10, color: '#999' },
             }}
           />

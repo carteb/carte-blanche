@@ -8,6 +8,7 @@ import renderControls from '../../../../utils/renderControls';
 import getControl from '../../../../utils/getControl';
 import React from 'react';
 import mapValues from 'lodash/mapValues';
+import get from 'lodash/get';
 import randomValue from './randomValue';
 import ConstraintsForm from './ConstraintsForm';
 import Row from '../../../form/Grid/Row';
@@ -42,6 +43,7 @@ class ObjectControl extends React.Component {
       label,
       secondaryLabel,
       propTypeData,
+      customMetaData = {},
       value,
       onUpdate,
       nestedLevel,
@@ -54,10 +56,22 @@ class ObjectControl extends React.Component {
       onUpdate({ value: values });
     };
 
-    const normalizedPropsWithControls = mapValues(propTypeData.value, (prop) => {
-      prop.control = getControl(prop); // eslint-disable-line no-param-reassign
+    const normalizedPropsWithControls = mapValues(propTypeData.value, (prop, key) => {
+      const nestedCustomMetaData = get(customMetaData, ['constraints', 'props', key], {});
+      prop.control = getControl(prop, nestedCustomMetaData); // eslint-disable-line no-param-reassign, max-len
+      prop.controlType = nestedCustomMetaData && nestedCustomMetaData.controlType; // eslint-disable-line no-param-reassign, max-len
+      prop.customMetaData = nestedCustomMetaData; // eslint-disable-line no-param-reassign, max-len
       return prop;
     });
+
+    const onRandomClick = () => {
+      onUpdate({
+        value: ObjectControl.randomValue({
+          ...propTypeData,
+          constraints: customMetaData.constraints,
+        }),
+      });
+    };
 
     return (
       <Row>
@@ -84,7 +98,7 @@ class ObjectControl extends React.Component {
             />}
             <RandomButton
               groupType={required ? 'none' : 'right'}
-              onClick={() => onUpdate({ value: ObjectControl.randomValue(propTypeData) })}
+              onClick={onRandomClick}
             />
           </div>
         </RightColumn>

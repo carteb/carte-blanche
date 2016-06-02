@@ -1,13 +1,14 @@
 import React, { PropTypes } from 'react';
 import styles from './styles.css';
 
-const Button = (props) => (
+const Button = ({ type = 'submit', onClick, className, text, ...otherProps }) => (
   <button
-    type={props.type || 'submit'}
-    className={styles.button}
-    onClick={props.onClick}
+    type={type}
+    className={`${styles.button} ${className}`}
+    onClick={onClick}
+    {...otherProps}
   >
-    {props.text}
+    {text}
   </button>
 );
 

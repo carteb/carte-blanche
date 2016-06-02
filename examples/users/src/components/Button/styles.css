@@ -1,14 +1,13 @@
 .button {
   box-sizing: border-box;
-  border: 1px solid #ccc;
-  height: 2.35rem;
+  border: 2px solid #61DDB2;
+  height: 2.5rem;
   color: #888;
   border-radius: 2rem;
-  line-height: 2.25rem;
   cursor: pointer;
   background-color: #fff;
   font-size: 1rem;
-  padding: 0 1.1rem;
+  padding: 0 1.2rem;
   margin: 2rem 0 0 0;
 }
 
@@ -22,7 +21,6 @@
 }
 
 .button:active {
-  border: 1px solid #ccc;
   background-color: #eee;
 }
 

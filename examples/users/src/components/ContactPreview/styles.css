@@ -5,7 +5,17 @@
   border-bottom: 1px solid #eee;
   display: flex;
   font-family: 'Open Sans', sans-serif;
+  color: #555;
+  text-decoration: none;
   font-size: 1rem;
+}
+
+.root:hover {
+  color: #888;
+}
+
+.root:active {
+  color: #444;
 }
 
 .fullName {

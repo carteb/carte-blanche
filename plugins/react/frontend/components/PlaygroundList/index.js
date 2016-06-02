@@ -7,6 +7,7 @@ import React, { Component } from 'react';
 import map from 'lodash/map';
 import mapValues from 'lodash/mapValues';
 import debounce from 'lodash/debounce';
+import has from 'lodash/has';
 import io from 'socket.io-client';
 import getSlug from 'speakingurl';
 import axios from 'axios';
@@ -128,7 +129,6 @@ class PlaygroundList extends Component {
             this.props.meta,
             customMetadata
           );
-
           this.setState({
             metadataWithControls,
             customMetadata,
@@ -143,6 +143,7 @@ class PlaygroundList extends Component {
   };
 
   // Attach the correct controls to the component metadata
+  // TODO rename to generateMetadataWithControlsAndConstraints
   generateMetadataWithControls = (docgenMetadata, customMetadata) => {
     let metadataWithControls;
     if (docgenMetadata.props) {
@@ -153,6 +154,11 @@ class PlaygroundList extends Component {
         // Attach the control
         newProp.control = getControl(newProp, propMeta);
         newProp.controlType = propMeta && propMeta.controlType;
+        if (has(customMetadata, ['props', propKey])) {
+          newProp.customMetaData = customMetadata.props[propKey];
+        } else {
+          newProp.customMetaData = {};
+        }
         return newProp;
       });
     }

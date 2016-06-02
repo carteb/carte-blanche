@@ -25,6 +25,7 @@ const renderControls = (
       value: get(globalComponentProps, keyPath),
       onUpdate: ({ value }) => updatePropertyValues(keyPath, value),
       nestedLevel,
+      customMetaData: prop.customMetaData,
     };
     return cloneElement(prop.control, props);
   });

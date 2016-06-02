@@ -1,7 +1,7 @@
 import valueOrNullOrUndefined from '../../../../utils/valueOrNullOrUndefined';
 
 export default (props) => {
-  const { constraints = {}, required } = props;
+  const { required, constraints = {} } = props;
   const canBeNull = !required;
   const canBeUndefined = !required;
   const { min = 0, max = 10000 } = constraints;

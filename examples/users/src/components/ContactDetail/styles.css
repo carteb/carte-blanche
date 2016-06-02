@@ -2,7 +2,7 @@
   min-width: 320px;
   max-width: 640px;
   font-family: 'Open Sans', sans-serif;
-  margin: 0 auto;
+  margin: 2rem auto 0 auto;
 }
 .top {
   display: flex;
