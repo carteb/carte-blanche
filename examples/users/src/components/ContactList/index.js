@@ -14,11 +14,11 @@ class ContactList extends Component { // eslint-disable-line react/prefer-statel
         lastName: PropTypes.string,
         avatarUrl: PropTypes.string,
       }),
-    ).isRequired
+    ).isRequired,
   };
 
   render() {
-    const { contacts, onAddCall } = this.props
+    const { contacts, onAddCall } = this.props;
 
     return (
       <ul className={styles.root}>

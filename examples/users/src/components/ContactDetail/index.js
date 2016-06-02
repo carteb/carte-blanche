@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import CallStats from '../CallStats'
+import CallStats from '../CallStats';
 import styles from './styles.css';
 
 function ContactDetail({ contact, calls, onAddCall }) {
@@ -46,7 +46,7 @@ ContactDetail.propTypes = {
       duration: PropTypes.number,
       receiverId: PropTypes.string,
     }),
-  ).isRequired
+  ).isRequired,
 };
 
 export default ContactDetail;

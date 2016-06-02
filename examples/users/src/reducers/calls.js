@@ -12,7 +12,7 @@ export default function calls(state = initialState, action) {
           id: (state.reduce((maxId, call) => Math.max(call.id, maxId), -1) + 1).toString(),
           timestamp: action.timestamp,
           duration: action.duration,
-          receiverId: action.receiverId
+          receiverId: action.receiverId,
         },
         ...state,
       ];

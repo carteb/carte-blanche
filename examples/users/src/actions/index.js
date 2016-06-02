@@ -10,11 +10,11 @@ export function addContact(firstName, lastName, avatarUrl, phone) {
   };
 }
 
-export function addCall(timestamp: number, duration: number, receiverId: number): Action {
+export function addCall(timestamp, duration, receiverId) {
   return {
     type: types.ADD_CALL,
     timestamp,
     duration,
-    receiverId
+    receiverId,
   };
 }

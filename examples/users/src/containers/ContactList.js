@@ -9,7 +9,7 @@ import * as ContactActions from '../actions';
 
 class ContactListContainer extends Component { // eslint-disable-line
   render() {
-    const { actions: { addContact, addCall }, contacts, calls } = this.props
+    const { actions: { addContact, addCall }, contacts } = this.props;
     return (
       <div>
         <AddContact onAddContact={addContact} />
@@ -26,7 +26,7 @@ ContactListContainer.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    contacts: sortBy(state.contacts, ['firstName', 'lastName'])
+    contacts: sortBy(state.contacts, ['firstName', 'lastName']),
   };
 }
 

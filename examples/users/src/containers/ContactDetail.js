@@ -13,7 +13,7 @@ class ContactDetailContainer extends Component { // eslint-disable-line
       return <ContactNotFound />;
     }
 
-    const { contact, calls, actions: { addCall } } = this.props
+    const { contact, calls, actions: { addCall } } = this.props;
 
     return (<ContactDetail contact={contact} calls={calls} onAddCall={addCall} />);
   }
@@ -29,13 +29,13 @@ ContactDetailContainer.propTypes = {
       duration: PropTypes.number,
       receiverId: PropTypes.string,
     }),
-  )
-}
+  ),
+};
 
 function mapStateToProps(state, props) {
   return {
     contact: state.contacts.find(contact => contact.id === props.params.id),
-    calls: state.calls.filter(call => call.receiverId === props.params.id)
+    calls: state.calls.filter(call => call.receiverId === props.params.id),
   };
 }
 

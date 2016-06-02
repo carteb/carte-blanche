@@ -16,38 +16,40 @@ class ContactList extends Component { // eslint-disable-line react/prefer-statel
         duration: PropTypes.number,
         receiverId: PropTypes.string,
       }),
-    ).isRequired
+    ).isRequired,
   };
 
   render() {
-    const { receiverId, calls, onAddCall } = this.props
+    const { receiverId, calls, onAddCall } = this.props;
 
-    const data = calls.map((call, key) => {
-      return {y: new Date(call.timestamp).getHours(), x: call.timestamp}
-    })
+    const data = calls.map((call) => (
+      { y: new Date(call.timestamp).getHours(), x: call.timestamp }
+    ));
 
     const xRange = calls.reduce((range, call) => {
-      const min = call.timestamp < range[0] ? call.timestamp : range[0]
-      const max = call.timestamp > range[1] ? call.timestamp : range[1]
-      return [min, max]
-    }, [Date.now(), 0])
+      const min = call.timestamp < range[0] ? call.timestamp : range[0];
+      const max = call.timestamp > range[1] ? call.timestamp : range[1];
+      return [min, max];
+    }, [Date.now(), 0]);
 
     return (
       <div className={styles.root}>
         <CallButton onAddCall={onAddCall} receiverId={receiverId} />
         <ul className={styles.callList}>
           {calls.map(call => {
-            const time = new Date(call.timestamp)
+            const time = new Date(call.timestamp);
             return (
               <li className={styles.call} key={call.id}>
                 <span>{`${time.getDate()}/${time.getMonth()}/${time.getFullYear()} `}</span>
-                <span>{`${(call.duration/3600)|0}h ${((call.duration%3600)/60)|0}m`}</span>
-              </li>)
+                <span>
+                  {`${(call.duration / 3600) | 0}h ${((call.duration % 3600) / 60) | 0}m`}
+                </span>
+              </li>);
           })}
         </ul>
         <span className={styles.call}>Total calls: {calls.length}</span>
 
-        <VictoryScatter data={data} domain={{x: xRange, y: [0, 24]}} />
+        <VictoryScatter data={data} domain={{ x: xRange, y: [0, 24] }} />
 
       </div>
     );
