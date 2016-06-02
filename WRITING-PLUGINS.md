@@ -53,7 +53,7 @@ The main method of your plugin is `apply`:
 // plugin.js
 function ReacularPlugin(options) { /* … */ }
 
-ReactPlugin.prototype.apply = function apply(compiler) {
+ReacularPlugin.prototype.apply = function apply(compiler) {
   /* … */
 };
 
@@ -62,10 +62,10 @@ export default ReacularPlugin;
 
 The `apply` method gets called by Webpack automatically and passes a reference to the [Webpack compiler instance](https://webpack.github.io/docs/plugins.html#the-compiler-instance). With `compiler.plugin()` we can hook into steps within the build process. (see the [general Webpack documentation about writing plugins](https://github.com/webpack/docs/wiki/How-to-write-a-plugin))
 
-To make writing plugins easier, we've added two special lifecycle hooks in the compilation called `carte-blanche-plugin-before-processing` and `carte-blanche-plugin-processing`. To access them, attach a callback to the `compilation` step:
+To make writing plugins easier, we've added two special lifecycle hooks in the compilation called `carte-blanche-plugin-before-processing`, `carte-blanche-plugin-assets-processing` and `carte-blanche-plugin-processing`. To access them, attach a callback to the `compilation` step:
 
 ```JS
-ReactPlugin.prototype.apply = function apply(compiler) {
+ReacularPlugin.prototype.apply = function apply(compiler) {
   compiler.plugin('compilation', function(compilation) {
     /* … */
   });
@@ -75,9 +75,10 @@ ReactPlugin.prototype.apply = function apply(compiler) {
 You can now attach callbacks to our special hooks with `compilation.plugin()`, which get called for every single one of your components:
 
 ```JS
-ReactPlugin.prototype.apply = function apply(compiler) {
+ReacularPlugin.prototype.apply = function apply(compiler) {
   compiler.plugin('compilation', (compilation) => {
     compiler.plugin('carte-blanche-plugin-before-processing', function(pluginData) { /* … */ });
+    compiler.plugin('carte-blanche-plugin-asset-processing', function(pluginData) { /* … */ });
     compiler.plugin('carte-blanche-plugin-processing', function(renderToClient) { /* … */ });
   });
 };
@@ -92,6 +93,19 @@ compiler.plugin('carte-blanche-plugin-before-processing', function(pluginData) {
   pluginData.metaInformation = staticAnalysis(pluginData.source);
 });
 ```
+
+### `carte-blanche-plugin-assets-processing`
+
+In the `carte-blanche-plugin-assets-processing` hook we pass you an array of absolute paths to assets. This allows you to inject custom scripts and styling into the head of the client.
+
+```JS
+compiler.plugin('carte-blanche-plugin-assets-processing', function(assets) {
+  assets.push(path.join(__dirname, './myCustomScript.js'));
+  assets.push(path.join(__dirname, './myCustomStyles.css'));
+});
+```
+
+> Note that `.css` and `.js` files are allowed to be added to the asset pipeline.
 
 ### `carte-blanche-plugin-processing`
 
@@ -163,4 +177,4 @@ module.exports = function playground(frontendData, pluginData, Component, compon
 
 The best place to learn more from is the [Webpack documentation](https://github.com/webpack/docs/wiki/How-to-write-a-plugin). Since a CarteBlanche plugin is nothing more than a slightly extended Webpack plugin with some rendering sprinkled on top, you can use all the power you have from webpack to make your plugin the best ever!
 
-A good idea might also be to check out other plugins, ranging from the small-and-digestible to the complex! (e.g. [ReactPlugin](./plugins/react))
+A good idea might also be to check out other plugins, ranging from the small-and-digestible to the complex! (e.g. [ReacularPlugin](./plugins/react))

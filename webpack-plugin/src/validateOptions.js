@@ -4,7 +4,7 @@
 function validateOptions(options) {
   // Default options to our preferred value
   options.dest = options.dest || 'carte-blanche';
-  options.filter = options.filter || /([A-Z][a-zA-Z]*\/index|[A-Z][a-zA-Z]*)\.(jsx?|es6)$/;
+  options.filter = options.filter || /([A-Z][a-zA-Z]*\/index|[A-Z][a-zA-Z]*)\.(jsx?|es6|react\.jsx?)$/;
 
   // Assert that the componentRoot option was specified
   if (!options.componentRoot) {
