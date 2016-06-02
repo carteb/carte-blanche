@@ -33,7 +33,7 @@ class AddUser extends Component { // eslint-disable-line react/prefer-stateless-
           {map(this.state, (val, name) => createInput(name))}
           <button type="submit">Add</button>
         </form>
-        <UserPreview {...this.state} />
+        <UserPreview user={{ ...this.state }} />
       </div>
     );
   }
