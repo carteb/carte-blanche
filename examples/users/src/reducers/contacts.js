@@ -13,6 +13,7 @@ export default function contacts(state = initialState, action) {
           firstName: action.firstName,
           lastName: action.lastName,
           avatarUrl: action.avatarUrl,
+          phone: action.phone,
         },
         ...state,
       ];

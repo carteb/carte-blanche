@@ -1,3 +1,6 @@
+// Selecting arrays or objects is currently unsupported due to UI problems.
+// Ref: https://github.com/pure-ui/carte-blanche/pull/210
+
 const controlTypes = [
   'bool',
   'string',
@@ -8,8 +11,6 @@ const controlTypes = [
   'avatar',
   'name',
   'func',
-  'shape',
-  'arrayOf',
 ];
 
 export default controlTypes;

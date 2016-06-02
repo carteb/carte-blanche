@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { map } from 'lodash';
-import ContactPreview from '../ContactPreview';
+import styles from './styles.css';
 
 /* eslint-disable max-len */
 
@@ -8,6 +7,7 @@ const initialState = {
   firstName: '',
   lastName: '',
   avatarUrl: '',
+  phone: [],
 };
 
 class AddContact extends Component { // eslint-disable-line react/prefer-stateless-function
@@ -20,20 +20,46 @@ class AddContact extends Component { // eslint-disable-line react/prefer-statele
 
   onSubmit = (evt) => {
     evt.preventDefault();
-    const { firstName, lastName, avatarUrl } = this.state;
-    this.props.onAddContact(firstName, lastName, avatarUrl);
+    const { firstName, lastName, avatarUrl, phone } = this.state;
+    this.props.onAddContact(firstName, lastName, avatarUrl, phone);
     this.setState({ ...initialState });
   }
 
   render() {
-    const createInput = (name) => (<input id={name} value={this.state[name]} key={name} onChange={e => this.setState({ [name]: e.target.value })} />);
     return (
-      <div>
-        <form onSubmit={this.onSubmit}>
-          {map(this.state, (val, name) => createInput(name))}
-          <button type="submit">Add</button>
+      <div className={styles.root}>
+        <form onSubmit={this.onSubmit} className={styles.form}>
+          <input
+            value={this.state.firstName}
+            className={styles.input}
+            onChange={e => this.setState({ firstName: e.target.value })}
+            placeholder="First name"
+          />
+          <input
+            value={this.state.lastName}
+            className={styles.input}
+            onChange={e => this.setState({ lastName: e.target.value })}
+            placeholder="Last name"
+          />
+          <input
+            value={this.state.avatarUrl}
+            className={styles.input}
+            onChange={e => this.setState({ avatarUrl: e.target.value })}
+            placeholder="Photo Url"
+          />
+          <input
+            value={this.state.phone[0]}
+            className={styles.input}
+            onChange={e => this.setState({ phone: [e.target.value] })}
+            placeholder="Phone"
+          />
+          <button
+            type="submit"
+            className={styles.button}
+          >
+            Add Contact
+          </button>
         </form>
-        <ContactPreview contact={{ ...this.state }} />
       </div>
     );
   }

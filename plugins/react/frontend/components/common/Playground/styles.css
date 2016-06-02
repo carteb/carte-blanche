@@ -20,12 +20,13 @@
   justify-content: center;
   align-items: center;
   margin: 0 auto;
+  padding: 1rem 0;
 }
 
 .resizeDiv {
   height: 100%;
   width: 100%;
-  min-height: 20vh;
+  min-height: 8rem;
   transition: height 150ms ease-in-out; /* TODO replace with scaleX for perf? */
 }
 

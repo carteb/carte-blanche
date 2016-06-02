@@ -12,16 +12,31 @@
 
 .fullName {
   padding: 0.25rem 0;
+  margin-left: 0.5rem;
 }
 
 .firstName {
   font-weight: bold;
 }
 
-.image {
-  margin: 0.25rem 0.5rem 0.25rem 0;
+.avatar {
+  margin: 0.25rem 0;
   height: 1.5rem;
   width: 1.5rem;
   border-radius: 0.75rem;
   background: #eee;
+}
+
+.avatarFallback {
+  box-sizing: border-box;
+  height: 1.5rem;
+  width: 1.5rem;
+  margin: 0.25rem 0;
+  background: #ccc;
+  text-align: center;
+  line-height: 1.5rem;
+  vertical-align: middle;
+  border-radius: 0.75rem;
+  color: #fff;
+  font-size: 0.75rem;
 }

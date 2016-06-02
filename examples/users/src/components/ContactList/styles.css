@@ -3,4 +3,8 @@
 .root {
   box-sizing: border-box;
   list-style-type: none;
+  min-width: 320px;
+  max-width: 640px;
+  padding-left: 0;
+  margin: 0 auto;
 }
