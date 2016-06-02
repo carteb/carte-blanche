@@ -5,7 +5,7 @@ const getPropKeys = (constraints, parsedMetadata) => {
   if (constraints.props) {
     propKeys = propKeys.concat(Object.keys(constraints.props));
   }
-  if (parsedMetadata.value) {
+  if (parsedMetadata && parsedMetadata.value) {
     propKeys = propKeys.concat(Object.keys(parsedMetadata.value));
   }
   return uniq(propKeys).sort();

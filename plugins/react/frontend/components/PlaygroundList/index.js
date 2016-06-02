@@ -19,6 +19,7 @@ import variationsToProps from '../../utils/variationsToProps';
 import codeToCustomMetadata from '../../utils/codeToCustomMetadata';
 import customMetadataToCode from '../../utils/customMetadataToCode';
 import addDataToVariation from '../../utils/addDataToVariation';
+import convertMetaDataStructure from '../../utils/convertMetaDataStructure';
 // Shared Utilities between ReactPlugin and Client
 import {
   getComponentNameFromPath,
@@ -145,14 +146,21 @@ class PlaygroundList extends Component {
   // Attach the correct controls to the component metadata
   generateMetadataWithControls = (docgenMetadata, customMetadata) => {
     let metadataWithControls;
+
     if (docgenMetadata.props) {
       metadataWithControls = mapValues(docgenMetadata.props, (prop, propKey) => {
-        const newProp = { ...prop };
         // Get the metadata for this property
         const propMeta = customMetadata && customMetadata.props && customMetadata.props[propKey];
+        // has custom meta data?
+        // override the propTypeData value
+        const metaDataStructure = propMeta ? convertMetaDataStructure(propMeta) : {};
+        const newProp = { ...prop, ...metaDataStructure };
+        newProp.propTypeData = prop;
         // Attach the control
         newProp.control = getControl(newProp, propMeta);
         newProp.controlType = propMeta && propMeta.controlType;
+        // Attach the original custom meta data
+        newProp.customMetaData = propMeta;
         return newProp;
       });
     }
