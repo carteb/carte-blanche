@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { VictoryScatter } from 'victory';
 import CallButton from '../CallButton';
+import styles from './styles.css';
 
 /* eslint-disable max-len  */
 
@@ -32,19 +33,19 @@ class ContactList extends Component { // eslint-disable-line react/prefer-statel
     }, [Date.now(), 0])
 
     return (
-      <div>
+      <div className={styles.root}>
         <CallButton onAddCall={onAddCall} receiverId={receiverId} />
-        <span>Calls: {calls.length}</span>
-        <ul>
+        <ul className={styles.callList}>
           {calls.map(call => {
             const time = new Date(call.timestamp)
             return (
-              <li key={call.id}>
+              <li className={styles.call} key={call.id}>
                 <span>{`${time.getDate()}/${time.getMonth()}/${time.getFullYear()} `}</span>
                 <span>{`${(call.duration/3600)|0}h ${((call.duration%3600)/60)|0}m`}</span>
               </li>)
           })}
         </ul>
+        <span className={styles.call}>Total calls: {calls.length}</span>
 
         <VictoryScatter data={data} domain={{x: xRange, y: [0, 24]}} />
 

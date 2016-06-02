@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { map } from 'lodash';
 import ContactPreview from '../ContactPreview';
+import styles from './styles.css';
 
 /* eslint-disable max-len */
 
@@ -43,17 +44,17 @@ class CallButton extends Component { // eslint-disable-line react/prefer-statele
 
     let buttonValue = null
     if (editing) {
-      buttonValue = <input type="number" value={duration} onChange={this.onNewDuration} />
+      buttonValue = <input className={styles.input} type="number" value={duration} onChange={this.onNewDuration} />
     } else if (timestamp) {
-      buttonValue = <span onClick={() => this.setState({editing: true})}>{duration}</span>
+      buttonValue = <span onClick={() => this.setState({editing: true})}>{`${duration}s`}</span>
     } else {
       buttonValue = <span onClick={this.onStartCall}>Call</span>
     }
 
     return (
-      <div>
-        <button>{buttonValue}</button>
-        {timestamp ? <button onClick={this.onEndCall}>End Call</button> : null}
+      <div className={styles.root}>
+        <button className={styles.button}>{buttonValue}</button>
+        {timestamp ? <button className={styles.button} onClick={this.onEndCall}>End Call</button> : null}
       </div>
     );
   }
