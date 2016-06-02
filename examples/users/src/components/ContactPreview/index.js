@@ -9,10 +9,12 @@ function ContactPreview({ contact }) {
         contact.avatarUrl ?
           <img
             src={contact.avatarUrl}
+            className={styles.avatar}
             role="presentation"
-            className={styles.image}
           /> :
-          null
+          <div className={styles.avatarFallback}>
+            {contact.firstName[0]}
+          </div>
       }
       <div className={styles.fullName}>
         <span className={styles.firstName}>{contact.firstName}</span>
