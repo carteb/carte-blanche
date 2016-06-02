@@ -2,6 +2,8 @@
 
 Carte Blanche is an isolated development space with integrated fuzz testing for your components. See them individually, explore them in different states and quickly and confidently develop them.
 
+![Screenshot of Carte Blanche](https://cloud.githubusercontent.com/assets/7525670/15761445/8ae05d4a-2918-11e6-8573-bd9bd0ef2330.png)
+
 ## Setup
 
 Setting up Carte Blanche is an easy two-step process:
@@ -10,8 +12,10 @@ Setting up Carte Blanche is an easy two-step process:
 
 2. Add it to the plugins in your development webpack configuration, specifying a relative path to the folder with your components in the `componentRoot` option:
   ```JS
+  var CarteBlanche = require('carte-blanche');
+  /* … */
   plugins: [
-    new PluginName({
+    new CarteBlanche({
       componentRoot: './src/components'
     })
   ],
