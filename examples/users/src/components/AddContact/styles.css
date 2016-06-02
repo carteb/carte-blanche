@@ -2,6 +2,14 @@
 
 .root {
   font-family: 'Open Sans', sans-serif;
+  min-width: 320px;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.form {
+  width: 80%;
+  margin: 2rem auto;
 }
 
 .input {
@@ -40,15 +48,15 @@
 
 .button {
   box-sizing: border-box;
-  border: 1px solid #ddd;
-  height: 2.25rem;
+  border: 1px solid #ccc;
+  height: 2.35rem;
   color: #888;
-  border-radius: 1em;
+  border-radius: 2rem;
   line-height: 2.25rem;
   cursor: pointer;
-  background-color: #f8f8f8;
+  background-color: #fff;
   font-size: 1rem;
-  padding: 0 1rem;
+  padding: 0 1.1rem;
   margin: 2rem 0 0 0;
 }
 

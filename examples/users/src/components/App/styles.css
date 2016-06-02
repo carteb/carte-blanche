@@ -39,3 +39,21 @@
   margin-left: auto;
   margin-right: 1rem;
 }
+
+.footer {
+  font-size: 0.65rem;
+  color: #ccc;
+  text-align: center;
+}
+
+.footerLink {
+  color: #ccc;
+}
+
+.footerLink:hover {
+  color: #ddd;
+}
+
+.footerLink:active {
+  color: #999;
+}

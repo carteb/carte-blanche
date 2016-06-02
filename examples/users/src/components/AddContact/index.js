@@ -20,15 +20,15 @@ class AddContact extends Component { // eslint-disable-line react/prefer-statele
 
   onSubmit = (evt) => {
     evt.preventDefault();
-    const { firstName, lastName, avatarUrl } = this.state;
-    this.props.onAddContact(firstName, lastName, avatarUrl);
+    const { firstName, lastName, avatarUrl, phone } = this.state;
+    this.props.onAddContact(firstName, lastName, avatarUrl, phone);
     this.setState({ ...initialState });
   }
 
   render() {
     return (
-      <div>
-        <form onSubmit={this.onSubmit}>
+      <div className={styles.root}>
+        <form onSubmit={this.onSubmit} className={styles.form}>
           <input
             value={this.state.firstName}
             className={styles.input}
@@ -57,7 +57,7 @@ class AddContact extends Component { // eslint-disable-line react/prefer-statele
             type="submit"
             className={styles.button}
           >
-            + Add Contact
+            Add Contact
           </button>
         </form>
       </div>

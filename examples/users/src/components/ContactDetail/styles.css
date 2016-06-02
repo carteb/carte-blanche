@@ -4,6 +4,7 @@
   min-width: 320px;
   max-width: 640px;
   font-family: 'Open Sans', sans-serif;
+  margin: 0 auto;
 }
 .top {
   display: flex;

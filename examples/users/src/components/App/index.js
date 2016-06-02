@@ -45,8 +45,14 @@ class App extends Component { // eslint-disable-line react/prefer-stateless-func
         <div>
           {this.props.children}
         </div>
-        <div>
-          The design was inspired by <a href="https://dribbble.com/shots/2750926-Home-Care-App-Icons">Jon McClure</a>
+        <div className={styles.footer}>
+          <span>The design was inspired by </span>
+          <a
+            href="https://dribbble.com/shots/2750926-Home-Care-App-Icons"
+            className={styles.footerLink}
+          >
+            Jon McClure
+          </a>
         </div>
       </div>
     );
