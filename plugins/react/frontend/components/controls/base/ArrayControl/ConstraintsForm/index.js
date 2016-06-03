@@ -51,7 +51,7 @@ const ConstraintsForm = ({ constraints, parsedMetadata, onUpdate }) => {
   const convertMetaDataToConstraints = prop => {
     if (!prop) return null;
     return { controlType: prop.name, constraints: convertMetaDataToConstraints(prop.value) };
-  }
+  };
 
   const constraintData = Object.keys(constraints).length > 0
     ? constraints
