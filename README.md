@@ -99,3 +99,16 @@ This project has a custom plugin system to make it as extensible as possible. By
     hostname: 'mydomain.com'
   })
   ```
+
+## Plugins
+
+This is a list of endorsed plugins that are useable right now:
+
+- **[`carte-blanche-react-plugin`](./plugins/react)**: CarteBlanche + React = ❤︎ (installed if no other plugins are specified)
+- [`carte-blanche-source-plugin`](./plugins/source): Show the source code of your components right in the interface!
+
+Want to write your own plugin? Check out [`writing-plugins.md`](./WRITING-PLUGINS.md)!
+
+## License
+
+Copyright (c) 2016 Nikolaus Graf and Maximilian Stoiber, licensed under the MIT License.
