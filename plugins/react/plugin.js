@@ -25,7 +25,7 @@ function ReactPlugin(options) {
 
   const parsedPort = parseFloat(this.options.port);
   // The port option must be something that can be made a number
-  if (this.options.port && !isNaN(parsedPort)) {
+  if (this.options.port && isNaN(parsedPort)) {
     throw new Error('The "port" option of the ReactPlugin must be a number!\n\n');
   }
 
