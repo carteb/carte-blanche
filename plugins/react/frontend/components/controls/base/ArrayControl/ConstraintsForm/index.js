@@ -48,6 +48,15 @@ const ConstraintsForm = ({ constraints, parsedMetadata, onUpdate }) => {
     onUpdate({ ...newCustomMetadata });
   };
 
+  const convertMetaDataToConstraints = prop => {
+    if (!prop) return null;
+    return { controlType: prop.name, constraints: convertMetaDataToConstraints(prop.value) };
+  }
+
+  const constraintData = Object.keys(constraints).length > 0
+    ? constraints
+    : convertMetaDataToConstraints(parsedMetadata.value);
+
   const renderControl = ({ controlType, constraint }) => (
     <Row>
       <LeftColumn nestedLevel={1}>{controlType}</LeftColumn>
@@ -61,18 +70,14 @@ const ConstraintsForm = ({ constraints, parsedMetadata, onUpdate }) => {
       {renderConstraintForm(
         controlType,
         onUpdate,
-        constraints,
+        constraintData,
         parsedMetadata
       )}
       {constraint && renderControl(constraint)}
     </Row>
   );
 
-  return (
-    <Row>
-      {renderControl(constraints)}
-    </Row>
-  );
+  return renderControl(constraintData);
 };
 
 export default ConstraintsForm;
