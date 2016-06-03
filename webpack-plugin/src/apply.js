@@ -107,8 +107,13 @@ function apply(compiler) {
   ));
 
   // Log out that CarteBlanche has started
-  // eslint-disable-next-line no-console
-  console.log(`CarteBlanche started at http://${devServerOptions.host}:${devServerOptions.port}/${dest}!`);
+  if (devServerOptions) {
+    // eslint-disable-next-line no-console
+    console.log(`CarteBlanche started at http://${devServerOptions.host}:${devServerOptions.port}/${dest}!`);
+  } else {
+    // eslint-disable-next-line no-console
+    console.log(`CarteBlanche started at /${dest}`);
+  }
 }
 
 export default apply;
