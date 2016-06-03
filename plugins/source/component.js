@@ -1,5 +1,5 @@
 import React from 'react';
 
-export default function sourceFrontend(options, data) {
-  return (<pre>{data.source}</pre>);
+export default function sourceFrontend(frontendData, pluginData) {
+  return (<pre>{pluginData.source}</pre>);
 }
