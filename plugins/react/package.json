@@ -1,10 +1,10 @@
 {
   "name": "carte-blanche-react-plugin",
-  "version": "0.0.2",
+  "version": "0.1.2",
   "description": "",
-  "homepage": "https://github.com/pure-ui/carte-blanche",
+  "homepage": "https://github.com/carteb/carte-blanche",
   "bugs": {
-    "url": "https://github.com/pure-ui/carte-blanche/issues"
+    "url": "https://github.com/carteb/carte-blanche/issues"
   },
   "contributors": [
     "Nik Graf <nik@nikgraf.com> (https://medium.com/@nikgraf)",
@@ -13,7 +13,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/pure-ui/carte-blanche"
+    "url": "https://github.com/carteb/carte-blanche"
   },
   "license": "MIT",
   "main": "dist/plugin.js",
@@ -50,7 +50,7 @@
     "velocity-react": "^1.1.5"
   },
   "peerDependencies": {
-    "carte-blanche": "^0.0.0",
+    "carte-blanche": "^0.1.0",
     "webpack": ">=1 <3"
   },
   "scripts": {

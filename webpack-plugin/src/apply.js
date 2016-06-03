@@ -105,6 +105,10 @@ function apply(compiler) {
     compilation.plugin('html-webpack-plugin-alter-chunks', (chunks) =>
       chunks.filter((chunk) => chunk.files.indexOf(userBundleFileName) === -1)
   ));
+
+  // Log out that CarteBlanche has started
+  // eslint-disable-next-line no-console
+  console.log(`CarteBlanche started at http://${devServerOptions.host}:${devServerOptions.port}/${dest}!`);
 }
 
 export default apply;
