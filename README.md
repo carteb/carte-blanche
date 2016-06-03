@@ -4,6 +4,10 @@ Carte Blanche is an isolated development space with integrated fuzz testing for 
 
 ![Screenshot of Carte Blanche](https://cloud.githubusercontent.com/assets/7525670/15761445/8ae05d4a-2918-11e6-8573-bd9bd0ef2330.png)
 
+## 30 seconds feature video on Youtube
+
+[<img width="450" src="http://img.youtube.com/vi/6g3-TQ6aaw8/maxresdefault.jpg" >](http://www.youtube.com/watch?v=6g3-TQ6aaw8)
+
 ## Setup
 
 Setting up Carte Blanche is an easy two-step process:
