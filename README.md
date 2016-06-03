@@ -1,87 +1,101 @@
-# CarteBlanche
+# Carte Blanche
 
-### NOTE: This is a highly experimental project. Please help us by not sharing it yet :)
+Carte Blanche is an isolated development space with integrated fuzz testing for your components. See them individually, explore them in different states and quickly and confidently develop them.
+
+![Screenshot of Carte Blanche](https://cloud.githubusercontent.com/assets/7525670/15761445/8ae05d4a-2918-11e6-8573-bd9bd0ef2330.png)
 
 ## Setup
 
-```
-$ git clone https://github.com/pure-ui/carte-blanche
-$ npm install
-```
+Setting up Carte Blanche is an easy two-step process:
 
-## Usage & Plugin Development
+1. Install the plugin with `npm install --save-dev carte-blanche`
 
-## Development
+2. Add it to the plugins in your development webpack configuration, specifying a relative path to the folder with your components in the `componentRoot` option:
+  ```JS
+  var CarteBlanche = require('carte-blanche');
+  /* … */
+  plugins: [
+    new CarteBlanche({
+      componentRoot: './src/components'
+    })
+  ],
+  ```
 
-### Client
+That's it, now start your development environment and go to `/carte-blanche` to see your Carte Blanche!
 
-For the development of the client (`client/` folder) we prepared some example apps.
+## Options
 
-To use them, run
+You can specify some options for the webpack plugin:
 
-```
-$ npm run example:<examplename>
-$ npm run example:dev
-```
+- `componentRoot` (required): Folder where your component modules are.
 
-You can then visit `http://localhost:8080` to see the app and `http://localhost:8080/carte-blanche` to see the carte-blanche!
+  ```JS
+    plugins: [
+      new CarteBlanche({
+        componentRoot: 'src/components'
+      })
+    ]
+  ```
 
-> Note: `$ npm start` aliases to `$ npm run example:dev`
+- `dest` (default: `'carte-blanche'`): Change the location of your Carte Blanche. Needs to be a path.
 
-Here the full list of examples:
+  ```JS
+    plugins: [
+      new CarteBlanche({
+        componentRoot: 'src/components',
+        dest: 'components'
+      })
+    ]
+  ```
 
-```sh
-$ npm run example:dev       # Complex PropTypes, almost no styling. Perfect for dev
-$ npm run example:profile   # Simple, visually nice example
-$ npm run example:dest      # Has the dest option enabled at /examples/
-$ npm run example:radium    # Styles the example app with Radium
-$ npm run example:jss       #           --“--             JSS
-$ npm run example:aphrodite #           --“--             Aphrodite
-```
+- `plugins` (default: `ReactPlugin`): An array of plugins to use in your Carte Blanche. *(Want to write your own? See [writing-plugins.md](./WRITING-PLUGINS.md) for more information!)*
 
-To build the client, run `$ npm run client:build`.
+  ```JS
+    var ReactPlugin = require('carte-blanche-react-plugin');
+    var SourcePlugin = require('carte-blanche-source-plugin');
 
-### Core
+    plugins: [
+      new CarteBlanche({
+        componentRoot: 'src/components',
+        plugins: [
+         new SourcePlugin({ /* …options for the plugin here… */ }),
+         new ReactPlugin()
+        ]
+      })
+    ]
+  ```
 
-We use `iron-node` to develop the webpack plugin. (`webpack-plugin/` folder) `iron-node` runs your Node process in Electron, meaning you get access to the full Chrome DevTools for the Node process. This allows you to use `debugger;` statements and step through your code, be able to `console.log` complex data types (Objects, Arrays,…) and much more!
+- `filter` (default: matches uppercase files and uppercase folders with an index file): Regex that matches your components in the `componentRoot` folder. *We do not recommend changing this, as it might have unintended side effects.*
 
-```sh
-$ npm run example:<examplename>:iron
-```
+  ```JS
+    plugins: [
+      new CarteBlanche({
+        filter: /.*\.jsx$/ // Matches all files ending in .jsx
+      })
+    ]
+  ```
 
-> Note: this command doesn't exist for all examples, but would be trivial to add
+This project has a custom plugin system to make it as extensible as possible. By default, we include the `ReactPlugin`, which has options of itself. *(to pass these in you'll have to explicitly specify it with the `plugins` option)*
 
-### Plugins
+### ReactPlugin Options
 
-One important plugin lives in this repo, the ReactPlugin. It's in the `plugins/react/` folder, and has it's entire own build process. Run one of the examples from above, and in another terminal instance round
+- `variationFolderName` (default: `variations`): The name of the folders that stores the variation files.
+  ```JS
+  new ReactPlugin({
+    variationFolderName: 'examples'
+  })
+  ```
 
-```sh
-$ npm run plugins:react:dev
-```
+- `port` (default: 8082): The port the variations server runs at.
+  ```JS
+  new ReactPlugin({
+    port: 7000
+  })
+  ```
 
-to get hot reloading of the ReactPlugin.
-
-To build the client for publishing a new release, run
-
-```sh
-$ npm run plugins:react:build
-```
-
-### Utils
-
-We have some shared utils, which we use in both the client and some plugins in the `utils/` folder. We publish them separately, and they have their own building, testing and linting process. Develop them using TDD (test driven development) by running `npm run test -- --watch` in the `utils/` folder.
-
-## Structure
-
-```
-client
-└── client.js   # The client users see at /carte-blanche
-examples        # The Example Apps used for development and demos
-plugins         # Some plugins we wrote ourselves
-├── react       # The ReactPlugin
-└── source      # SourcePlugin (shows the source code of the component)
-utils           # Some shared utilities (`carte-blanche-utils`)
-webpack-plugin  # The main webpack plugin
-├── src         # The source code
-└── index.js    # The main entry file
-```
+- `hostname` (default: `localhost`): The URL the variations server runs at.
+  ```JS
+  new ReactPlugin({
+    hostname: 'mydomain.com'
+  })
+  ```
