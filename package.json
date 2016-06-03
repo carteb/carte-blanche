@@ -107,6 +107,7 @@
     "eslint-plugin-jsx-a11y": "^1.2.2",
     "eslint-plugin-mocha": "^2.2.0",
     "eslint-plugin-react": "^5.1.1",
+    "exenv": "^1.2.1",
     "express": "^4.13.4",
     "express-http-proxy": "^0.6.0",
     "extract-text-webpack-plugin": "^1.0.1",
