@@ -356,7 +356,6 @@ class PlaygroundList extends Component {
   };
 
   startVariationEditMode = (id) => {
-    console.log('some stuff');
     document.body.style.overflow = 'hidden';
     this.setState({
       variationEditMode: true,
@@ -384,7 +383,6 @@ class PlaygroundList extends Component {
     this.setState({
       variationDeleteMode: false,
     });
-
   };
 
   render() {
@@ -466,14 +464,14 @@ class PlaygroundList extends Component {
         >
           {(this.state.selectedVariationId) && (
             <div className={styles.deleteModalWrapper}>
-              
+
               <p>Are you sure you want to delete this variation?</p>
 
-                <DeleteConfirmationButtons
-                  variationPath={this.state.selectedVariationId}
-                  confirmDeleteVariation={this.deleteVariation}
-                  cancelDeleteVariation={this.stopVariationDeleteMode}
-                />
+              <DeleteConfirmationButtons
+                variationPath={this.state.selectedVariationId}
+                confirmDeleteVariation={this.deleteVariation}
+                cancelDeleteVariation={this.stopVariationDeleteMode}
+              />
 
             </div>
           )}
