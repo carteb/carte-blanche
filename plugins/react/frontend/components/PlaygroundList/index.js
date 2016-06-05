@@ -34,6 +34,7 @@ import Modal from '../common/Modal';
 import CreateVariationButton from '../common/CreateVariationButton';
 import EditButton from '../common/EditButton';
 import CustomMetadataForm from '../CustomMetadataForm';
+import DeleteConfirmationButtons from '../common/DeleteConfirmationButtons';
 
 // Styles
 import styles from './styles.css';
@@ -46,6 +47,7 @@ class PlaygroundList extends Component {
     metadataError: null,
     variationPropsList: {},
     variationEditMode: false,
+    variationDeleteMode: false,
     customMetadataEditMode: false,
     selectedVariationId: undefined,
     customMetadata: undefined,
@@ -255,6 +257,8 @@ class PlaygroundList extends Component {
     .then(() => {
       this.setState({
         variationEditMode: false,
+        variationDeleteMode: false,
+        selectedVariationId: undefined,
       });
       this.fetchVariations();
     })
@@ -365,10 +369,25 @@ class PlaygroundList extends Component {
     });
   };
 
+  startVariationDeleteMode = (id) => {
+    document.body.style.overflow = 'hidden';
+    this.setState({
+      variationDeleteMode: true,
+      selectedVariationId: id,
+    });
+  };
+
   stopVariationEditMode = () => {
     document.body.style.overflow = '';
     this.setState({
       variationEditMode: false,
+    });
+  };
+
+  stopVariationDeleteMode = () => {
+    document.body.style.overflow = '';
+    this.setState({
+      variationDeleteMode: false,
     });
   };
 
@@ -393,7 +412,6 @@ class PlaygroundList extends Component {
     const { component } = this.props;
     // Find the selected variation
     const selectedVariation = this.state.variationPropsList[this.state.selectedVariationId];
-
     return (
       <div className={styles.wrapper}>
         <h2 className={styles.title}>
@@ -409,6 +427,7 @@ class PlaygroundList extends Component {
           visible={this.state.customMetadataEditMode}
           onCloseClick={this.stopCustomMetadataEditMode}
         >
+
           <CustomMetadataForm
             customMetadata={this.state.customMetadata}
             parsedMetadata={this.props.meta}
@@ -443,6 +462,27 @@ class PlaygroundList extends Component {
             </div>
           )}
         </Modal>
+
+        {/* VARIATION DELETE MODE MODAL */}
+        <Modal
+          visible={this.state.variationDeleteMode}
+          onCloseClick={this.stopVariationDeleteMode}
+        >
+          {(this.state.selectedVariationId) && (
+            <div className={styles.deleteModalWrapper}>
+
+              <p>Are you sure you want to delete this variation?</p>
+
+              <DeleteConfirmationButtons
+                variationPath={this.state.selectedVariationId}
+                confirmDeleteVariation={this.deleteVariation}
+                cancelDeleteVariation={this.stopVariationDeleteMode}
+              />
+
+            </div>
+          )}
+        </Modal>
+
         {/* MAIN AREA WITH PLAYGROUNDS */}
         {map(this.state.variationPropsList, (variation, variationPath) => (
           variation.err ? (
@@ -467,7 +507,7 @@ class PlaygroundList extends Component {
               title={variation.name}
               variationProps={variation.props}
               variationPath={variationPath}
-              onDeleteButtonClick={this.deleteVariation}
+              onDeleteButtonClick={this.startVariationDeleteMode}
               onEditButtonClick={this.startVariationEditMode}
             />
           )
