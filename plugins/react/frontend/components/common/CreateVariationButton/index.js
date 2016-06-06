@@ -1,13 +1,16 @@
 import React, { PropTypes, Component } from 'react';
-import { VelocityComponent } from 'velocity-react';
 
 import Card from '../Card';
 import styles from './styles.css';
+import getSlug from 'speakingurl';
+import Input from '../../form/Input';
+import Button from '../../form/Button';
+import has from 'lodash/has';
 
 class CreateVariationButton extends Component {
   static propTypes = {
     onSubmit: PropTypes.func.isRequired,
-    error: PropTypes.string,
+    variationPropsList: PropTypes.object.isRequired,
   };
 
   state = {
@@ -16,79 +19,88 @@ class CreateVariationButton extends Component {
     error: '',
   };
 
-  shouldComponentUpdate(nextProps) {
-    if (nextProps.error !== this.state.error
-        && nextProps.error !== this.props.error) {
-      this.setState({
-        error: nextProps.error,
-      });
+  componentDidUpdate() {
+    if (this.state.inputVisible) {
+      this.input.focus();
     }
-    return true;
   }
 
-  buttonClick = (newState) => {
-    if (newState === true || newState === false || !this.state.inputVisible) {
-      this.setState({
-        inputVisible: newState || !this.state.inputVisible,
-      });
-    } else {
-      if (this.state.inputValue !== '') {
-        this.submitForm();
-      }
-    }
+  onBlur = () => {
+    this.setState({
+      inputVisible: false,
+    });
+  }
+
+  buttonClick = () => {
+    this.setState({
+      inputVisible: true,
+    });
   };
 
-  changeInput = (evt) => {
+  changeInput = (data) => {
     this.setState({
       error: '',
-      inputValue: evt.target.value,
+      inputValue: data.value,
     });
   };
 
   submitForm = (evt) => {
     evt && evt.preventDefault(); // eslint-disable-line no-unused-expressions
-    if (this.state.inputValue && this.state.inputValue !== '') {
-      this.props.onSubmit(this.state.inputValue);
-    } else {
+
+    if (this.state.inputValue === '') {
       this.setState({
-        error: 'Empty input',
+        error: 'Please provide a name for the variation',
       });
+      return;
     }
+
+    const slug = getSlug(this.state.inputValue);
+    if (has(this.props.variationPropsList, `${slug}`)) {
+      this.setState({
+        error: `A variation with the name ${name} already exists.`,
+      });
+      return;
+    }
+
+    this.setState({
+      inputValue: '',
+      error: '',
+    });
+    this.props.onSubmit(this.state.inputValue, slug);
   };
 
   render() {
     return (
-      <VelocityComponent
-        animation={{
-          translateX: (this.state.error !== '') ? '1em' : 0,
-        }}
-        loop={2}
-        duration={50}
-        easing="ease-in-out"
-        reverse
+      <Card
+        onClick={this.buttonClick}
+        aria-role="button"
+        className={styles.card}
       >
-        <Card
-          className={styles.wrapper}
-          onClick={this.buttonClick}
-          aria-role="button"
+        <form
+          onSubmit={this.submitForm}
+          className={!this.state.inputVisible && styles.hidden}
         >
-          <VelocityComponent
-            animation={{
-              opacity: this.state.inputVisible ? 1 : 0,
-            }}
-            duration={150}
-            display={this.state.inputVisible ? 'block' : 'none'}
-          >
-            <form onSubmit={this.submitForm}>
-              <input
-                className={styles.input}
-                type="text"
-                value={this.state.inputValue}
-                onChange={this.changeInput}
-                placeholder={"Add variation"}
-              />
-            </form>
-          </VelocityComponent>
+          <div className={styles.wrapper}>
+            <Input
+              className={styles.input}
+              value={this.state.inputValue}
+              onChange={this.changeInput}
+              placeholder="Variation name"
+              onBlur={this.onBlur}
+              ref={(ref) => { this.input = ref; }}
+            />
+            <Button
+              type="submit"
+              className={styles.button}
+            >
+              Create Variation
+            </Button>
+          </div>
+          <div className={this.state.error ? styles.error : styles.hidden}>
+            {this.state.error}
+          </div>
+        </form>
+        <div className={this.state.inputVisible ? styles.hidden : styles.svgWrapper}>
           <svg
             className={styles.svg}
             version="1.1"
@@ -116,8 +128,8 @@ class CreateVariationButton extends Component {
               />
             </g>
           </svg>
-        </Card>
-      </VelocityComponent>
+        </div>
+      </Card>
     );
   }
 }
