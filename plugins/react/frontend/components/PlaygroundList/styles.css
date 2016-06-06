@@ -22,6 +22,10 @@
   flex-direction: row;
 }
 
+.deleteModalWrapper{
+  text-align: center;
+}
+
 .componentEditButton {
   position: relative;
   top: 3px;

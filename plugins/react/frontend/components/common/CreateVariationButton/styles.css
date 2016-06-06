@@ -1,29 +1,49 @@
-.wrapper {
+.card {
   width: 90%;
+  cursor: pointer;
+}
+
+.card:hover line {
+  stroke: #AAA;
+}
+
+.wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
+  padding: 3rem;
+}
+
+.svgWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .svg {
   width: 5%;
-  margin: 3em;
+  margin: 3rem;
 }
 
 .svg line {
   stroke: #CCC;
 }
 
-.wrapper:hover line {
-  stroke: #AAA;
+.input {
+  font-size: 1rem;
 }
 
-.input {
-  background-color: transparent;
-  border: none;
-  border-bottom: 1px dotted #AAA;
-  font-size: 2em;
-  outline: none;
-  color: #999;
+.button {
+  font-size: 1rem;
+  margin-left: 1rem;
+}
+
+.error {
+  color: #bd3230;
+  padding-bottom: 2rem;
+  text-align: center;
+}
+
+.hidden {
+  display: none;
 }
