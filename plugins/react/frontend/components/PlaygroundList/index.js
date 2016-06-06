@@ -9,7 +9,6 @@ import mapValues from 'lodash/mapValues';
 import debounce from 'lodash/debounce';
 import has from 'lodash/has';
 import io from 'socket.io-client';
-import getSlug from 'speakingurl';
 import axios from 'axios';
 
 // Utilities
@@ -52,7 +51,6 @@ class PlaygroundList extends Component {
     selectedVariationId: undefined,
     customMetadata: undefined,
     metadataWithControls: null,
-    createVariationError: '',
     loadingMetadata: true,
     loadingVariations: true,
   };
@@ -211,17 +209,7 @@ class PlaygroundList extends Component {
       });
   };
 
-  createVariation = (name) => {
-    const slug = getSlug(name);
-    if (this.state.variationPropsList[`${slug}`] !== undefined) {
-      this.setState({
-        createVariationError: `A variation with the name ${name} already exists.`,
-      });
-      return;
-    }
-    this.setState({
-      createVariationError: '',
-    });
+  createVariation = (name, slug) => {
     const data = this.getVariationStringFromProps({
       props: this.getRandomValues(),
       name,
@@ -513,8 +501,8 @@ class PlaygroundList extends Component {
           )
         ))}
         <CreateVariationButton
-          error={this.state.createVariationError}
           onSubmit={this.createVariation}
+          variationPropsList={this.state.variationPropsList}
         />
       </div>
     );
