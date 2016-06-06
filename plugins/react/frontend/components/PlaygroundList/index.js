@@ -235,6 +235,7 @@ class PlaygroundList extends Component {
   };
 
   deleteVariation = (variationPath) => {
+    this.stopVariationDeleteMode();
     axios(`http://${this.props.hostname}:${this.props.port}/variations/${this.props.componentPath}?variation=${variationPath}`, {
       method: 'DELETE',
       headers: {
@@ -357,18 +358,18 @@ class PlaygroundList extends Component {
     });
   };
 
+  stopVariationEditMode = () => {
+    document.body.style.overflow = '';
+    this.setState({
+      variationEditMode: false,
+    });
+  };
+
   startVariationDeleteMode = (id) => {
     document.body.style.overflow = 'hidden';
     this.setState({
       variationDeleteMode: true,
       selectedVariationId: id,
-    });
-  };
-
-  stopVariationEditMode = () => {
-    document.body.style.overflow = '';
-    this.setState({
-      variationEditMode: false,
     });
   };
 
