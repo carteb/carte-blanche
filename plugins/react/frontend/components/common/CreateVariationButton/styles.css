@@ -34,8 +34,6 @@
 }
 
 .button {
-  position: relative;
-  top: -2px;
   font-size: 1rem;
   margin-left: 1rem;
 }
