@@ -1,7 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CarteBlanche = require('../../webpack-plugin/dist/index');
+// const CarteBlanche = require('../../webpack-plugin/dist/index');
 const autoprefixer = require('autoprefixer');
 
 module.exports = {
@@ -12,12 +12,12 @@ module.exports = {
     publicPath: '/',
   },
   entry: [
-    'webpack-dev-server/client',
+    'webpack-hot-middleware/client',
     'webpack/hot/only-dev-server',
     path.join(__dirname, './src/index.js'),
   ],
   plugins: [
-    // new webpack.HotModuleReplacementPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
@@ -28,9 +28,9 @@ module.exports = {
       inject: true,
       template: path.join(__dirname, './src/index.html'),
     }),
-    new CarteBlanche({
-      componentRoot: 'src/components',
-    }),
+    // new CarteBlanche({
+    //   componentRoot: 'src/components',
+    // }),
   ],
   module: {
     loaders: [
