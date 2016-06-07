@@ -143,6 +143,7 @@
 }
 
 .footer {
+  background-color: #282830;
   position: absolute;
   bottom: -13.5em; /* 13.5em = height of footer - height of buttons */
   left: 0;
