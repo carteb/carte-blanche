@@ -116,7 +116,16 @@ This project has a custom plugin system to make it as extensible as possible. By
   ```
   Example usage: https://github.com/carteb/carte-blanche/blob/master/examples/users/webpack.dev.babel.js#L35-L37
 
-  
+- `files` (default: empty Array): Users can add custom .js and .css files to the client with the files option.
+  ```JS
+  new ReactPlugin({
+    files: [
+      path.join(__dirname, 'customStyles.css'),
+    ],
+  }),
+  ```
+  Example usage: https://github.com/carteb/carte-blanche/blob/master/examples/redux/todomvc/webpack.config.babel.js#L30-L32
+
 
 ## Plugins
 
