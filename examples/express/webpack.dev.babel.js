@@ -1,7 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-// const CarteBlanche = require('../../webpack-plugin/dist/index');
+const CarteBlanche = require('../../webpack-plugin/dist/index');
 const autoprefixer = require('autoprefixer');
 
 module.exports = {
@@ -28,9 +28,9 @@ module.exports = {
       inject: true,
       template: path.join(__dirname, './src/index.html'),
     }),
-    // new CarteBlanche({
-    //   componentRoot: 'src/components',
-    // }),
+    new CarteBlanche({
+      componentRoot: 'src/components',
+    }),
   ],
   module: {
     loaders: [
