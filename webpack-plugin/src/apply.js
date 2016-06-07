@@ -107,7 +107,7 @@ function apply(compiler) {
   ));
 
   // Log out that CarteBlanche has started
-  if (devServerOptions) {
+  if (devServerOptions.host && devServerOptions.port) {
     // eslint-disable-next-line no-console
     console.log(`CarteBlanche started at http://${devServerOptions.host}:${devServerOptions.port}/${dest}!`);
   } else {
