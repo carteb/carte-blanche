@@ -107,6 +107,16 @@ This project has a custom plugin system to make it as extensible as possible. By
     hostname: 'mydomain.com'
   })
   ```
+  
+- `injectTags` (default: empty Array): Injects these tags into the iFrames of the rendered components. Useful for webfonts, stylesheets, etc.
+  ```JS
+  new ReactPlugin({
+    injectTags: ['<link href="…" rel="stylesheet />'],
+  }),
+  ```
+  Example usage: https://github.com/carteb/carte-blanche/blob/master/examples/users/webpack.dev.babel.js#L35-L37
+
+  
 
 ## Plugins
 
