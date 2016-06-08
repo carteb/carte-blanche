@@ -9,7 +9,7 @@ import RightColumn from '../form/Grid/RightColumn';
 
 function PropForm(props) {
   return (
-    <div style={{ width: '70%' }}>
+    <div style={{ width: '100%' }}>
       <Grid>
         <Row>
           <LeftColumn>
