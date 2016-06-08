@@ -11,6 +11,7 @@ import Grid from '../form/Grid';
 import LeftColumn from '../form/Grid/LeftColumn';
 import RightColumn from '../form/Grid/RightColumn';
 import ComboBox from '../form/ComboBox';
+import Label from '../form/Label';
 
 const CustomMetadataForm = (props) => {
   // retriev all propKeys from the parsed & custom metadata
@@ -43,7 +44,12 @@ const CustomMetadataForm = (props) => {
 
           return (
             <Row key={propKey}>
-              <LeftColumn>{propKey} ({propType})</LeftColumn>
+              <LeftColumn>
+                <Label
+                  type={propType}
+                  propKey={propKey}
+                />
+              </LeftColumn>
               <RightColumn>
                 <ComboBox
                   value={controlType}

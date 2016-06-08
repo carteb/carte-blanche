@@ -1,5 +1,4 @@
 import React from 'react';
-import styles from './styles.css';
 import set from 'lodash/set';
 import has from 'lodash/has';
 import controlTypes from '../../../../CustomMetadataForm/controlTypes';
@@ -10,6 +9,7 @@ import Row from '../../../../form/Grid/Row';
 import LeftColumn from '../../../../form/Grid/LeftColumn';
 import RightColumn from '../../../../form/Grid/RightColumn';
 import ComboBox from '../../../../form/ComboBox';
+import Label from '../../../../form/Label';
 
 /*
  * Rendering the selection & constraintform for nested objects
@@ -29,9 +29,10 @@ import ComboBox from '../../../../form/ComboBox';
 const ConstraintsForm = (props) => {
   // retriev all propKeys from the parsed & custom metadata
   const propKeys = getPropKeys(props.constraints, props.parsedMetadata);
+  const nestedLevel = props.nestedLevel + 1;
 
   return (
-    <div className={styles.wrapper}>
+    <div>
       {
         propKeys.map((propKey) => {
           const controlType = getControlType(
@@ -61,7 +62,12 @@ const ConstraintsForm = (props) => {
 
           return (
             <Row>
-              <LeftColumn>{propKey} ({propType})</LeftColumn>
+              <LeftColumn nestedLevel={nestedLevel}>
+                <Label
+                  type={propType}
+                  propKey={propKey}
+                />
+              </LeftColumn>
               <RightColumn>
                 <ComboBox
                   value={controlType}
@@ -74,7 +80,8 @@ const ConstraintsForm = (props) => {
                 controlType,
                 props.onUpdate,
                 props.constraints,
-                props.parsedMetadata
+                props.parsedMetadata,
+                nestedLevel
               )}
             </Row>
           );

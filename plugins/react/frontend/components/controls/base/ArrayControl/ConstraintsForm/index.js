@@ -34,7 +34,7 @@ import ComboBox from '../../../../form/ComboBox';
  * @returns {Object}
  * @constructor
  */
-const ConstraintsForm = ({ constraints, parsedMetadata, onUpdate }) => {
+const ConstraintsForm = ({ constraints, parsedMetadata, onUpdate, nestedLevel }) => {
   const onChange = (event) => {
     const controlType = event.value;
     // check if the control type has constraints
@@ -50,7 +50,7 @@ const ConstraintsForm = ({ constraints, parsedMetadata, onUpdate }) => {
 
   const renderControl = ({ controlType, constraint }) => (
     <Row>
-      <LeftColumn nestedLevel={1}>{controlType}</LeftColumn>
+      <LeftColumn nestedLevel={nestedLevel}>{controlType}</LeftColumn>
       <RightColumn>
         <ComboBox
           value={controlType}
