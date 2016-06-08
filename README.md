@@ -2,7 +2,7 @@
 
 Carte Blanche is an isolated development space with integrated fuzz testing for your components. See them individually, explore them in different states and quickly and confidently develop them.
 
-[![Join the chat at https://gitter.im/carteb/carte-blanche](https://badges.gitter.im/carteb/carte-blanche.svg)](https://gitter.im/carteb/carte-blanche?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Build Status](https://travis-ci.org/carteb/carte-blanche.svg?branch=master)](https://travis-ci.org/carteb/carte-blanche) [![Join the chat at https://gitter.im/carteb/carte-blanche](https://badges.gitter.im/carteb/carte-blanche.svg)](https://gitter.im/carteb/carte-blanche?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ![Screenshot of Carte Blanche](https://cloud.githubusercontent.com/assets/7525670/15761445/8ae05d4a-2918-11e6-8573-bd9bd0ef2330.png)
 
