@@ -15,7 +15,6 @@ export default class ComboBoxItem extends Component {
     index: PropTypes.number.isRequired,
     onItemClick: PropTypes.func.isRequired,
     onItemMouseEnter: PropTypes.func.isRequired,
-    onItemMouseLeave: PropTypes.func.isRequired,
   };
 
   static contextTypes = {
@@ -36,10 +35,6 @@ export default class ComboBoxItem extends Component {
 
   onMouseEnter = () => {
     this.props.onItemMouseEnter(this.props.index);
-  };
-
-  onMouseLeave = () => {
-    this.props.onItemMouseLeave();
   };
 
   onMouseDown = (event) => {
@@ -65,7 +60,6 @@ export default class ComboBoxItem extends Component {
       <li
         onClick={this.onClick}
         onMouseEnter={this.onMouseEnter}
-        onMouseLeave={this.onMouseLeave}
         onMouseDown={this.onMouseDown}
         role="option"
         style={optionStyle}

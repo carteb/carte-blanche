@@ -39,6 +39,7 @@ const renderConstraintForm = (
       parsedMetadata={relevantParsedMetadata}
       constraints={constraints}
       onUpdate={onUpdateConstraints}
+      nestedLevel={0}
     />
   );
 };
