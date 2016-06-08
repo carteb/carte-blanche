@@ -38,10 +38,6 @@ export default class ComboBoxItem extends Component {
     this.props.onItemMouseEnter(this.props.index);
   };
 
-  onMouseLeave = () => {
-    this.props.onItemMouseLeave();
-  };
-
   onMouseDown = (event) => {
     event.preventDefault();
   };
@@ -65,7 +61,6 @@ export default class ComboBoxItem extends Component {
       <li
         onClick={this.onClick}
         onMouseEnter={this.onMouseEnter}
-        onMouseLeave={this.onMouseLeave}
         onMouseDown={this.onMouseDown}
         role="option"
         style={optionStyle}
