@@ -15,7 +15,6 @@ export default class ComboBoxItem extends Component {
     index: PropTypes.number.isRequired,
     onItemClick: PropTypes.func.isRequired,
     onItemMouseEnter: PropTypes.func.isRequired,
-    onItemMouseLeave: PropTypes.func.isRequired,
   };
 
   static contextTypes = {
