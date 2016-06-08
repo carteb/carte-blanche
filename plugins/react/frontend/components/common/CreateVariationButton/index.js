@@ -25,16 +25,24 @@ class CreateVariationButton extends Component {
     }
   }
 
-  onBlur = () => {
+  resetState() {
     this.setState({
+      inputValue: '',
+      error: '',
       inputVisible: false,
     });
   }
 
-  buttonClick = () => {
+  showForm = () => {
     this.setState({
       inputVisible: true,
     });
+  };
+
+  hideForm = (evt) => {
+    evt && evt.stopPropagation(); // eslint-disable-line no-unused-expressions
+
+    this.resetState();
   };
 
   changeInput = (data) => {
@@ -62,17 +70,14 @@ class CreateVariationButton extends Component {
       return;
     }
 
-    this.setState({
-      inputValue: '',
-      error: '',
-    });
+    this.resetState();
     this.props.onSubmit(this.state.inputValue, slug);
   };
 
   render() {
     return (
       <Card
-        onClick={this.buttonClick}
+        onClick={this.showForm}
         aria-role="button"
         className={styles.card}
       >
@@ -86,7 +91,6 @@ class CreateVariationButton extends Component {
               value={this.state.inputValue}
               onChange={this.changeInput}
               placeholder="Variation name"
-              onBlur={this.onBlur}
               ref={(ref) => { this.input = ref; }}
             />
             <Button
@@ -94,6 +98,12 @@ class CreateVariationButton extends Component {
               className={styles.button}
             >
               Create Variation
+            </Button>
+            <Button
+              className={styles.button}
+              onClick={this.hideForm}
+            >
+              Cancel
             </Button>
           </div>
           <div className={this.state.error ? styles.error : styles.hidden}>

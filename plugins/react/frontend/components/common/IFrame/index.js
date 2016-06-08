@@ -7,6 +7,12 @@ import path from 'path';
 const createHtml = (componentPath, dest, userFiles, injectTags) => (
   `<!DOCTYPE html>
   <html style="height: 100%; width: 100%; margin: 0; padding: 0;">
+    <head>
+      ${(injectTags) ? injectTags.join('\n') : ''}
+      <style>
+        ${userFiles && userFiles.styles.join('\n')}
+      </style>
+    </head>
     <body style="height: 100%; width: 100%; margin: 0; padding: 0;">
       <div
         id="root"
@@ -21,10 +27,6 @@ const createHtml = (componentPath, dest, userFiles, injectTags) => (
         window.COMPONENT_PATH = '${componentPath}';
         window.COMPONENT_DATA = undefined;
       </script>
-      ${(injectTags) ? injectTags.join('\n') : ''}
-      <style>
-        ${userFiles && userFiles.styles.join('\n')}
-      </style>
       <script>
         ${userFiles && userFiles.scripts.join('\n')}
       </script>

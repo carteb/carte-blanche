@@ -82,6 +82,16 @@ You can specify some options for the webpack plugin:
       })
     ]
   ```
+  
+- `hot`: The tool tries to auto dedect if you use HotReloading in your application. In any case if you don't have HotReloading we recommend to deactivate it with this option. Set it to true in case to force Carte Blanche to include it.
+
+  ```JS
+    plugins: [
+      new CarteBlanche({
+        hot: false
+      })
+    ]
+  ```
 
 This project has a custom plugin system to make it as extensible as possible. By default, we include the `ReactPlugin`, which has options of itself. *(to pass these in you'll have to explicitly specify it with the `plugins` option)*
 
@@ -107,6 +117,25 @@ This project has a custom plugin system to make it as extensible as possible. By
     hostname: 'mydomain.com'
   })
   ```
+  
+- `injectTags` (default: empty Array): Injects these tags into the iFrames of the rendered components. Useful for webfonts, stylesheets, etc.
+  ```JS
+  new ReactPlugin({
+    injectTags: ['<link href="…" rel="stylesheet />'],
+  }),
+  ```
+  Example usage: https://github.com/carteb/carte-blanche/blob/master/examples/users/webpack.dev.babel.js#L35-L37
+
+- `files` (default: empty Array): Users can add custom .js and .css files to the iFrame with the files option.
+  ```JS
+  new ReactPlugin({
+    files: [
+      path.join(__dirname, 'customStyles.css'),
+    ],
+  }),
+  ```
+  Example usage: https://github.com/carteb/carte-blanche/blob/master/examples/redux/todomvc/webpack.config.babel.js#L30-L32
+
 
 ## Plugins
 

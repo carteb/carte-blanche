@@ -12,6 +12,7 @@
   padding: 6px 0;
   margin: 0;
   position: absolute;
+  left: 0;
   width: 100%;
   z-index: 10000;
   box-sizing: border-box;
