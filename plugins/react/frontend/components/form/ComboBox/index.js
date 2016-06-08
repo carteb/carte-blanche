@@ -325,6 +325,7 @@ export default class ComboBox extends Component {
     this.setState({
       isOpen: false,
       focusedOptionIndex: undefined,
+      inputValue: '',
     });
     const obj = { value, isMatchingOption: true };
 
