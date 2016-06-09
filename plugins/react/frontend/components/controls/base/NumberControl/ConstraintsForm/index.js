@@ -10,7 +10,7 @@ const defaultConstraints = {
   max: 1000,
 };
 
-export default ({ constraints = {}, onUpdate }) => {
+export default ({ constraints = {}, onUpdate, nestedLevel }) => {
   const {
     min = defaultConstraints.min,
     max = defaultConstraints.max,
@@ -26,7 +26,7 @@ export default ({ constraints = {}, onUpdate }) => {
   return (
     <Row>
       <Row>
-        <LeftColumn nestedLevel={1}>Min</LeftColumn>
+        <LeftColumn nestedLevel={nestedLevel}>Min</LeftColumn>
         <RightColumn>
           <Input
             type="number"

@@ -8,7 +8,8 @@ const renderConstraintForm = (
   controlType,
   updateConstraints,
   constraints,
-  parsedMetadata
+  parsedMetadata,
+  nestedLevel
 ) => {
   // retrieving the ConstraintsForm based on the controlType string/key
   const control = getControl({ name: controlType });
@@ -39,6 +40,7 @@ const renderConstraintForm = (
       onUpdate={onUpdateConstraints}
       constraints={nestedConstraints}
       parsedMetadata={relevantParsedMetadata}
+      nestedLevel={nestedLevel}
     />
   );
 };

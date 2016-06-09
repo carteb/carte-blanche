@@ -18,4 +18,4 @@ SourcePlugin.prototype.apply = function apply(compiler) {
   });
 };
 
-export default SourcePlugin;
+module.exports = SourcePlugin;

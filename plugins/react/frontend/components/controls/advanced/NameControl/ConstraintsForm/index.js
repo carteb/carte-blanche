@@ -20,7 +20,7 @@ const defaultConstraints = {
   type: TYPE_OPTIONS[0],
 };
 
-export default ({ constraints = {}, onUpdate }) => {
+export default ({ constraints = {}, onUpdate, nestedLevel }) => {
   const {
     type = defaultConstraints.type.value,
   } = constraints;
@@ -31,7 +31,7 @@ export default ({ constraints = {}, onUpdate }) => {
 
   return (
     <Row>
-      <LeftColumn nestedLevel={1}>Name Type</LeftColumn>
+      <LeftColumn nestedLevel={nestedLevel}>Name Type</LeftColumn>
       <RightColumn>
         <ComboBox
           value={type}

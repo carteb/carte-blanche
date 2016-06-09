@@ -111,7 +111,7 @@ export default class ComboBox extends Component {
 
     this.state = {
       isOpen: false,
-      focusedOptionIndex: undefined,
+      focusedOptionIndex: 0,
       filteredOptions: props.options,
       inputValue: '',
     };
@@ -140,13 +140,13 @@ export default class ComboBox extends Component {
   }
 
   /**
-   * Closed opened combo-box options and removed focusStyles on blur.
+   * Closed opened combo-box options and resets the focused option to the first.
    */
   onBlur = (event) => {
     if (!this.props.disabled) {
       this.setState({
         isOpen: false,
-        focusedOptionIndex: undefined,
+        focusedOptionIndex: 0,
       });
     }
 
@@ -204,17 +204,6 @@ export default class ComboBox extends Component {
   };
 
   /**
-   * Set focusedOptionIndex to undefined.
-   */
-  onMouseLeaveAtOption = () => {
-    if (!this.props.disabled) {
-      this.setState({
-        focusedOptionIndex: undefined,
-      });
-    }
-  };
-
-  /**
    * Update component value when an option is clicked.
    */
   onClickAtOption = (index) => {
@@ -259,7 +248,7 @@ export default class ComboBox extends Component {
           event.preventDefault();
           this.setState({
             isOpen: false,
-            focusedOptionIndex: undefined,
+            focusedOptionIndex: 0,
           });
         }
       }
@@ -276,7 +265,7 @@ export default class ComboBox extends Component {
    */
   onArrowDownKeyDown = () => {
     let index = 0;
-    if (this.state.focusedOptionIndex !== undefined && (this.state.focusedOptionIndex + 1) < this.state.filteredOptions.length) {
+    if ((this.state.focusedOptionIndex + 1) < this.state.filteredOptions.length) {
       index = this.state.focusedOptionIndex + 1;
     }
 
@@ -324,7 +313,8 @@ export default class ComboBox extends Component {
   triggerChange = (value) => {
     this.setState({
       isOpen: false,
-      focusedOptionIndex: undefined,
+      focusedOptionIndex: 0,
+      inputValue: '',
     });
     const obj = { value, isMatchingOption: true };
 
@@ -424,7 +414,6 @@ export default class ComboBox extends Component {
                 index={index}
                 onItemClick={this.onClickAtOption}
                 onItemMouseEnter={this.onMouseEnterAtOption}
-                onItemMouseLeave={this.onMouseLeaveAtOption}
               >
                 {entry.value}
               </ComboBoxItem>
