@@ -35,5 +35,5 @@ app.listen(8080, (err) => {
     return console.log(err);
   }
 
-  console.log('Express server started at localhost:3000');
+  console.log('Express server started at localhost:8080');
 });
