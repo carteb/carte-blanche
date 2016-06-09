@@ -59,6 +59,7 @@
     "test:coverage": "istanbul cover --config istanbul.yml _mocha -- --opts mocha.opts"
   },
   "dependencies": {
+    "autoprefixer": "^6.3.6",
     "body-parser": "^1.15.1",
     "carte-blanche-utils": "^0.0.1",
     "chokidar": "^1.5.1",
