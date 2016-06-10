@@ -59,3 +59,55 @@
 .caretFocusStyle {
   outline: 0;
 }
+
+.style {
+  box-sizing: border-box;
+  color: #666;
+  cursor: pointer;
+  padding: 10px;
+  font-size: 15px;
+  /*
+  To avoid any kind of flickering the user wont get feedback
+  for selecting the option text
+  */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  /* This button can only be pressed */
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  /*
+  Prevent flickering while tapping on WebKit
+  http://stackoverflow.com/a/3516243/837709
+  */
+  -webkit-tap-highlight-color: transparent;
+}
+
+.hoverStyle {
+  background: #F5F5F5;
+  color: #444;
+}
+
+.selectStyle {
+  box-sizing: border-box;
+  color: #666;
+  padding: 0;
+  font-size: 15px;
+  /*
+  To avoid any kind of flickering the user wont get feedback
+  for selecting the button text
+  */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  /* This button can only be pressed */
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  /*
+  Prevent flickering while tapping on WebKit
+  http://stackoverflow.com/a/3516243/837709
+  */
+  -webkit-tap-highlight-color: transparent;
+}

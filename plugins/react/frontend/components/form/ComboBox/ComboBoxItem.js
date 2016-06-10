@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import style from './itemStyles';
+import styles from './styles.css';
 
 /**
  * Belle internal component to wrap an Option in a ComboBox.
@@ -42,17 +42,14 @@ export default class ComboBoxItem extends Component {
   };
 
   render() {
-    let optionStyle;
+    let optionClass;
 
     if (this.props.isDisplayedAsSelected) {
-      optionStyle = style.selectStyle;
+      optionClass = styles.selectStyle;
     } else {
-      optionStyle = style.style;
+      optionClass = styles.style;
       if (this.context.isHoveredIndex === this.props.index) {
-        optionStyle = {
-          ...optionStyle,
-          ...style.hoverStyle,
-        };
+        optionClass += ` ${styles.hoverStyle}`
       }
     }
 
@@ -62,7 +59,7 @@ export default class ComboBoxItem extends Component {
         onMouseEnter={this.onMouseEnter}
         onMouseDown={this.onMouseDown}
         role="option"
-        style={optionStyle}
+        className={optionClass}
       >
         {this.props.children}
       </li>
