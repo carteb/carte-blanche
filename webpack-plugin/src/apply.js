@@ -15,6 +15,7 @@ import emitAssets from './utils/emitAssets';
 import registerPlugins from './registerPlugins';
 import registerDefaultPlugins from './registerDefaultPlugins';
 import createHTML from './utils/createHTML';
+import constructorIndexInArray from './utils/constructorIndexInArray';
 
 function apply(compiler) {
   const dest = this.options.dest;
@@ -59,10 +60,42 @@ function apply(compiler) {
     outputName: userBundleFileName,
   }));
 
+  // Detect CommonsChunkPlugin usage
+  const commonsChunkPluginIndex = constructorIndexInArray(
+    compiler.options.plugins,
+    'CommonsChunkPlugin'
+  );
+
+  // Get the filename of the common chunk
+  let commonsChunkFilename;
+  if (commonsChunkPluginIndex !== false) {
+    const commonsChunkOptions = compiler.options.plugins[commonsChunkPluginIndex];
+    // Called like "new CommonsChunkPlugin('somename')"
+    if (commonsChunkOptions.filenameTemplate ===
+        commonsChunkOptions.chunkNames) {
+      commonsChunkFilename = `${commonsChunkOptions.chunkNames}.js`;
+    // Called like "new CommonsChunkPlugin({ filename: 'somefilename.js' })"
+    } else if (commonsChunkOptions.filenameTemplate) {
+      commonsChunkFilename = commonsChunkOptions.filenameTemplate;
+    // Called like "new CommonsChunkPlugin({ name: 'somename' })"
+    } else if (commonsChunkOptions.chunkNames) {
+      commonsChunkFilename = `${commonsChunkOptions.chunkNames}.js`;
+    // Don't know if this can actually happen, better to have it there just in case
+    } else {
+      // eslint-disable-next-line no-console
+      console.log('[CarteBlanche] We detected you use the CommonsChunkPlugin, ' +
+      'but we could not detect the filename of the common chunk. Please use the ' +
+      '"filename" option of the CommonsChunkPlugin.');
+    }
+  }
+
   // The client assets, default the HTML to only include the client bundles and the
   // user bundle
   const clientAssets = {
-    'index.html': createHTML(dest),
+    'index.html': createHTML({
+      dest,
+      commonsChunkFilename,
+    }),
     'client-bundle.js': fs.readFileSync(path.resolve(__dirname, './assets/client-bundle.js')),
     'client-bundle.css': fs.readFileSync(path.resolve(__dirname, './assets/main.css')),
   };
@@ -90,7 +123,11 @@ function apply(compiler) {
           }
         });
         // Put together the HTML file based on the assets we got
-        clientAssets['index.html'] = createHTML(dest, scripts, styles);
+        clientAssets['index.html'] = createHTML({
+          dest,
+          extraScripts: scripts,
+          extraStyles: styles,
+        });
         emitAssets(compilation, clientAssets, dest, callback);
       });
     } else {
