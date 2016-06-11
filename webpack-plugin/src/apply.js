@@ -31,6 +31,7 @@ function apply(compiler) {
   const userBundleFileName = path.join(dest, 'user-bundle.js');
   const userEntries = compiler.options.entry;
   const devServerOptions = compiler.options.devServer;
+
   // Load the dynamic resolve loader with a placeholder file
   const extraEntries = [
     `!!${require.resolve('./dynamic-resolve.js')}?${
@@ -43,9 +44,10 @@ function apply(compiler) {
   ];
   // Find out if we need to include the webpack-dev-server client
   // TODO Test automatically if the user has any variant (middlware, devserver,...) of HMR enabled
-  if (this.options.hot !== false && (this.options.hot === true ||
-      (includes(userEntries, 'webpack-dev-server/client') && devServerOptions.hot)
-    )) {
+  const devServerWithHMR = includes(userEntries, 'webpack-dev-server/client') &&
+                           devServerOptions &&
+                           devServerOptions.hot;
+  if (this.options.hot === true || devServerWithHMR) {
     if (includes(userEntries, 'webpack/hot/only-dev-server')) {
       extraEntries.unshift('webpack/hot/only-dev-server');
     }
@@ -107,7 +109,7 @@ function apply(compiler) {
   ));
 
   // Log out that CarteBlanche has started
-  if (devServerOptions.host && devServerOptions.port) {
+  if (devServerOptions && devServerOptions.host && devServerOptions.port) {
     // eslint-disable-next-line no-console
     console.log(`CarteBlanche started at http://${devServerOptions.host}:${devServerOptions.port}/${dest}!`);
   } else {
