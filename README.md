@@ -138,7 +138,6 @@ This project has a custom plugin system to make it as extensible as possible. By
   ```
   Example usage: https://github.com/carteb/carte-blanche/blob/master/examples/redux/todomvc/webpack.config.babel.js#L30-L32
 
-
 ## Plugins
 
 This is a list of endorsed plugins that are useable right now:
@@ -147,6 +146,12 @@ This is a list of endorsed plugins that are useable right now:
 - [`carte-blanche-source-plugin`](./plugins/source): Show the source code of your components right in the interface!
 
 Want to write your own plugin? Check out [`writing-plugins.md`](./WRITING-PLUGINS.md)!
+
+## Examples
+
+Examples are in the `examples` directory. To run them, first run the command `npm run examples:directory`, where `directory` is the path to the example, with each directory separated by `:`.
+
+For example, to run the Redux TodoMVC example, run `npm run example:redux:todomvc`.
 
 ## License
 
