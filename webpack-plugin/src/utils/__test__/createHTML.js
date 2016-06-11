@@ -41,11 +41,11 @@ describe('createHTML', () => {
     <script src="/examples/user-bundle.js"></script>
   </body>
 </html>`;
-    expect(createHTML(dest)).to.equal(expected);
+    expect(createHTML({ dest })).to.equal(expected);
   });
 
   it('should inject scripts', () => {
-    const scripts = ['console.log("Hello World!")'];
+    const extraScripts = ['console.log("Hello World!")'];
     const expected = `
 <!DOCTYPE html>
 <html>
@@ -62,11 +62,11 @@ describe('createHTML', () => {
     <script src="user-bundle.js"></script>
   </body>
 </html>`;
-    expect(createHTML(undefined, scripts)).to.equal(expected);
+    expect(createHTML({ extraScripts })).to.equal(expected);
   });
 
   it('should inject styles', () => {
-    const styles = ['body { background: red; }'];
+    const extraStyles = ['body { background: red; }'];
     const expected = `
 <!DOCTYPE html>
 <html>
@@ -83,6 +83,27 @@ describe('createHTML', () => {
     <script src="user-bundle.js"></script>
   </body>
 </html>`;
-    expect(createHTML(undefined, undefined, styles)).to.equal(expected);
+    expect(createHTML({ extraStyles })).to.equal(expected);
+  });
+
+  it('should inject the common chunk', () => {
+    const commonsChunkFilename = 'commons.js';
+    const expected = `
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>CarteBlanche</title>
+    <link rel="stylesheet" type="text/css" href="client-bundle.css" />
+  </head>
+  <body>
+    <div id='carte-blanche-root'></div>
+
+    <script src="/commons.js"></script>
+    <script src="client-bundle.js"></script>
+    <script src="user-bundle.js"></script>
+  </body>
+</html>`;
+    expect(createHTML({ commonsChunkFilename })).to.equal(expected);
   });
 });

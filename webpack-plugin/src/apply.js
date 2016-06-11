@@ -92,10 +92,7 @@ function apply(compiler) {
   // The client assets, default the HTML to only include the client bundles and the
   // user bundle
   const clientAssets = {
-    'index.html': createHTML({
-      dest,
-      commonsChunkFilename,
-    }),
+    'index.html': createHTML({ dest, commonsChunkFilename }),
     'client-bundle.js': fs.readFileSync(path.resolve(__dirname, './assets/client-bundle.js')),
     'client-bundle.css': fs.readFileSync(path.resolve(__dirname, './assets/main.css')),
   };
