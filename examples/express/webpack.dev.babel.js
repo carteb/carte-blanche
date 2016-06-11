@@ -1,7 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CarteBlanche = require('../../webpack-plugin/dist/index');
+const CarteBlanche = require('../../webpack-plugin/index');
 const autoprefixer = require('autoprefixer');
 
 module.exports = {
