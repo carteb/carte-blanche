@@ -28,38 +28,6 @@ function apply(compiler) {
     registerDefaultPlugins(compiler);
   }
 
-  // Compile the client
-  const userBundleFileName = path.join(dest, 'user-bundle.js');
-  const userEntries = compiler.options.entry;
-  const devServerOptions = compiler.options.devServer;
-  // Load the dynamic resolve loader with a placeholder file
-  const extraEntries = [
-    `!!${require.resolve('./dynamic-resolve.js')}?${
-      JSON.stringify({
-        filter: filter.toString(),
-        componentRoot: this.options.componentRoot,
-        context: compiler.context,
-        dest: this.options.dest,
-      })}!${require.resolve('./assets/placeholder.js')}`,
-  ];
-  // Find out if we need to include the webpack-dev-server client
-  // TODO Test automatically if the user has any variant (middlware, devserver,...) of HMR enabled
-  if (this.options.hot !== false && (this.options.hot === true ||
-      (includes(userEntries, 'webpack-dev-server/client') && devServerOptions.hot)
-    )) {
-    if (includes(userEntries, 'webpack/hot/only-dev-server')) {
-      extraEntries.unshift('webpack/hot/only-dev-server');
-    }
-    extraEntries.unshift(`webpack-dev-server/client?http://${devServerOptions.host}:${devServerOptions.port}`);
-  }
-  // Apply the ExtraEntry plugin with our entries above, a unique entryName
-  // and ouput everything to userBundleFileName
-  compiler.apply(new ExtraEntryWebpackPlugin({
-    entry: extraEntries,
-    entryName: `CarteBlanche [${this.id}]`,
-    outputName: userBundleFileName,
-  }));
-
   // Detect CommonsChunkPlugin usage
   const commonsChunkPluginIndex = constructorIndexInArray(
     compiler.options.plugins,
@@ -88,6 +56,39 @@ function apply(compiler) {
       '"filename" option of the CommonsChunkPlugin.');
     }
   }
+
+  // Compile the client
+  const userBundleFileName = path.join(dest, 'user-bundle.js');
+  const userEntries = compiler.options.entry;
+  const devServerOptions = compiler.options.devServer;
+  // Load the dynamic resolve loader with a placeholder file
+  const extraEntries = [
+    `!!${require.resolve('./dynamic-resolve.js')}?${
+      JSON.stringify({
+        filter: filter.toString(),
+        componentRoot: this.options.componentRoot,
+        context: compiler.context,
+        dest: this.options.dest,
+        commonsChunkFilename,
+      })}!${require.resolve('./assets/placeholder.js')}`,
+  ];
+  // Find out if we need to include the webpack-dev-server client
+  // TODO Test automatically if the user has any variant (middlware, devserver,...) of HMR enabled
+  if (this.options.hot !== false && (this.options.hot === true ||
+      (includes(userEntries, 'webpack-dev-server/client') && devServerOptions.hot)
+    )) {
+    if (includes(userEntries, 'webpack/hot/only-dev-server')) {
+      extraEntries.unshift('webpack/hot/only-dev-server');
+    }
+    extraEntries.unshift(`webpack-dev-server/client?http://${devServerOptions.host}:${devServerOptions.port}`);
+  }
+  // Apply the ExtraEntry plugin with our entries above, a unique entryName
+  // and ouput everything to userBundleFileName
+  compiler.apply(new ExtraEntryWebpackPlugin({
+    entry: extraEntries,
+    entryName: `CarteBlanche [${this.id}]`,
+    outputName: userBundleFileName,
+  }));
 
   // The client assets, default the HTML to only include the client bundles and the
   // user bundle
