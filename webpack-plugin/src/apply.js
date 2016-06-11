@@ -15,7 +15,7 @@ import emitAssets from './utils/emitAssets';
 import registerPlugins from './registerPlugins';
 import registerDefaultPlugins from './registerDefaultPlugins';
 import createHTML from './utils/createHTML';
-import constructorIndexInArray from './utils/constructorIndexInArray';
+import getCommonsChunkFilename from './utils/getCommonsChunkFilename';
 
 function apply(compiler) {
   const dest = this.options.dest;
@@ -28,39 +28,11 @@ function apply(compiler) {
     registerDefaultPlugins(compiler);
   }
 
-  // Detect CommonsChunkPlugin usage
-  const commonsChunkPluginIndex = constructorIndexInArray(
-    compiler.options.plugins,
-    'CommonsChunkPlugin'
-  );
-
-  // Get the filename of the common chunk
-  let commonsChunkFilename;
-  if (commonsChunkPluginIndex !== false) {
-    const commonsChunkOptions = compiler.options.plugins[commonsChunkPluginIndex];
-    // Called like "new CommonsChunkPlugin('somename')"
-    if (commonsChunkOptions.filenameTemplate ===
-        commonsChunkOptions.chunkNames) {
-      commonsChunkFilename = `${commonsChunkOptions.chunkNames}.js`;
-    // Called like "new CommonsChunkPlugin({ filename: 'somefilename.js' })"
-    } else if (commonsChunkOptions.filenameTemplate) {
-      commonsChunkFilename = commonsChunkOptions.filenameTemplate;
-    // Called like "new CommonsChunkPlugin({ name: 'somename' })"
-    } else if (commonsChunkOptions.chunkNames) {
-      commonsChunkFilename = `${commonsChunkOptions.chunkNames}.js`;
-    // Don't know if this can actually happen, better to have it there just in case
-    } else {
-      // eslint-disable-next-line no-console
-      console.log('[CarteBlanche] We detected you use the CommonsChunkPlugin, ' +
-      'but we could not detect the filename of the common chunk. Please use the ' +
-      '"filename" option of the CommonsChunkPlugin.');
-    }
-  }
-
   // Compile the client
   const userBundleFileName = path.join(dest, 'user-bundle.js');
   const userEntries = compiler.options.entry;
   const devServerOptions = compiler.options.devServer;
+  const commonsChunkFilename = getCommonsChunkFilename(compiler.options.plugins);
   // Load the dynamic resolve loader with a placeholder file
   const extraEntries = [
     `!!${require.resolve('./dynamic-resolve.js')}?${
