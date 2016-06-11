@@ -4,7 +4,7 @@
   "description": "",
   "main": "",
   "scripts": {
-    "start": "node src/server"
+    "start": "babel-node src/server"
   },
   "keywords": [],
   "author": "Max Stoiber <contact@mxstbr.com> (http://mxstbr.com)",
