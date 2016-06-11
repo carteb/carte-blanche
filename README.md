@@ -75,7 +75,7 @@ You can specify some options for the webpack plugin:
     ]
   ```
 
-- `filter` (default: matches files that start with a capital letter and/or folders that start with a capital letter and contain an index file): Regex that matches your components in the `componentRoot` folder. *We do not recommend changing this, as it might have unintended side effects.*
+- `filter` (default: matches uppercase files and uppercase folders with an index file): Regex that matches your components in the `componentRoot` folder. *We do not recommend changing this, as it might have unintended side effects.*
 
   ```JS
     plugins: [
@@ -84,7 +84,7 @@ You can specify some options for the webpack plugin:
       })
     ]
   ```
-  
+
 - `hot`: The tool tries to auto dedect if you use HotReloading in your application. In any case if you don't have HotReloading we recommend to deactivate it with this option. Set it to true in case to force Carte Blanche to include it.
 
   ```JS
@@ -119,7 +119,7 @@ This project has a custom plugin system to make it as extensible as possible. By
     hostname: 'mydomain.com'
   })
   ```
-  
+
 - `injectTags` (default: empty Array): Injects these tags into the iFrames of the rendered components. Useful for webfonts, stylesheets, etc.
   ```JS
   new ReactPlugin({
