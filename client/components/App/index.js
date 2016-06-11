@@ -39,10 +39,11 @@ class App extends React.Component {
    * @return {String} The path to the next component
    */
   getNextComponentPath = () => {
+    const components = this.props.navigationStore.getState();
     let nextComponentPath = '';
     let isNextComponent = false;
     // Map over all components
-    Object.keys(window.STYLEGUIDE_PLUGIN_CLIENT_API.scripts)
+    Object.keys(components)
       .some((componentPath) => {
         // If this is the next component, short circuit the some loop by returning
         // true and set path to the current one
@@ -66,9 +67,10 @@ class App extends React.Component {
    * @return {String} The previous component path
    */
   getPreviousComponentPath = () => {
+    const components = this.props.navigationStore.getState();
     let previousComponentPath = '';
     // Map over all components
-    Object.keys(window.STYLEGUIDE_PLUGIN_CLIENT_API.scripts)
+    Object.keys(components)
       .some((componentPath) => {
         // If this is the current component, short curcuit the some loop
         if (this.props.location.pathname.indexOf(componentPath) > -1) {
