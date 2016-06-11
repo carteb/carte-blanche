@@ -17,6 +17,7 @@ import IFrame from '../IFrame';
 import EditButton from '../EditButton';
 import DeleteButton from '../DeleteButton';
 import Card from '../Card';
+import SourceCode from './SourceCode';
 import styles from './styles.css';
 
 class Playground extends React.Component {
@@ -154,13 +155,21 @@ class Playground extends React.Component {
                 </code>
               </div>
             ) : (
-              <IFrame
-                dest={this.props.dest}
-                variationProps={this.props.variationProps}
-                userFiles={this.props.userFiles}
-                injectTags={this.props.injectTags}
-                componentPath={this.props.componentPath}
-              />
+              <div>
+                <IFrame
+                  dest={this.props.dest}
+                  variationProps={this.props.variationProps}
+                  userFiles={this.props.userFiles}
+                  injectTags={this.props.injectTags}
+                  componentPath={this.props.componentPath}
+                />
+                {this.props.showSourceCode &&
+                  <SourceCode
+                    componentPath={this.props.componentPath}
+                    variationProps={this.props.variationProps}
+                  />
+                }
+              </div>
             )}
           </div>
         </Card>
@@ -179,6 +188,7 @@ Playground.propTypes = {
   variationPath: PropTypes.string,
   title: PropTypes.string,
   variationBasePath: PropTypes.string,
+  showSourceCode: PropTypes.bool,
 };
 
 export default Playground;

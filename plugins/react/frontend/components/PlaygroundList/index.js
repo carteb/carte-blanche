@@ -444,6 +444,7 @@ class PlaygroundList extends Component {
                 injectTags={this.props.injectTags}
                 component={component}
                 componentPath={this.props.componentPath}
+                showSourceCode
                 fullHeight
                 variationProps={selectedVariation.props}
                 variationPath={this.state.selectedVariationId}
