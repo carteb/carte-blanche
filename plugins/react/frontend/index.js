@@ -22,6 +22,7 @@ export default function playground(
       hostname={options.hostname}
       port={options.port}
       dest={JSON.parse(pluginData.dest)}
+      commonsChunkFilename={JSON.parse(pluginData.commonsChunkFilename)}
       userFiles={frontendData.files}
       injectTags={options.injectTags}
       componentPath={componentPath}

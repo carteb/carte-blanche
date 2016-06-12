@@ -4,7 +4,7 @@
 import React from 'react';
 import path from 'path';
 
-const createHtml = (componentPath, dest, userFiles, injectTags) => (
+const createHtml = (componentPath, dest, userFiles, injectTags, commonsChunkFilename) => (
   `<!DOCTYPE html>
   <html style="height: 100%; width: 100%; margin: 0; padding: 0;">
     <head>
@@ -27,6 +27,7 @@ const createHtml = (componentPath, dest, userFiles, injectTags) => (
         window.COMPONENT_PATH = '${componentPath}';
         window.COMPONENT_DATA = undefined;
       </script>
+      ${(commonsChunkFilename) ? `<script src="/${commonsChunkFilename}"></script>` : ''}
       <script>
         ${userFiles && userFiles.scripts.join('\n')}
       </script>
@@ -43,7 +44,7 @@ class IFrame extends React.Component {
     const doc = this.iframe.contentDocument;
     doc.open();
     // eslint-disable-next-line max-len
-    doc.write(createHtml(this.props.componentPath, this.props.dest, this.props.userFiles, this.props.injectTags));
+    doc.write(createHtml(this.props.componentPath, this.props.dest, this.props.userFiles, this.props.injectTags, this.props.commonsChunkFilename));
     doc.close();
 
     this.iframe.contentWindow.INITIAL_COMPONENT_DATA = this.props.variationProps;

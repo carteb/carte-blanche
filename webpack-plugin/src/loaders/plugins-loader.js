@@ -35,7 +35,7 @@ module.exports = function pluginsLoader(source) {
   }
 
    // Pass the source code of the component to the plugins
-  const pluginData = { source, dest: query.dest };
+  const pluginData = { source, dest: query.dest, commonsChunkFilename: query.commonsChunkFilename };
 
   // Trigger events for carte-blanche child plugins
   this._compilation.applyPlugins( // eslint-disable-line no-underscore-dangle

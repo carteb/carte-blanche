@@ -44,6 +44,7 @@
     "example:jss": "npm run server -- --context examples/styling/jss/ --config examples/styling/jss/webpack.dev.babel.js",
     "example:aphrodite": "npm run server -- --context examples/styling/aphrodite/ --config examples/styling/aphrodite/webpack.dev.babel.js",
     "example:express": "(cd examples/express && npm start)",
+    "example:commons": "npm run server -- --context examples/commons/ --config examples/commons/webpack.dev.babel.js",
     "example:redux:todomvc": "npm run server -- --context examples/redux/todomvc/ --config examples/redux/todomvc/webpack.config.babel.js",
     "formEnvironment": "npm run server -- --context plugins/react/formEnvironment/ --config plugins/react/formEnvironment/webpack.dev.babel.js",
     "client:dev": "webpack-dev-server --hot --config client/webpack.dev.babel.js",
