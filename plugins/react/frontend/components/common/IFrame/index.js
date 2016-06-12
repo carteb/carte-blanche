@@ -31,7 +31,7 @@ const createHtml = (componentPath, dest, userFiles, injectTags, commonsChunkFile
       <script>
         ${userFiles && userFiles.scripts.join('\n')}
       </script>
-      <script src="${(dest) ? `/${path.join(dest, 'client-bundle.js')}` : 'client-bundle.js'}"></script>
+      <script src="${(dest) ? `/${path.join(dest, 'iframe-client-bundle.js')}` : 'iframe-client-bundle.js'}"></script>
       <script src="${(dest) ? `/${path.join(dest, 'user-bundle.js')}` : 'user-bundle.js'}"></script>
     </body>
   </html>

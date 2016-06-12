@@ -6,9 +6,8 @@ npm-debug.log.*
 dist
 stats.json
 webpack-plugin/src/assets/client-bundle.js
-webpack-plugin/src/client-bundle.js
-webpack-plugin/src/assets/main.css
-webpack-plugin/src/main.css
+webpack-plugin/src/assets/iframe-client-bundle.js
+webpack-plugin/src/assets/client.css
 webpack-plugin/dist
 client/user-bundle.js
 
