@@ -32,11 +32,8 @@ function apply(compiler) {
   const userBundleFileName = path.join(dest, 'user-bundle.js');
   const userEntries = compiler.options.entry;
   const devServerOptions = compiler.options.devServer;
-<<<<<<< HEAD
-
-=======
   const commonsChunkFilename = getCommonsChunkFilename(compiler.options.plugins);
->>>>>>> master
+
   // Load the dynamic resolve loader with a placeholder file
   const extraEntries = [
     `!!${require.resolve('./dynamic-resolve.js')}?${
