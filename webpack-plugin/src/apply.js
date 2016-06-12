@@ -33,6 +33,7 @@ function apply(compiler) {
   const userEntries = compiler.options.entry;
   const devServerOptions = compiler.options.devServer;
   const commonsChunkFilename = getCommonsChunkFilename(compiler.options.plugins);
+
   // Load the dynamic resolve loader with a placeholder file
   const extraEntries = [
     `!!${require.resolve('./dynamic-resolve.js')}?${
@@ -46,13 +47,21 @@ function apply(compiler) {
   ];
   // Find out if we need to include the webpack-dev-server client
   // TODO Test automatically if the user has any variant (middlware, devserver,...) of HMR enabled
-  if (this.options.hot !== false && (this.options.hot === true ||
-      (includes(userEntries, 'webpack-dev-server/client') && devServerOptions.hot)
-    )) {
+  const devServerWithHMR = includes(userEntries, 'webpack-dev-server/client') &&
+                           devServerOptions &&
+                           devServerOptions.hot;
+  const middlwareWithHMR = includes(userEntries, 'webpack-hot-middleware/client');
+
+  if (this.options.hot !== false && (this.options.hot === true || devServerWithHMR)) {
     if (includes(userEntries, 'webpack/hot/only-dev-server')) {
       extraEntries.unshift('webpack/hot/only-dev-server');
     }
     extraEntries.unshift(`webpack-dev-server/client?http://${devServerOptions.host}:${devServerOptions.port}`);
+  } else if (this.options.hot !== false && (this.options.hot === true || middlwareWithHMR)) {
+    if (includes(userEntries, 'webpack/hot/only-dev-server')) {
+      extraEntries.unshift('webpack/hot/only-dev-server');
+    }
+    extraEntries.unshift('webpack-hot-middleware/client');
   }
   // Apply the ExtraEntry plugin with our entries above, a unique entryName
   // and ouput everything to userBundleFileName
@@ -114,7 +123,7 @@ function apply(compiler) {
   ));
 
   // Log out that CarteBlanche has started
-  if (devServerOptions) {
+  if (devServerOptions && devServerOptions.host && devServerOptions.port) {
     // eslint-disable-next-line no-console
     console.log(`CarteBlanche started at http://${devServerOptions.host}:${devServerOptions.port}/${dest}!`);
   } else {
