@@ -7,12 +7,13 @@ export default {
   devtool: 'eval',
   output: {
     path: path.join(__dirname, '../webpack-plugin/src/assets/'),
-    filename: 'client-bundle.js',
+    filename: '[name]-bundle.js',
     publicPath: '/',
   },
-  entry: [
-    path.join(__dirname, './client.js'),
-  ],
+  entry: {
+    client: path.join(__dirname, './client.js'),
+    'iframe-client': path.join(__dirname, './iframe-client.js'),
+  },
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {

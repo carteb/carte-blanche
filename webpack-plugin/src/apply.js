@@ -64,7 +64,10 @@ function apply(compiler) {
   const clientAssets = {
     'index.html': createHTML(dest),
     'client-bundle.js': fs.readFileSync(path.resolve(__dirname, './assets/client-bundle.js')),
-    'client-bundle.css': fs.readFileSync(path.resolve(__dirname, './assets/main.css')),
+    'client-bundle.css': fs.readFileSync(path.resolve(__dirname, './assets/client.css')),
+    'iframe-client-bundle.js': fs.readFileSync(
+      path.resolve(__dirname, './assets/iframe-client-bundle.js')
+    ),
   };
 
   compiler.plugin('emit', (compilation, callback) => {
