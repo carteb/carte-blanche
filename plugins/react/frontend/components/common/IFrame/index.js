@@ -27,7 +27,7 @@ const createHtml = (componentPath, dest, userFiles, injectTags, commonsChunkFile
         window.COMPONENT_PATH = '${componentPath}';
         window.COMPONENT_DATA = undefined;
       </script>
-      ${(commonsChunkFilename) ? `<script src="/${commonsChunkFilename}"></script>` : ''}
+      ${(commonsChunkFilename !== 'undefined') ? `<script src="/${commonsChunkFilename}"></script>` : ''}
       <script>
         ${userFiles && userFiles.scripts.join('\n')}
       </script>
