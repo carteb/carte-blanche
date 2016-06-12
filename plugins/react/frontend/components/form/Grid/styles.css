@@ -1,8 +1,11 @@
 .root {
   display: flex;
   box-sizing: border-box;
-  position: relative;
-  height: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 50%;
 }
 
 .leftBackgroundColumn {
