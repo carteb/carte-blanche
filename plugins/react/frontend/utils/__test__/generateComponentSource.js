@@ -32,6 +32,19 @@ describe('generateComponentSource', () => {
     expect(source).to.equal('<Component style={{"color":"red"}} />');
   });
 
+  it('handles array props', () => {
+    const source = generateComponentSource('Component', { results: [223, 665, 20] });
+    expect(source).to.equal('<Component results={[223,665,20]} />');
+  });
+
+  it.skip('handles date props', () => {
+    const createdAt = new Date('2016-06-12T06:52:13.000Z');
+    const source = generateComponentSource('Component', { createdAt });
+    expect(source).to.equal(
+      '<Component createdAt={new Date(\'2016-06-12T06:52:13.000Z\')} />'
+    );
+  });
+
   it('handles multiple props', () => {
     const source = generateComponentSource('Component', { a: '1', b: '2' });
     expect(source).to.equal('<Component a="1" b="2" />');
