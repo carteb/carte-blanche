@@ -75,7 +75,7 @@ You can specify some options for the webpack plugin:
     ]
   ```
 
-- `filter` (default: matches uppercase files and uppercase folders with an index file): Regex that matches your components in the `componentRoot` folder. *We do not recommend changing this, as it might have unintended side effects.*
+- `filter` (default: matches files that start with a capital letter and/or folders that start with a capital letter and contain an index file): Regex that matches your components in the `componentRoot` folder. *We do not recommend changing this, as it might have unintended side effects.*
 
   ```JS
     plugins: [
