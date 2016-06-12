@@ -15,6 +15,7 @@ import emitAssets from './utils/emitAssets';
 import registerPlugins from './registerPlugins';
 import registerDefaultPlugins from './registerDefaultPlugins';
 import createHTML from './utils/createHTML';
+import getCommonsChunkFilename from './utils/getCommonsChunkFilename';
 
 function apply(compiler) {
   const dest = this.options.dest;
@@ -31,6 +32,7 @@ function apply(compiler) {
   const userBundleFileName = path.join(dest, 'user-bundle.js');
   const userEntries = compiler.options.entry;
   const devServerOptions = compiler.options.devServer;
+  const commonsChunkFilename = getCommonsChunkFilename(compiler.options.plugins);
   // Load the dynamic resolve loader with a placeholder file
   const extraEntries = [
     `!!${require.resolve('./dynamic-resolve.js')}?${
@@ -39,6 +41,7 @@ function apply(compiler) {
         componentRoot: this.options.componentRoot,
         context: compiler.context,
         dest: this.options.dest,
+        commonsChunkFilename,
       })}!${require.resolve('./assets/placeholder.js')}`,
   ];
   // Find out if we need to include the webpack-dev-server client
@@ -62,7 +65,7 @@ function apply(compiler) {
   // The client assets, default the HTML to only include the client bundles and the
   // user bundle
   const clientAssets = {
-    'index.html': createHTML(dest),
+    'index.html': createHTML({ dest, commonsChunkFilename }),
     'client-bundle.js': fs.readFileSync(path.resolve(__dirname, './assets/client-bundle.js')),
     'client-bundle.css': fs.readFileSync(path.resolve(__dirname, './assets/main.css')),
   };
@@ -90,7 +93,11 @@ function apply(compiler) {
           }
         });
         // Put together the HTML file based on the assets we got
-        clientAssets['index.html'] = createHTML(dest, scripts, styles);
+        clientAssets['index.html'] = createHTML({
+          dest,
+          extraScripts: scripts,
+          extraStyles: styles,
+        });
         emitAssets(compilation, clientAssets, dest, callback);
       });
     } else {
