@@ -2,6 +2,12 @@
 
 CarteBlanche is maintained by @mxstbr, @nikgraf, @jantimon and an amazing team of contributors. All contributions, except for those by Max, Nik and Timon, are credited here.
 
+## v0.2 / 2016-06-12
+
+- added; show JSX code of variation in interface, thanks @RStankov
+- added; CommonsChunkPlugin support
+- improved; various bug fixes and improvements
+
 ## v0.1.3 / 2016-06-08
 
 - added; modal confirmation on variation delete, thanks @nkalichynskyi
