@@ -28,9 +28,6 @@ describe('codeToCustomMetadata', () => {
     "age": undefinedVariable
   }
 };`;
-    const expected = {
-      err: 'SyntaxError: Unexpected token u',
-    };
-    expect(codeToCustomMetadata(code)).to.deep.equal(expected);
+    expect(codeToCustomMetadata(code).err).to.contain('SyntaxError: Unexpected token u');
   });
 });
