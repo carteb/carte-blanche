@@ -1,5 +1,5 @@
 import valueOrNullOrUndefined from '../../../../utils/valueOrNullOrUndefined';
-import faker from 'faker/build/build/faker';
+import faker from 'faker';
 
 export default ({ required }) => {
   const canBeUndefined = !required;
