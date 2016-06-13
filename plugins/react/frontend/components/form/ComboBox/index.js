@@ -1,36 +1,12 @@
 /* eslint-disable max-len */
 
 import React, { Component, PropTypes } from 'react';
-import { injectStyles, removeAllStyles } from './inject-style';
-import style from './styles';
 import ComboBoxItem from './ComboBoxItem';
 import Input from '../Input';
 import filter from 'lodash/filter';
 import isEmpty from 'lodash/isEmpty';
 import map from 'lodash/map';
-import uniqueId from 'lodash/uniqueId';
 import styles from './styles.css';
-
-/**
- * Update hover style for the specified styleId.
- *
- * @param caretStyleId {string} - unique is assigned as class to caret span
- * @param props {object} - the components props optionally containing hoverStyle
- */
-function updatePseudoClassStyle(caretStyleId) {
-  const caretFocusStyle = {
-    ...style.caretFocusStyle,
-  };
-
-  const legacyStyles = [
-    {
-      id: caretStyleId,
-      style: caretFocusStyle,
-      pseudoClass: 'focus',
-    },
-  ];
-  injectStyles(legacyStyles);
-}
 
 /**
  * Default function used for filtering options.
@@ -58,17 +34,9 @@ export default class ComboBox extends Component {
     onFocus: PropTypes.func,
     onBlur: PropTypes.func,
     className: PropTypes.string,
-    caretClassName: PropTypes.string,
     style: PropTypes.object,
-    wrapperStyle: PropTypes.object,
-    menuStyle: PropTypes.object,
-    focusStyle: PropTypes.object,
     disabledStyle: PropTypes.object,
     disabledHoverStyle: PropTypes.object,
-    hoverStyle: PropTypes.object,
-    caretToOpenStyle: PropTypes.object,
-    caretToCloseStyle: PropTypes.object,
-    disabledCaretToOpenStyle: PropTypes.object,
     maxOptions: PropTypes.number,
     filterFunction: PropTypes.func,
     'aria-label': PropTypes.string,
@@ -121,22 +89,6 @@ export default class ComboBox extends Component {
     return {
       isHoveredIndex: this.state.focusedOptionIndex,
     };
-  }
-
-  /**
-   * Generates the style-id & inject the focus & hover style.
-   */
-  componentWillMount() {
-    const id = uniqueId();
-    this.caretStyleId = `caretStyle-id${id}`;
-    updatePseudoClassStyle(this.caretStyleId, this.props);
-  }
-
-  /**
-   * Remove a component's associated styles whenever it gets removed from the DOM.
-   */
-  componentWillUnmount() {
-    removeAllStyles([this.caretStyleId]);
   }
 
   /**
@@ -325,48 +277,15 @@ export default class ComboBox extends Component {
   }
 
   render() {
-    let inputStyle = {
-      ...style.style,
-      ...this.props.style,
-    };
-    const wrapperStyle = {
-      ...style.wrapperStyle,
-      ...this.props.wrapperStyle,
-    };
-    const menuStyle = {
-      ...style.menuStyle,
-      ...this.props.menuStyle,
-    };
+    const menuStyle = {};
 
     const tabIndex = this.props.tabIndex ? this.props.tabIndex : '0';
 
-    if (this.props.disabled) {
-      inputStyle = {
-        ...inputStyle,
-        ...style.disabledStyle,
-        ...this.props.disabledStyle,
-      };
-    }
-
-    // todo: Currently there are no different hover styles for caret, like select they are probably not really needed.
-    let caretStyle;
-    if (this.props.disabled) {
-      caretStyle = {
-        ...style.caretToOpenStyle,
-        ...this.props.caretToOpenStyle,
-        ...style.disabledCaretToOpenStyle,
-        ...this.props.disabledCaretToOpenStyle,
-      };
-    } else if (this.state.isOpen) {
-      caretStyle = {
-        ...style.caretToCloseStyle,
-        ...this.props.caretToCloseStyle,
-      };
+    let caretClass;
+    if (this.state.isOpen) {
+      caretClass = styles.caretToCloseStyle;
     } else {
-      caretStyle = {
-        ...style.caretToOpenStyle,
-        ...this.props.caretToOpenStyle,
-      };
+      caretClass = styles.caretToOpenStyle;
     }
 
     const computedMenuStyle = (this.state.isOpen && !this.props.disabled && this.state.filteredOptions && this.state.filteredOptions.length > 0) ? menuStyle : { display: 'none' };
@@ -375,7 +294,6 @@ export default class ComboBox extends Component {
     // value will be updated depending on whether user has passed value as property
     return (
       <div
-        style={wrapperStyle}
         aria-label={this.props['aria-label']}
         aria-disabled={this.props.disabled}
         className={styles.root}
@@ -395,8 +313,7 @@ export default class ComboBox extends Component {
           ref={(ref) => { this.input = ref; }}
         />
         <span
-          style={caretStyle}
-          className={this.caretStyleId}
+          className={`${caretClass}&nbsp;${styles.caretFocusStyle}`}
           onClick={this.onCaretClick}
           tabIndex={-1}
         />

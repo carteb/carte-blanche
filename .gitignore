@@ -12,3 +12,4 @@ webpack-plugin/dist
 client/user-bundle.js
 
 examples/**/variations/
+.idea
