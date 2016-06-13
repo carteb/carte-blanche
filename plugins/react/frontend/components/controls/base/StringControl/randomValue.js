@@ -1,5 +1,5 @@
 import valueOrNullOrUndefined from '../../../../utils/valueOrNullOrUndefined';
-import faker from 'faker/build/build/faker';
+import faker from 'faker';
 
 export default (props) => {
   const canBeUndefined = !props.required;
