@@ -1,6 +1,6 @@
 {
   "name": "carte-blanche",
-  "version": "0.2.0",
+  "version": "0.2.3",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -21,7 +21,7 @@
   "repository": "https://github.com/carteb/carte-blanche",
   "license": "MIT",
   "dependencies": {
-    "carte-blanche-react-plugin": "^0.1.0",
+    "carte-blanche-react-plugin": "^0.2.0",
     "chai": "^3.5.0",
     "exenv": "^1.2.1",
     "extra-entry-webpack-plugin": "0.0.2",
