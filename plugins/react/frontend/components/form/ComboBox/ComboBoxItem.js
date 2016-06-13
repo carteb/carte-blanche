@@ -49,7 +49,7 @@ export default class ComboBoxItem extends Component {
     } else {
       optionClass = styles.style;
       if (this.context.isHoveredIndex === this.props.index) {
-        optionClass += ` ${styles.hoverStyle}`
+        optionClass += `&nbsp;${styles.hoverStyle}`;
       }
     }
 

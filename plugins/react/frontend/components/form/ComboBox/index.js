@@ -313,7 +313,7 @@ export default class ComboBox extends Component {
           ref={(ref) => { this.input = ref; }}
         />
         <span
-          className={`${caretClass} ${styles.caretFocusStyle}`}
+          className={`${caretClass}&nbsp;${styles.caretFocusStyle}`}
           onClick={this.onCaretClick}
           tabIndex={-1}
         />
