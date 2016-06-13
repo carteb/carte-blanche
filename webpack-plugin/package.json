@@ -18,10 +18,7 @@
     "Max Stoiber <contact@mxstbr.com> (http://mxstbr.com)",
     "Jan Nicklas <j.nicklas@me.com> (https://twitter.com/jantimon)"
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/carteb/carte-blanche"
-  },
+  "repository": "https://github.com/carteb/carte-blanche",
   "license": "MIT",
   "dependencies": {
     "carte-blanche-react-plugin": "^0.1.0",
