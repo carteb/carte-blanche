@@ -2,7 +2,7 @@
 import React from 'react';
 import {
   Grid,
-  Row
+  Row,
 } from 'react-bootstrap';
 
 import {
@@ -12,11 +12,11 @@ import {
 const Root = () =>
   <Grid>
     <Row>
-    <Button>Here is a sample button</Button>
+      <Button>Here is a sample button</Button>
     </Row>
     <Row>
-    <Button bsStyle="primary">Here is a primary button</Button>
+      <Button bsStyle="primary">Here is a primary button</Button>
     </Row>
-  </Grid>
+  </Grid>;
 
 export default Root;
