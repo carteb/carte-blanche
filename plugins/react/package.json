@@ -50,7 +50,7 @@
     "velocity-react": "^1.1.5"
   },
   "peerDependencies": {
-    "carte-blanche": "^0.1.0",
+    "carte-blanche": "^0.2.0",
     "webpack": ">=1 <3"
   },
   "scripts": {
