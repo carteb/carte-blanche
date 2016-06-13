@@ -1,7 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
 
-const CarteBlanche = require('carte-blanche');
+// To use the dev version, rename this file to webpack.config.babel.js (the .babel is missing atm)
+const CarteBlanche = require('../../webpack-plugin/dist/index');
 
 const commonEntrypoints = [
   'react-hot-loader/patch',
