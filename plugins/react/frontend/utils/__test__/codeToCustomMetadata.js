@@ -29,7 +29,7 @@ describe('codeToCustomMetadata', () => {
   }
 };`;
     const expected = {
-      err: 'SyntaxError: Unexpected token u',
+      err: 'SyntaxError: Unexpected token u in JSON at position 26',
     };
     expect(codeToCustomMetadata(code)).to.deep.equal(expected);
   });
