@@ -4,6 +4,10 @@ CarteBlanche is maintained by [@mxstbr](https://github.com/mxstbr), [@nikgraf](h
 
 *The ReactPlugin changelog is [here](./plugins/react/CHANGELOG.md)!*
 
+## v0.2.2 / 2016-06-13
+
+- fixed; support for library webpack configurations, thanks [@tmc](https://github.com/tmc) for the repro
+
 ## v0.2 / 2016-06-12
 
 - fixed; only search for components that _start_ with an uppercase letter, thanks [@kalmanb](https://github.com/kalmanb)
