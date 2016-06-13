@@ -67,7 +67,7 @@ function apply(compiler) {
   // and ouput everything to userBundleFileName
   compiler.apply(new ExtraEntryWebpackPlugin({
     entry: extraEntries,
-    entryName: `CarteBlanche [${this.id}]`,
+    entryName: `CarteBlanche_${this.id}`,
     outputName: userBundleFileName,
   }));
 
