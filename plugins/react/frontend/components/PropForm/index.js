@@ -6,6 +6,7 @@ import Grid from '../form/Grid';
 import Row from '../form/Grid/Row';
 import LeftColumn from '../form/Grid/LeftColumn';
 import RightColumn from '../form/Grid/RightColumn';
+import SavingLabel from '../common/SavingLabel';
 
 function PropForm(props) {
   return (
@@ -17,7 +18,7 @@ function PropForm(props) {
           </LeftColumn>
           <RightColumn>
             <RandomButton onClick={props.onRandomClick} />
-            {props.saving && <div>Saving...</div>}
+            {props.saving && <SavingLabel />}
           </RightColumn>
         </Row>
         {renderControls(
