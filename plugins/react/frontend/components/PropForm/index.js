@@ -17,6 +17,7 @@ function PropForm(props) {
           </LeftColumn>
           <RightColumn>
             <RandomButton onClick={props.onRandomClick} />
+            {props.saving && <div>Saving...</div>}
           </RightColumn>
         </Row>
         {renderControls(
