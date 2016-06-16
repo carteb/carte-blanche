@@ -5,10 +5,8 @@
  */
 
 import React from 'react';
-import styles from './styles';
+import styles from './styles.css';
 
-const SavingLabel = () => {
-  return <div style={styles.label}>Saving...</div>;
-};
+const SavingLabel = () => (<div className={styles.label}>Saving...</div>);
 
 export default SavingLabel;
