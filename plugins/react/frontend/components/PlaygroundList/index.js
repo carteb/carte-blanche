@@ -3,13 +3,14 @@
  */
 
 // External
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import map from 'lodash/map';
 import mapValues from 'lodash/mapValues';
 import debounce from 'lodash/debounce';
 import has from 'lodash/has';
 import io from 'socket.io-client';
 import axios from 'axios';
+import { connect } from 'react-redux';
 
 // Utilities
 import getControl from '../../utils/getControl';
@@ -21,19 +22,12 @@ import customMetadataToCode from '../../utils/customMetadataToCode';
 import addDataToVariation from '../../utils/addDataToVariation';
 // Shared Utilities between ReactPlugin and Client
 import {
-  getComponentNameFromPath,
   keycodes as KeyCodes,
   getVariationPathFromComponentPath,
 } from 'carte-blanche-utils';
 
 // Components
-import Playground from '../common/Playground';
-import PropForm from '../PropForm';
-import Modal from '../common/Modal';
-import CreateVariationButton from '../common/CreateVariationButton';
-import EditButton from '../common/EditButton';
-import CustomMetadataForm from '../CustomMetadataForm';
-import DeleteConfirmationButtons from '../common/DeleteConfirmationButtons';
+import PlaygroundListComponent from './component';
 
 // Styles
 import styles from './styles.css';
@@ -41,20 +35,36 @@ import styles from './styles.css';
 // Global settings
 const PERSISTENCE_DELAY = 1000;
 
+const { node, string, object, array } = PropTypes;
+
 class PlaygroundList extends Component {
-  state = {
-    metadataError: null,
-    variationPropsList: {},
-    variationEditMode: false,
-    variationDeleteMode: false,
-    customMetadataEditMode: false,
-    selectedVariationId: undefined,
-    customMetadata: undefined,
-    metadataWithControls: null,
-    loadingMetadata: true,
-    loadingVariations: true,
-    saving: false,
+  static propTypes = {
+    component: node,
+    componentPath: string,
+    meta: object,
+    userFiles: array,
+    dest: string,
+    commonsChunkFilename: string,
+    options: object,
   };
+
+  constructor() {
+    super();
+
+    this.state = {
+      metadataError: null,
+      variationPropsList: {},
+      variationEditMode: false,
+      variationDeleteMode: false,
+      customMetadataEditMode: false,
+      selectedVariationId: undefined,
+      customMetadata: undefined,
+      metadataWithControls: null,
+      loadingMetadata: true,
+      loadingVariations: true,
+      saving: false,
+    };
+  }
 
   componentWillMount() {
     // Create a debounced method from the persistVariation method
@@ -403,121 +413,64 @@ class PlaygroundList extends Component {
       );
     }
 
-    const { component } = this.props;
+    const {
+      component,
+      componentPath,
+      meta,
+      userFiles,
+      dest,
+      commonsChunkFilename,
+      options,
+    } = this.props;
+    const {
+      variationDeleteMode,
+      variationPropsList,
+      selectedVariationId,
+      saving,
+      metadataWithControls,
+      customMetadata,
+      customMetadataEditMode,
+    } = this.state;
     // Find the selected variation
-    const selectedVariation = this.state.variationPropsList[this.state.selectedVariationId];
-    return (
-      <div className={styles.wrapper}>
-        <h2 className={styles.title}>
-          {getComponentNameFromPath(this.props.componentPath)}
-          <EditButton
-            onClick={this.startCustomMetadataEditMode}
-            className={styles.componentEditButton}
-          />
-        </h2>
-
-        {/* METADATA EDIT MODE MODAL */}
-        <Modal
-          visible={this.state.customMetadataEditMode}
-          onCloseClick={this.stopCustomMetadataEditMode}
-        >
-
-          <CustomMetadataForm
-            customMetadata={this.state.customMetadata}
-            parsedMetadata={this.props.meta}
-            updateCustomMetadata={this.updateCustomMetadata}
-          />
-        </Modal>
-        {/* VARIATION EDIT MODE MODAL */}
-        <Modal
-          visible={this.state.variationEditMode}
-          onCloseClick={this.stopVariationEditMode}
-        >
-          {(this.state.selectedVariationId) && (
-            <div className={styles.modalWrapper}>
-              <PropForm
-                metadataWithControls={this.state.metadataWithControls}
-                onVariationPropsChange={this.updateVariation}
-                onRandomClick={this.randomiseEverything.bind(this, this.state.selectedVariationId)} // eslint-disable-line react/jsx-no-bind,max-len
-                open={this.state.variationEditMode}
-                variationPath={this.state.selectedVariationId}
-                saving={this.state.saving}
-                variationProps={selectedVariation.props}
-              />
-              <Playground
-                userFiles={this.props.userFiles}
-                dest={this.props.dest}
-                commonsChunkFilename={this.props.commonsChunkFilename}
-                injectTags={this.props.injectTags}
-                component={component}
-                componentPath={this.props.componentPath}
-                showSourceCode
-                fullHeight
-                variationProps={selectedVariation.props}
-                variationPath={this.state.selectedVariationId}
-              />
-            </div>
-          )}
-        </Modal>
-
-        {/* VARIATION DELETE MODE MODAL */}
-        <Modal
-          visible={this.state.variationDeleteMode}
-          onCloseClick={this.stopVariationDeleteMode}
-        >
-          {(this.state.selectedVariationId) && (
-            <div className={styles.deleteModalWrapper}>
-
-              <p>Are you sure you want to delete this variation?</p>
-
-              <DeleteConfirmationButtons
-                variationPath={this.state.selectedVariationId}
-                confirmDeleteVariation={this.deleteVariation}
-                cancelDeleteVariation={this.stopVariationDeleteMode}
-              />
-
-            </div>
-          )}
-        </Modal>
-
-        {/* MAIN AREA WITH PLAYGROUNDS */}
-        {map(this.state.variationPropsList, (variation, variationPath) => (
-          variation.err ? (
-            <Playground
-              userFiles={this.props.userFiles}
-              dest={this.props.dest}
-              commonsChunkFilename={this.props.commonsChunkFilename}
-              injectTags={this.props.injectTags}
-              key={variationPath}
-              variationPath={variationPath}
-              componentPath={getVariationPathFromComponentPath(this.props.componentPath)}
-              variationBasePath={this.props.variationBasePath}
-              err={variation.err}
-            />
-          ) : (
-            <Playground
-              userFiles={this.props.userFiles}
-              dest={this.props.dest}
-              commonsChunkFilename={this.props.commonsChunkFilename}
-              injectTags={this.props.injectTags}
-              key={variationPath}
-              component={component}
-              componentPath={this.props.componentPath}
-              title={variation.name}
-              variationProps={variation.props}
-              variationPath={variationPath}
-              onDeleteButtonClick={this.startVariationDeleteMode}
-              onEditButtonClick={this.startVariationEditMode}
-            />
-          )
-        ))}
-        <CreateVariationButton
-          onSubmit={this.createVariation}
-          variationPropsList={this.state.variationPropsList}
-        />
-      </div>
-    );
+    const selectedVariation = variationPropsList[selectedVariationId];
+    return (<PlaygroundListComponent
+      selectedVariation={selectedVariation}
+      component={component}
+      variationPropsList={variationPropsList}
+      selectedVariationId={selectedVariationId}
+      variationDeleteMode={variationDeleteMode}
+      saving={saving}
+      metadataWithControls={metadataWithControls}
+      customMetadata={customMetadata}
+      customMetadataEditMode={customMetadataEditMode}
+      componentPath={componentPath}
+      meta={meta}
+      userFiles={userFiles}
+      dest={dest}
+      commonsChunkFilename={commonsChunkFilename}
+      injectTags={options.injectTags}
+      variationBasePath={options.variationBasePath}
+      startCustomMetadataEditMode={this.startCustomMetadataEditMode}
+      stopCustomMetadataEditMode={this.stopCustomMetadataEditMode}
+      updateCustomMetadata={this.updateCustomMetadata}
+      stopVariationEditMode={this.stopVariationEditMode}
+      updateVariation={this.updateVariation}
+      randomiseEverything={this.randomiseEverything}
+      stopVariationDeleteMode={this.stopVariationDeleteMode}
+      deleteVariation={this.deleteVariation}
+      startVariationDeleteMode={this.startVariationDeleteMode}
+      startVariationEditMode={this.startVariationEditMode}
+      createVariation={this.startVariationEditMode}
+    />);
   }
 }
 
-export default PlaygroundList;
+const mapStateToProps = state => ({
+  commonsChunkFilename: state.pluginData.commonsChunkFilename,
+  dest: state.pluginData.dest,
+  meta: state.pluginData.meta,
+  options: state.options,
+  userFiles: state.files,
+});
+
+export default connect(mapStateToProps)(PlaygroundList);
