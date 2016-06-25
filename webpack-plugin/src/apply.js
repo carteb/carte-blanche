@@ -16,8 +16,19 @@ import registerPlugins from './registerPlugins';
 import registerDefaultPlugins from './registerDefaultPlugins';
 import createHTML from './utils/createHTML';
 import getCommonsChunkFilename from './utils/getCommonsChunkFilename';
+import inProd from './utils/inProd';
 
 function apply(compiler) {
+  // Warn if users are in production
+  if (inProd(compiler)) {
+    // eslint-disable-next-line no-console
+    console.warn(
+      '[CarteBlanche] Running CarteBlanche in production is not recommended! It could make your ' +
+      'application run slower and eat up unnecessary resources, also giving access to your ' +
+      'servers file system from the outside.'
+    );
+  }
+
   const dest = this.options.dest;
   const filter = this.options.filter;
 
