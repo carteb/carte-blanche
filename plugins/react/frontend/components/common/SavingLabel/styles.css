@@ -1,0 +1,9 @@
+.label {
+  float: right;
+  background: rgb(205, 233, 255);
+  padding: 8px 15px;
+  border-radius: 3px;
+  color: #666;
+  font-size: 13px;
+  margin-right: 8px;
+}

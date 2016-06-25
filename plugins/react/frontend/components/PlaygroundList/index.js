@@ -53,6 +53,7 @@ class PlaygroundList extends Component {
     metadataWithControls: null,
     loadingMetadata: true,
     loadingVariations: true,
+    saving: false,
   };
 
   componentWillMount() {
@@ -274,6 +275,9 @@ class PlaygroundList extends Component {
       }),
     })
     .then(() => {
+      this.setState({
+        saving: false,
+      });
       this.fetchVariations();
     })
     .catch((err) => {
@@ -320,6 +324,7 @@ class PlaygroundList extends Component {
           props,
         },
       },
+      saving: true,
     });
 
     // Persist changes to server
@@ -436,6 +441,7 @@ class PlaygroundList extends Component {
                 onRandomClick={this.randomiseEverything.bind(this, this.state.selectedVariationId)} // eslint-disable-line react/jsx-no-bind,max-len
                 open={this.state.variationEditMode}
                 variationPath={this.state.selectedVariationId}
+                saving={this.state.saving}
                 variationProps={selectedVariation.props}
               />
               <Playground
