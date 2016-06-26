@@ -19,7 +19,7 @@ class IFrameDataManager extends React.Component { // eslint-disable-line
     const Component = this.props.component;
     // TODO figure out why the passed props are not raw objects
     const propAsRawObject = { ...this.state.componentProps };
-    return <Component { ...propAsRawObject } />;
+    return <Component {...propAsRawObject} />;
   }
 }
 
