@@ -24,6 +24,8 @@ window.$INITIALIZE_COMPONENT_GUI = function initializeComponentGui(components) {
 
   const navigationStore = createNavigationStore(components);
 
+  console.log(components);
+
   // Generate a view per user component that renders the frontend part of the
   // plugins for each component
   const routes = map(components, (component, componentPath) => (

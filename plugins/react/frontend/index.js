@@ -1,13 +1,13 @@
-import React from 'react';
-// import { createStore } from 'redux';
-// import { Provider } from 'react-redux';
+import React, { Component } from 'react';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
 
-// import reducer from './reducers';
-// import PlaygroundList from './components/PlaygroundList';
+import reducer from './reducers';
+import PlaygroundList from './components/PlaygroundList';
 import IFrameDataManager from './components/common/IFrameDataManager';
 import normalizeMetaInfo from './utils/normalizeMetaInfo';
 
-export default class playground extends React.Component {
+export default class playground extends Component {
   constructor(props) {
     super(props);
     console.log('here');
@@ -21,7 +21,7 @@ export default class playground extends React.Component {
       },
     };
     console.log('another one', initialState);
-    // this.store = createStore(reducer, initialState);
+    this.store = createStore(reducer, initialState);
   }
 
   render() {
@@ -38,16 +38,14 @@ export default class playground extends React.Component {
       return <IFrameDataManager component={Component} />;
     }
 
-    return null;
-
-    // return (
-    //   <Provider store={this.store}>
-    //     <PlaygroundList
-    //       component={Component}
-    //       componentPath={componentPath}
-    //       navigationStore={navigationStore}
-    //     />
-    //   </Provider>
-    // );
+    return (
+      <Provider store={this.store}>
+        <PlaygroundList
+          component={Component}
+          componentPath={componentPath}
+          navigationStore={navigationStore}
+        />
+      </Provider>
+    );
   }
 }
