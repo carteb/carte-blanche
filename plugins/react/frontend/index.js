@@ -1,35 +1,51 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+
+import reducer from './reducers';
 import PlaygroundList from './components/PlaygroundList';
 import IFrameDataManager from './components/common/IFrameDataManager';
 import normalizeMetaInfo from './utils/normalizeMetaInfo';
 
-export default function playground(
-  frontendData,
-  pluginData,
-  Component,
-  componentPath,
-  navigationStore,
-) {
-  const options = frontendData.options;
-
-  if (window.frameElement) {
-    // in frame
-    return <IFrameDataManager component={Component} />;
+export default class playground extends Component {
+  constructor(props) {
+    super(props);
+    console.log('here');
+    const initialState = {
+      options: props.frontendData.options,
+      files: props.frontendData.files,
+      pluginData: {
+        commonsChunkFilename: JSON.parse(props.pluginData.commonsChunkFilename),
+        meta: normalizeMetaInfo(props.pluginData.reactDocs),
+        dest: JSON.parse(props.pluginData.dest),
+      },
+    };
+    console.log('another one', initialState);
+    this.store = createStore(reducer, initialState);
   }
 
-  return (
-    <PlaygroundList
-      hostname={options.hostname}
-      port={options.port}
-      dest={JSON.parse(pluginData.dest)}
-      commonsChunkFilename={JSON.parse(pluginData.commonsChunkFilename)}
-      userFiles={frontendData.files}
-      injectTags={options.injectTags}
-      componentPath={componentPath}
-      component={Component}
-      navigationStore={navigationStore}
-      variationBasePath={options.variationBasePath}
-      meta={normalizeMetaInfo(pluginData.reactDocs)}
-    />
-  );
+  render() {
+    const {
+      Component,
+      componentPath,
+      navigationStore,
+    } = this.props;
+
+    console.log(this.store);
+
+    if (window.frameElement) {
+      // in frame
+      return <IFrameDataManager component={Component} />;
+    }
+
+    return (
+      <Provider store={this.store}>
+        <PlaygroundList
+          component={Component}
+          componentPath={componentPath}
+          navigationStore={navigationStore}
+        />
+      </Provider>
+    );
+  }
 }

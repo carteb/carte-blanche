@@ -18,6 +18,8 @@ function ReactPlugin(options) {
 
   this.options = options || {};
 
+  console.log(this.options);
+
   // The hostname option must be a string
   if (this.options.hostname && !isString(this.options.hostname)) {
     throw new Error('The "hostname" option of the ReactPlugin must be a string!\n\n');
