@@ -20,6 +20,7 @@ const createHtml = (componentPath, dest, userFiles, injectTags, commonsChunkFile
           display: flex;
           justify-content: center;
           align-items: center;
+          height: 100vh;
         "
       ></div>
       <script>
