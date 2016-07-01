@@ -4,6 +4,10 @@ CarteBlanche is maintained by [@mxstbr](https://github.com/mxstbr), [@nikgraf](h
 
 *The ReactPlugin changelog is [here](./plugins/react/CHANGELOG.md)!*
 
+## To be release
+
+- fixed; support for output:publicPath configuration of webpack
+
 ## v0.2.2 / 2016-06-13
 
 - fixed; support for library webpack configurations, thanks [@tmc](https://github.com/tmc) for the repro
