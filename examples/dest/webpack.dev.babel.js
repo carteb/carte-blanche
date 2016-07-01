@@ -10,7 +10,7 @@ export default {
   output: {
     path: path.join(__dirname, '../dist'),
     filename: 'bundle.js',
-    publicPath: '/',
+    publicPath: 'app',
   },
   entry: [
     'webpack-dev-server/client',
@@ -30,6 +30,7 @@ export default {
       inject: true,
       template: path.join(__dirname, './src/index.html'),
     }),
+    // Carte Blanche can be reached via http://localhost:8080/app/space
     new CarteBlanche({
       componentRoot: './src/components/',
       dest: 'space',

@@ -82,10 +82,11 @@ function apply(compiler) {
     outputName: userBundleFileName,
   }));
 
+  const publicPath = compiler.options.output.publicPath;
   // The client assets, default the HTML to only include the client bundles and the
   // user bundle
   const clientAssets = {
-    'index.html': createHTML({ dest, commonsChunkFilename }),
+    'index.html': createHTML({ publicPath, dest, commonsChunkFilename }),
     'client-bundle.js': fs.readFileSync(path.resolve(__dirname, './assets/client-bundle.js')),
     'client-bundle.css': fs.readFileSync(path.resolve(__dirname, './assets/client.css')),
     'iframe-client-bundle.js': fs.readFileSync(

@@ -7,23 +7,29 @@ import path from 'path';
  * @param  {String} dest The URL carte-blanche should be at
  * @return {Object}      The template split into two parts
  */
-const createBaseTemplate = (dest, commonsChunkFilename) => ({
-  top: `
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <title>CarteBlanche</title>
-    <link rel="stylesheet" type="text/css" href="${(dest) ? `/${path.join(dest, 'client-bundle.css')}` : 'client-bundle.css'}" />
-  </head>
-  <body>
-    <div id='carte-blanche-root'></div>\n`,
-  bottom: `${(commonsChunkFilename) ? `    <script src="/${commonsChunkFilename}"></script>` : ''}
-    <script src="${(dest) ? `/${path.join(dest, 'client-bundle.js')}` : 'client-bundle.js'}"></script>
-    <script src="${(dest) ? `/${path.join(dest, 'user-bundle.js')}` : 'user-bundle.js'}"></script>
-  </body>
-</html>`,
-});
+const createBaseTemplate = (publicPath = '', dest = '', commonsChunkFilename = '') => {
+  const basePath = publicPath || dest ? path.join('/', publicPath, dest) : '';
+  const clientBundleJsPath = path.join(basePath, 'client-bundle.js');
+  const clientBundleCssPath = path.join(basePath, 'client-bundle.css');
+  const userBundleJsPath = path.join(basePath, 'user-bundle.js');
+  return {
+    top: `
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <meta charset="UTF-8">
+          <title>CarteBlanche</title>
+          <link rel="stylesheet" type="text/css" href="${clientBundleCssPath}" />
+        </head>
+        <body>
+          <div id='carte-blanche-root'></div>\n`,
+    bottom: `${(commonsChunkFilename) ? `    <script src="/${commonsChunkFilename}"></script>` : ''}
+          <script src="${clientBundleJsPath}"></script>
+          <script src="${userBundleJsPath}"></script>
+        </body>
+      </html>`,
+  };
+};
 
 /**
  * Create HTML from a base template with injected styles and scripts and the
@@ -38,8 +44,8 @@ const createBaseTemplate = (dest, commonsChunkFilename) => ({
  * @return {String}        The finished HTML
  */
 const createHTML = (options) => {
-  const { dest, extraScripts, extraStyles, commonsChunkFilename } = options || {};
-  const baseTemplate = createBaseTemplate(dest || '', commonsChunkFilename || '');
+  const { publicPath, dest, extraScripts, extraStyles, commonsChunkFilename } = options || {};
+  const baseTemplate = createBaseTemplate(publicPath, dest, commonsChunkFilename);
   // If there's no extraScripts or extraStyles return the basetemplate
   if (!extraScripts && !extraStyles) {
     return `${baseTemplate.top}\n${baseTemplate.bottom}`;
