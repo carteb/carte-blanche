@@ -4,11 +4,11 @@ import path from 'path';
 /**
  * Create the base template, returning a top and a bottom part
  *
- * @param  {String} dest The URL carte-blanche should be at
- * @return {Object}      The template split into two parts
+ * @param  {String} basePath             The URL carte-blanche should be at
+ * @param  {String} commonsChunkFilename The URL of the common chunk
+ * @return {Object}          The template split into two parts
  */
-const createBaseTemplate = (publicPath = '', dest = '', commonsChunkFilename = '') => {
-  const basePath = publicPath || dest ? path.join('/', publicPath, dest) : '';
+const createBaseTemplate = (basePath = '', commonsChunkFilename = '') => {
   const clientBundleJsPath = path.join(basePath, 'client-bundle.js');
   const clientBundleCssPath = path.join(basePath, 'client-bundle.css');
   const userBundleJsPath = path.join(basePath, 'user-bundle.js');
@@ -36,7 +36,7 @@ const createBaseTemplate = (publicPath = '', dest = '', commonsChunkFilename = '
  * common chunk
  *
  * @param {Object} [options]              The options
- * @param {String} [options.dest]         The subfolder where the bundles are
+ * @param {String} [options.basePath]      The base path of the URL where the bundles are
  * @param {Array}  [options.extraScripts] An array of strings filled with JS code
  * @param {Array}  [options.extraStyles]              --“--               CSS code
  * @param {Array}  [options.commonsChunkFilename] The common chunk filename
@@ -44,8 +44,8 @@ const createBaseTemplate = (publicPath = '', dest = '', commonsChunkFilename = '
  * @return {String}        The finished HTML
  */
 const createHTML = (options) => {
-  const { publicPath, dest, extraScripts, extraStyles, commonsChunkFilename } = options || {};
-  const baseTemplate = createBaseTemplate(publicPath, dest, commonsChunkFilename);
+  const { basePath, extraScripts, extraStyles, commonsChunkFilename } = options || {};
+  const baseTemplate = createBaseTemplate(basePath, commonsChunkFilename);
   // If there's no extraScripts or extraStyles return the basetemplate
   if (!extraScripts && !extraStyles) {
     return `${baseTemplate.top}\n${baseTemplate.bottom}`;

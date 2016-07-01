@@ -21,8 +21,7 @@ export default function pluginFrontend(
     <PlaygroundList
       hostname={options.hostname}
       port={options.port}
-      publicPath={pluginData.publicPath}
-      dest={JSON.parse(pluginData.dest)}
+      basePath={JSON.parse(pluginData.basePath)}
       commonsChunkFilename={JSON.parse(pluginData.commonsChunkFilename)}
       userFiles={frontendData.files}
       injectTags={options.injectTags}

@@ -157,8 +157,7 @@ class Playground extends React.Component {
             ) : (
               <div>
                 <IFrame
-                  publicPath={this.props.publicPath}
-                  dest={this.props.dest}
+                  basePath={this.props.basePath}
                   commonsChunkFilename={this.props.commonsChunkFilename}
                   variationProps={this.props.variationProps}
                   userFiles={this.props.userFiles}

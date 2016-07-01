@@ -6,13 +6,11 @@ import path from 'path';
 
 const createHtml = (
   componentPath,
-  publicPath = '',
-  dest = '',
+  basePath = '',
   userFiles,
   injectTags,
   commonsChunkFilename
 ) => {
-  const basePath = publicPath || dest ? path.join('/', publicPath, dest) : '';
   const iframeClientBundle = path.join(basePath, 'iframe-client-bundle.js');
   const userBundle = path.join(basePath, 'user-bundle.js');
   return `<!DOCTYPE html>
@@ -57,8 +55,7 @@ class IFrame extends React.Component {
     // eslint-disable-next-line max-len
     doc.write(createHtml(
       this.props.componentPath,
-      this.props.publicPath,
-      this.props.dest,
+      this.props.basePath,
       this.props.userFiles,
       this.props.injectTags,
       this.props.commonsChunkFilename

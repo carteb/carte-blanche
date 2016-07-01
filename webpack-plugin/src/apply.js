@@ -16,6 +16,7 @@ import registerPlugins from './registerPlugins';
 import registerDefaultPlugins from './registerDefaultPlugins';
 import createHTML from './utils/createHTML';
 import getCommonsChunkFilename from './utils/getCommonsChunkFilename';
+import getBasePath from './utils/getBasePath';
 import inProd from './utils/inProd';
 
 function apply(compiler) {
@@ -29,7 +30,7 @@ function apply(compiler) {
     );
   }
 
-  const dest = this.options.dest;
+  const basePath = getBasePath(compiler, this.options);
   const filter = this.options.filter;
 
   // Register either the plugins or the default plugins
@@ -40,7 +41,7 @@ function apply(compiler) {
   }
 
   // Compile the client
-  const userBundleFileName = path.join(dest, 'user-bundle.js');
+  const userBundleFileName = path.join(this.options.dest, 'user-bundle.js');
   const userEntries = compiler.options.entry;
   const devServerOptions = compiler.options.devServer;
   const commonsChunkFilename = getCommonsChunkFilename(compiler.options.plugins);
@@ -52,7 +53,7 @@ function apply(compiler) {
         filter: filter.toString(),
         componentRoot: this.options.componentRoot,
         context: compiler.context,
-        dest: this.options.dest,
+        basePath,
         commonsChunkFilename,
       })}!${require.resolve('./assets/placeholder.js')}`,
   ];
@@ -82,11 +83,10 @@ function apply(compiler) {
     outputName: userBundleFileName,
   }));
 
-  const publicPath = compiler.options.output.publicPath;
   // The client assets, default the HTML to only include the client bundles and the
   // user bundle
   const clientAssets = {
-    'index.html': createHTML({ publicPath, dest, commonsChunkFilename }),
+    'index.html': createHTML({ basePath, commonsChunkFilename }),
     'client-bundle.js': fs.readFileSync(path.resolve(__dirname, './assets/client-bundle.js')),
     'client-bundle.css': fs.readFileSync(path.resolve(__dirname, './assets/client.css')),
     'iframe-client-bundle.js': fs.readFileSync(
@@ -118,16 +118,16 @@ function apply(compiler) {
         });
         // Put together the HTML file based on the assets we got
         clientAssets['index.html'] = createHTML({
-          dest,
+          basePath,
           extraScripts: scripts,
           extraStyles: styles,
         });
-        emitAssets(compilation, clientAssets, dest, callback);
+        emitAssets(compilation, clientAssets, this.options.dest, callback);
       });
     } else {
       // If not custom assets were passed in by neither the user nor any plugins
       // emit the defaults straight away
-      emitAssets(compilation, clientAssets, dest, callback);
+      emitAssets(compilation, clientAssets, this.options.dest, callback);
     }
   });
 
@@ -140,10 +140,10 @@ function apply(compiler) {
   // Log out that CarteBlanche has started
   if (devServerOptions && devServerOptions.host && devServerOptions.port) {
     // eslint-disable-next-line no-console
-    console.log(`CarteBlanche started at http://${devServerOptions.host}:${devServerOptions.port}/${dest}!`);
+    console.log(`CarteBlanche started at http://${devServerOptions.host}:${devServerOptions.port}/${basePath}`);
   } else {
     // eslint-disable-next-line no-console
-    console.log(`CarteBlanche started at /${dest}`);
+    console.log(`CarteBlanche started at /${basePath}`);
   }
 }
 
