@@ -43,7 +43,7 @@ const createBaseTemplate = (basePath = '', commonsChunkFilename = '') => {
  *
  * @return {String}        The finished HTML
  */
-const createHTML = (options) => {
+const createHtml = (options) => {
   const { basePath, extraScripts, extraStyles, commonsChunkFilename } = options || {};
   const baseTemplate = createBaseTemplate(basePath, commonsChunkFilename);
   // If there's no extraScripts or extraStyles return the basetemplate
@@ -62,4 +62,4 @@ const createHTML = (options) => {
   return `${baseTemplate.top}${injectedContent}${baseTemplate.bottom}`;
 };
 
-export default createHTML;
+export default createHtml;

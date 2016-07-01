@@ -14,7 +14,7 @@ import readMultipleFiles from 'read-multiple-files';
 import emitAssets from './utils/emitAssets';
 import registerPlugins from './registerPlugins';
 import registerDefaultPlugins from './registerDefaultPlugins';
-import createHTML from './utils/createHTML';
+import createHtml from './utils/createHtml';
 import getCommonsChunkFilename from './utils/getCommonsChunkFilename';
 import getBasePath from './utils/getBasePath';
 import inProd from './utils/inProd';
@@ -86,7 +86,7 @@ function apply(compiler) {
   // The client assets, default the HTML to only include the client bundles and the
   // user bundle
   const clientAssets = {
-    'index.html': createHTML({ basePath, commonsChunkFilename }),
+    'index.html': createHtml({ basePath, commonsChunkFilename }),
     'client-bundle.js': fs.readFileSync(path.resolve(__dirname, './assets/client-bundle.js')),
     'client-bundle.css': fs.readFileSync(path.resolve(__dirname, './assets/client.css')),
     'iframe-client-bundle.js': fs.readFileSync(
@@ -117,7 +117,7 @@ function apply(compiler) {
           }
         });
         // Put together the HTML file based on the assets we got
-        clientAssets['index.html'] = createHTML({
+        clientAssets['index.html'] = createHtml({
           basePath,
           extraScripts: scripts,
           extraStyles: styles,
