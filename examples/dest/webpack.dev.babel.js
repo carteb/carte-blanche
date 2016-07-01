@@ -31,13 +31,8 @@ export default {
       template: path.join(__dirname, './src/index.html'),
     }),
     new CarteBlanche({
-      include: [
-        // match components like Button/index.js
-        'src/components/**/[A-Z][a-zA-Z]*/index.js',
-        // match components like Button.js
-        'src/components/**/[A-Z][a-zA-Z]*.js',
-      ],
-      dest: 'components/index.html',
+      componentRoot: './src/components/',
+      dest: 'space',
     }),
   ],
   module: {
