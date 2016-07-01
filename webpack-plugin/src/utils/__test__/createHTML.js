@@ -23,8 +23,8 @@ describe('createHTML', () => {
     expect(createHTML()).to.equal(expected);
   });
 
-  it('should handle the dest option', () => {
-    const dest = 'examples';
+  it('should handle the basePath option', () => {
+    const basePath = '/examples';
     const expected = `
 <!DOCTYPE html>
 <html>
@@ -41,7 +41,7 @@ describe('createHTML', () => {
     <script src="/examples/user-bundle.js"></script>
   </body>
 </html>`;
-    expect(createHTML({ dest })).to.equal(expected);
+    expect(createHTML({ basePath })).to.equal(expected);
   });
 
   it('should inject scripts', () => {

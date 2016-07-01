@@ -14,20 +14,20 @@ const createBaseTemplate = (basePath = '', commonsChunkFilename = '') => {
   const userBundleJsPath = path.join(basePath, 'user-bundle.js');
   return {
     top: `
-      <!DOCTYPE html>
-      <html>
-        <head>
-          <meta charset="UTF-8">
-          <title>CarteBlanche</title>
-          <link rel="stylesheet" type="text/css" href="${clientBundleCssPath}" />
-        </head>
-        <body>
-          <div id='carte-blanche-root'></div>\n`,
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>CarteBlanche</title>
+    <link rel="stylesheet" type="text/css" href="${clientBundleCssPath}" />
+  </head>
+  <body>
+    <div id='carte-blanche-root'></div>\n`,
     bottom: `${(commonsChunkFilename) ? `    <script src="/${commonsChunkFilename}"></script>` : ''}
-          <script src="${clientBundleJsPath}"></script>
-          <script src="${userBundleJsPath}"></script>
-        </body>
-      </html>`,
+    <script src="${clientBundleJsPath}"></script>
+    <script src="${userBundleJsPath}"></script>
+  </body>
+</html>`,
   };
 };
 
