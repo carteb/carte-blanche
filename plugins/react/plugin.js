@@ -112,6 +112,8 @@ ReactPlugin.prototype.apply = function apply(compiler) {
       (data) => {
         // eslint-disable-next-line no-param-reassign
         data.reactDocs = reactDocs.parse(data.source, carteBlancheResolver);
+        // eslint-disable-next-line no-param-reassign
+        data.publicPath = compiler.options.output.publicPath;
       }
     );
 

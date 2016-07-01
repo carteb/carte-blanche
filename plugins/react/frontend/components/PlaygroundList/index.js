@@ -446,6 +446,7 @@ class PlaygroundList extends Component {
               />
               <Playground
                 userFiles={this.props.userFiles}
+                publicPath={this.props.publicPath}
                 dest={this.props.dest}
                 commonsChunkFilename={this.props.commonsChunkFilename}
                 injectTags={this.props.injectTags}
@@ -485,6 +486,7 @@ class PlaygroundList extends Component {
           variation.err ? (
             <Playground
               userFiles={this.props.userFiles}
+              publicPath={this.props.publicPath}
               dest={this.props.dest}
               commonsChunkFilename={this.props.commonsChunkFilename}
               injectTags={this.props.injectTags}
@@ -497,6 +499,7 @@ class PlaygroundList extends Component {
           ) : (
             <Playground
               userFiles={this.props.userFiles}
+              publicPath={this.props.publicPath}
               dest={this.props.dest}
               commonsChunkFilename={this.props.commonsChunkFilename}
               injectTags={this.props.injectTags}
