@@ -1,0 +1,17 @@
+.base {
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  font-size: 1rem;
+}
+
+.svg path,
+.svg circle {
+  stroke: #999;
+  transition: stroke 150ms;
+}
+
+.base:hover .svg path,
+.base:hover .svg circle {
+  stroke: #333;
+}
