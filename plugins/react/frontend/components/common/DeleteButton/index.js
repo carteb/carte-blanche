@@ -8,8 +8,10 @@
 import React from 'react';
 import styles from './styles.css';
 
+import Button from '../Button';
+
 const DeleteButton = (props) => (
-  <button {...props} className={`${styles.base} ${props.className}`}>
+  <Button className={props.className}>
     <svg
       className={styles.svg}
       height={(props.height) ? props.height : '24'}
@@ -31,7 +33,7 @@ const DeleteButton = (props) => (
         <g id="New_icons_1_" />
       </g>
     </svg>
-  </button>
+  </Button>
 );
 
 export default DeleteButton;
