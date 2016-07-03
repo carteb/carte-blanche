@@ -7,10 +7,9 @@
 
 import React from 'react';
 import styles from './styles.css';
-
 import Button from '../Button';
 
-const DeleteButton = (props) => (
+const RefreshButton = (props) => (
   <Button {...props} className={props.className}>
     <svg
       className={styles.svg}
@@ -42,4 +41,4 @@ const DeleteButton = (props) => (
   </Button>
 );
 
-export default DeleteButton;
+export default RefreshButton;
