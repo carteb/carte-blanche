@@ -16,6 +16,7 @@ import reactDOM from 'react-dom';
 import IFrame from '../IFrame';
 import EditButton from '../EditButton';
 import DeleteButton from '../DeleteButton';
+import RefreshButton from '../RefreshButton';
 import Card from '../Card';
 import SourceCode from './SourceCode';
 import styles from './styles.css';
@@ -24,6 +25,7 @@ class Playground extends React.Component {
   state = {
     buttonsVisible: false,
     delay: true,
+    renderiFrame: true,
   };
 
   componentDidMount = () => {
@@ -56,6 +58,17 @@ class Playground extends React.Component {
         this.resizeDiv.style.height = `${frameHeight}px`;
       }
     }
+  };
+
+  refreshComponent = () => {
+    // Refresh by un-rendering the iframe, and when it's unmounted re-mounting it
+    this.setState({
+      renderiFrame: false,
+    }, () => {
+      this.setState({
+        renderiFrame: true,
+      });
+    });
   };
 
   showButtons = () => {
@@ -142,6 +155,10 @@ class Playground extends React.Component {
                       onClick={this.onDeleteButtonClick}
                     />
                   )}
+                  <RefreshButton
+                    className={styles.button}
+                    onClick={this.refreshComponent}
+                  />
                 </div>
               </VelocityComponent>
             )}
@@ -154,7 +171,7 @@ class Playground extends React.Component {
       at ${this.props.variationBasePath}/${this.props.componentPath}/${this.props.variationPath}.js`}
                 </code>
               </div>
-            ) : (
+            ) : (this.state.renderiFrame && (
               <div>
                 <IFrame
                   dest={this.props.dest}
@@ -164,14 +181,14 @@ class Playground extends React.Component {
                   injectTags={this.props.injectTags}
                   componentPath={this.props.componentPath}
                 />
-                {this.props.showSourceCode &&
+                {(this.props.showSourceCode) &&
                   <SourceCode
                     componentPath={this.props.componentPath}
                     variationProps={this.props.variationProps}
                   />
                 }
               </div>
-            )}
+            ))}
           </div>
         </Card>
       </div>

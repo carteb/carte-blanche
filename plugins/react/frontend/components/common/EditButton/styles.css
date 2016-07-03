@@ -1,10 +1,3 @@
-.base {
-  cursor: pointer;
-  background-color: transparent;
-  border: none;
-  font-size: 1rem;
-}
-
 .svg polygon,
 .svg line,
 .svg circle {
@@ -12,8 +5,8 @@
   transition: stroke 150ms;
 }
 
-.base:hover .svg polygon,
-.base:hover .svg line,
-.base:hover .svg circle {
+.svg:hover polygon,
+.svg:hover line,
+.svg:hover circle {
   stroke: #333;
 }
