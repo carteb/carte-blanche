@@ -12,7 +12,7 @@ module.exports = function dynamicResolve() {
 
   const loaderMapping = {
     compiledComponent: '',
-    meta: `!!${require.resolve('./loaders/plugins-loader.js')}?dest="${query.dest}"&commonsChunkFilename="${query.commonsChunkFilename}"!`,
+    meta: `!!${require.resolve('./loaders/plugins-loader.js')}?basePath="${query.basePath}"&commonsChunkFilename="${query.commonsChunkFilename}"!`,
     examples: `${require.resolve('./loaders/examples-loader.js')}!`,
   };
 

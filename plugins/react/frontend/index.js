@@ -3,7 +3,7 @@ import PlaygroundList from './components/PlaygroundList';
 import IFrameDataManager from './components/common/IFrameDataManager';
 import normalizeMetaInfo from './utils/normalizeMetaInfo';
 
-export default function playground(
+export default function pluginFrontend(
   frontendData,
   pluginData,
   Component,
@@ -21,7 +21,7 @@ export default function playground(
     <PlaygroundList
       hostname={options.hostname}
       port={options.port}
-      dest={JSON.parse(pluginData.dest)}
+      basePath={JSON.parse(pluginData.basePath)}
       commonsChunkFilename={JSON.parse(pluginData.commonsChunkFilename)}
       userFiles={frontendData.files}
       injectTags={options.injectTags}
