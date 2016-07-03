@@ -7,6 +7,7 @@
 import React from 'react';
 import styles from './styles';
 
+// TODO should this a button instead of div?
 const RandomButton = (props) => (
   <div {...props} style={styles.base}>
     <svg
