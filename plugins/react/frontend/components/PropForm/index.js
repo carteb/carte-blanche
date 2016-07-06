@@ -1,12 +1,13 @@
 import React from 'react';
 
 import renderControls from '../../utils/renderControls';
-import RandomButton from '../common/RandomButton';
+import RandomButton from '../form/RandomButton';
 import Grid from '../form/Grid';
 import Row from '../form/Grid/Row';
 import LeftColumn from '../form/Grid/LeftColumn';
 import RightColumn from '../form/Grid/RightColumn';
 import SavingLabel from '../common/SavingLabel';
+import styles from './styles.css';
 
 function PropForm(props) {
   return (
@@ -17,7 +18,11 @@ function PropForm(props) {
             <h2>Props</h2>
           </LeftColumn>
           <RightColumn>
-            <RandomButton onClick={props.onRandomClick} />
+            <RandomButton
+              onClick={props.onRandomClick}
+              className={styles.randomButton}
+              groupType={'none'}
+            />
             {props.saving && <SavingLabel />}
           </RightColumn>
         </Row>
