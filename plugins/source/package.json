@@ -40,6 +40,6 @@
   "devDependencies": {
     "autoprefixer": "^6.3.6",
     "babel-cli": "^6.9.0",
-    "webpack": "^1.13.1"
+    "webpack": "^2.1.0-beta.15"
   }
 }
