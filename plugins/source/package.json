@@ -33,13 +33,14 @@
     "react": "^15.0.1"
   },
   "scripts": {
-    "build": "BABEL_DISABLE_CACHE=1 BABEL_ENV=production babel --out-dir='dist' plugin.js component.js",
+    "build": "cross-env BABEL_DISABLE_CACHE=1 BABEL_ENV=production babel --out-dir=dist plugin.js component.js",
     "dev": "npm run build -- --watch",
     "prepublish": "npm run build"
   },
   "devDependencies": {
     "autoprefixer": "^6.3.6",
     "babel-cli": "^6.9.0",
+    "cross-env": "^1.0.7",
     "webpack": "^1.13.1"
   }
 }
