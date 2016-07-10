@@ -2,6 +2,10 @@
 import loaderUtils from 'loader-utils';
 import path from 'path';
 
+// backslashes need to be duplicated, because we loose them all otherwise
+// when turned into a string in the return statement
+const adjustBackSlashes = (p) => p.replace(/\\/g, '\\\\');
+
 module.exports = function dynamicResolve() {
   this.cacheable();
   const query = loaderUtils.parseQuery(this.query);
@@ -20,7 +24,7 @@ module.exports = function dynamicResolve() {
 
   // Add dynamics requires for every loaders
   loaders.forEach((loader) => {
-    loaderMapping[loader] = `require.context('${loaderMapping[loader]}${absoluteComponentRoot}', true, ${filter})`;
+    loaderMapping[loader] = `require.context('${adjustBackSlashes(loaderMapping[loader] + absoluteComponentRoot)}', true, ${filter})`;
   });
 
   return `
