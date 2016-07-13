@@ -35,11 +35,11 @@ import styles from './styles.css';
 // Global settings
 const PERSISTENCE_DELAY = 1000;
 
-const { node, string, object, array } = PropTypes;
+const { func, string, object, array } = PropTypes;
 
 class PlaygroundList extends Component {
   static propTypes = {
-    component: node,
+    component: func,
     componentPath: string,
     meta: object,
     userFiles: array,
@@ -127,7 +127,15 @@ class PlaygroundList extends Component {
 
   // Fetch the metadata of the current component
   fetchMetadata = () => {
-    axios(`http://${this.props.hostname}:${this.props.port}/components/${this.props.componentPath}`)
+    const {
+      componentPath,
+      meta,
+      options: {
+        hostname,
+        port,
+      },
+    } = this.props;
+    axios(`http://${hostname}:${port}/components/${componentPath}`)
       .then((response) => {
         const json = response.data;
         const customMetadata = codeToCustomMetadata(json.data);
@@ -137,7 +145,7 @@ class PlaygroundList extends Component {
           });
         } else {
           const metadataWithControls = this.generateMetadataWithControls(
-            this.props.meta,
+            meta,
             customMetadata
           );
           this.setState({
@@ -179,7 +187,8 @@ class PlaygroundList extends Component {
 
   // Connect to the socket server
   connectToSocket = () => {
-    this.socket = io.connect(`http://${this.props.hostname}:${this.props.port}`);
+    const { hostname, port } = this.props.options;
+    this.socket = io.connect(`http://${hostname}:${port}`);
     // Listen to the events dispatched by the socket server
     this.socket.on('componentMetadataChanged', this.fetchMetadata);
     this.socket.on('componentVariationChanged', this.fetchVariations);
@@ -196,7 +205,15 @@ class PlaygroundList extends Component {
 
   // Fetch all variations for the current component
   fetchVariations = () => {
-    axios(`http://${this.props.hostname}:${this.props.port}/variations/${this.props.componentPath}`)
+    const {
+      componentPath,
+      navigationStore,
+      options: {
+        hostname,
+        port,
+      },
+    } = this.props;
+    axios(`http://${hostname}:${port}/variations/${componentPath}`)
       .then((response) => {
         const json = response.data;
         const variationPropsList = variationsToProps(json.data);
@@ -212,7 +229,7 @@ class PlaygroundList extends Component {
             link: key,
           }
         ));
-        this.props.navigationStore.setPluginLinks(this.props.componentPath, 'react', links);
+        navigationStore.setPluginLinks(componentPath, 'react', links);
       })
       .catch((ex) => {
         // TODO proper error handling
@@ -221,11 +238,18 @@ class PlaygroundList extends Component {
   };
 
   createVariation = (name, slug) => {
+    const {
+      componentPath,
+      options: {
+        hostname,
+        port,
+      },
+    } = this.props;
     const data = this.getVariationStringFromProps({
       props: this.getRandomValues(),
       name,
     });
-    axios(`http://${this.props.hostname}:${this.props.port}/variations/${this.props.componentPath}`, {
+    axios(`http://${hostname}:${port}/variations/${componentPath}`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -246,8 +270,15 @@ class PlaygroundList extends Component {
   };
 
   deleteVariation = (variationPath) => {
+    const {
+      componentPath,
+      options: {
+        hostname,
+        port,
+      },
+    } = this.props;
     this.stopVariationDeleteMode();
-    axios(`http://${this.props.hostname}:${this.props.port}/variations/${this.props.componentPath}?variation=${variationPath}`, {
+    axios(`http://${hostname}:${port}/variations/${componentPath}?variation=${variationPath}`, {
       method: 'DELETE',
       headers: {
         Accept: 'application/json',
@@ -269,11 +300,18 @@ class PlaygroundList extends Component {
   };
 
   persistVariation = (variationPath, props) => {
+    const {
+      componentPath,
+      options: {
+        hostname,
+        port,
+      },
+    } = this.props;
     const data = this.getVariationStringFromProps({
       props,
       name: this.state.variationPropsList[variationPath].name,
     });
-    axios(`http://${this.props.hostname}:${this.props.port}/variations/${this.props.componentPath}`, {
+    axios(`http://${hostname}:${port}/variations/${componentPath}`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -308,7 +346,14 @@ class PlaygroundList extends Component {
   };
 
   persistCustomMetadata = (customMetadata) => {
-    axios(`http://${this.props.hostname}:${this.props.port}/components/${this.props.componentPath}`, {
+    const {
+      componentPath,
+      options: {
+        hostname,
+        port,
+      },
+    } = this.props;
+    axios(`http://${hostname}:${port}/components/${componentPath}`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',

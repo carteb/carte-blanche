@@ -1,51 +1,27 @@
-import React, { Component } from 'react';
-import { createStore } from 'redux';
-import { Provider } from 'react-redux';
+import React from 'react';
 
-import reducer from './reducers';
-import PlaygroundList from './components/PlaygroundList';
+import Playground from './components/Playground';
 import IFrameDataManager from './components/common/IFrameDataManager';
-import normalizeMetaInfo from './utils/normalizeMetaInfo';
 
-export default class playground extends Component {
-  constructor(props) {
-    super(props);
-    console.log('here');
-    const initialState = {
-      options: props.frontendData.options,
-      files: props.frontendData.files,
-      pluginData: {
-        commonsChunkFilename: JSON.parse(props.pluginData.commonsChunkFilename),
-        meta: normalizeMetaInfo(props.pluginData.reactDocs),
-        dest: JSON.parse(props.pluginData.dest),
-      },
-    };
-    console.log('another one', initialState);
-    this.store = createStore(reducer, initialState);
+export default function pluginFrontend(
+  frontendData,
+  pluginData,
+  Component,
+  componentPath,
+  navigationStore,
+) {
+  if (window.frameElement) {
+    // in frame
+    return <IFrameDataManager component={Component} />;
   }
 
-  render() {
-    const {
-      Component,
-      componentPath,
-      navigationStore,
-    } = this.props;
-
-    console.log(this.store);
-
-    if (window.frameElement) {
-      // in frame
-      return <IFrameDataManager component={Component} />;
-    }
-
-    return (
-      <Provider store={this.store}>
-        <PlaygroundList
-          component={Component}
-          componentPath={componentPath}
-          navigationStore={navigationStore}
-        />
-      </Provider>
-    );
-  }
+  return (
+    <Playground
+      frontendData={frontendData}
+      pluginData={pluginData}
+      Component={Component}
+      componentPath={componentPath}
+      navigationStore={navigationStore}
+    />
+  );
 }

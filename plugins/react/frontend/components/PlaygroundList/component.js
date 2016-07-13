@@ -129,14 +129,14 @@ const PlaygroundList = props => (
   </div>
 );
 
-const { shape, object, node, array, string, bool, func } = React.PropTypes;
+const { shape, object, array, string, bool, func } = React.PropTypes;
 
 PlaygroundList.propTypes = {
   selectedVariation: shape({
     props: object,
   }),
-  component: node,
-  variationPropsList: array,
+  component: func,
+  variationPropsList: object,
   selectedVariationId: string,
   variationDeleteMode: bool,
   saving: bool,
@@ -148,7 +148,7 @@ PlaygroundList.propTypes = {
   userFiles: array,
   dest: string,
   commonsChunkFilename: string,
-  injectTags: bool,
+  injectTags: array,
   variationBasePath: string,
   startCustomMetadataEditMode: func,
   stopCustomMetadataEditMode: func,
