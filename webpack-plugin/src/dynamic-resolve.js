@@ -1,15 +1,15 @@
 /* eslint-disable max-len */
 import loaderUtils from 'loader-utils';
 import path from 'path';
+import slash from 'slash';
 import duplicateBackslashes from './utils/duplicateBackslashes';
 
 module.exports = function dynamicResolve() {
   this.cacheable();
   const query = loaderUtils.parseQuery(this.query);
   const filter = query.filter;
-  // TODO check on windows
   const absoluteComponentRoot = path.resolve(query.context, query.componentRoot);
-  const relativeComponentRoot = path.relative(query.context, absoluteComponentRoot);
+  const relativeComponentRoot = slash(path.relative(query.context, absoluteComponentRoot));
 
   const loaderMapping = {
     compiledComponent: '',

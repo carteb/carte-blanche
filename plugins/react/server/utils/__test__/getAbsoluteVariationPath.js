@@ -1,5 +1,6 @@
 import getAbsoluteVariationPath from '../getAbsoluteVariationPath';
 import { expect } from 'chai';
+import path from 'path';
 
 describe('getAbsoluteVariationPath', () => {
   it('should get the absolute path from the variations base path and the component path', () => {
@@ -7,7 +8,7 @@ describe('getAbsoluteVariationPath', () => {
     const componentPath = 'src/components/Button.js';
 
     expect(getAbsoluteVariationPath(variationsBasePath, componentPath)).to.equal(
-      '/User/asdf/variations/src/components/Button'
+      path.normalize('/User/asdf/variations/src/components/Button')
     );
   });
 
@@ -16,7 +17,7 @@ describe('getAbsoluteVariationPath', () => {
     const componentPath = 'src/components/Button.js';
 
     expect(getAbsoluteVariationPath(variationsBasePath, componentPath)).to.equal(
-      'src/components/Button'
+      path.normalize('src/components/Button')
     );
   });
 
@@ -25,7 +26,7 @@ describe('getAbsoluteVariationPath', () => {
     const componentPath = 'src/components/Button.js';
 
     expect(getAbsoluteVariationPath(variationsBasePath, componentPath)).to.equal(
-      'src/variations/src/components/Button'
+      path.normalize('src/variations/src/components/Button')
     );
   });
 
@@ -34,7 +35,7 @@ describe('getAbsoluteVariationPath', () => {
     const componentPath = '';
 
     expect(getAbsoluteVariationPath(variationsBasePath, componentPath)).to.equal(
-      '/User/asdf/variations'
+      path.normalize('/User/asdf/variations')
     );
   });
 
@@ -43,7 +44,7 @@ describe('getAbsoluteVariationPath', () => {
     const componentPath = '/src/components/Button.js';
 
     expect(getAbsoluteVariationPath(variationsBasePath, componentPath)).to.equal(
-      '/User/asdf/variations/src/components/Button'
+      path.normalize('/User/asdf/variations/src/components/Button')
     );
   });
 });

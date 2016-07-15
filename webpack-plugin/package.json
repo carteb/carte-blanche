@@ -28,7 +28,8 @@
     "loader-utils": "^0.2.15",
     "lodash": "^4.13.1",
     "mocha": "^2.5.3",
-    "read-multiple-files": "^1.1.1"
+    "read-multiple-files": "^1.1.1",
+    "slash": "^1.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.9.0",
