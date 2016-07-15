@@ -1,10 +1,7 @@
 /* eslint-disable max-len */
 import loaderUtils from 'loader-utils';
 import path from 'path';
-
-// backslashes need to be duplicated, because we loose them all otherwise
-// when turned into a string in the return statement
-const adjustBackSlashes = (p) => p.replace(/\\/g, '\\\\');
+import duplicateBackslashes from './utils/duplicateBackslashes';
 
 module.exports = function dynamicResolve() {
   this.cacheable();
@@ -23,8 +20,9 @@ module.exports = function dynamicResolve() {
   const loaders = Object.keys(loaderMapping);
 
   // Add dynamics requires for every loaders
+  // duplicate backslashes to prevent them being escaped away in returned script
   loaders.forEach((loader) => {
-    loaderMapping[loader] = `require.context('${adjustBackSlashes(loaderMapping[loader] + absoluteComponentRoot)}', true, ${filter})`;
+    loaderMapping[loader] = `require.context('${duplicateBackslashes(loaderMapping[loader] + absoluteComponentRoot)}', true, ${filter})`;
   });
 
   return `
