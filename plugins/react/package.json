@@ -55,8 +55,8 @@
   },
   "scripts": {
     "build": "npm run build:frontend && npm run build:backend",
-    "build:frontend": "NODE_ENV=production webpack --config webpack.prod.babel.js",
-    "build:backend": "BABEL_DISABLE_CACHE=1 BABEL_ENV=production babel --out-dir='dist' plugin.js resolver.js server/server.js server/run.js server/utils/getAbsoluteVariationPath.js",
+    "build:frontend": "cross-env NODE_ENV=production webpack --config webpack.prod.babel.js",
+    "build:backend": "cross-env BABEL_DISABLE_CACHE=1 BABEL_ENV=production babel --out-dir=dist plugin.js resolver.js server/server.js server/run.js server/utils/getAbsoluteVariationPath.js",
     "dev": "npm run build:frontend -- --watch",
     "prepublish": "npm run build"
   },
@@ -64,6 +64,7 @@
     "autoprefixer": "^6.3.6",
     "babel-cli": "^6.9.0",
     "chai": "^3.5.0",
+    "cross-env": "^1.0.7",
     "css-loader": "^0.23.1",
     "enzyme": "^2.3.0",
     "extract-text-webpack-plugin": "^1.0.1",

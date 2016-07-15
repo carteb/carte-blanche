@@ -41,7 +41,7 @@ function apply(compiler) {
   }
 
   // Compile the client
-  const userBundleFileName = path.join(this.options.dest, 'user-bundle.js');
+  const userBundleFileName = path.posix.join(this.options.dest, 'user-bundle.js');
   const userEntries = compiler.options.entry;
   const devServerOptions = compiler.options.devServer;
   const commonsChunkFilename = getCommonsChunkFilename(compiler.options.plugins);
