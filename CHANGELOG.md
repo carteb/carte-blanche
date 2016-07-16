@@ -6,6 +6,7 @@ CarteBlanche is maintained by [@mxstbr](https://github.com/mxstbr), [@nikgraf](h
 
 ## To be released
 
+- added; support for Windows, thanks [@novascreen](https://github.com/novascreen)
 - fixed; support for webpack v2.1.0-beta
 
 ## v0.3.1 / 2016-07-13
