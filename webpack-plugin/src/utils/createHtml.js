@@ -9,9 +9,9 @@ import path from 'path';
  * @return {Object}          The template split into two parts
  */
 const createBaseTemplate = (basePath = '', commonsChunkFilename = '') => {
-  const clientBundleJsPath = path.join(basePath, 'client-bundle.js');
-  const clientBundleCssPath = path.join(basePath, 'client-bundle.css');
-  const userBundleJsPath = path.join(basePath, 'user-bundle.js');
+  const clientBundleJsPath = path.posix.join(basePath, 'client-bundle.js');
+  const clientBundleCssPath = path.posix.join(basePath, 'client-bundle.css');
+  const userBundleJsPath = path.posix.join(basePath, 'user-bundle.js');
   return {
     top: `
 <!DOCTYPE html>
