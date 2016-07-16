@@ -8,7 +8,7 @@
 import fs from 'fs';
 import path from 'path';
 import includes from 'lodash/includes';
-import ExtraEntryWebpackPlugin from './utils/extra-entry-webpack-plugin';
+import ExtraEntryWebpackPlugin from 'extra-entry-webpack-plugin';
 import readMultipleFiles from 'read-multiple-files';
 
 import emitAssets from './utils/emitAssets';
