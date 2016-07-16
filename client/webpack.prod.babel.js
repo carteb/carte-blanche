@@ -20,7 +20,7 @@ export default {
         PRODUCTION: process.env.PRODUCTION,
       },
     }),
-    new ExtractTextPlugin('[name].css?[hash]', { allChunks: true }),
+    new ExtractTextPlugin({ filename: '[name].css?[hash]', allChunks: true }),
   ],
   module: {
     loaders: [
@@ -30,7 +30,10 @@ export default {
         exclude: /node_modules/,
       }, {
         test: /\.css$/,
-        loader: xt('style', 'css?modules&importLoaders=1!postcss-loader'),
+        loader: xt({
+          notExtractLoader: 'style-loader',
+          loader: 'css-loader?modules&importLoaders=1!postcss-loader',
+        }),
       },
     ],
   },

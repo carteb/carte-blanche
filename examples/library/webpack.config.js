@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 
 // To use the dev version, rename this file to webpack.config.babel.js (the .babel is missing atm)
+// eslint-disable-next-line import/no-unresolved
 const CarteBlanche = require('../../webpack-plugin/dist/index');
 
 const commonEntrypoints = [

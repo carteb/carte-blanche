@@ -27,19 +27,19 @@
     "widget",
     "react-component"
   ],
-  "peerDependencies": {
-    "carte-blanche": "^0.1.0",
-    "webpack": ">=1 <3",
-    "react": "^15.0.1"
-  },
   "scripts": {
     "build": "BABEL_DISABLE_CACHE=1 BABEL_ENV=production babel --out-dir='dist' plugin.js component.js",
     "dev": "npm run build -- --watch",
     "prepublish": "npm run build"
   },
+  "dependencies": {
+    "carte-blanche": "^0.3.0",
+    "webpack": ">=1 <3 || ^2.1.0-beta",
+    "react": "^15.0.1"
+  },
   "devDependencies": {
     "autoprefixer": "^6.3.6",
     "babel-cli": "^6.9.0",
-    "webpack": "^1.13.1"
+    "webpack": "^2.1.0-beta.18"
   }
 }
