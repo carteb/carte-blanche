@@ -1,6 +1,6 @@
 {
   "name": "carte-blanche-react-plugin",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "",
   "homepage": "https://github.com/carteb/carte-blanche",
   "bugs": {
@@ -30,7 +30,7 @@
   "dependencies": {
     "axios": "^0.12.0",
     "body-parser": "^1.15.1",
-    "carte-blanche": "^0.2.0",
+    "carte-blanche": "^0.3.0",
     "carte-blanche-utils": "^0.0.1",
     "chokidar": "^1.5.1",
     "cors": "^2.7.1",

@@ -4,9 +4,10 @@ CarteBlanche is maintained by [@mxstbr](https://github.com/mxstbr), [@nikgraf](h
 
 ## to be released
 
-- changed; use the same RandomButton to randomize all the props
-- added; introduced a RefreshButton to reload the iFrame
-- changed; switch to basePath support instead of dest
+- added; notification when saving variation, thanks [@lithin](https://github.com/lithin)
+- fixed; properly resize iframe based on contents, thanks [@FezVrasta](https://github.com/FezVrasta)
+- added; introduce a RefreshButton to reload the iFrame
+- changed; support carte-blanche@0.3
 
 ## v0.2 / 2016-06-12
 
