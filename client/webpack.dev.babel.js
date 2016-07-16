@@ -20,11 +20,6 @@ export default {
       filename: 'carte-blanche/index.html',
       template: '!!html!' + path.join(__dirname, './index.html'), // eslint-disable-line
     }),
-    new webpack.DefinePlugin({
-      'process.env': {
-        DISABLE_LOGGER: process.env.DISABLE_LOGGER,
-      },
-    }),
   ],
   module: {
     loaders: [

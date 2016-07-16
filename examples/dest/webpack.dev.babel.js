@@ -20,11 +20,6 @@ export default {
   plugins: [
     // new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
-    new webpack.DefinePlugin({
-      'process.env': {
-        DISABLE_LOGGER: process.env.DISABLE_LOGGER,
-      },
-    }),
     new ExtractTextPlugin({ filename: 'bundle-[hash].css', disable: true }),
     new HtmlWebpackPlugin({
       inject: true,
