@@ -4,7 +4,11 @@ CarteBlanche is maintained by [@mxstbr](https://github.com/mxstbr), [@nikgraf](h
 
 *The ReactPlugin changelog is [here](./plugins/react/CHANGELOG.md)!*
 
-- v0.3.1 / 2016-07-13
+## To be released
+
+- fixed; support for webpack v2.1.0-beta
+
+## v0.3.1 / 2016-07-13
 
 - fixed; `carte-blanche-react-plugin` dependency version
 
