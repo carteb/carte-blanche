@@ -64,17 +64,17 @@ function apply(compiler) {
                            devServerOptions.hot;
   const middlwareWithHMR = includes(userEntries, 'webpack-hot-middleware/client');
 
-  // if (this.options.hot !== false && (this.options.hot === true || devServerWithHMR)) {
-  //   if (includes(userEntries, 'webpack/hot/only-dev-server')) {
-  //     extraEntries.unshift('webpack/hot/only-dev-server');
-  //   }
-  //   extraEntries.unshift(`webpack-dev-server/client?http://${devServerOptions.host}:${devServerOptions.port}`);
-  // } else if (this.options.hot !== false && (this.options.hot === true || middlwareWithHMR)) {
-  //   if (includes(userEntries, 'webpack/hot/only-dev-server')) {
-  //     extraEntries.unshift('webpack/hot/only-dev-server');
-  //   }
-  //   extraEntries.unshift('webpack-hot-middleware/client');
-  // }
+  if (this.options.hot !== false && (this.options.hot === true || devServerWithHMR)) {
+    if (includes(userEntries, 'webpack/hot/only-dev-server')) {
+      extraEntries.unshift('webpack/hot/only-dev-server');
+    }
+    extraEntries.unshift(`webpack-dev-server/client?http://${devServerOptions.host}:${devServerOptions.port}`);
+  } else if (this.options.hot !== false && (this.options.hot === true || middlwareWithHMR)) {
+    if (includes(userEntries, 'webpack/hot/only-dev-server')) {
+      extraEntries.unshift('webpack/hot/only-dev-server');
+    }
+    extraEntries.unshift('webpack-hot-middleware/client');
+  }
   // Apply the ExtraEntry plugin with our entries above, a unique entryName
   // and ouput everything to userBundleFileName
   compiler.apply(new ExtraEntryWebpackPlugin({
