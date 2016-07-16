@@ -31,7 +31,7 @@
     "node": "5.5.0"
   },
   "scripts": {
-    "postinstall": "npm run client:build",
+    "postinstall": "npm run client:build && npm run plugin:react:build",
     "start": "npm run example:dev",
     "server": "webpack-dev-server --hot",
     "example:dev": "npm run server -- --context examples/dev/ --config examples/dev/webpack.dev.babel.js",
