@@ -5,6 +5,7 @@ import CarteBlanche from '../../webpack-plugin/index';
 import autoprefixer from 'autoprefixer';
 
 import ReactPlugin from '../../plugins/react/dist/plugin';
+import SourcePlugin from '../../plugins/source/plugin';
 
 export default {
   devtool: 'inline-source-map',
@@ -29,6 +30,7 @@ export default {
       componentRoot: './src/components/',
       plugins: [
         new ReactPlugin(),
+        new SourcePlugin(),
       ],
     }),
   ],
@@ -46,6 +48,12 @@ export default {
           path.join(__dirname, '../../plugins'),
         ],
       }, {
+        test: /highlight.*\.css/,
+        loader: 'style!css!postcss',
+        include: [
+          path.join(__dirname, '../../plugins'),
+        ],
+      }, {
         test: /\.css/,
         loader: 'style!css?modules&importLoaders=1&localIdentName=[local]__[path][name]__[hash:base64:5]!postcss-loader', // eslint-disable-line max-len
         include: [
@@ -53,6 +61,9 @@ export default {
           path.join(__dirname, '../../webpack-plugin'),
           path.join(__dirname, '../../plugins'),
         ],
+        exclude: [
+          /highlight.*\.css/
+        ]
       }, {
         test: /\.(png|jpg|gif)$/,
         loaders: ['url?limit=10000'],
