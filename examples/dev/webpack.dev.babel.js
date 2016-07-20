@@ -62,8 +62,8 @@ export default {
           path.join(__dirname, '../../plugins'),
         ],
         exclude: [
-          /highlight.*\.css/
-        ]
+          /highlight.*\.css/,
+        ],
       }, {
         test: /\.(png|jpg|gif)$/,
         loaders: ['url?limit=10000'],

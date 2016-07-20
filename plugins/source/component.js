@@ -6,8 +6,9 @@ export default function sourceFrontend(frontendData, pluginData) {
   const { value, language } = hljs.highlightAuto(pluginData.source);
   return (
     <div style={{ width: '90%', margin: 'auto' }}>
-      <pre className={"hljs " + language}
-           dangerouslySetInnerHTML={{__html: value}}
+      <pre
+        className={`hljs ${language}`}
+        dangerouslySetInnerHTML={{ __html: value }}
       />
     </div>
   );
