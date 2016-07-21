@@ -69,4 +69,9 @@ Modal.propTypes = {
   onCloseClick: PropTypes.func.isRequired,
 };
 
+Modal.defaultProps = {
+  visible: false,
+  onCloseClick: () => {},
+};
+
 export default Modal;

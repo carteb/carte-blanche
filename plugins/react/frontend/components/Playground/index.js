@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import normalizeMetaInfo from '../../utils/normalizeMetaInfo';
 import PlaygroundList from '../PlaygroundList';
 import reducer from '../../reducers';
+import createSagaMiddleware from 'redux-saga';
+import sagas from '../../sagas';
 
 export default class Playground extends Component {
   constructor(props) {
@@ -21,11 +23,12 @@ export default class Playground extends Component {
         dest: JSON.parse(pluginData.dest),
       },
     };
-    this.store = createStore(reducer, initialState);
+    const sagaMiddleware = createSagaMiddleware();
+    this.store = createStore(reducer, initialState, applyMiddleware(sagaMiddleware));
+    sagaMiddleware.run(sagas);
   }
 
   render() {
-    console.log(this.props);
     const {
       Component: propComponent,
       componentPath,

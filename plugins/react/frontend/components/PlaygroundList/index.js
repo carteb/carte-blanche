@@ -35,17 +35,13 @@ import styles from './styles.css';
 // Global settings
 const PERSISTENCE_DELAY = 1000;
 
-const { func, string, object, array } = PropTypes;
+const { func, string, object } = PropTypes;
 
 class PlaygroundList extends Component {
   static propTypes = {
-    component: func,
-    componentPath: string,
-    meta: object,
-    userFiles: array,
-    dest: string,
-    commonsChunkFilename: string,
-    options: object,
+    component: func.isRequired,
+    componentPath: string.isRequired,
+    navigationStore: object.isRequired,
   };
 
   constructor() {
@@ -459,53 +455,55 @@ class PlaygroundList extends Component {
     }
 
     const {
+      commonsChunkFilename,
       component,
       componentPath,
-      meta,
-      userFiles,
       dest,
-      commonsChunkFilename,
+      meta,
       options,
+      userFiles,
     } = this.props;
     const {
-      variationDeleteMode,
-      variationPropsList,
-      selectedVariationId,
-      saving,
-      metadataWithControls,
       customMetadata,
       customMetadataEditMode,
+      metadataWithControls,
+      saving,
+      selectedVariationId,
+      variationDeleteMode,
+      variationEditMode,
+      variationPropsList,
     } = this.state;
     // Find the selected variation
     const selectedVariation = variationPropsList[selectedVariationId];
     return (<PlaygroundListComponent
-      selectedVariation={selectedVariation}
+      commonsChunkFilename={commonsChunkFilename}
       component={component}
-      variationPropsList={variationPropsList}
-      selectedVariationId={selectedVariationId}
-      variationDeleteMode={variationDeleteMode}
-      saving={saving}
-      metadataWithControls={metadataWithControls}
+      componentPath={componentPath}
+      createVariation={this.createVariation}
       customMetadata={customMetadata}
       customMetadataEditMode={customMetadataEditMode}
-      componentPath={componentPath}
-      meta={meta}
-      userFiles={userFiles}
-      dest={dest}
-      commonsChunkFilename={commonsChunkFilename}
-      injectTags={options.injectTags}
-      variationBasePath={options.variationBasePath}
-      startCustomMetadataEditMode={this.startCustomMetadataEditMode}
-      stopCustomMetadataEditMode={this.stopCustomMetadataEditMode}
-      updateCustomMetadata={this.updateCustomMetadata}
-      stopVariationEditMode={this.stopVariationEditMode}
-      updateVariation={this.updateVariation}
-      randomiseEverything={this.randomiseEverything}
-      stopVariationDeleteMode={this.stopVariationDeleteMode}
       deleteVariation={this.deleteVariation}
+      dest={dest}
+      injectTags={options.injectTags}
+      meta={meta}
+      metadataWithControls={metadataWithControls}
+      randomiseEverything={this.randomiseEverything}
+      saving={saving}
+      selectedVariation={selectedVariation}
+      selectedVariationId={selectedVariationId}
+      startCustomMetadataEditMode={this.startCustomMetadataEditMode}
       startVariationDeleteMode={this.startVariationDeleteMode}
       startVariationEditMode={this.startVariationEditMode}
-      createVariation={this.startVariationEditMode}
+      stopCustomMetadataEditMode={this.stopCustomMetadataEditMode}
+      stopVariationDeleteMode={this.stopVariationDeleteMode}
+      stopVariationEditMode={this.stopVariationEditMode}
+      updateCustomMetadata={this.updateCustomMetadata}
+      updateVariation={this.updateVariation}
+      userFiles={userFiles}
+      variationBasePath={options.variationBasePath}
+      variationDeleteMode={variationDeleteMode}
+      variationEditMode={variationEditMode}
+      variationPropsList={variationPropsList}
     />);
   }
 }

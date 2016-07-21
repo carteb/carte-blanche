@@ -1,4 +1,5 @@
 import React from 'react';
+import 'babel-polyfill';
 
 import Playground from './components/Playground';
 import IFrameDataManager from './components/common/IFrameDataManager';
