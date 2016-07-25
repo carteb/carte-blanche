@@ -8,8 +8,10 @@
 import React from 'react';
 import styles from './styles.css';
 
+import Button from '../Button';
+
 const EditButton = (props) => (
-  <button {...props} className={`${styles.base} ${props.className}`}>
+  <Button {...props} className={props.className}>
     <svg
       height={(props.height) ? props.height : '24'}
       width={(props.width) ? props.width : '24'}
@@ -36,7 +38,7 @@ const EditButton = (props) => (
         <rect height="24" width="24" fill="none" />
       </g>
     </svg>
-  </button>
+  </Button>
 );
 
 export default EditButton;

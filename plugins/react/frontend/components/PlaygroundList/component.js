@@ -39,6 +39,7 @@ const PlaygroundList = props => (
         updateCustomMetadata={props.updateCustomMetadata}
       />
     </Modal>
+
     {/* VARIATION EDIT MODE MODAL */}
     <Modal
       visible={props.variationEditMode}
@@ -57,7 +58,7 @@ const PlaygroundList = props => (
           />
           <Playground
             userFiles={props.userFiles}
-            dest={props.dest}
+            basePath={props.basePath}
             commonsChunkFilename={props.commonsChunkFilename}
             injectTags={props.injectTags}
             component={props.component}
@@ -96,7 +97,7 @@ const PlaygroundList = props => (
       variation.err ? (
         <Playground
           userFiles={props.userFiles}
-          dest={props.dest}
+          basePath={props.basePath}
           commonsChunkFilename={props.commonsChunkFilename}
           injectTags={props.injectTags}
           key={variationPath}
@@ -108,7 +109,7 @@ const PlaygroundList = props => (
       ) : (
         <Playground
           userFiles={props.userFiles}
-          dest={props.dest}
+          basePath={props.basePath}
           commonsChunkFilename={props.commonsChunkFilename}
           injectTags={props.injectTags}
           key={variationPath}
@@ -132,6 +133,7 @@ const PlaygroundList = props => (
 const { shape, object, array, string, bool, func } = React.PropTypes;
 
 PlaygroundList.propTypes = {
+  basePath: string.isRequired,
   commonsChunkFilename: string,
   component: func,
   componentPath: string,

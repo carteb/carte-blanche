@@ -20,7 +20,7 @@ export default class Playground extends Component {
       pluginData: {
         commonsChunkFilename: JSON.parse(pluginData.commonsChunkFilename),
         meta: normalizeMetaInfo(pluginData.reactDocs),
-        dest: JSON.parse(pluginData.dest),
+        basePath: JSON.parse(pluginData.basePath),
       },
     };
     const sagaMiddleware = createSagaMiddleware();

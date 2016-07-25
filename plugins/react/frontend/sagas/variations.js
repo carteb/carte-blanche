@@ -2,7 +2,7 @@ import { takeLatest } from 'redux-saga';
 import { CREATE_VARIATION } from '../actions/variations';
 
 function createVariationWorker() {
-  console.log('ici');
+  // whatever we need to do to create variation
 }
 
 export function* createVariationWatcher() {

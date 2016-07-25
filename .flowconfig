@@ -4,6 +4,8 @@
 .*/node_modules/react/.*
 .*/node_modules/config-chain/.*
 .*/node_modules/npmconf/.*
+.*/node_modules/jsonlint/.*
+.*/node_modules/radium/.*
 
 [include]
 

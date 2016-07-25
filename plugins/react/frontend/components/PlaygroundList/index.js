@@ -473,6 +473,7 @@ class PlaygroundList extends Component {
       variationEditMode,
       variationPropsList,
     } = this.state;
+
     // Find the selected variation
     const selectedVariation = variationPropsList[selectedVariationId];
     return (<PlaygroundListComponent

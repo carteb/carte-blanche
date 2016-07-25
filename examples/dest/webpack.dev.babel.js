@@ -10,7 +10,7 @@ export default {
   output: {
     path: path.join(__dirname, '../dist'),
     filename: 'bundle.js',
-    publicPath: '/',
+    publicPath: 'app',
   },
   entry: [
     'webpack-dev-server/client',
@@ -20,24 +20,15 @@ export default {
   plugins: [
     // new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
-    new webpack.DefinePlugin({
-      'process.env': {
-        DISABLE_LOGGER: process.env.DISABLE_LOGGER,
-      },
-    }),
-    new ExtractTextPlugin('bundle-[hash].css', { disable: true }),
+    new ExtractTextPlugin({ filename: 'bundle-[hash].css', disable: true }),
     new HtmlWebpackPlugin({
       inject: true,
       template: path.join(__dirname, './src/index.html'),
     }),
+    // Carte Blanche can be reached via http://localhost:8080/app/space
     new CarteBlanche({
-      include: [
-        // match components like Button/index.js
-        'src/components/**/[A-Z][a-zA-Z]*/index.js',
-        // match components like Button.js
-        'src/components/**/[A-Z][a-zA-Z]*.js',
-      ],
-      dest: 'components/index.html',
+      componentRoot: './src/components/',
+      dest: 'space',
     }),
   ],
   module: {
@@ -54,9 +45,10 @@ export default {
           path.join(__dirname, '../../plugins'),
         ],
       }, {
-        test: /\.css/,
-        loader: ExtractTextPlugin.extract('style',
-        'css?modules&importLoaders=1&localIdentName=[name]-[local]!postcss-loader'),
+        loader: ExtractTextPlugin.extract({
+          notExtractLoader: 'style-loader',
+          loader: 'css-loader?modules&importLoaders=1&localIdentName=[name]-[local]!postcss-loader',
+        }),
         include: [
           path.join(__dirname, './src'),
           path.join(__dirname, '../../webpack-plugin'),

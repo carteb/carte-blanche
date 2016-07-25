@@ -4,7 +4,7 @@ import sinon from 'sinon';
 import { shallow, mount } from 'enzyme';
 
 import PropForm from '../index';
-import RandomButton from '../../common/RandomButton';
+import RandomButton from '../../form/RandomButton';
 
 // controls
 const EnumControl = () => <div>EnumControl</div>;

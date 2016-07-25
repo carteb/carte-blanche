@@ -18,8 +18,6 @@ function ReactPlugin(options) {
 
   this.options = options || {};
 
-  console.log(this.options);
-
   // The hostname option must be a string
   if (this.options.hostname && !isString(this.options.hostname)) {
     throw new Error('The "hostname" option of the ReactPlugin must be a string!\n\n');
@@ -114,6 +112,8 @@ ReactPlugin.prototype.apply = function apply(compiler) {
       (data) => {
         // eslint-disable-next-line no-param-reassign
         data.reactDocs = reactDocs.parse(data.source, carteBlancheResolver);
+        // eslint-disable-next-line no-param-reassign
+        data.publicPath = compiler.options.output.publicPath;
       }
     );
 

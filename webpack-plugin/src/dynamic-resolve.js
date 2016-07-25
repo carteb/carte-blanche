@@ -1,26 +1,28 @@
 /* eslint-disable max-len */
 import loaderUtils from 'loader-utils';
 import path from 'path';
+import slash from 'slash';
+import duplicateBackslashes from './utils/duplicateBackslashes';
 
 module.exports = function dynamicResolve() {
   this.cacheable();
   const query = loaderUtils.parseQuery(this.query);
   const filter = query.filter;
-  // TODO check on windows
   const absoluteComponentRoot = path.resolve(query.context, query.componentRoot);
-  const relativeComponentRoot = path.relative(query.context, absoluteComponentRoot);
+  const relativeComponentRoot = slash(path.relative(query.context, absoluteComponentRoot));
 
   const loaderMapping = {
     compiledComponent: '',
-    meta: `!!${require.resolve('./loaders/plugins-loader.js')}?dest="${query.dest}"&commonsChunkFilename="${query.commonsChunkFilename}"!`,
+    meta: `!!${require.resolve('./loaders/plugins-loader.js')}?basePath="${query.basePath}"&commonsChunkFilename="${query.commonsChunkFilename}"!`,
     examples: `${require.resolve('./loaders/examples-loader.js')}!`,
   };
 
   const loaders = Object.keys(loaderMapping);
 
   // Add dynamics requires for every loaders
+  // duplicate backslashes to prevent them being escaped away in returned script
   loaders.forEach((loader) => {
-    loaderMapping[loader] = `require.context('${loaderMapping[loader]}${absoluteComponentRoot}', true, ${filter})`;
+    loaderMapping[loader] = `require.context('${duplicateBackslashes(loaderMapping[loader] + absoluteComponentRoot)}', true, ${filter})`;
   });
 
   return `

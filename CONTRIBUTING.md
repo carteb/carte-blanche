@@ -5,7 +5,7 @@ Thanks so much for taking an interest in Carte Blanche, we value contributions o
 ## Setup
 
 ```
-$ git clone https://github.com/pure-ui/carte-blanche
+$ git clone https://github.com/carteb/carte-blanche
 $ npm install
 ```
 
@@ -56,7 +56,7 @@ $ npm run example:<examplename>:iron
 One important plugin lives in this repo, the ReactPlugin. It's in the `plugins/react/` folder, and has it's entire own build process. Run one of the examples from above, and in another terminal instance start
 
 ```sh
-$ npm run plugins:react:dev
+$ npm run plugin:react:dev
 ```
 
 to get hot reloading of the ReactPlugin.
@@ -64,7 +64,7 @@ to get hot reloading of the ReactPlugin.
 To build the client for publishing a new release, run
 
 ```sh
-$ npm run plugins:react:build
+$ npm run plugin:react:build
 ```
 
 ### Utils

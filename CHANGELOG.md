@@ -4,6 +4,19 @@ CarteBlanche is maintained by [@mxstbr](https://github.com/mxstbr), [@nikgraf](h
 
 *The ReactPlugin changelog is [here](./plugins/react/CHANGELOG.md)!*
 
+## To be released
+
+- added; support for Windows, thanks [@novascreen](https://github.com/novascreen)
+- fixed; support for webpack v2.1.0-beta
+
+## v0.3.1 / 2016-07-13
+
+- fixed; `carte-blanche-react-plugin` dependency version
+
+## v0.3 / 2016-07-13
+
+- fixed; support for output:publicPath configuration of webpack
+
 ## v0.2.2 / 2016-06-13
 
 - fixed; support for library webpack configurations, thanks [@tmc](https://github.com/tmc) for the repro

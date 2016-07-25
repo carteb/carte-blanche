@@ -19,11 +19,6 @@ module.exports = {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
-    new webpack.DefinePlugin({
-      'process.env': {
-        DISABLE_LOGGER: process.env.DISABLE_LOGGER,
-      },
-    }),
     new HtmlWebpackPlugin({
       inject: true,
       template: path.join(__dirname, './src/index.html'),

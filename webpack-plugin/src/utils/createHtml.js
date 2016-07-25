@@ -4,42 +4,48 @@ import path from 'path';
 /**
  * Create the base template, returning a top and a bottom part
  *
- * @param  {String} dest The URL carte-blanche should be at
- * @return {Object}      The template split into two parts
+ * @param  {String} basePath             The URL carte-blanche should be at
+ * @param  {String} commonsChunkFilename The URL of the common chunk
+ * @return {Object}          The template split into two parts
  */
-const createBaseTemplate = (dest, commonsChunkFilename) => ({
-  top: `
+const createBaseTemplate = (basePath = '', commonsChunkFilename = '') => {
+  const clientBundleJsPath = path.posix.join(basePath, 'client-bundle.js');
+  const clientBundleCssPath = path.posix.join(basePath, 'client-bundle.css');
+  const userBundleJsPath = path.posix.join(basePath, 'user-bundle.js');
+  return {
+    top: `
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8">
     <title>CarteBlanche</title>
-    <link rel="stylesheet" type="text/css" href="${(dest) ? `/${path.join(dest, 'client-bundle.css')}` : 'client-bundle.css'}" />
+    <link rel="stylesheet" type="text/css" href="${clientBundleCssPath}" />
   </head>
   <body>
     <div id='carte-blanche-root'></div>\n`,
-  bottom: `${(commonsChunkFilename) ? `    <script src="/${commonsChunkFilename}"></script>` : ''}
-    <script src="${(dest) ? `/${path.join(dest, 'client-bundle.js')}` : 'client-bundle.js'}"></script>
-    <script src="${(dest) ? `/${path.join(dest, 'user-bundle.js')}` : 'user-bundle.js'}"></script>
+    bottom: `${(commonsChunkFilename) ? `    <script src="/${commonsChunkFilename}"></script>` : ''}
+    <script src="${clientBundleJsPath}"></script>
+    <script src="${userBundleJsPath}"></script>
   </body>
 </html>`,
-});
+  };
+};
 
 /**
  * Create HTML from a base template with injected styles and scripts and the
  * common chunk
  *
  * @param {Object} [options]              The options
- * @param {String} [options.dest]         The subfolder where the bundles are
+ * @param {String} [options.basePath]      The base path of the URL where the bundles are
  * @param {Array}  [options.extraScripts] An array of strings filled with JS code
  * @param {Array}  [options.extraStyles]              --“--               CSS code
  * @param {Array}  [options.commonsChunkFilename] The common chunk filename
  *
  * @return {String}        The finished HTML
  */
-const createHTML = (options) => {
-  const { dest, extraScripts, extraStyles, commonsChunkFilename } = options || {};
-  const baseTemplate = createBaseTemplate(dest || '', commonsChunkFilename || '');
+const createHtml = (options) => {
+  const { basePath, extraScripts, extraStyles, commonsChunkFilename } = options || {};
+  const baseTemplate = createBaseTemplate(basePath, commonsChunkFilename);
   // If there's no extraScripts or extraStyles return the basetemplate
   if (!extraScripts && !extraStyles) {
     return `${baseTemplate.top}\n${baseTemplate.bottom}`;
@@ -56,4 +62,4 @@ const createHTML = (options) => {
   return `${baseTemplate.top}${injectedContent}${baseTemplate.bottom}`;
 };
 
-export default createHTML;
+export default createHtml;

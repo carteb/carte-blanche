@@ -2,6 +2,18 @@
 
 CarteBlanche is maintained by [@mxstbr](https://github.com/mxstbr), [@nikgraf](https://github.com/nikgraf), [@jantimon](https://github.com/jantimon) and an amazing team of contributors. All contributions, except for those by Max, Nik and Timon, are credited here.
 
+## to be released
+
+- added; support for Windows, thanks [@novascreen](https://github.com/novascreen)
+- fixed; support for webpack v2.1.0-beta
+
+## v0.3 / 2016-07-13
+
+- added; notification when saving variation, thanks [@lithin](https://github.com/lithin)
+- fixed; properly resize iframe based on contents, thanks [@FezVrasta](https://github.com/FezVrasta)
+- added; introduce a RefreshButton to reload the iFrame
+- changed; support carte-blanche@0.3
+
 ## v0.2 / 2016-06-12
 
 - added; show JSX code of variation in interface, thanks [@RStankov](https://github.com/RStankov)

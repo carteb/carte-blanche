@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-expressions */
 import { expect } from 'chai';
-import createHTML from '../createHTML';
+import createHtml from '../createHtml';
 
-describe('createHTML', () => {
+describe('createHtml', () => {
   it('should return the default template if no arguments are specified', () => {
     const expected = `
 <!DOCTYPE html>
@@ -20,11 +20,11 @@ describe('createHTML', () => {
     <script src="user-bundle.js"></script>
   </body>
 </html>`;
-    expect(createHTML()).to.equal(expected);
+    expect(createHtml()).to.equal(expected);
   });
 
-  it('should handle the dest option', () => {
-    const dest = 'examples';
+  it('should handle the basePath option', () => {
+    const basePath = '/examples';
     const expected = `
 <!DOCTYPE html>
 <html>
@@ -41,7 +41,7 @@ describe('createHTML', () => {
     <script src="/examples/user-bundle.js"></script>
   </body>
 </html>`;
-    expect(createHTML({ dest })).to.equal(expected);
+    expect(createHtml({ basePath })).to.equal(expected);
   });
 
   it('should inject scripts', () => {
@@ -62,7 +62,7 @@ describe('createHTML', () => {
     <script src="user-bundle.js"></script>
   </body>
 </html>`;
-    expect(createHTML({ extraScripts })).to.equal(expected);
+    expect(createHtml({ extraScripts })).to.equal(expected);
   });
 
   it('should inject styles', () => {
@@ -83,7 +83,7 @@ describe('createHTML', () => {
     <script src="user-bundle.js"></script>
   </body>
 </html>`;
-    expect(createHTML({ extraStyles })).to.equal(expected);
+    expect(createHtml({ extraStyles })).to.equal(expected);
   });
 
   it('should inject the common chunk', () => {
@@ -104,6 +104,6 @@ describe('createHTML', () => {
     <script src="user-bundle.js"></script>
   </body>
 </html>`;
-    expect(createHTML({ commonsChunkFilename })).to.equal(expected);
+    expect(createHtml({ commonsChunkFilename })).to.equal(expected);
   });
 });
