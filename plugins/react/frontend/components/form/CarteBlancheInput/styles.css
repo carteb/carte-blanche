@@ -52,7 +52,3 @@
   background-image: -webkit-linear-gradient(top, #eee 0%, #f3f3f3 100%);
   background-repeat: repeat-x;
 }
-
-.isNull {
-  composes: isUndefined;
-}

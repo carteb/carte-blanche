@@ -31,7 +31,6 @@ module.exports = {
           files: ['./node_modules/todomvc-app-css/index.css'],
         }),
       ],
-      // files: [path.join(__dirname, './node_modules/todomvc-app-css/index.css')],
     }),
   ],
   module: {
@@ -42,8 +41,8 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
-        test: /\.css?$/,
-        loaders: ['style-loader!css-loader'],
+        test: /\.css$/,
+        loader: 'style-loader!css-loader',
       },
     ],
   },
