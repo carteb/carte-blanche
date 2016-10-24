@@ -13,3 +13,4 @@ client/user-bundle.js
 
 examples/**/variations/
 .idea
+yarn.lock
