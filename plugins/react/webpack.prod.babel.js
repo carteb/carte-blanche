@@ -1,6 +1,5 @@
 /* eslint-disable no-var */
 var path = require('path');
-var autoprefixer = require('autoprefixer');
 
 const MATCH_ALL_NON_RELATIVE_IMPORTS = /^\w.*$/i;
 
@@ -29,5 +28,4 @@ module.exports = {
   },
   externals: [MATCH_ALL_NON_RELATIVE_IMPORTS],
   target: 'web',
-  postcss: [autoprefixer({ browsers: ['> 1%'] })],
 };
