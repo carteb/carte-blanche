@@ -2,7 +2,6 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CarteBlanche = require('../../webpack-plugin/index');
-const autoprefixer = require('autoprefixer');
 
 module.exports = {
   devtool: 'inline-source-map',
@@ -48,5 +47,4 @@ module.exports = {
       },
     ],
   },
-  postcss: [autoprefixer({ browsers: ['last 2 versions'] })],
 };
