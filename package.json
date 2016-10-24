@@ -68,6 +68,7 @@
     "chokidar": "^1.5.1",
     "connect-history-api-fallback": "^1.2.0",
     "cors": "^2.7.1",
+    "css-loader": "^0.23.1",
     "faker": "^3.1.0",
     "lodash": "^4.13.1",
     "mkdirp": "^0.5.1",
@@ -81,6 +82,7 @@
     "read-multiple-files": "^1.1.1",
     "socket.io": "^1.4.6",
     "speakingurl": "^9.0.0",
+    "style-loader": "^0.13.1",
     "velocity-react": "^1.1.5",
     "victory": "^0.9.0",
     "whatwg-fetch": "^1.0.0"
