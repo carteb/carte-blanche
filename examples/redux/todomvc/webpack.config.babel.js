@@ -28,7 +28,7 @@ module.exports = {
       hot: false,
       plugins: [
         new ReactPlugin({
-          files: ['./node_modules/todomvc-app-css/index.css'],
+          injectTags: ['<link href="./node_modules/todomvc-app-css/index.css" rel="stylesheet" />'],
         }),
       ],
     }),
