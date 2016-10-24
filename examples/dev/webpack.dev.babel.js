@@ -2,7 +2,7 @@ import path from 'path';
 import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CarteBlanche from '../../webpack-plugin/index';
-import autoprefixer from 'autoprefixer';
+// import autoprefixer from 'autoprefixer';
 
 import ReactPlugin from '../../plugins/react/dist/plugin';
 
@@ -65,7 +65,7 @@ export default {
       },
     ],
   },
-  postcss: [autoprefixer({ browsers: ['last 2 versions'] })],
+  //postcss: [autoprefixer({ browsers: ['last 2 versions'] })],
   devServer: {
     // It suppress error shown in console, so it has to be set to false.
     quiet: false,
