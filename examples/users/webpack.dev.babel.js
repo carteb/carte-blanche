@@ -3,7 +3,6 @@ import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CarteBlanche from '../../webpack-plugin/index';
 import ReactPlugin from '../../plugins/react/dist/plugin';
-import autoprefixer from 'autoprefixer';
 
 export default {
   devtool: 'inline-source-map',
@@ -55,7 +54,6 @@ export default {
       },
     ],
   },
-  postcss: [autoprefixer({ browsers: ['last 2 versions'] })],
   devServer: {
     historyApiFallback: true,
     // It suppress error shown in console, so it has to be set to false.

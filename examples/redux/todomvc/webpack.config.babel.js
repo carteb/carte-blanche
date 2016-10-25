@@ -28,10 +28,9 @@ module.exports = {
       hot: false,
       plugins: [
         new ReactPlugin({
-          files: ['./node_modules/todomvc-app-css/index.css'],
+          injectTags: ['<link href="./node_modules/todomvc-app-css/index.css" rel="stylesheet" />'],
         }),
       ],
-      // files: [path.join(__dirname, './node_modules/todomvc-app-css/index.css')],
     }),
   ],
   module: {
@@ -42,8 +41,8 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
-        test: /\.css?$/,
-        loaders: ['style', 'raw'],
+        test: /\.css$/,
+        loader: 'style-loader!css-loader',
       },
     ],
   },

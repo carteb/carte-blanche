@@ -9,7 +9,6 @@
 }
 
 .wrapper--fullHeight {
-  composes: wrapper;
   border: none;
   margin: 0 auto 20px;
   overflow-y: scroll;
