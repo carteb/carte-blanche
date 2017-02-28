@@ -37,20 +37,20 @@ export default {
     loaders: [
       {
         test: /\.js$/,
-        loaders: ['react-hot', 'babel'],
+        loaders: ['react-hot-loader', 'babel-loader'],
         exclude: /node_modules/,
       }, {
         test: /\.css/,
-        loader: 'style!css?modules&importLoaders=1&localIdentName=[local]__[path][name]__[hash:base64:5]!postcss-loader', // eslint-disable-line max-len
+        loader: 'style-loader!css?modules&importLoaders=1&localIdentName=[local]__[path][name]__[hash:base64:5]!postcss-loader', // eslint-disable-line max-len
       }, {
         test: /\.(png|jpg|gif)$/,
-        loaders: ['url?limit=10000'],
+        loaders: ['url-loader?limit=10000'],
       }, {
         test: /\.(svg)$/,
-        loaders: ['url?limit=0'],
+        loaders: ['url-loader?limit=0'],
       }, {
         test: /\.(json)$/,
-        loader: 'json',
+        loader: 'json-loader',
       },
     ],
   },

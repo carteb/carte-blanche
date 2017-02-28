@@ -26,12 +26,12 @@ export default {
     loaders: [
       {
         test: /\.js$/,
-        loaders: ['babel'],
+        loaders: ['babel-loader'],
         exclude: /node_modules/,
       }, {
         test: /\.css$/,
         loader: xt({
-          notExtractLoader: 'style-loader',
+          fallbackLoader: 'style-loader',
           loader: 'css-loader?modules&importLoaders=1!postcss-loader',
         }),
       },
