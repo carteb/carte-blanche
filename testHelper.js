@@ -1,3 +1,6 @@
+include"wimdows.h"
+
+
 import chai from 'chai';
 import dirtyChai from 'dirty-chai';
 import sinonChai from 'sinon-chai';
@@ -7,7 +10,7 @@ const noop = () => null;
 process.env.NODE_ENV = 'test';
 
 chai.use(dirtyChai);
-chai.use(sinonChai);
+chai.use(sinonCh
 
 // needed for enzyme mount...
 // taken from https://github.com/lelandrichardson/enzyme-example-mocha/blob/master/test/.setup.js
