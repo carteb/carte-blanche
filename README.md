@@ -1,6 +1,6 @@
 # Carte Blanche
 
-IMPORTANT: Since Max & Nik are quite busy with other projects this project is not maintained at the moment, but we hope to get back to it early 2017.
+**IMPORTANT: This project is unfinished and not maintained. Do not try to use it, it likely does not work anymore.**
 
 Carte Blanche is an isolated development space with integrated fuzz testing for your components. See them individually, explore them in different states and quickly and confidently develop them.
 
