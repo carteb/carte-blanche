@@ -28,7 +28,7 @@
     "react-component"
   ],
   "dependencies": {
-    "axios": "^0.12.0",
+    "axios": "^0.19.0",
     "body-parser": "^1.15.1",
     "carte-blanche": "^0.3.0",
     "carte-blanche-utils": "^0.0.1",
