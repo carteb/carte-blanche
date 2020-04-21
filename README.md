@@ -18,7 +18,7 @@ Carte Blanche is an isolated development space with integrated fuzz testing for 
 
 **In addition we haven't invested time to make it work on windows yet. Let us know in case you want to help.**
 
-**`react@^15.0.0` is required**
+**`react@^15.4.2` is required**
 
 Setting up Carte Blanche is an easy two-step process:
 
