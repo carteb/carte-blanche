@@ -57,5 +57,9 @@
     "build:backend": "cross-env BABEL_DISABLE_CACHE=1 BABEL_ENV=production babel --out-dir=dist plugin.js resolver.js server/server.js server/run.js server/utils/getAbsoluteVariationPath.js",
     "dev": "npm run build:frontend -- --watch",
     "prepublish": "npm run build"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.23.0",
+    "cross-env": "^3.1.4"
   }
 }

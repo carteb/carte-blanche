@@ -26,8 +26,8 @@ export default {
       {
         test: /\.js$/,
         loaders: [
-          'react-hot',
-          'babel',
+          'react-hot-loader',
+          'babel-loader',
         ],
         include: path.join(__dirname),
       }, {
