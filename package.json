@@ -28,7 +28,7 @@
     "url": "https://github.com/pure-ui/carte-blanche"
   },
   "engines": {
-    "node": "5.5.0"
+    "node": ">= 5.5.0"
   },
   "scripts": {
     "postinstall": "npm run client:build && npm run plugin:react:build",
