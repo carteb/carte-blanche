@@ -3,13 +3,14 @@
  */
 
 // External
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import map from 'lodash/map';
 import mapValues from 'lodash/mapValues';
 import debounce from 'lodash/debounce';
 import has from 'lodash/has';
 import io from 'socket.io-client';
 import axios from 'axios';
+import { connect } from 'react-redux';
 
 // Utilities
 import getControl from '../../utils/getControl';
@@ -21,19 +22,12 @@ import customMetadataToCode from '../../utils/customMetadataToCode';
 import addDataToVariation from '../../utils/addDataToVariation';
 // Shared Utilities between ReactPlugin and Client
 import {
-  getComponentNameFromPath,
   keycodes as KeyCodes,
   getVariationPathFromComponentPath,
 } from 'carte-blanche-utils';
 
 // Components
-import Playground from '../common/Playground';
-import PropForm from '../PropForm';
-import Modal from '../common/Modal';
-import CreateVariationButton from '../common/CreateVariationButton';
-import EditButton from '../common/EditButton';
-import CustomMetadataForm from '../CustomMetadataForm';
-import DeleteConfirmationButtons from '../common/DeleteConfirmationButtons';
+import PlaygroundListComponent from './component';
 
 // Styles
 import styles from './styles.css';
@@ -41,20 +35,32 @@ import styles from './styles.css';
 // Global settings
 const PERSISTENCE_DELAY = 1000;
 
+const { func, string, object } = PropTypes;
+
 class PlaygroundList extends Component {
-  state = {
-    metadataError: null,
-    variationPropsList: {},
-    variationEditMode: false,
-    variationDeleteMode: false,
-    customMetadataEditMode: false,
-    selectedVariationId: undefined,
-    customMetadata: undefined,
-    metadataWithControls: null,
-    loadingMetadata: true,
-    loadingVariations: true,
-    saving: false,
+  static propTypes = {
+    component: func.isRequired,
+    componentPath: string.isRequired,
+    navigationStore: object.isRequired,
   };
+
+  constructor() {
+    super();
+
+    this.state = {
+      metadataError: null,
+      variationPropsList: {},
+      variationEditMode: false,
+      variationDeleteMode: false,
+      customMetadataEditMode: false,
+      selectedVariationId: undefined,
+      customMetadata: undefined,
+      metadataWithControls: null,
+      loadingMetadata: true,
+      loadingVariations: true,
+      saving: false,
+    };
+  }
 
   componentWillMount() {
     // Create a debounced method from the persistVariation method
@@ -117,7 +123,15 @@ class PlaygroundList extends Component {
 
   // Fetch the metadata of the current component
   fetchMetadata = () => {
-    axios(`http://${this.props.hostname}:${this.props.port}/components/${this.props.componentPath}`)
+    const {
+      componentPath,
+      meta,
+      options: {
+        hostname,
+        port,
+      },
+    } = this.props;
+    axios(`http://${hostname}:${port}/components/${componentPath}`)
       .then((response) => {
         const json = response.data;
         const customMetadata = codeToCustomMetadata(json.data);
@@ -127,7 +141,7 @@ class PlaygroundList extends Component {
           });
         } else {
           const metadataWithControls = this.generateMetadataWithControls(
-            this.props.meta,
+            meta,
             customMetadata
           );
           this.setState({
@@ -169,7 +183,8 @@ class PlaygroundList extends Component {
 
   // Connect to the socket server
   connectToSocket = () => {
-    this.socket = io.connect(`http://${this.props.hostname}:${this.props.port}`);
+    const { hostname, port } = this.props.options;
+    this.socket = io.connect(`http://${hostname}:${port}`);
     // Listen to the events dispatched by the socket server
     this.socket.on('componentMetadataChanged', this.fetchMetadata);
     this.socket.on('componentVariationChanged', this.fetchVariations);
@@ -186,7 +201,15 @@ class PlaygroundList extends Component {
 
   // Fetch all variations for the current component
   fetchVariations = () => {
-    axios(`http://${this.props.hostname}:${this.props.port}/variations/${this.props.componentPath}`)
+    const {
+      componentPath,
+      navigationStore,
+      options: {
+        hostname,
+        port,
+      },
+    } = this.props;
+    axios(`http://${hostname}:${port}/variations/${componentPath}`)
       .then((response) => {
         const json = response.data;
         const variationPropsList = variationsToProps(json.data);
@@ -202,7 +225,7 @@ class PlaygroundList extends Component {
             link: key,
           }
         ));
-        this.props.navigationStore.setPluginLinks(this.props.componentPath, 'react', links);
+        navigationStore.setPluginLinks(componentPath, 'react', links);
       })
       .catch((ex) => {
         // TODO proper error handling
@@ -211,11 +234,18 @@ class PlaygroundList extends Component {
   };
 
   createVariation = (name, slug) => {
+    const {
+      componentPath,
+      options: {
+        hostname,
+        port,
+      },
+    } = this.props;
     const data = this.getVariationStringFromProps({
       props: this.getRandomValues(),
       name,
     });
-    axios(`http://${this.props.hostname}:${this.props.port}/variations/${this.props.componentPath}`, {
+    axios(`http://${hostname}:${port}/variations/${componentPath}`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -236,8 +266,15 @@ class PlaygroundList extends Component {
   };
 
   deleteVariation = (variationPath) => {
+    const {
+      componentPath,
+      options: {
+        hostname,
+        port,
+      },
+    } = this.props;
     this.stopVariationDeleteMode();
-    axios(`http://${this.props.hostname}:${this.props.port}/variations/${this.props.componentPath}?variation=${variationPath}`, {
+    axios(`http://${hostname}:${port}/variations/${componentPath}?variation=${variationPath}`, {
       method: 'DELETE',
       headers: {
         Accept: 'application/json',
@@ -259,11 +296,18 @@ class PlaygroundList extends Component {
   };
 
   persistVariation = (variationPath, props) => {
+    const {
+      componentPath,
+      options: {
+        hostname,
+        port,
+      },
+    } = this.props;
     const data = this.getVariationStringFromProps({
       props,
       name: this.state.variationPropsList[variationPath].name,
     });
-    axios(`http://${this.props.hostname}:${this.props.port}/variations/${this.props.componentPath}`, {
+    axios(`http://${hostname}:${port}/variations/${componentPath}`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -298,7 +342,14 @@ class PlaygroundList extends Component {
   };
 
   persistCustomMetadata = (customMetadata) => {
-    axios(`http://${this.props.hostname}:${this.props.port}/components/${this.props.componentPath}`, {
+    const {
+      componentPath,
+      options: {
+        hostname,
+        port,
+      },
+    } = this.props;
+    axios(`http://${hostname}:${port}/components/${componentPath}`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -403,121 +454,67 @@ class PlaygroundList extends Component {
       );
     }
 
-    const { component } = this.props;
+    const {
+      commonsChunkFilename,
+      component,
+      componentPath,
+      dest,
+      meta,
+      options,
+      userFiles,
+    } = this.props;
+    const {
+      customMetadata,
+      customMetadataEditMode,
+      metadataWithControls,
+      saving,
+      selectedVariationId,
+      variationDeleteMode,
+      variationEditMode,
+      variationPropsList,
+    } = this.state;
+
     // Find the selected variation
-    const selectedVariation = this.state.variationPropsList[this.state.selectedVariationId];
-    return (
-      <div className={styles.wrapper}>
-        <h2 className={styles.title}>
-          {getComponentNameFromPath(this.props.componentPath)}
-          <EditButton
-            onClick={this.startCustomMetadataEditMode}
-            className={styles.componentEditButton}
-          />
-        </h2>
-
-        {/* METADATA EDIT MODE MODAL */}
-        <Modal
-          visible={this.state.customMetadataEditMode}
-          onCloseClick={this.stopCustomMetadataEditMode}
-        >
-
-          <CustomMetadataForm
-            customMetadata={this.state.customMetadata}
-            parsedMetadata={this.props.meta}
-            updateCustomMetadata={this.updateCustomMetadata}
-          />
-        </Modal>
-        {/* VARIATION EDIT MODE MODAL */}
-        <Modal
-          visible={this.state.variationEditMode}
-          onCloseClick={this.stopVariationEditMode}
-        >
-          {(this.state.selectedVariationId) && (
-            <div className={styles.modalWrapper}>
-              <PropForm
-                metadataWithControls={this.state.metadataWithControls}
-                onVariationPropsChange={this.updateVariation}
-                onRandomClick={this.randomiseEverything.bind(this, this.state.selectedVariationId)} // eslint-disable-line react/jsx-no-bind,max-len
-                open={this.state.variationEditMode}
-                variationPath={this.state.selectedVariationId}
-                saving={this.state.saving}
-                variationProps={selectedVariation.props}
-              />
-              <Playground
-                userFiles={this.props.userFiles}
-                basePath={this.props.basePath}
-                commonsChunkFilename={this.props.commonsChunkFilename}
-                injectTags={this.props.injectTags}
-                component={component}
-                componentPath={this.props.componentPath}
-                showSourceCode
-                fullHeight
-                variationProps={selectedVariation.props}
-                variationPath={this.state.selectedVariationId}
-              />
-            </div>
-          )}
-        </Modal>
-
-        {/* VARIATION DELETE MODE MODAL */}
-        <Modal
-          visible={this.state.variationDeleteMode}
-          onCloseClick={this.stopVariationDeleteMode}
-        >
-          {(this.state.selectedVariationId) && (
-            <div className={styles.deleteModalWrapper}>
-
-              <p>Are you sure you want to delete this variation?</p>
-
-              <DeleteConfirmationButtons
-                variationPath={this.state.selectedVariationId}
-                confirmDeleteVariation={this.deleteVariation}
-                cancelDeleteVariation={this.stopVariationDeleteMode}
-              />
-
-            </div>
-          )}
-        </Modal>
-
-        {/* MAIN AREA WITH PLAYGROUNDS */}
-        {map(this.state.variationPropsList, (variation, variationPath) => (
-          variation.err ? (
-            <Playground
-              userFiles={this.props.userFiles}
-              basePath={this.props.basePath}
-              commonsChunkFilename={this.props.commonsChunkFilename}
-              injectTags={this.props.injectTags}
-              key={variationPath}
-              variationPath={variationPath}
-              componentPath={getVariationPathFromComponentPath(this.props.componentPath)}
-              variationBasePath={this.props.variationBasePath}
-              err={variation.err}
-            />
-          ) : (
-            <Playground
-              userFiles={this.props.userFiles}
-              basePath={this.props.basePath}
-              commonsChunkFilename={this.props.commonsChunkFilename}
-              injectTags={this.props.injectTags}
-              key={variationPath}
-              component={component}
-              componentPath={this.props.componentPath}
-              title={variation.name}
-              variationProps={variation.props}
-              variationPath={variationPath}
-              onDeleteButtonClick={this.startVariationDeleteMode}
-              onEditButtonClick={this.startVariationEditMode}
-            />
-          )
-        ))}
-        <CreateVariationButton
-          onSubmit={this.createVariation}
-          variationPropsList={this.state.variationPropsList}
-        />
-      </div>
-    );
+    const selectedVariation = variationPropsList[selectedVariationId];
+    return (<PlaygroundListComponent
+      commonsChunkFilename={commonsChunkFilename}
+      component={component}
+      componentPath={componentPath}
+      createVariation={this.createVariation}
+      customMetadata={customMetadata}
+      customMetadataEditMode={customMetadataEditMode}
+      deleteVariation={this.deleteVariation}
+      dest={dest}
+      injectTags={options.injectTags}
+      meta={meta}
+      metadataWithControls={metadataWithControls}
+      randomiseEverything={this.randomiseEverything}
+      saving={saving}
+      selectedVariation={selectedVariation}
+      selectedVariationId={selectedVariationId}
+      startCustomMetadataEditMode={this.startCustomMetadataEditMode}
+      startVariationDeleteMode={this.startVariationDeleteMode}
+      startVariationEditMode={this.startVariationEditMode}
+      stopCustomMetadataEditMode={this.stopCustomMetadataEditMode}
+      stopVariationDeleteMode={this.stopVariationDeleteMode}
+      stopVariationEditMode={this.stopVariationEditMode}
+      updateCustomMetadata={this.updateCustomMetadata}
+      updateVariation={this.updateVariation}
+      userFiles={userFiles}
+      variationBasePath={options.variationBasePath}
+      variationDeleteMode={variationDeleteMode}
+      variationEditMode={variationEditMode}
+      variationPropsList={variationPropsList}
+    />);
   }
 }
 
-export default PlaygroundList;
+const mapStateToProps = state => ({
+  commonsChunkFilename: state.pluginData.commonsChunkFilename,
+  dest: state.pluginData.dest,
+  meta: state.pluginData.meta,
+  options: state.options,
+  userFiles: state.files,
+});
+
+export default connect(mapStateToProps)(PlaygroundList);

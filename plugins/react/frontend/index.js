@@ -1,7 +1,8 @@
 import React from 'react';
-import PlaygroundList from './components/PlaygroundList';
+import 'babel-polyfill';
+
+import Playground from './components/Playground';
 import IFrameDataManager from './components/common/IFrameDataManager';
-import normalizeMetaInfo from './utils/normalizeMetaInfo';
 
 export default function pluginFrontend(
   frontendData,
@@ -10,26 +11,18 @@ export default function pluginFrontend(
   componentPath,
   navigationStore,
 ) {
-  const options = frontendData.options;
-
   if (window.frameElement) {
     // in frame
     return <IFrameDataManager component={Component} />;
   }
 
   return (
-    <PlaygroundList
-      hostname={options.hostname}
-      port={options.port}
-      basePath={JSON.parse(pluginData.basePath)}
-      commonsChunkFilename={JSON.parse(pluginData.commonsChunkFilename)}
-      userFiles={frontendData.files}
-      injectTags={options.injectTags}
+    <Playground
+      frontendData={frontendData}
+      pluginData={pluginData}
+      Component={Component}
       componentPath={componentPath}
-      component={Component}
       navigationStore={navigationStore}
-      variationBasePath={options.variationBasePath}
-      meta={normalizeMetaInfo(pluginData.reactDocs)}
     />
   );
 }

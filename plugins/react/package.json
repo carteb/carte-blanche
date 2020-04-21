@@ -29,6 +29,7 @@
   ],
   "dependencies": {
     "axios": "^0.12.0",
+    "babel-polyfill": "^6.9.1",
     "body-parser": "^1.15.1",
     "carte-blanche": "^0.3.0",
     "carte-blanche-utils": "^0.0.1",
@@ -44,7 +45,10 @@
     "react-docgen": "^2.8.2",
     "react-dom": "^15.1.0",
     "react-frame-component": "^0.6.1",
+    "react-redux": "^4.4.5",
     "read-multiple-files": "^1.1.1",
+    "redux": "^3.5.2",
+    "redux-saga": "^0.11.0",
     "socket.io": "^1.4.6",
     "socket.io-client": "^1.4.6",
     "speakingurl": "^9.0.0",
